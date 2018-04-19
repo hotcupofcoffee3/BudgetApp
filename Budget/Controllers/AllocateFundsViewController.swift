@@ -118,7 +118,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                             // Success!!! Adds default amount
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
-                                budget.allocateFundsToCategory(withThisAmount: nil, to: categorySelected)
+                                budget.allocateFundsToCategory(withThisAmount: category.budgeted, to: categorySelected)
                                 
                                 self.allocateSuccessLabel.textColor = successColor
                                 self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, category.budgeted)) allocated to \(categorySelected)"
@@ -225,7 +225,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                             // Success!!! Removes default amount
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
-                                budget.removeFundsFromCategory(withThisAmount: nil, from: categorySelected)
+                                budget.removeFundsFromCategory(withThisAmount: category.budgeted, from: categorySelected)
                                 
                                 self.allocateSuccessLabel.textColor = successColor
                                 self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, category.budgeted)) removed from \(categorySelected)"

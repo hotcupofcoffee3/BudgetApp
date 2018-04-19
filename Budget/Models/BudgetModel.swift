@@ -65,33 +65,21 @@ class Budget {
     
     // Category functions
 
-    func allocateFundsToCategory (withThisAmount: Double?, to thisCategory: String) {
+    func allocateFundsToCategory (withThisAmount: Double, to thisCategory: String) {
         
+        // It can't be, but this just makes it clearer
         if thisCategory != uncategorizedKey {
             
             guard let currentCategory = categories[thisCategory] else { return }
                 
-            if withThisAmount == nil {
-                
-                // Adds funds to specified category
-                currentCategory.available += currentCategory.budgeted
-                
-                // Takes funds from general Uncategorized category
-                guard let uncategorized = categories[uncategorizedKey] else { return }
-                uncategorized.available -= currentCategory.budgeted
-        
-            } else {
-                
-                guard let amount = withThisAmount else { return }
+            let amount = withThisAmount
                     
-                // Adds funds to specified category
-                currentCategory.available += amount
-                
-                // Takes funds from Uncategorized category
-                guard let uncategorized = categories[uncategorizedKey] else { return }
-                uncategorized.available -= amount
-                
-            }
+            // Adds funds to specified category
+            currentCategory.available += amount
+            
+            // Takes funds from Uncategorized category
+            guard let uncategorized = categories[uncategorizedKey] else { return }
+            uncategorized.available -= amount
             
         }
         
