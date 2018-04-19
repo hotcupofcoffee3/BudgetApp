@@ -115,6 +115,7 @@
                         <segue destination="biI-Yy-Qdb" kind="show" identifier="MainToShiftFundsSegue" id="3xs-Yo-Pb9"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="MainToAddWithdrawalSegue" id="eXP-Fb-uY0"/>
                         <segue destination="hpc-vk-Cnu" kind="show" identifier="MainToAddDepositSegue" id="8WW-RU-MKf"/>
+                        <segue destination="ZN3-qu-gHe" kind="show" identifier="MainToMoveFundsSegue" id="ZXq-hv-ffC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UQz-5D-Zav" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -239,6 +240,188 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2393" y="1046"/>
+        </scene>
+        <!--Move Funds View Controller-->
+        <scene sceneID="Bcg-ZU-BHL">
+            <objects>
+                <viewController id="ZN3-qu-gHe" customClass="MoveFundsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i7U-YQ-tJM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GV9-dw-Zdv">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Move Funds" id="S2m-g8-mCo">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" id="zV1-tk-6do">
+                                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="done:" destination="ZN3-qu-gHe" id="ldg-yY-XwS"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-DU-pLN">
+                                <rect key="frame" x="20" y="74" width="335" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sk8-Ez-WgU">
+                                <rect key="frame" x="20" y="102" width="335" height="30.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30.5" id="ktk-rw-6VW"/>
+                                </constraints>
+                                <string key="text">*If no amount entered, the budgeted
+amount gets allocated or removed.</string>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bwI-dc-nKQ" userLabel="Allocate, Remove">
+                                <rect key="frame" x="92" y="152.5" width="191" height="29"/>
+                                <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <segments>
+                                    <segment title="Allocate"/>
+                                    <segment title="Remove"/>
+                                    <segment title="Shift"/>
+                                </segments>
+                                <color key="tintColor" red="0.767118156" green="0.73760622740000004" blue="0.72818344830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </segmentedControl>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZQI-yf-Iua" userLabel="From - To Stack">
+                                <rect key="frame" x="20" y="240.5" width="335" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vla-yx-E24">
+                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FzX-3s-uAH">
+                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CRk-ZL-XU4" userLabel="Picker Stack">
+                                <rect key="frame" x="20" y="261" width="335" height="80"/>
+                                <subviews>
+                                    <pickerView tag="1" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="24W-sK-lTp" userLabel="From Picker">
+                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="80"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="ZN3-qu-gHe" id="fnL-J5-Tef"/>
+                                            <outlet property="delegate" destination="ZN3-qu-gHe" id="oV3-oi-grB"/>
+                                        </connections>
+                                    </pickerView>
+                                    <pickerView tag="2" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Cfh-dz-bdA" userLabel="To Picker">
+                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="80"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="ZN3-qu-gHe" id="Ys9-eQ-0np"/>
+                                            <outlet property="delegate" destination="ZN3-qu-gHe" id="thV-gv-CdP"/>
+                                        </connections>
+                                    </pickerView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="Yzk-Ho-i9a"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JWr-0q-4qT" userLabel="Current balances">
+                                <rect key="frame" x="20" y="351" width="335" height="18"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubg-Uo-pCO">
+                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8E-1m-t2W">
+                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HBJ-pv-STC" userLabel="Amount">
+                                <rect key="frame" x="20" y="200.5" width="335" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQw-6D-hkK">
+                                        <rect key="frame" x="0.0" y="0.0" width="162.5" height="30"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gye-NM-XkX">
+                                        <rect key="frame" x="172.5" y="0.0" width="162.5" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ZN3-qu-gHe" id="2C1-vO-vbJ"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFd-YW-dCJ">
+                                <rect key="frame" x="127.5" y="389" width="120" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Izc-zM-ZWU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Allocate Funds">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUn-Bd-eFH">
+                                <rect key="frame" x="20" y="379" width="335" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.767118156" green="0.73760622740000004" blue="0.72818344830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qFd-YW-dCJ" firstAttribute="centerX" secondItem="i7U-YQ-tJM" secondAttribute="centerX" id="1T6-dc-a0l"/>
+                            <constraint firstItem="GV9-dw-Zdv" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" id="28V-dk-P1v"/>
+                            <constraint firstItem="GV9-dw-Zdv" firstAttribute="trailing" secondItem="Ox5-b0-pkd" secondAttribute="trailing" id="9sb-Jl-DE2"/>
+                            <constraint firstItem="CRk-ZL-XU4" firstAttribute="top" secondItem="ZQI-yf-Iua" secondAttribute="bottom" id="DY9-bz-CVo"/>
+                            <constraint firstItem="JWr-0q-4qT" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="En4-Pn-5f7"/>
+                            <constraint firstItem="JWr-0q-4qT" firstAttribute="top" secondItem="CRk-ZL-XU4" secondAttribute="bottom" constant="10" id="Eve-Yk-VFO"/>
+                            <constraint firstItem="aUn-Bd-eFH" firstAttribute="top" secondItem="JWr-0q-4qT" secondAttribute="bottom" constant="10" id="HGn-dS-9fO"/>
+                            <constraint firstItem="sk8-Ez-WgU" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="IgJ-pm-34S"/>
+                            <constraint firstItem="CRk-ZL-XU4" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="LoV-Fe-XMJ"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="HBJ-pv-STC" secondAttribute="trailing" constant="20" id="Nof-NX-IJf"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="JWr-0q-4qT" secondAttribute="trailing" constant="20" id="OCT-ck-T7o"/>
+                            <constraint firstItem="ZQI-yf-Iua" firstAttribute="top" secondItem="bwI-dc-nKQ" secondAttribute="bottom" constant="60" id="Ojx-WB-6Pt"/>
+                            <constraint firstItem="bwI-dc-nKQ" firstAttribute="centerX" secondItem="i7U-YQ-tJM" secondAttribute="centerX" id="W2R-SU-k1O"/>
+                            <constraint firstItem="ZQI-yf-Iua" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="WYX-F5-S1h"/>
+                            <constraint firstItem="sk8-Ez-WgU" firstAttribute="top" secondItem="9oB-DU-pLN" secondAttribute="bottom" constant="10" id="YXT-y5-qaS"/>
+                            <constraint firstItem="aUn-Bd-eFH" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="buW-HE-sUY"/>
+                            <constraint firstItem="qFd-YW-dCJ" firstAttribute="top" secondItem="aUn-Bd-eFH" secondAttribute="bottom" constant="10" id="dSF-Vz-Vcu"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="ZQI-yf-Iua" secondAttribute="trailing" constant="20" id="dSj-7z-SAh"/>
+                            <constraint firstItem="9oB-DU-pLN" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="dZg-7L-JVV"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="aUn-Bd-eFH" secondAttribute="trailing" constant="20" id="dqk-MS-5NX"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="9oB-DU-pLN" secondAttribute="trailing" constant="20" id="hYy-Dz-TYN"/>
+                            <constraint firstItem="HBJ-pv-STC" firstAttribute="leading" secondItem="Ox5-b0-pkd" secondAttribute="leading" constant="20" id="iaB-Ny-Mo6"/>
+                            <constraint firstItem="Ox5-b0-pkd" firstAttribute="trailing" secondItem="sk8-Ez-WgU" secondAttribute="trailing" constant="20" id="lhf-r4-bCv"/>
+                            <constraint firstItem="HBJ-pv-STC" firstAttribute="top" secondItem="bwI-dc-nKQ" secondAttribute="bottom" constant="20" id="o31-Tg-Ifa"/>
+                            <constraint firstItem="9oB-DU-pLN" firstAttribute="top" secondItem="GV9-dw-Zdv" secondAttribute="bottom" constant="10" id="p6T-v5-VP7"/>
+                            <constraint firstItem="bwI-dc-nKQ" firstAttribute="top" secondItem="sk8-Ez-WgU" secondAttribute="bottom" constant="20" id="qUC-fW-yXL"/>
+                            <constraint firstItem="ZQI-yf-Iua" firstAttribute="top" secondItem="HBJ-pv-STC" secondAttribute="bottom" constant="10" id="uB0-wH-qQg"/>
+                            <constraint firstItem="GV9-dw-Zdv" firstAttribute="top" secondItem="Ox5-b0-pkd" secondAttribute="top" id="wu5-3P-NJ9"/>
+                            <constraint firstAttribute="trailing" secondItem="CRk-ZL-XU4" secondAttribute="trailing" constant="20" id="zcN-9O-bPA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ox5-b0-pkd"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5cY-Ra-OK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-359" y="1048"/>
         </scene>
         <!--Add Withdrawal View Controller-->
         <scene sceneID="qUh-bf-mVd">
@@ -418,7 +601,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-185" y="1045"/>
+            <point key="canvasLocation" x="615" y="1045"/>
         </scene>
         <!--Add Deposit View Controller-->
         <scene sceneID="t5u-op-rPM">
@@ -565,7 +748,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCj-uZ-Vid" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="484" y="1045"/>
+            <point key="canvasLocation" x="1266" y="1045"/>
         </scene>
         <!--Allocate Funds View Controller-->
         <scene sceneID="xUM-Zd-Y74">

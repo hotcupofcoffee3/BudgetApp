@@ -57,6 +57,12 @@ class MainScreen: UIViewController {
             self.performSegue(withIdentifier: mainToAddCategorySegueKey, sender: self)
             
         })
+        
+        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: "MainToMoveFundsSegue", sender: self)
+            
+        })
 
         alert.addAction(UIAlertAction(title: "Allocate Funds", style: .default) { (action) in
 
@@ -95,9 +101,9 @@ class MainScreen: UIViewController {
         loadCategories()
         loadTransactions()
         
-        for transaction in budget.transactions {
-            print(transaction.transactionID)
-        }
+//        for transaction in budget.transactions {
+//            print(transaction.transactionID)
+//        }
         
     }
     
