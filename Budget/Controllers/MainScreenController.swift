@@ -60,7 +60,7 @@ class MainScreen: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: "MainToMoveFundsSegue", sender: self)
+            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
             
         })
 

@@ -256,7 +256,7 @@
                                         <barButtonItem key="leftBarButtonItem" title="Done" id="zV1-tk-6do">
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
-                                                <action selector="done:" destination="ZN3-qu-gHe" id="ldg-yY-XwS"/>
+                                                <action selector="backButton:" destination="ZN3-qu-gHe" id="hVk-Tb-GjI"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -288,6 +288,9 @@ amount gets allocated or removed.</string>
                                     <segment title="Shift"/>
                                 </segments>
                                 <color key="tintColor" red="0.767118156" green="0.73760622740000004" blue="0.72818344830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="allocateRemoveOrShiftSwitch:" destination="ZN3-qu-gHe" eventType="valueChanged" id="Z88-FG-FRF"/>
+                                </connections>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZQI-yf-Iua" userLabel="From - To Stack">
                                 <rect key="frame" x="20" y="240.5" width="335" height="20.5"/>
@@ -333,13 +336,13 @@ amount gets allocated or removed.</string>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JWr-0q-4qT" userLabel="Current balances">
                                 <rect key="frame" x="20" y="351" width="335" height="18"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubg-Uo-pCO">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubg-Uo-pCO">
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8E-1m-t2W">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8E-1m-t2W">
                                         <rect key="frame" x="167.5" y="0.0" width="167.5" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                         <nil key="textColor"/>
@@ -376,8 +379,11 @@ amount gets allocated or removed.</string>
                                 <state key="normal" title="Allocate Funds">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="moveFundsButton:" destination="ZN3-qu-gHe" eventType="touchUpInside" id="EnD-bS-eBe"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUn-Bd-eFH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUn-Bd-eFH" userLabel="Warning Label">
                                 <rect key="frame" x="20" y="379" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -418,6 +424,17 @@ amount gets allocated or removed.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ox5-b0-pkd"/>
                     </view>
+                    <connections>
+                        <outlet property="allocateRemoveOrShift" destination="bwI-dc-nKQ" id="UGL-FS-KIR"/>
+                        <outlet property="fromCategoryCurrentBalanceLabel" destination="ubg-Uo-pCO" id="FkL-4e-SF2"/>
+                        <outlet property="fromCategoryPicker" destination="24W-sK-lTp" id="D7e-pm-Roc"/>
+                        <outlet property="fundsTextField" destination="gye-NM-XkX" id="6pU-24-oAb"/>
+                        <outlet property="leftAmountAtTopRight" destination="9oB-DU-pLN" id="N6a-e3-Zf4"/>
+                        <outlet property="moveFundsButtonTitle" destination="qFd-YW-dCJ" id="d8H-NH-lIl"/>
+                        <outlet property="toCategoryCurrentBalanceLabel" destination="h8E-1m-t2W" id="H74-vY-VxQ"/>
+                        <outlet property="toCategoryPicker" destination="Cfh-dz-bdA" id="3Ae-QE-kTa"/>
+                        <outlet property="warningLabel" destination="aUn-Bd-eFH" id="oCB-Xl-nf0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cY-Ra-OK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1305,7 +1322,7 @@ amount gets allocated or removed.</string>
         <segue reference="gOi-Bu-AOw"/>
         <segue reference="sum-Cr-7Ay"/>
         <segue reference="3xs-Yo-Pb9"/>
-        <segue reference="i3t-x5-KMX"/>
+        <segue reference="wnh-pn-gfd"/>
         <segue reference="8WW-RU-MKf"/>
         <segue reference="eXP-Fb-uY0"/>
         <segue reference="mU4-cf-aIR"/>
