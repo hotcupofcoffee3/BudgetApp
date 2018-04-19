@@ -332,9 +332,9 @@ class Budget {
         
         transactions.sort(by: {$0.transactionID > $1.transactionID})
         
-        for transaction in transactions {
-            print(transaction.transactionID)
-        }
+//        for transaction in transactions {
+//            print(transaction.transactionID)
+//        }
         
     }
     
@@ -342,9 +342,9 @@ class Budget {
         
         transactions.sort(by: {$0.transactionID < $1.transactionID})
         
-        for transaction in transactions {
-            print(transaction.transactionID)
-        }
+//        for transaction in transactions {
+//            print(transaction.transactionID)
+//        }
         
     }
     
