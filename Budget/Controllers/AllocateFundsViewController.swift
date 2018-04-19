@@ -33,6 +33,32 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
         
     }
     
+    func failureWithWarning(message: String) {
+        
+        // Warning notification haptic
+        let warning = UINotificationFeedbackGenerator()
+        warning.notificationOccurred(.error)
+        
+        self.allocateSuccessLabel.textColor = UIColor.red
+        self.allocateSuccessLabel.text = message
+        
+    }
+    
+    func updateUIElementsBecauseOfSuccess(forCategory: String) {
+        
+        // Success notification haptic
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+        
+        // Update Left label at top right & balance
+        updateLeftLabelAtTopRight()
+        updateCurrentCategoryBalanceLabel(for: forCategory)
+        
+        // Clear text field
+        addFundsTextField.text = nil
+        
+    }
+    
     @IBOutlet weak var allocateOrRemove: UISegmentedControl!
     
     @IBAction func allocateOrRemoveSwitch(_ sender: UISegmentedControl) {
@@ -103,12 +129,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                     
                     if (uncategorizedCategory.available - selectedCategory.budgeted) < 0 {
                         
-                        // Warning notification haptic
-                        let warning = UINotificationFeedbackGenerator()
-                        warning.notificationOccurred(.error)
-                        
-                        self.allocateSuccessLabel.textColor = UIColor.red
-                        self.allocateSuccessLabel.text = "You don't have enough funds left for this allocation."
+                        failureWithWarning(message: "You don't have enough funds left for this allocation.")
                         
                     } else {
                         
@@ -123,16 +144,8 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                                 self.allocateSuccessLabel.textColor = successColor
                                 self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, category.budgeted)) allocated to \(categorySelected)"
                                 
-                                // Success notification haptic
-                                let successHaptic = UINotificationFeedbackGenerator()
-                                successHaptic.notificationOccurred(.success)
-                                
-                                // Update Left label at top right & balance
-                                self.updateLeftLabelAtTopRight()
-                                self.updateCurrentCategoryBalanceLabel(for: categorySelected)
-                                
-                                // Clear text field
-                                self.addFundsTextField.text = nil
+                                // Haptics triggered, labels updated, and text field cleared
+                                self.updateUIElementsBecauseOfSuccess(forCategory: categorySelected)
                                 
                             }))
                             
@@ -151,12 +164,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                     
                     if (uncategorizedCategory.available - amount) < 0 {
                         
-                        // Warning notification haptic
-                        let warning = UINotificationFeedbackGenerator()
-                        warning.notificationOccurred(.error)
-                        
-                        self.allocateSuccessLabel.textColor = UIColor.red
-                        self.allocateSuccessLabel.text = "You don't have enough funds left for this allocation."
+                        failureWithWarning(message: "You don't have enough funds left for this allocation.")
                         
                     } else {
                         
@@ -170,16 +178,8 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                             self.allocateSuccessLabel.textColor = successColor
                             self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, amount)) allocated to \(categorySelected)"
                             
-                            // Success notification haptic
-                            let successHaptic = UINotificationFeedbackGenerator()
-                            successHaptic.notificationOccurred(.success)
-                            
-                            // Update Left label at top right & balance
-                            self.updateLeftLabelAtTopRight()
-                            self.updateCurrentCategoryBalanceLabel(for: categorySelected)
-                            
-                            // Clear text field
-                            self.addFundsTextField.text = nil
+                            // Haptics triggered, labels updated, and text field cleared
+                            self.updateUIElementsBecauseOfSuccess(forCategory: categorySelected)
                             
                         }))
                         
@@ -191,12 +191,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
 
                 } else {
                     
-                    self.allocateSuccessLabel.textColor = UIColor.red
-                    self.allocateSuccessLabel.text = "You can't have letters for the amount."
-                    
-                    // Warning notification haptic
-                    let warning = UINotificationFeedbackGenerator()
-                    warning.notificationOccurred(.error)
+                    failureWithWarning(message: "You can't have letters for the amount.")
                     
                 }
                 
@@ -209,12 +204,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                     
                     if (selectedCategory.available - selectedCategory.budgeted) < 0 {
                         
-                        // Warning notification haptic
-                        let warning = UINotificationFeedbackGenerator()
-                        warning.notificationOccurred(.error)
-                        
-                        self.allocateSuccessLabel.textColor = UIColor.red
-                        self.allocateSuccessLabel.text = "You don't have enough in this category for that."
+                       failureWithWarning(message: "You don't have enough in this category for that.")
                         
                     } else {
                         
@@ -230,16 +220,8 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                                 self.allocateSuccessLabel.textColor = successColor
                                 self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, category.budgeted)) removed from \(categorySelected)"
                                 
-                                // Success notification haptic
-                                let successHaptic = UINotificationFeedbackGenerator()
-                                successHaptic.notificationOccurred(.success)
-                                
-                                // Update Left label at top right & balance
-                                self.updateLeftLabelAtTopRight()
-                                self.updateCurrentCategoryBalanceLabel(for: categorySelected)
-                                
-                                // Clear text field
-                                self.addFundsTextField.text = nil
+                                // Haptics triggered, labels updated, and text field cleared
+                                self.updateUIElementsBecauseOfSuccess(forCategory: categorySelected)
                                 
                             }))
                             
@@ -258,12 +240,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                     
                     if (selectedCategory.available - amount) < 0 {
                         
-                        // Warning notification haptic
-                        let warning = UINotificationFeedbackGenerator()
-                        warning.notificationOccurred(.error)
-                        
-                        self.allocateSuccessLabel.textColor = UIColor.red
-                        self.allocateSuccessLabel.text = "You don't have enough funds in there for that."
+                        failureWithWarning(message: "You don't have enough funds in there for that.")
                         
                     } else {
                         
@@ -277,16 +254,8 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                             self.allocateSuccessLabel.textColor = successColor
                             self.allocateSuccessLabel.text = "$\(String(format: doubleFormatKey, amount)) removed from \(categorySelected)"
                             
-                            // Success notification haptic
-                            let successHaptic = UINotificationFeedbackGenerator()
-                            successHaptic.notificationOccurred(.success)
-                            
-                            // Update Left label at top right & balance
-                            self.updateLeftLabelAtTopRight()
-                            self.updateCurrentCategoryBalanceLabel(for: categorySelected)
-                            
-                            // Clear text field
-                            self.addFundsTextField.text = nil
+                            // Haptics triggered, labels updated, and text field cleared
+                            self.updateUIElementsBecauseOfSuccess(forCategory: categorySelected)
                             
                         }))
                         
@@ -298,12 +267,7 @@ class AllocateFundsViewController: UIViewController, UITextFieldDelegate, UIPick
                     
                 } else {
                     
-                    self.allocateSuccessLabel.textColor = UIColor.red
-                    self.allocateSuccessLabel.text = "You can't have letters for the amount."
-                    
-                    // Warning notification haptic
-                    let warning = UINotificationFeedbackGenerator()
-                    warning.notificationOccurred(.error)
+                   failureWithWarning(message: "You can't have letters for the amount.")
                     
                 }
                 
