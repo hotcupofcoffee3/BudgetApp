@@ -75,7 +75,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
         if let selectedCategory = budget.categories[categoryName] {
-            currentCategoryBalanceLabel.text = "Current left: $\(String(format: doubleFormatKey, selectedCategory.available))"
+            currentCategoryBalanceLabel.text = "\(categoryName) balance: $\(String(format: doubleFormatKey, selectedCategory.available))"
         }
         
     }
@@ -173,7 +173,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             let categoryIndexFromSelectedPickerRow = categoryPicked.selectedRow(inComponent: 0)
             
-            let category = budget.sortedCategoryKeys[categoryIndexFromSelectedPickerRow]
+            let categoryName = budget.sortedCategoryKeys[categoryIndexFromSelectedPickerRow]
             
             let convertedDates = convertDateToInts(dateToConvert: date)
             
@@ -222,7 +222,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                         
                     } else if transactionSelection == .withdrawal {
                         
-                        guard let categoryBeingWithdrawnFrom = budget.categories[category] else { return }
+                        guard let categoryBeingWithdrawnFrom = budget.categories[categoryName] else { return }
                         
                         if (categoryBeingWithdrawnFrom.available - amount) < 0 {
                             
@@ -238,12 +238,12 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
-                                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day)
+                                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
                                 
                                 self.warningLabel.textColor = successColor
-                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(category)"
+                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(categoryName)"
                                 
-                                self.updateUIElementsBecauseOfSuccess(forCategory: uncategorizedKey)
+                                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
                                 
                             }))
                             
