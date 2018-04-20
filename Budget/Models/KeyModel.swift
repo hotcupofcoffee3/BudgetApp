@@ -30,24 +30,24 @@ let withdrawalKey = "Withdrawal"
 // Other universal variables
 let successColor = UIColor.init(red: 100/255, green: 158/255, blue: 55/255, alpha: 1)
 
-// Main to all others
+// Main to others
 let mainToCategoriesSegueKey = "MainToCategoriesSegue"
 let mainToTransactionsSegueKey = "MainToTransactionsSegue"
 
 let mainToAddCategorySegueKey = "MainToAddCategorySegue"
-let mainToAddWithdrawalSegueKey = "MainToAddWithdrawalSegue"
+let mainToAddTransactionSegueKey = "MainToAddTransactionSegue"
 let mainToAddDepositSegueKey = "MainToAddDepositSegue"
 let mainToMoveFundsSegueKey = "MainToMoveFundsSegue"
 
-// Categories to add others
+// Categories to others
 let categoriesToAddCategorySegueKey = "CategoriesToAddCategorySegue"
-let categoriesToAddWithdrawalSegueKey = "CategoriesToAddWithdrawalSegue"
+let categoriesToAddTransactionSegueKey = "CategoriesToAddTransactionSegue"
 let categoriesToAddDepositSegueKey = "CategoriesToAddDepositSegue"
 let categoriesToMoveFundsSegueKey = "CategoriesToMoveFundsSegue"
 
-// Transactions to add others
+// Transactions to others
 let transactionsToAddCategorySegueKey = "TransactionsToAddCategorySegue"
-let transactionsToAddWithdrawalSegueKey = "TransactionsToAddWithdrawalSegue"
+let transactionsToAddTransactionSegueKey = "TransactionsToAddTransactionSegue"
 let transactionsToAddDepositSegueKey = "TransactionsToAddDepositSegue"
 let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
 

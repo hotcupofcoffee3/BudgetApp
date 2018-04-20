@@ -95,22 +95,16 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             self.performSegue(withIdentifier: transactionsToAddCategorySegueKey, sender: self)
             
         })
+
+        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
+            
+        })
         
         alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Deposit", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToAddDepositSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Withdrawal", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToAddWithdrawalSegueKey, sender: self)
+            self.performSegue(withIdentifier: transactionsToMoveFundsSegueKey, sender: self)
             
         })
         

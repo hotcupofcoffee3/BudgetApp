@@ -90,21 +90,15 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             
         })
         
+        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: categoriesToAddTransactionSegueKey, sender: self)
+            
+        })
+        
         alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Deposit", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: categoriesToAddDepositSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Withdrawal", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: categoriesToAddWithdrawalSegueKey, sender: self)
+            self.performSegue(withIdentifier: categoriesToMoveFundsSegueKey, sender: self)
             
         })
         

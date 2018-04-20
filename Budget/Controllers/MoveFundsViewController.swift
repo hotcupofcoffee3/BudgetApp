@@ -131,8 +131,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         let warning = UINotificationFeedbackGenerator()
         warning.notificationOccurred(.error)
         
-        self.warningLabel.textColor = UIColor.red
-        self.warningLabel.text = message
+        warningLabel.textColor = UIColor.red
+        warningLabel.text = message
         
     }
     

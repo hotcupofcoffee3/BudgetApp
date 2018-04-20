@@ -58,24 +58,18 @@ class MainScreen: UIViewController {
             
         })
         
+        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
+          
+            self.performSegue(withIdentifier: mainToAddTransactionSegueKey, sender: self)
+            
+        })
+        
         alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
             self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
             
         })
         
-        alert.addAction(UIAlertAction(title: "Add Deposit", style: .default) { (action) in
-      
-            self.performSegue(withIdentifier: mainToAddDepositSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Withdrawal", style: .default) { (action) in
-          
-            self.performSegue(withIdentifier: mainToAddWithdrawalSegueKey, sender: self)
-            
-        })
-
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
