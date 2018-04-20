@@ -35,24 +35,18 @@ let mainToCategoriesSegueKey = "MainToCategoriesSegue"
 let mainToTransactionsSegueKey = "MainToTransactionsSegue"
 
 let mainToAddCategorySegueKey = "MainToAddCategorySegue"
-let mainToAllocateFundsSegueKey = "MainToAllocateFundsSegue"
-let mainToShiftFundsSegueKey = "MainToShiftFundsSegue"
 let mainToAddWithdrawalSegueKey = "MainToAddWithdrawalSegue"
 let mainToAddDepositSegueKey = "MainToAddDepositSegue"
 let mainToMoveFundsSegueKey = "MainToMoveFundsSegue"
 
 // Categories to add others
 let categoriesToAddCategorySegueKey = "CategoriesToAddCategorySegue"
-let categoriesToAllocateFundsSegueKey = "CategoriesToAllocateFundsSegue"
-let categoriesToShiftFundsSegueKey = "CategoriesToShiftFundsSegue"
 let categoriesToAddWithdrawalSegueKey = "CategoriesToAddWithdrawalSegue"
 let categoriesToAddDepositSegueKey = "CategoriesToAddDepositSegue"
 let categoriesToMoveFundsSegueKey = "CategoriesToMoveFundsSegue"
 
 // Transactions to add others
 let transactionsToAddCategorySegueKey = "TransactionsToAddCategorySegue"
-let transactionsToAllocateFundsSegueKey = "TransactionsToAllocateFundsSegue"
-let transactionsToShiftFundsSegueKey = "TransactionsToShiftFundsSegue"
 let transactionsToAddWithdrawalSegueKey = "TransactionsToAddWithdrawalSegue"
 let transactionsToAddDepositSegueKey = "TransactionsToAddDepositSegue"
 let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"

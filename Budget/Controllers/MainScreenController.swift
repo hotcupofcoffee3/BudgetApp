@@ -63,18 +63,6 @@ class MainScreen: UIViewController {
             self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
             
         })
-
-        alert.addAction(UIAlertAction(title: "Allocate Funds", style: .default) { (action) in
-
-            self.performSegue(withIdentifier: mainToAllocateFundsSegueKey, sender: self)
-
-        })
-        
-        alert.addAction(UIAlertAction(title: "Shift Funds", style: .default) { (action) in
-         
-            self.performSegue(withIdentifier: mainToShiftFundsSegueKey, sender: self)
-            
-        })
         
         alert.addAction(UIAlertAction(title: "Add Deposit", style: .default) { (action) in
       

@@ -40,7 +40,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         cell.detailTextLabel?.textColor = UIColor.white
         
         if let category = budget.categories[budget.sortedCategoryKeys[indexPath.row]] {
-            cell.textLabel?.text = "\(category.name) - $\(String(format: doubleFormatKey, category.available))"
+            cell.textLabel?.text = "\(category.name): $\(String(format: doubleFormatKey, category.available))"
             cell.detailTextLabel?.text = "Budgeted: $\(String(format: doubleFormatKey, category.budgeted))"
         }
         
@@ -90,15 +90,9 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             
         })
         
-        alert.addAction(UIAlertAction(title: "Allocate Funds", style: .default) { (action) in
+        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: categoriesToAllocateFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Shift Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: categoriesToShiftFundsSegueKey, sender: self)
+            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
             
         })
         

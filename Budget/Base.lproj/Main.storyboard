@@ -111,8 +111,6 @@
                         <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="MainToCategoriesSegue" modalTransitionStyle="flipHorizontal" id="sum-Cr-7Ay"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="MainToTransactionsSegue" modalTransitionStyle="flipHorizontal" id="gOi-Bu-AOw"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="MainToAddCategorySegue" id="mU4-cf-aIR"/>
-                        <segue destination="frD-ww-HnZ" kind="show" identifier="MainToAllocateFundsSegue" id="i3t-x5-KMX"/>
-                        <segue destination="biI-Yy-Qdb" kind="show" identifier="MainToShiftFundsSegue" id="3xs-Yo-Pb9"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="MainToAddWithdrawalSegue" id="eXP-Fb-uY0"/>
                         <segue destination="hpc-vk-Cnu" kind="show" identifier="MainToAddDepositSegue" id="8WW-RU-MKf"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="MainToMoveFundsSegue" id="ZXq-hv-ffC"/>
@@ -239,7 +237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2393" y="1046"/>
+            <point key="canvasLocation" x="-2098" y="885"/>
         </scene>
         <!--Move Funds View Controller-->
         <scene sceneID="Bcg-ZU-BHL">
@@ -438,7 +436,7 @@ amount gets allocated or removed.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cY-Ra-OK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-359" y="1048"/>
+            <point key="canvasLocation" x="-1039" y="885"/>
         </scene>
         <!--Add Withdrawal View Controller-->
         <scene sceneID="qUh-bf-mVd">
@@ -618,7 +616,7 @@ amount gets allocated or removed.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="615" y="1045"/>
+            <point key="canvasLocation" x="-127" y="901"/>
         </scene>
         <!--Add Deposit View Controller-->
         <scene sceneID="t5u-op-rPM">
@@ -765,341 +763,7 @@ amount gets allocated or removed.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCj-uZ-Vid" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1266" y="1045"/>
-        </scene>
-        <!--Allocate Funds View Controller-->
-        <scene sceneID="xUM-Zd-Y74">
-            <objects>
-                <viewController storyboardIdentifier="AllocateFundsViewController" id="frD-ww-HnZ" customClass="AllocateFundsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3Sa-r6-fH6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGS-qb-5FN">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Allocate Funds" id="Yxd-tC-noh">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" id="iBI-jm-Pzv">
-                                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="backButton:" destination="frD-ww-HnZ" id="rBr-eD-aHs"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhi-KU-EHi">
-                                <rect key="frame" x="20" y="74" width="335" height="18"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4UO-KP-fEW">
-                                <rect key="frame" x="20" y="102" width="335" height="30.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30.5" id="h0J-HU-cAC"/>
-                                </constraints>
-                                <string key="text">*If no amount entered, the budgeted
-amount gets allocated or removed.</string>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="13"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3H3-n3-a4U" userLabel="Allocate, Remove">
-                                <rect key="frame" x="124" y="142.5" width="127" height="29"/>
-                                <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <segments>
-                                    <segment title="Allocate"/>
-                                    <segment title="Remove"/>
-                                </segments>
-                                <connections>
-                                    <action selector="allocateOrRemoveSwitch:" destination="frD-ww-HnZ" eventType="valueChanged" id="7XQ-K9-Cjd"/>
-                                </connections>
-                            </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="S5y-4A-1wi" userLabel="Allocate Funds Stack">
-                                <rect key="frame" x="20" y="190.5" width="335" height="120"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RG9-hK-3c9" userLabel="Amount">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byd-Ic-VYO">
-                                                <rect key="frame" x="0.0" y="0.0" width="162.5" height="30"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bra-a4-CzT">
-                                                <rect key="frame" x="172.5" y="0.0" width="162.5" height="30"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="frD-ww-HnZ" id="Omf-3R-rS8"/>
-                                                </connections>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="MkD-Qc-WUQ" userLabel="Category name">
-                                        <rect key="frame" x="0.0" y="40" width="335" height="80"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwJ-xQ-ZBq">
-                                                <rect key="frame" x="0.0" y="0.0" width="162.5" height="80"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <pickerView clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="v2W-ng-Zoy">
-                                                <rect key="frame" x="172.5" y="0.0" width="162.5" height="80"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="80" id="L95-8C-N7c"/>
-                                                </constraints>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="frD-ww-HnZ" id="WSr-Po-mnX"/>
-                                                    <outlet property="delegate" destination="frD-ww-HnZ" id="kyF-f7-kcW"/>
-                                                </connections>
-                                            </pickerView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="MkD-Qc-WUQ" firstAttribute="leading" secondItem="S5y-4A-1wi" secondAttribute="leading" id="6Mx-vL-A7V"/>
-                                    <constraint firstAttribute="trailing" secondItem="MkD-Qc-WUQ" secondAttribute="trailing" id="eUX-dW-RZR"/>
-                                    <constraint firstItem="RG9-hK-3c9" firstAttribute="leading" secondItem="S5y-4A-1wi" secondAttribute="leading" id="oGg-gO-wDd"/>
-                                    <constraint firstAttribute="trailing" secondItem="RG9-hK-3c9" secondAttribute="trailing" id="zFt-LD-xBa"/>
-                                </constraints>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E2-mu-ND4">
-                                <rect key="frame" x="20" y="348.5" width="335" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuV-cb-zbY">
-                                <rect key="frame" x="127.5" y="358.5" width="120" height="33"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="L59-QM-2qV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Allocate Funds">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="allocateFundsButton:" destination="frD-ww-HnZ" eventType="touchUpInside" id="Ou8-SO-XzP"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Food bal: $100.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdK-0k-iya">
-                                <rect key="frame" x="20" y="320.5" width="335" height="18"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.767118156" green="0.73760622740000004" blue="0.72818344830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" red="0.76711815595626831" green="0.7376062273979187" blue="0.72818344831466675" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="IGS-qb-5FN" firstAttribute="top" secondItem="kHy-yK-EGe" secondAttribute="top" id="2bP-gr-0aE"/>
-                            <constraint firstItem="4UO-KP-fEW" firstAttribute="top" secondItem="Mhi-KU-EHi" secondAttribute="bottom" constant="10" id="Bhf-gT-Ztw"/>
-                            <constraint firstItem="Mhi-KU-EHi" firstAttribute="top" secondItem="IGS-qb-5FN" secondAttribute="bottom" constant="10" id="E25-4M-7fv"/>
-                            <constraint firstItem="kHy-yK-EGe" firstAttribute="trailing" secondItem="XdK-0k-iya" secondAttribute="trailing" constant="20" id="EcH-u9-oGF"/>
-                            <constraint firstItem="IGS-qb-5FN" firstAttribute="trailing" secondItem="kHy-yK-EGe" secondAttribute="trailing" id="FnL-kw-pap"/>
-                            <constraint firstItem="kHy-yK-EGe" firstAttribute="trailing" secondItem="S5y-4A-1wi" secondAttribute="trailing" constant="20" id="GdT-20-15z"/>
-                            <constraint firstItem="Mhi-KU-EHi" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" constant="20" id="HQN-Te-dyz"/>
-                            <constraint firstItem="3H3-n3-a4U" firstAttribute="top" secondItem="4UO-KP-fEW" secondAttribute="bottom" constant="10" id="JKT-Yb-5j8"/>
-                            <constraint firstItem="4UO-KP-fEW" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" constant="20" id="L71-T2-ThJ"/>
-                            <constraint firstItem="XdK-0k-iya" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" constant="20" id="QWd-Y4-Zxx"/>
-                            <constraint firstItem="kHy-yK-EGe" firstAttribute="trailing" secondItem="7E2-mu-ND4" secondAttribute="trailing" constant="20" id="cRe-Op-XN5"/>
-                            <constraint firstItem="kHy-yK-EGe" firstAttribute="trailing" secondItem="4UO-KP-fEW" secondAttribute="trailing" constant="20" id="e44-zJ-W4X"/>
-                            <constraint firstItem="XdK-0k-iya" firstAttribute="top" secondItem="S5y-4A-1wi" secondAttribute="bottom" constant="10" id="gmm-tS-erL"/>
-                            <constraint firstItem="AuV-cb-zbY" firstAttribute="centerX" secondItem="3Sa-r6-fH6" secondAttribute="centerX" id="iqR-37-em3"/>
-                            <constraint firstItem="kHy-yK-EGe" firstAttribute="trailing" secondItem="Mhi-KU-EHi" secondAttribute="trailing" constant="20" id="nhc-UK-afZ"/>
-                            <constraint firstItem="7E2-mu-ND4" firstAttribute="top" secondItem="XdK-0k-iya" secondAttribute="bottom" constant="10" id="obl-p6-tpZ"/>
-                            <constraint firstItem="IGS-qb-5FN" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" id="q7t-Cm-RYB"/>
-                            <constraint firstItem="3H3-n3-a4U" firstAttribute="centerX" secondItem="3Sa-r6-fH6" secondAttribute="centerX" id="qhb-Rh-dfM"/>
-                            <constraint firstItem="S5y-4A-1wi" firstAttribute="top" secondItem="3H3-n3-a4U" secondAttribute="bottom" constant="20" id="tbg-Mf-9tP"/>
-                            <constraint firstItem="S5y-4A-1wi" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" constant="20" id="tsH-9g-Dcc"/>
-                            <constraint firstItem="AuV-cb-zbY" firstAttribute="top" secondItem="7E2-mu-ND4" secondAttribute="bottom" constant="10" id="uBp-ui-Vgh"/>
-                            <constraint firstItem="7E2-mu-ND4" firstAttribute="leading" secondItem="kHy-yK-EGe" secondAttribute="leading" constant="20" id="y23-so-sTG"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="kHy-yK-EGe"/>
-                    </view>
-                    <connections>
-                        <outlet property="addFundsTextField" destination="bra-a4-CzT" id="46V-v8-hyo"/>
-                        <outlet property="allocateFundsButtonTitle" destination="AuV-cb-zbY" id="qVu-6E-8z5"/>
-                        <outlet property="allocateOrRemove" destination="3H3-n3-a4U" id="d3G-6U-nz1"/>
-                        <outlet property="allocateSuccessLabel" destination="7E2-mu-ND4" id="Ioh-tc-oyX"/>
-                        <outlet property="categoryCurrentBalanceLabel" destination="XdK-0k-iya" id="xQz-9T-MY3"/>
-                        <outlet property="categoryPicker" destination="v2W-ng-Zoy" id="6CC-LI-DpE"/>
-                        <outlet property="leftAmountAtTopRight" destination="Mhi-KU-EHi" id="axK-lw-X6v"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5CG-zH-a25" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1721" y="1046"/>
-        </scene>
-        <!--Shift Funds View Controller-->
-        <scene sceneID="opi-b5-upV">
-            <objects>
-                <viewController storyboardIdentifier="ShiftFundsViewController" id="biI-Yy-Qdb" customClass="ShiftFundsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5jo-JR-gcq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ab-g0-Qve">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Shift Funds" id="7Y9-q6-CNL">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" id="GeJ-ph-yWx">
-                                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="backButton:" destination="biI-Yy-Qdb" id="ZhH-GN-IBM"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dli-3z-bYT">
-                                <rect key="frame" x="20" y="74" width="335" height="18"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OeL-ck-N6c">
-                                <rect key="frame" x="20" y="112" width="335" height="20.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v0U-9L-c56" userLabel="Amount Text Field">
-                                <rect key="frame" x="137.5" y="152.5" width="100" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="P59-ov-70M"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="biI-Yy-Qdb" id="aFD-ij-mmR"/>
-                                </connections>
-                            </textField>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zul-4z-Q6o" userLabel="From - To Stack">
-                                <rect key="frame" x="20" y="202.5" width="335" height="20.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9B-sz-gJB">
-                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxk-2b-3pF">
-                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JkP-Ko-lb3" userLabel="Picker Stack">
-                                <rect key="frame" x="20" y="223" width="335" height="80"/>
-                                <subviews>
-                                    <pickerView tag="1" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EOz-Sd-4Dc" userLabel="From Picker">
-                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="80"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="biI-Yy-Qdb" id="7nb-Um-1NJ"/>
-                                            <outlet property="delegate" destination="biI-Yy-Qdb" id="Rco-2H-60g"/>
-                                        </connections>
-                                    </pickerView>
-                                    <pickerView tag="2" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="4ya-hF-eyT" userLabel="To Picker">
-                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="80"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="biI-Yy-Qdb" id="16u-u0-FZa"/>
-                                            <outlet property="delegate" destination="biI-Yy-Qdb" id="N9I-FN-r94"/>
-                                        </connections>
-                                    </pickerView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="jPg-fg-gbA"/>
-                                </constraints>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7s-6C-aaU">
-                                <rect key="frame" x="20" y="341" width="335" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rh5-ma-zBU">
-                                <rect key="frame" x="146" y="351" width="83" height="33"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Shift Funds">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="shiftFundsButton:" destination="biI-Yy-Qdb" eventType="touchUpInside" id="sNY-zc-Kr5"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Dbu-9k-KHG" userLabel="Current balances">
-                                <rect key="frame" x="20" y="313" width="335" height="18"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kav-f7-AKE">
-                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="18"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current: $100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5HJ-bT-7A9">
-                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="18"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.767118156" green="0.73760622740000004" blue="0.72818344830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="dli-3z-bYT" firstAttribute="top" secondItem="8Ab-g0-Qve" secondAttribute="bottom" constant="10" id="0DN-pN-0FU"/>
-                            <constraint firstItem="OeL-ck-N6c" firstAttribute="top" secondItem="dli-3z-bYT" secondAttribute="bottom" constant="20" id="19R-TZ-YDo"/>
-                            <constraint firstItem="zul-4z-Q6o" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="49e-Ib-wOC"/>
-                            <constraint firstItem="v0U-9L-c56" firstAttribute="top" secondItem="OeL-ck-N6c" secondAttribute="bottom" constant="20" id="4rZ-Ym-BK0"/>
-                            <constraint firstItem="v0U-9L-c56" firstAttribute="centerX" secondItem="5jo-JR-gcq" secondAttribute="centerX" id="CAk-nM-TPa"/>
-                            <constraint firstItem="8Ab-g0-Qve" firstAttribute="top" secondItem="zUM-Z0-vyU" secondAttribute="top" id="F2o-fX-2Ij"/>
-                            <constraint firstItem="zUM-Z0-vyU" firstAttribute="trailing" secondItem="Dbu-9k-KHG" secondAttribute="trailing" constant="20" id="F8j-NK-pVQ"/>
-                            <constraint firstItem="rh5-ma-zBU" firstAttribute="centerX" secondItem="5jo-JR-gcq" secondAttribute="centerX" id="FtC-ti-8Fa"/>
-                            <constraint firstItem="dli-3z-bYT" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="KFZ-x8-Fgb"/>
-                            <constraint firstItem="OeL-ck-N6c" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="KcA-Gt-vqc"/>
-                            <constraint firstItem="zul-4z-Q6o" firstAttribute="top" secondItem="v0U-9L-c56" secondAttribute="bottom" constant="20" id="Kwu-Hg-9JP"/>
-                            <constraint firstItem="rh5-ma-zBU" firstAttribute="top" secondItem="Z7s-6C-aaU" secondAttribute="bottom" constant="10" id="NGy-iN-CFe"/>
-                            <constraint firstItem="JkP-Ko-lb3" firstAttribute="top" secondItem="zul-4z-Q6o" secondAttribute="bottom" id="PCq-CT-481"/>
-                            <constraint firstItem="zUM-Z0-vyU" firstAttribute="trailing" secondItem="Z7s-6C-aaU" secondAttribute="trailing" constant="20" id="WOW-3z-ZId"/>
-                            <constraint firstItem="zUM-Z0-vyU" firstAttribute="trailing" secondItem="dli-3z-bYT" secondAttribute="trailing" constant="20" id="YPa-4K-gqJ"/>
-                            <constraint firstItem="Dbu-9k-KHG" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="aUc-Rw-HcM"/>
-                            <constraint firstItem="zUM-Z0-vyU" firstAttribute="trailing" secondItem="OeL-ck-N6c" secondAttribute="trailing" constant="20" id="gf0-l3-IIH"/>
-                            <constraint firstItem="Z7s-6C-aaU" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="lbv-SW-8o9"/>
-                            <constraint firstItem="8Ab-g0-Qve" firstAttribute="trailing" secondItem="zUM-Z0-vyU" secondAttribute="trailing" id="ozY-BE-KMG"/>
-                            <constraint firstItem="8Ab-g0-Qve" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" id="qXV-a7-wr1"/>
-                            <constraint firstItem="JkP-Ko-lb3" firstAttribute="leading" secondItem="zUM-Z0-vyU" secondAttribute="leading" constant="20" id="tIN-Ux-exL"/>
-                            <constraint firstItem="Dbu-9k-KHG" firstAttribute="top" secondItem="JkP-Ko-lb3" secondAttribute="bottom" constant="10" id="vFX-L0-Ev4"/>
-                            <constraint firstAttribute="trailing" secondItem="JkP-Ko-lb3" secondAttribute="trailing" constant="20" id="vWi-y8-JpG"/>
-                            <constraint firstItem="Z7s-6C-aaU" firstAttribute="top" secondItem="Dbu-9k-KHG" secondAttribute="bottom" constant="10" id="xZa-3A-yJP"/>
-                            <constraint firstItem="zUM-Z0-vyU" firstAttribute="trailing" secondItem="zul-4z-Q6o" secondAttribute="trailing" constant="20" id="zfO-3v-4Ex"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="zUM-Z0-vyU"/>
-                    </view>
-                    <connections>
-                        <outlet property="amountTextField" destination="v0U-9L-c56" id="lIF-Yg-CK1"/>
-                        <outlet property="fromCategoryCurrentBalanceLabel" destination="kav-f7-AKE" id="99i-ER-ewa"/>
-                        <outlet property="fromCategoryPicker" destination="EOz-Sd-4Dc" id="AVE-OH-TTl"/>
-                        <outlet property="leftAmountAtTopRight" destination="dli-3z-bYT" id="50E-S6-jfe"/>
-                        <outlet property="successLabel" destination="Z7s-6C-aaU" id="oMv-hK-WX7"/>
-                        <outlet property="toCategoryCurrentBalanceLabel" destination="5HJ-bT-7A9" id="bUK-mg-mKx"/>
-                        <outlet property="toCategoryPicker" destination="4ya-hF-eyT" id="JmU-yc-Ti6"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d3j-lP-oJo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1039.2" y="1048.4257871064469"/>
+            <point key="canvasLocation" x="625" y="885"/>
         </scene>
         <!--Category View Controller-->
         <scene sceneID="jGS-FH-vSd">
@@ -1197,15 +861,13 @@ amount gets allocated or removed.</string>
                         <outlet property="availableBalanceLabel" destination="VuF-MX-zAy" id="7tm-iA-92j"/>
                         <outlet property="displayedDataTable" destination="cG6-sI-Nir" id="TKm-62-9Im"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
-                        <segue destination="frD-ww-HnZ" kind="show" identifier="CategoriesToAllocateFundsSegue" id="0zM-Br-cb4"/>
-                        <segue destination="biI-Yy-Qdb" kind="show" identifier="CategoriesToShiftFundsSegue" id="fC1-hG-h7w"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddWithdrawalSegue" id="8K3-ts-dmR"/>
                         <segue destination="hpc-vk-Cnu" kind="show" identifier="CategoriesToAddDepositSegue" id="UIo-Ty-1Am"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2342" y="-117"/>
+            <point key="canvasLocation" x="-2097" y="-117"/>
         </scene>
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
@@ -1303,15 +965,13 @@ amount gets allocated or removed.</string>
                         <outlet property="availableBalanceLabel" destination="t4n-ff-mkf" id="P2j-br-Ofq"/>
                         <outlet property="displayedDataTable" destination="ZqH-WV-HTb" id="N7J-xZ-5Ko"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="TransactionsToAddCategorySegue" id="okA-JN-PqX"/>
-                        <segue destination="frD-ww-HnZ" kind="show" identifier="TransactionsToAllocateFundsSegue" id="wnh-pn-gfd"/>
-                        <segue destination="biI-Yy-Qdb" kind="show" identifier="TransactionsToShiftFundsSegue" id="g1B-nI-PuK"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddWithdrawalSegue" id="LCW-GF-oV6"/>
                         <segue destination="hpc-vk-Cnu" kind="show" identifier="TransactionsToAddDepositSegue" id="g1y-eN-AAK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="334" y="-117"/>
+            <point key="canvasLocation" x="62" y="-117"/>
         </scene>
     </scenes>
     <resources>
@@ -1319,13 +979,11 @@ amount gets allocated or removed.</string>
         <image name="transactionsIcon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gOi-Bu-AOw"/>
-        <segue reference="sum-Cr-7Ay"/>
-        <segue reference="3xs-Yo-Pb9"/>
-        <segue reference="wnh-pn-gfd"/>
-        <segue reference="8WW-RU-MKf"/>
-        <segue reference="eXP-Fb-uY0"/>
-        <segue reference="mU4-cf-aIR"/>
+        <segue reference="QpK-gN-dzJ"/>
+        <segue reference="Fq3-ws-fhT"/>
+        <segue reference="g1y-eN-AAK"/>
+        <segue reference="LCW-GF-oV6"/>
+        <segue reference="okA-JN-PqX"/>
         <segue reference="rVB-tb-xC6"/>
     </inferredMetricsTieBreakers>
 </document>

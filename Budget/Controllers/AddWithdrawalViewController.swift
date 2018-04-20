@@ -86,7 +86,7 @@ class AddWithdrawalViewController: UIViewController, UITextFieldDelegate, UIPick
         withdrawalNameTextField.resignFirstResponder()
         withdrawalAmountTextField.resignFirstResponder()
         
-        if let name = withdrawalNameTextField.text, let amount = withdrawalAmountTextField.text {
+        if let title = withdrawalNameTextField.text, let amount = withdrawalAmountTextField.text {
             
             let date = withdrawalDatePicker.date
             
@@ -96,7 +96,7 @@ class AddWithdrawalViewController: UIViewController, UITextFieldDelegate, UIPick
             
             let convertedDates = convertDateToInts(dateToConvert: date)
             
-            if name == "" || amount == "" {
+            if title == "" || amount == "" {
                 
                 // Warning notification haptic
                 let warningHaptic = UINotificationFeedbackGenerator()
@@ -130,11 +130,11 @@ class AddWithdrawalViewController: UIViewController, UITextFieldDelegate, UIPick
                         withdrawalWarningLabel.text = "You have to enter a number greater than 0."
                     } else {
                         
-                        let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(name)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+                        let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                             
-                            budget.withdrawalTransaction(title: name, from: category, inTheAmountOf: amount, year: year, month: month, day: day)
+                            budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day)
                             
                             self.withdrawalWarningLabel.textColor = successColor
                             self.withdrawalWarningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(category)"

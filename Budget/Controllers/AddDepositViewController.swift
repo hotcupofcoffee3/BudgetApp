@@ -48,9 +48,9 @@ class AddDepositViewController: UIViewController, UITextFieldDelegate {
         
         let date = depositeDatePicker.date
         
-        if let name = depositNameTextField.text, let amount = depositAmountTextField.text {
+        if let title = depositNameTextField.text, let amount = depositAmountTextField.text {
             
-            if name == "" || amount == "" {
+            if title == "" || amount == "" {
                 
                 // Warning notification haptic
                 let warningHaptic = UINotificationFeedbackGenerator()
@@ -65,11 +65,11 @@ class AddDepositViewController: UIViewController, UITextFieldDelegate {
                 
                 if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey]{
                     
-                    let alert = UIAlertController(title: nil, message: "Deposit \"\(name)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                         
-                        budget.depositTransaction(title: name, inTheAmountOf: amount, year: year, month: month, day: day)
+                        budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                         
                         self.depositWarningLabel.textColor = successColor
                         self.depositWarningLabel.text = "$\(String(format: doubleFormatKey, amount)) was deposited."

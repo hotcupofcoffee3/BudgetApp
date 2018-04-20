@@ -27,14 +27,14 @@ class Category {
 class Transaction {
     var transactionID: Int
     var type: TransactionType
+    var title: String
     var year: Int
     var month: Int
     var day: Int
-    var title: String
     var inTheAmountOf: Double
     var forCategory: String
     
-    init (transactionID: Int, type: TransactionType, title: String, forCategory: String = uncategorizedKey, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+    init (transactionID: Int, type: TransactionType, title: String, forCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
         self.type = type
         self.title = title
         self.forCategory = forCategory
@@ -300,33 +300,65 @@ class Budget {
         
     }
     
-    func depositTransaction (title: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-        
-        guard let uncategorized = categories[uncategorizedKey] else { return }
-        uncategorized.available += inTheAmountOf
+    func addTransaction (type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
         
         let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
         
-        transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+        if type == .deposit {
+            
+            guard let uncategorized = categories[uncategorizedKey] else { return }
+            uncategorized.available += inTheAmountOf
+            
+            let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
+            
+            transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+            
+            sortTransactionsDescending()
+            
+            saveEverything()
+            
+        } else if type == .withdrawal {
+            
+            transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+            
+            guard let category = categories[thisCategory]  else { return }
+            category.available -= inTheAmountOf
+            
+            sortTransactionsDescending()
+            
+            saveEverything()
+            
+        }
         
-        sortTransactionsDescending()
-        
-        saveEverything()
     }
     
-    func withdrawalTransaction (title: String, from thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-        
-        let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
-        
-        transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
-        
-        guard let category = categories[thisCategory]  else { return }
-        category.available -= inTheAmountOf
-        
-        sortTransactionsDescending()
-        
-        saveEverything()
-    }
+//    func depositTransaction (title: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+//
+//        guard let uncategorized = categories[uncategorizedKey] else { return }
+//        uncategorized.available += inTheAmountOf
+//
+//        let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
+//
+//        transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+//
+//        sortTransactionsDescending()
+//
+//        saveEverything()
+//    }
+//
+//    func withdrawalTransaction (title: String, from thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+//
+//        let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
+//
+//        transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+//
+//        guard let category = categories[thisCategory]  else { return }
+//        category.available -= inTheAmountOf
+//
+//        sortTransactionsDescending()
+//
+//        saveEverything()
+//    }
     
     func sortTransactionsDescending() {
         
@@ -375,12 +407,14 @@ class Budget {
         if transactions[index].type == .deposit {
             
             deleteTransaction(at: index)
-            depositTransaction(title: updatedTransaction.title, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
+
+            addTransaction(type: .deposit, title: updatedTransaction.title, forCategory: uncategorizedKey, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
             
         } else {
             
             deleteTransaction(at: index)
-            withdrawalTransaction(title: updatedTransaction.title, from: updatedTransaction.forCategory, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
+
+            addTransaction(type: .withdrawal, title: updatedTransaction.title, forCategory: updatedTransaction.forCategory, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
             
         }
         

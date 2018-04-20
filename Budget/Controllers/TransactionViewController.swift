@@ -38,7 +38,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         if !budget.transactions.isEmpty {
             let transaction = budget.transactions[indexPath.row]
-            cell.textLabel?.text = "\(transaction.title) - $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
+            cell.textLabel?.text = "\(transaction.title): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
             
             if transaction.type == .deposit {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(depositKey)"
@@ -96,15 +96,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
         })
         
-        alert.addAction(UIAlertAction(title: "Allocate Funds", style: .default) { (action) in
+        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: transactionsToAllocateFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Shift Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToShiftFundsSegueKey, sender: self)
+            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
             
         })
         
