@@ -511,6 +511,9 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
+        moveFundsButtonTitle.layer.cornerRadius = 18
+        moveFundsButtonTitle.layer.masksToBounds = true
+        
         updateUIForAllocate()
         
     }

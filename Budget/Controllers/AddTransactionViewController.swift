@@ -271,6 +271,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         super.viewDidLoad()
         budget.sortCategoriesByKey(withUncategorized: true)
         
+        addTransactionButtonTitle.layer.cornerRadius = 18
+        addTransactionButtonTitle.layer.masksToBounds = true
+        
         updateLeftLabelAtTopRight()
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)

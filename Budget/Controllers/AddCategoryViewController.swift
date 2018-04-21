@@ -29,6 +29,8 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var categoryWarningLabel: UILabel!
     
+    @IBOutlet weak var addCategoryButton: UIButton!
+    
     @IBAction func addCategory(_ sender: UIButton) {
         
         if let categoryName = categoryNameTextField.text, let categoryAmount = categoryBudgetedAmountTextField.text {
@@ -94,6 +96,10 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         updateLeftLabelAtTopRight()
+        
+        addCategoryButton.layer.cornerRadius = 18
+        addCategoryButton.layer.masksToBounds = true
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
