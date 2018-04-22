@@ -744,7 +744,7 @@ amount gets allocated or removed.</string>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="CategoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
-                        <segue destination="6A0-QP-gbR" kind="showDetail" identifier="EditCategorySegue" id="fek-yf-plG"/>
+                        <segue destination="6A0-QP-gbR" kind="show" identifier="EditCategorySegue" id="fek-yf-plG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -758,7 +758,26 @@ amount gets allocated or removed.</string>
                     <view key="view" contentMode="scaleToFill" id="QPF-K0-elk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-r2-6XR">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Edit Transaction" id="w7a-52-07p">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="cdg-an-hdJ">
+                                            <connections>
+                                                <action selector="backButton:" destination="caT-MF-o9B" id="6xk-F7-ZA6"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.47895878549999998" green="0.55139392610000004" blue="0.2860712111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="l7y-r2-6XR" firstAttribute="top" secondItem="CAm-9u-cEY" secondAttribute="top" id="QTV-B7-Zdk"/>
+                            <constraint firstItem="l7y-r2-6XR" firstAttribute="trailing" secondItem="CAm-9u-cEY" secondAttribute="trailing" id="blZ-xa-CQt"/>
+                            <constraint firstItem="l7y-r2-6XR" firstAttribute="leading" secondItem="CAm-9u-cEY" secondAttribute="leading" id="n4N-NZ-K2c"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="CAm-9u-cEY"/>
                     </view>
                 </viewController>
@@ -864,7 +883,7 @@ amount gets allocated or removed.</string>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="TransactionsToAddCategorySegue" id="okA-JN-PqX"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="TransactionsToMoveFundsSegue" id="KPk-6k-mJN"/>
-                        <segue destination="caT-MF-o9B" kind="showDetail" identifier="EditTransactionSegue" id="kQN-hV-jsz"/>
+                        <segue destination="caT-MF-o9B" kind="show" identifier="EditTransactionSegue" id="kQN-hV-jsz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -878,13 +897,133 @@ amount gets allocated or removed.</string>
                     <view key="view" contentMode="scaleToFill" id="kYs-n1-xmf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2w-B5-Ngn">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Edit Category" id="bJL-sV-Uw1">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="r37-Ob-6xE">
+                                            <connections>
+                                                <action selector="backButton:" destination="6A0-QP-gbR" id="9IB-gT-Agd"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GrL-wE-0bw">
+                                <rect key="frame" x="20" y="84" width="335" height="110"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EdS-pm-kby" userLabel="Detail Stack">
+                                        <rect key="frame" x="0.0" y="0.0" width="105" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKQ-fI-rbR">
+                                                <rect key="frame" x="0.0" y="0.0" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2V-gt-Wvf">
+                                                <rect key="frame" x="0.0" y="40" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAk-x8-crZ">
+                                                <rect key="frame" x="0.0" y="80" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Veb-BB-Q7n" userLabel="New Stack">
+                                        <rect key="frame" x="115" y="0.0" width="105" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63M-Za-Zhm">
+                                                <rect key="frame" x="0.0" y="0.0" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Name&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-25-Xx8">
+                                                <rect key="frame" x="0.0" y="40" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiN-8t-jTD">
+                                                <rect key="frame" x="0.0" y="80" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9KN-JY-2Mp" userLabel="Current Stack">
+                                        <rect key="frame" x="230" y="0.0" width="105" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAd-Yg-eUu">
+                                                <rect key="frame" x="0.0" y="0.0" width="105" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-SM-MAa">
+                                                <rect key="frame" x="0.0" y="40" width="105" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-Xh-d5c">
+                                                <rect key="frame" x="0.0" y="80" width="105" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmD-p8-thG">
+                                <rect key="frame" x="112.5" y="234" width="150" height="36"/>
+                                <color key="backgroundColor" red="0.38728559019999997" green="0.26823037859999999" blue="0.2164732516" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="TIG-q8-ISp"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="UXD-q2-KGR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Edit Category">
+                                    <color key="titleColor" red="0.47895878549999998" green="0.55139392610000004" blue="0.2860712111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="editCategory:" destination="6A0-QP-gbR" eventType="touchUpInside" id="cUZ-by-o0C"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.47895878549999998" green="0.55139392610000004" blue="0.2860712111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="N2w-B5-Ngn" firstAttribute="top" secondItem="W4p-ce-q5u" secondAttribute="top" id="88I-Fr-PMs"/>
+                            <constraint firstItem="hmD-p8-thG" firstAttribute="top" secondItem="GrL-wE-0bw" secondAttribute="bottom" constant="40" id="8aE-vM-kaf"/>
+                            <constraint firstItem="N2w-B5-Ngn" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" id="AqX-vl-njN"/>
+                            <constraint firstItem="GrL-wE-0bw" firstAttribute="top" secondItem="N2w-B5-Ngn" secondAttribute="bottom" constant="20" id="Frw-d2-Sag"/>
+                            <constraint firstItem="GrL-wE-0bw" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="HkZ-K5-ZPL"/>
+                            <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="GrL-wE-0bw" secondAttribute="trailing" constant="20" id="KCq-C3-hUH"/>
+                            <constraint firstItem="hmD-p8-thG" firstAttribute="centerX" secondItem="kYs-n1-xmf" secondAttribute="centerX" id="Wua-8a-UYv"/>
+                            <constraint firstItem="N2w-B5-Ngn" firstAttribute="trailing" secondItem="W4p-ce-q5u" secondAttribute="trailing" id="f8q-NE-A7M"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="W4p-ce-q5u"/>
                     </view>
+                    <connections>
+                        <outlet property="currentCategoryAmount" destination="DiN-8t-jTD" id="afs-bW-v8C"/>
+                        <outlet property="currentCategoryName" destination="b7v-25-Xx8" id="6A5-T9-ZBw"/>
+                        <outlet property="editCategoryButton" destination="hmD-p8-thG" id="xZv-P1-EnB"/>
+                        <outlet property="newCategoryAmount" destination="0w4-Xh-d5c" id="WNf-fP-x50"/>
+                        <outlet property="newCategoryName" destination="X5p-SM-MAa" id="bsY-6I-cWM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAj-oB-hq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1943" y="-922"/>
+            <point key="canvasLocation" x="-1943.2" y="-922.48875562218893"/>
         </scene>
     </scenes>
     <resources>
@@ -894,9 +1033,9 @@ amount gets allocated or removed.</string>
     <inferredMetricsTieBreakers>
         <segue reference="QpK-gN-dzJ"/>
         <segue reference="Fq3-ws-fhT"/>
-        <segue reference="LCW-GF-oV6"/>
-        <segue reference="KPk-6k-mJN"/>
-        <segue reference="okA-JN-PqX"/>
-        <segue reference="rVB-tb-xC6"/>
+        <segue reference="8K3-ts-dmR"/>
+        <segue reference="hxM-AH-nJz"/>
+        <segue reference="8ar-qL-cfd"/>
+        <segue reference="7Qw-Ty-GlP"/>
     </inferredMetricsTieBreakers>
 </document>

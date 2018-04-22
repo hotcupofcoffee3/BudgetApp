@@ -10,6 +10,10 @@ import UIKit
 
 class EditTransactionViewController: UIViewController {
 
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

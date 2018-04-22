@@ -14,7 +14,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         dismiss(animated: true, completion: nil)
     }
     
-    
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     

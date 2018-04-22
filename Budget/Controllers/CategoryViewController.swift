@@ -51,7 +51,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
-        print(editableCategoryName)
+        performSegue(withIdentifier: editCategorySegueKey, sender: self)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

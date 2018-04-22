@@ -9,11 +9,40 @@
 import UIKit
 
 class EditCategoryViewController: UIViewController {
-
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var currentCategoryName: UILabel!
+    
+    @IBOutlet weak var currentCategoryAmount: UILabel!
+    
+    @IBOutlet weak var newCategoryName: UITextField!
+    
+    @IBOutlet weak var newCategoryAmount: UITextField!
+    
+    @IBAction func editCategory(_ sender: UIButton) {
+    }
+    
+    @IBOutlet weak var editCategoryButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        currentCategoryName.text = editableCategoryName
+        
+        if let currentCategory = budget.categories[editableCategoryName] {
+            
+            currentCategoryAmount.text = "$\(String(format: doubleFormatKey, currentCategory.budgeted))"
+            
+        }
+        
+        self.editCategoryButton.layer.cornerRadius = 18
+        self.editCategoryButton.layer.masksToBounds = true
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +50,5 @@ class EditCategoryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
