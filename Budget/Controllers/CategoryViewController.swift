@@ -8,6 +8,8 @@
 
 import UIKit
 
+var editableCategoryName = String()
+
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func refreshAvailableBalanceLabel() {
@@ -47,8 +49,9 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-        return true
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
+        print(editableCategoryName)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

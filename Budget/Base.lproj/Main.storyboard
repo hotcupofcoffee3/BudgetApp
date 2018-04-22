@@ -744,11 +744,27 @@ amount gets allocated or removed.</string>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="CategoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
+                        <segue destination="6A0-QP-gbR" kind="showDetail" identifier="EditCategorySegue" id="fek-yf-plG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1943" y="-117"/>
+        </scene>
+        <!--Edit Transaction View Controller-->
+        <scene sceneID="52J-CY-nCV">
+            <objects>
+                <viewController id="caT-MF-o9B" customClass="EditTransactionViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QPF-K0-elk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="CAm-9u-cEY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e1z-H6-RYK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-127" y="-922"/>
         </scene>
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
@@ -848,11 +864,27 @@ amount gets allocated or removed.</string>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="TransactionsToAddCategorySegue" id="okA-JN-PqX"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="TransactionsToMoveFundsSegue" id="KPk-6k-mJN"/>
+                        <segue destination="caT-MF-o9B" kind="showDetail" identifier="EditTransactionSegue" id="kQN-hV-jsz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-127" y="-117"/>
+        </scene>
+        <!--Edit Category View Controller-->
+        <scene sceneID="Yzs-XX-Nqe">
+            <objects>
+                <viewController id="6A0-QP-gbR" customClass="EditCategoryViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kYs-n1-xmf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="W4p-ce-q5u"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IAj-oB-hq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1943" y="-922"/>
         </scene>
     </scenes>
     <resources>
@@ -862,9 +894,9 @@ amount gets allocated or removed.</string>
     <inferredMetricsTieBreakers>
         <segue reference="QpK-gN-dzJ"/>
         <segue reference="Fq3-ws-fhT"/>
-        <segue reference="8K3-ts-dmR"/>
-        <segue reference="hxM-AH-nJz"/>
-        <segue reference="8ar-qL-cfd"/>
-        <segue reference="7Qw-Ty-GlP"/>
+        <segue reference="LCW-GF-oV6"/>
+        <segue reference="KPk-6k-mJN"/>
+        <segue reference="okA-JN-PqX"/>
+        <segue reference="rVB-tb-xC6"/>
     </inferredMetricsTieBreakers>
 </document>

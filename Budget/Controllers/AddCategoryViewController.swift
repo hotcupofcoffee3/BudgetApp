@@ -23,6 +23,38 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: Update elements because of success
+    
+    func updateUIElementsBecauseOfSuccess() {
+        
+        // Success notification haptic
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+        
+        // Update Left label at top right & current balance
+        updateLeftLabelAtTopRight()
+        // Update Left label at top right
+        updateLeftLabelAtTopRight()
+        
+        // Set text fields back to being empty
+        categoryNameTextField.text = nil
+        categoryBudgetedAmountTextField.text = nil
+        
+    }
+    
+    // MARK: Failure message
+    
+    func failureWithWarning(message: String) {
+        
+        // Warning notification haptic
+        let warningHaptic = UINotificationFeedbackGenerator()
+        warningHaptic.notificationOccurred(.error)
+        
+        categoryWarningLabel.textColor = UIColor.red
+        categoryWarningLabel.text = message
+        
+    }
+    
     @IBOutlet weak var categoryNameTextField: UITextField!
     
     @IBOutlet weak var categoryBudgetedAmountTextField: UITextField!
@@ -37,12 +69,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             
             if categoryName == "" || categoryAmount == "" {
                 
-                categoryWarningLabel.textColor = UIColor.red
-                categoryWarningLabel.text = "You have to complete all fields."
-                
-                // Warning notification haptic
-                let warningHaptic = UINotificationFeedbackGenerator()
-                warningHaptic.notificationOccurred(.error)
+               failureWithWarning(message: "You have to complete all fields.")
                 
             } else {
                 
@@ -57,17 +84,8 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                         self.categoryWarningLabel.textColor = successColor
                         self.categoryWarningLabel.text = "\"\(categoryName)\" with a budgeted amount of $\(String(format: doubleFormatKey, categoryAmount)) has been added."
-                        
-                        // Success notification haptic
-                        let successHaptic = UINotificationFeedbackGenerator()
-                        successHaptic.notificationOccurred(.success)
-                        
-                        // Update Left label at top right
-                        self.updateLeftLabelAtTopRight()
-                        
-                        // Set text fields back to being empty
-                        self.categoryNameTextField.text = nil
-                        self.categoryBudgetedAmountTextField.text = nil
+
+                        self.updateUIElementsBecauseOfSuccess()
                         
                     }))
                     
@@ -77,12 +95,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                     
                 } else {
                     
-                    categoryWarningLabel.textColor = UIColor.red
-                    categoryWarningLabel.text = "You have to enter a number for the amount."
-                    
-                    // Warning notification haptic
-                    let warningHaptic = UINotificationFeedbackGenerator()
-                    warningHaptic.notificationOccurred(.error)
+                    failureWithWarning(message: "You have to enter a number for the amount.")
                     
                 }
                 

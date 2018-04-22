@@ -8,6 +8,8 @@
 
 import UIKit
 
+var editableTransactionIndex = Int()
+
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func refreshAvailableBalanceLabel() {
@@ -15,8 +17,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
         }
     }
-    
-    var transactionNames = [String]()
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
@@ -49,6 +49,13 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        editableTransactionIndex = indexPath.row
+        print(editableTransactionIndex)
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
