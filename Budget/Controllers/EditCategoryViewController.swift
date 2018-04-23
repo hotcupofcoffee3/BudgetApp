@@ -12,34 +12,33 @@ class EditCategoryViewController: UIViewController {
     
     var currentCategoryNameString = String()
     var currentCategoryAmountDouble = Double()
-    var warningMessage = String()
-    var alertMessage = String()
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     func updateLabelsAtTop() {
+        
         if let currentCategory = budget.categories[currentCategoryNameString] {
-            currentCategoryName.text = "New Category"
-            currentCategoryAmount.text = "\(String(format: doubleFormatKey, currentCategory.budgeted))"
+            
+            currentCategoryName.text = currentCategoryNameString
+            currentCategoryAmount.text = "$\(String(format: doubleFormatKey, currentCategory.budgeted))"
+            
         }
+    
     }
     
     // MARK: Update elements because of success
     
-    func updateUIElementsBecauseOfSuccess(forFromCategory: String, forToCategory: String) {
+    func updateUIElementsBecauseOfSuccess(successMessage: String) {
         
         // Success notification haptic
         let successHaptic = UINotificationFeedbackGenerator()
         successHaptic.notificationOccurred(.success)
         
-        
-        
-        
-        // TODO: Add success label stuff here
-        
-        
+        // Warning label update
+        warningLabel.textColor = successColor
+        warningLabel.text = successMessage
         
         
         // Update Left label at top right & balance labels
@@ -78,123 +77,135 @@ class EditCategoryViewController: UIViewController {
         
         if let oldCategoryTitle = currentCategoryName.text, let newCategoryTitleFromTextField = newCategoryName.text, let newCategoryBudgetedStringFromTextField = newCategoryAmount.text {
             
-            var newCategoryTitle = ""
+            var newCategoryTitle = newCategoryTitleFromTextField
             var newCategoryBudgeted = Double()
             
             guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
             
 
             // ***** Are the fields empty?
-            if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField == "" {
+            if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField == ""  {
                 
                 failureWithWarning(message: "There is nothing to update.")
+               
+                
+            // ***** Do both fields have info, and it is the exact same as the current info?
+            } else if newCategoryTitleFromTextField == oldCategoryTitle && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
+                
+                failureWithWarning(message: "This is the same information that is already set.")
                 
                 
-            // ***** Was the new category entered the same as the one already set?
+            // ***** Was the new category entered the same as the one already set, if not amount changed?
             } else if oldCategoryTitle == newCategoryTitleFromTextField && newCategoryBudgetedStringFromTextField == "" {
                 
-                failureWithWarning(message: "The category is already named '\(currentCategoryName)'")
+                failureWithWarning(message: "The category is already named '\(currentCategoryNameString)'")
+                
+                
+            // *** Was the amount entered the same as is already budgeted?
+            } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
+                
+                failureWithWarning(message: "The category is already budgeted $\(String(format: doubleFormatKey, oldCategory.budgeted))")
+                
+                
+            // *** Was category blank and amount not convertible to a Double?
+            } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == nil {
+                
+                failureWithWarning(message: "You have to enter a number.")
+                
             
-                
-            // *** Was the category left blank and an amount entered?
-            } else if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField != "" {
-                
-                
-                // *** Was the amount entered convertible to a Double?
-                if let newCategoryBudgetedDouble = Double(newCategoryBudgetedStringFromTextField) {
-                    
-                    
-                    // *** Was the amount entered less than 0?
-                    if newCategoryBudgetedDouble < 0.0 {
-                        
-                        failureWithWarning(message: "You have to enter a positive amount")
-                        
-                        
-                    // *** Was the amount entered the same as is already budgeted?
-                    } else if newCategoryBudgetedDouble == oldCategory.budgeted {
-                        
-                        failureWithWarning(message: "This is the same amount already budgeted.")
-                        
-                    }
-                
-                
-                // *** Was the amount entered something OTHER than an amount convertible to a Double?
-                } else {
-                    
-                    failureWithWarning(message: "You have to enter a number.")
-                    
-                }
-                
-                
-            // *** If everything is set properly:
+            // ***** All impossible entries are taken care of.
             } else {
                 
-                
-                // This is only done if the above errors are not met:
-                // 1) Both of the fields are not empty.
-                // 2) The new category entered is not equal to a category already created.
-                // 3) If the category was left blank (and therefore only updating the amount), the amount is different from what was set.
-                
-                
-                // Sets new category to old category if empty.
-                if newCategoryTitleFromTextField == "" {
+                // Sets new Category budgeted amount to an actual amount
+                if let newCategoryBudgetedDouble = Double(newCategoryBudgetedStringFromTextField) {
                     
-                    newCategoryTitle = oldCategoryTitle
+                    newCategoryBudgeted = newCategoryBudgetedDouble
                     
-                }
-                
-                // Sets budgeted amount if empty, or converts budgeted amount String to Double.
-                if newCategoryBudgetedStringFromTextField == "" {
+                } else {
                     
                     newCategoryBudgeted = oldCategory.budgeted
                     
-                } else if let newBudgtedAsDouble = Double(newCategoryBudgetedStringFromTextField) {
-                    
-                    newCategoryBudgeted = newBudgtedAsDouble
-                    
                 }
                 
-                // TODO: Add warning label popup to confirm:
                 
-                let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                // *** Was the amount entered less than 0?
+                if newCategoryBudgeted < 0.0 {
+                    
+                    failureWithWarning(message: "You have to enter a positive amount")
                     
                     
                     
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                
-                present(alert, animated: true, completion: nil)
-                
-                // Update Category function called & local variables for labels set
-                
-                budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewBudgetedAmount: newCategoryBudgeted)
-                self.currentCategoryNameString = newCategoryTitle
-                self.currentCategoryAmountDouble = newCategoryBudgeted
-                
-                // *** If only amount updated...
-                if oldCategoryTitle == newCategoryTitle && oldCategory.budgeted != newCategoryBudgeted {
                     
-                    // TODO: Success message - "Old category was updated with amount $0.00"
-                
+                // ****************
+                // Everything is properly set:
+                // 1) The category is not being given the same information.
+                // 2) The amount is a double and isn't negative.
+                // ****************
                     
-                    
-                // *** If only the title was updated...
-                } else if oldCategoryTitle != newCategoryTitle && oldCategory.budgeted == newCategoryBudgeted {
-                    
-                    // TODO: Success message - "Old category was changed to new category, still with a budgeted amount of $0.00"
-                    
-                    
-                    
-                // *** If both were changed
                 } else {
                     
-                    // TODO: Success message - "Old category with a budgeted amount of $0.00 was changed to New category with a budgeted amount of $0.00"
+                    
+                    // ***** Checks the fields to assign appropriate Alert and Success messages
+                    
+                    var alertMessage = String()
+                    var successMessage = String()
+                    
+                    
+                    // ***** If only amount changed: Sets new category to old category.
+                    
+                    if newCategoryTitleFromTextField == "" || newCategoryTitleFromTextField == oldCategoryTitle {
+                        
+                        newCategoryTitle = oldCategoryTitle
+
+                        alertMessage = "Update '\(oldCategoryTitle)' with $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
+                        
+                        successMessage = "'\(oldCategoryTitle)' successfully updated with $\(String(format: doubleFormatKey, newCategoryBudgeted))!"
+                        
+                        
+                    // ***** If only name changed: Sets new category budgeted to old category budgeted.
+                    } else if newCategoryBudgetedStringFromTextField == "" {
+                        
+                        newCategoryBudgeted = oldCategory.budgeted
+                        
+                        alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)'?"
+                        
+                        successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)'!"
+                        
+                        
+                    // ***** If both change: Sets new budgeted amount to text field input.
+                    } else {
+
+                        alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)', and change budgeted amount from $\(String(format: doubleFormatKey, oldCategory.budgeted)) to $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
+                        
+                        successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)', and the budgeted amount of $\(String(format: doubleFormatKey, oldCategory.budgeted)) was changed to $\(String(format: doubleFormatKey, newCategoryBudgeted))!"
+                        
+                    }
+                    
+                    // ***** Alert message to pop up to confirmation
+                    
+                    let alert = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                        
+                        // Update Category function called & local variables for labels set
+                        
+                        budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewBudgetedAmount: newCategoryBudgeted)
+                        
+                        self.currentCategoryNameString = newCategoryTitle
+                        self.currentCategoryAmountDouble = newCategoryBudgeted
+                        
+                        self.updateUIElementsBecauseOfSuccess(successMessage: successMessage)
+                        
+                        self.updateLabelsAtTop()
+                        
+                    }))
+                    
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    
+                    present(alert, animated: true, completion: nil)
                     
                 }
-                
+            
             }
             
         }
@@ -208,16 +219,9 @@ class EditCategoryViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        currentCategoryName.text = editableCategoryName
+        currentCategoryNameString = editableCategoryName
         
-        if let currentCategory = budget.categories[editableCategoryName] {
-            
-            self.currentCategoryNameString = editableCategoryName
-            self.currentCategoryAmountDouble = currentCategory.budgeted
-            
-            currentCategoryAmount.text = "$\(String(format: doubleFormatKey, currentCategory.budgeted))"
-            
-        }
+        updateLabelsAtTop()
         
         self.editCategoryButton.layer.cornerRadius = 18
         self.editCategoryButton.layer.masksToBounds = true
