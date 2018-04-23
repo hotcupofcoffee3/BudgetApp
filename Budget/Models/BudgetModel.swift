@@ -260,44 +260,6 @@ class Budget {
     
     
     
-    
-    //                if newCategoryName == oldCategoryName || newCategoryName == "" {
-    //
-    //                    // Budgeted amount checked:
-    //
-    //                    if let newCategoryBudgetedString = newCategoryBudgeted {
-    //
-    //                        // Is it a double?
-    //                        if let newCategoryBudgeted = Double(newCategoryBudgetedString) {
-    //
-    //                            guard let oldCategory = categories[oldCategoryName] else { return }
-    //
-    //                            oldCategory.budgeted = newCategoryBudgeted
-    //
-    //                        } else {
-    //
-    //                            // TODO: Warning message - Have to put in a number
-    //
-    //                        }
-    //
-    //                    }
-    //
-    //                    // If name changed, everything gets changed
-    //                }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     // ************************************************
     //MARK: - Transaction functions
     // ************************************************

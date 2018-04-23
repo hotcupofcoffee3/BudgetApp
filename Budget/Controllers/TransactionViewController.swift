@@ -54,7 +54,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         editableTransactionIndex = indexPath.row
-        print(editableTransactionIndex)
         
     }
     

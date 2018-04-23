@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditCategoryViewController: UIViewController {
+class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     var currentCategoryNameString = String()
     var currentCategoryAmountDouble = Double()
