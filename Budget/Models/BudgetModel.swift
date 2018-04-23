@@ -50,6 +50,10 @@ class Transaction {
 
 }
 
+// ************************************************
+// MARK: - Budget Class
+// ************************************************
+
 class Budget {
 
     var categories = [String: Category]()
@@ -62,8 +66,14 @@ class Budget {
     
     
     
+    // ************************************************
+    // MARK: - Category functions
+    // ************************************************
     
-    // Category functions
+    
+    
+    // MARK: Allocate Funds
+    
 
     func allocateFundsToCategory (withThisAmount: Double, to thisCategory: String) {
         
@@ -86,6 +96,10 @@ class Budget {
         saveEverything()
         
     }
+    
+    
+    
+    // MARK: Remove Funds
     
     func removeFundsFromCategory (withThisAmount: Double?, from thisCategory: String) {
         
@@ -120,6 +134,10 @@ class Budget {
         
     }
     
+    
+    
+    // MARK: Add Category
+    
     func addCategory (named: String, withThisAmount: Double) {
         if categories[named] == nil {
             categories[named] = Category(name: named, budgeted: withThisAmount)
@@ -128,6 +146,10 @@ class Budget {
         sortCategoriesByKey(withUncategorized: false)
         saveEverything()
     }
+    
+    
+    
+    // MARK: Delete Category
     
     func deleteCategory (named: String) {
         
@@ -157,6 +179,10 @@ class Budget {
         sortCategoriesByKey(withUncategorized: false)
         saveEverything()
     }
+    
+    
+    
+    // MARK: Sort Categories
     
     func sortCategoriesByKey (withUncategorized: Bool) {
         
@@ -188,48 +214,42 @@ class Budget {
         
     }
     
-    func updateCategory(named oldCategoryName: String, updatedWith newCategory: Category) {
+    // MARK: Update Category
+    
+    func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewBudgetedAmount newCategoryBudgeted: Double) {
         
-        if categories[oldCategoryName] != nil {
-            
-            let newCategoryName = newCategory.name
-            
-            // If same category name, then only the budgeted amount gets changed
-            if newCategoryName == oldCategoryName {
-                
-                guard let oldCategory = categories[oldCategoryName] else { return }
-                
-                oldCategory.budgeted = newCategory.budgeted
-                
-            // If name changed, everything gets changed
-            } else {
-                
-                // New category created with new category name and budgeted
-                categories[newCategoryName] = newCategory
-                
-                // New category gets old category's available amount
-                if let nuevoCategory = categories[newCategoryName], let viejoCategory = categories[oldCategoryName] {
-                    
-                    nuevoCategory.available = viejoCategory.available
-                    
-                }
-                
-                // Old category removed
-                categories[oldCategoryName] = nil
-                
-                // Transactions with old category name get set to new category's name
-                for transaction in transactions {
-                    
-                    if transaction.forCategory == oldCategoryName {
+        if newCategoryName == oldCategoryName {
                         
-                        transaction.forCategory = newCategoryName
-                        
-                    }
+            guard let oldCategory = categories[oldCategoryName] else { return }
+            
+            oldCategory.budgeted = newCategoryBudgeted
+            
+        } else {
+                    
+            // New category created with new category name and budgeted
+            categories[newCategoryName] = Category(name: newCategoryName, budgeted: newCategoryBudgeted)
+            
+            // New category gets old category's available amount
+            if let nuevoCategory = categories[newCategoryName], let viejoCategory = categories[oldCategoryName] {
+                
+                nuevoCategory.available = viejoCategory.available
+                
+            }
+                    
+            // Old category removed
+            categories[oldCategoryName] = nil
+            
+            // Transactions with old category name get set to new category's name
+            for transaction in transactions {
+                
+                if transaction.forCategory == oldCategoryName {
+                    
+                    transaction.forCategory = newCategoryName
                     
                 }
                 
             }
-            
+                    
         }
         
         saveEverything()
@@ -237,7 +257,54 @@ class Budget {
     }
     
     
-    //MARK: Transaction functions
+    
+    
+    
+    
+    //                if newCategoryName == oldCategoryName || newCategoryName == "" {
+    //
+    //                    // Budgeted amount checked:
+    //
+    //                    if let newCategoryBudgetedString = newCategoryBudgeted {
+    //
+    //                        // Is it a double?
+    //                        if let newCategoryBudgeted = Double(newCategoryBudgetedString) {
+    //
+    //                            guard let oldCategory = categories[oldCategoryName] else { return }
+    //
+    //                            oldCategory.budgeted = newCategoryBudgeted
+    //
+    //                        } else {
+    //
+    //                            // TODO: Warning message - Have to put in a number
+    //
+    //                        }
+    //
+    //                    }
+    //
+    //                    // If name changed, everything gets changed
+    //                }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ************************************************
+    //MARK: - Transaction functions
+    // ************************************************
+    
+    
+    
+    // MARK: Convert Date into YYYYMMDD
     
     func convertDateInfoToYYYYMMDD(year: Int, month: Int, day: Int) -> Int {
         
@@ -272,6 +339,10 @@ class Budget {
         
     }
     
+    
+    
+    // MARK: Convert Date into ID
+    
     func convertedDateComponentsToTransactionID(year: Int, month: Int, day: Int) -> Int {
         
         var formattedID = Int()
@@ -299,6 +370,10 @@ class Budget {
         return formattedID
         
     }
+    
+    
+    
+    // MARK: Add Transaction
     
     func addTransaction (type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
         
@@ -332,53 +407,25 @@ class Budget {
         
     }
     
-//    func depositTransaction (title: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-//
-//        guard let uncategorized = categories[uncategorizedKey] else { return }
-//        uncategorized.available += inTheAmountOf
-//
-//        let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
-//
-//        transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
-//
-//        sortTransactionsDescending()
-//
-//        saveEverything()
-//    }
-//
-//    func withdrawalTransaction (title: String, from thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-//
-//        let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
-//
-//        transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
-//
-//        guard let category = categories[thisCategory]  else { return }
-//        category.available -= inTheAmountOf
-//
-//        sortTransactionsDescending()
-//
-//        saveEverything()
-//    }
+    
+    
+    // MARK: Sort Transactions
     
     func sortTransactionsDescending() {
         
         transactions.sort(by: {$0.transactionID > $1.transactionID})
-        
-//        for transaction in transactions {
-//            print(transaction.transactionID)
-//        }
         
     }
     
     func sortTransactionsAscending() {
         
         transactions.sort(by: {$0.transactionID < $1.transactionID})
-        
-//        for transaction in transactions {
-//            print(transaction.transactionID)
-//        }
-        
+
     }
+    
+    
+    
+    // MARK: Delete transaction
     
     func deleteTransaction (at index: Int) {
         let category = transactions[index].forCategory
@@ -403,6 +450,10 @@ class Budget {
         saveEverything()
     }
     
+    
+    
+    // MARK: Update Transaction
+    
     func updateTransaction(named updatedTransaction: Transaction, atIndex index: Int) {
         if transactions[index].type == .deposit {
             
@@ -419,6 +470,9 @@ class Budget {
         }
         
     }
+    
+    
+    
     
     //////////////////////////////
     //////////////////////////////

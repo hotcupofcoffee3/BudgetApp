@@ -31,8 +31,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         let successHaptic = UINotificationFeedbackGenerator()
         successHaptic.notificationOccurred(.success)
         
-        // Update Left label at top right & current balance
-        updateLeftLabelAtTopRight()
         // Update Left label at top right
         updateLeftLabelAtTopRight()
         
