@@ -75,104 +75,97 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func editCategory(_ sender: UIButton) {
         
-        if let oldCategoryTitle = currentCategoryName.text, let newCategoryTitleFromTextField = newCategoryName.text, let newCategoryBudgetedStringFromTextField = newCategoryAmount.text {
+        guard let oldCategoryTitle = currentCategoryName.text else { return }
+        guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
+        
+        guard let newCategoryTitleFromTextField = newCategoryName.text else { return }
+        guard let newCategoryBudgetedStringFromTextField = newCategoryAmount.text else { return }
             
-            var newCategoryTitle = newCategoryTitleFromTextField
-            var newCategoryBudgeted = Double()
-            
-            guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
-            
+        var newCategoryTitle = ""
+        var newCategoryBudgeted = Double()
 
-            // ***** Are the fields empty?
-            if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField == ""  {
-                
-                failureWithWarning(message: "There is nothing to update.")
-               
-                
-            // ***** Do both fields have info, and it is the exact same as the current info?
-            } else if newCategoryTitleFromTextField == oldCategoryTitle && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
+        // *** Are the fields empty?
+        if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField == ""  {
+            
+            failureWithWarning(message: "There is nothing to update.")
+        
+        } else {
+            
+            // *** Are both fields the exact same as already set?
+            if newCategoryTitleFromTextField == oldCategoryTitle && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
                 
                 failureWithWarning(message: "This is the same information that is already set.")
                 
-                
-            // ***** Was the new category entered the same as the one already set, if not amount changed?
+            // *** Was the new category entered the same as the one already set, if not amount changed?
             } else if oldCategoryTitle == newCategoryTitleFromTextField && newCategoryBudgetedStringFromTextField == "" {
                 
                 failureWithWarning(message: "The category is already named '\(currentCategoryNameString)'")
-                
                 
             // *** Was the amount entered the same as is already budgeted?
             } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
                 
                 failureWithWarning(message: "The category is already budgeted $\(String(format: doubleFormatKey, oldCategory.budgeted))")
                 
-                
-            // *** Was category blank and amount not convertible to a Double?
-            } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == nil {
+            // *** Was the amount not convertible to a Double?
+            // *** This checks both if the name field is empty, as well as if both have information and the amount is not a Double.
+            } else if (newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == nil) || (newCategoryTitleFromTextField != "" && newCategoryBudgetedStringFromTextField != "" && Double(newCategoryBudgetedStringFromTextField) == nil){
                 
                 failureWithWarning(message: "You have to enter a number.")
-                
-            
-            // ***** All impossible entries are taken care of.
+               
+            // *** All is checked except for a negative number
             } else {
                 
-                // Sets new Category budgeted amount to an actual amount
-                if let newCategoryBudgetedDouble = Double(newCategoryBudgetedStringFromTextField) {
+                // *** Assigns 'newCategoryBudgeted' a value based on if the field is blank (the amount already budgeted) or a new amount.
+                if let budgetedAsDouble = Double(newCategoryBudgetedStringFromTextField) {
                     
-                    newCategoryBudgeted = newCategoryBudgetedDouble
+                    // Assigns the amount from text field, if it is populated, to the 'newCategoryBudgeted' variable
+                    newCategoryBudgeted = budgetedAsDouble
                     
                 } else {
                     
+                    // If it is left blank, then the amount from the old category is assigned to it.
                     newCategoryBudgeted = oldCategory.budgeted
                     
                 }
                 
-                
-                // *** Was the amount entered less than 0?
+                // *** Is the amount negative?
                 if newCategoryBudgeted < 0.0 {
                     
                     failureWithWarning(message: "You have to enter a positive amount")
                     
-                    
-                    
-                    
-                // ****************
-                // Everything is properly set:
-                // 1) The category is not being given the same information.
-                // 2) The amount is a double and isn't negative.
-                // ****************
-                    
+                // *** Everything is checked. Successful entry!
                 } else {
                     
+                    // Sets 'newCategoryTitle'
+                    if newCategoryTitleFromTextField == "" {
+                        
+                        newCategoryTitle = oldCategoryTitle
+                        
+                    } else {
+                        
+                        newCategoryTitle = newCategoryTitleFromTextField
+                        
+                    }
                     
                     // ***** Checks the fields to assign appropriate Alert and Success messages
-                    
                     var alertMessage = String()
                     var successMessage = String()
                     
-                    
-                    // ***** If only amount changed: Sets new category to old category.
-                    
+                    // *** If only amount changed: Sets new category to old category.
                     if newCategoryTitleFromTextField == "" || newCategoryTitleFromTextField == oldCategoryTitle {
                         
-                        newCategoryTitle = oldCategoryTitle
-
                         alertMessage = "Update '\(oldCategoryTitle)' with $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
                         
                         successMessage = "'\(oldCategoryTitle)' successfully updated with $\(String(format: doubleFormatKey, newCategoryBudgeted))!"
                         
-                        
-                    // ***** If only name changed: Sets new category budgeted to old category budgeted.
-                    } else if newCategoryBudgetedStringFromTextField == "" {
-                        
-                        newCategoryBudgeted = oldCategory.budgeted
+                    // *** If only name changed: Sets new category budgeted to old category budgeted.
+                    } else if newCategoryBudgetedStringFromTextField == "" || Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
                         
                         alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)'?"
                         
                         successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)'!"
                         
-                        
-                    // ***** If both change: Sets new budgeted amount to text field input.
+                    // *** If both change: Sets new budgeted amount to text field input.
                     } else {
 
                         alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)', and change budgeted amount from $\(String(format: doubleFormatKey, oldCategory.budgeted)) to $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
@@ -181,7 +174,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                     }
                     
-                    // ***** Alert message to pop up to confirmation
+                    // *** Alert message to pop up to confirmation
                     
                     let alert = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
                     
