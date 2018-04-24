@@ -29,6 +29,8 @@ let withdrawalKey = "Withdrawal"
 
 // Other universal variables
 let successColor = UIColor.init(red: 100/255, green: 158/255, blue: 55/255, alpha: 1)
+let tealColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
+let lightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, alpha: 1)
 
 // Main to others
 let mainToCategoriesSegueKey = "MainToCategoriesSegue"

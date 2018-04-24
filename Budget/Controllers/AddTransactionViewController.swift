@@ -142,8 +142,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         return budget.sortedCategoryKeys.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return budget.sortedCategoryKeys[row]
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -271,8 +272,10 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         super.viewDidLoad()
         budget.sortCategoriesByKey(withUncategorized: true)
         
-        addTransactionButtonTitle.layer.cornerRadius = 18
+        addTransactionButtonTitle.layer.cornerRadius = 27
         addTransactionButtonTitle.layer.masksToBounds = true
+        addTransactionButtonTitle.layer.borderWidth = 1
+        addTransactionButtonTitle.layer.borderColor = lightGreenColor.cgColor
         
         updateLeftLabelAtTopRight()
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])

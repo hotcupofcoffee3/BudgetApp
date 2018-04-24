@@ -108,8 +108,10 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
         updateLeftLabelAtTopRight()
         
-        addCategoryButton.layer.cornerRadius = 18
+        addCategoryButton.layer.cornerRadius = 27
         addCategoryButton.layer.masksToBounds = true
+        addCategoryButton.layer.borderWidth = 1
+        addCategoryButton.layer.borderColor = lightGreenColor.cgColor
         
     }
     

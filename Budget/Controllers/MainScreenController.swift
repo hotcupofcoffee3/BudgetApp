@@ -10,6 +10,8 @@ import UIKit
 
 class MainScreen: UIViewController {
     
+    @IBOutlet weak var hiddenDeleteButton: UIButton!
+    
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     func refreshAvailableBalanceLabel() {
@@ -30,22 +32,7 @@ class MainScreen: UIViewController {
         performSegue(withIdentifier: mainToTransactionsSegueKey, sender: self)
     }
     
-    @IBAction func deleteEVERYTHING(_ sender: UIBarButtonItem) {
-        
-        let alert = UIAlertController(title: nil, message: "Delete EVERYTHING?", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-            budget.deleteEVERYTHING()
-            self.refreshAvailableBalanceLabel()
-        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func addSomething(_ sender: UIBarButtonItem) {
+    @IBAction func addSomething(_ sender: UIButton) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -93,13 +80,23 @@ class MainScreen: UIViewController {
 
         categoriesButtonTitle.layer.cornerRadius = 35
         categoriesButtonTitle.layer.masksToBounds = true
-        categoriesButtonTitle.layer.borderWidth = 1
-        categoriesButtonTitle.layer.borderColor = UIColor.white.cgColor
+        categoriesButtonTitle.layer.borderWidth = 2
+        categoriesButtonTitle.layer.borderColor = tealColor.cgColor
         
         transactionsButtonTitle.layer.cornerRadius = 35
         transactionsButtonTitle.layer.masksToBounds = true
-        transactionsButtonTitle.layer.borderWidth = 1
-        transactionsButtonTitle.layer.borderColor = UIColor.white.cgColor
+        transactionsButtonTitle.layer.borderWidth = 2
+        transactionsButtonTitle.layer.borderColor = tealColor.cgColor
+        
+        
+        // Long press gesture recognizer
+        let uilpr = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpress(gestureRecognizer:)))
+        
+        uilpr.minimumPressDuration = 2
+        
+        hiddenDeleteButton.addGestureRecognizer(uilpr)
+        
+        
         
     }
     
@@ -115,8 +112,27 @@ class MainScreen: UIViewController {
     
     
     
-    
-    
+    // Long press recognizer function
+    @objc func longpress(gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        // Only does it once, even if it is held down for longer.
+        // If this isn't done, then it'll keep adding a new one of these every 2 seconds (the amount of time we have it set).
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            
+            let alert = UIAlertController(title: nil, message: "Delete EVERYTHING?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                budget.deleteEVERYTHING()
+                self.refreshAvailableBalanceLabel()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
     
     
     

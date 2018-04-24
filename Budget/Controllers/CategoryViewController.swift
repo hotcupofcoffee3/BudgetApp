@@ -126,7 +126,11 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         budget.sortCategoriesByKey(withUncategorized: false)
         displayedDataTable.reloadData()
         
-        categoryNavBar.isTranslucent = true
+        
+        // No image used, to make the navbar background transparent
+//        categoryNavBar.setBackgroundImage(UIImage(), for: .default)
+//        categoryNavBar.shadowImage = UIImage()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

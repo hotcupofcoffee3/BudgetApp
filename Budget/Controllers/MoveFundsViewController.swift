@@ -179,8 +179,9 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         return budget.sortedCategoryKeys.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return budget.sortedCategoryKeys[row]
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -208,8 +209,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @IBOutlet weak var fromCategoryPicker: UIPickerView!
     
     @IBOutlet weak var toCategoryPicker: UIPickerView!
-    
-    
     
     
     // MARK: From and To Labels
@@ -510,8 +509,10 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
-        moveFundsButtonTitle.layer.cornerRadius = 18
+        moveFundsButtonTitle.layer.cornerRadius = 27
         moveFundsButtonTitle.layer.masksToBounds = true
+        moveFundsButtonTitle.layer.borderWidth = 1
+        moveFundsButtonTitle.layer.borderColor = lightGreenColor.cgColor
         
         updateUIForAllocate()
         

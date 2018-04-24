@@ -223,8 +223,10 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         
         updateLabelsAtTop()
         
-        self.editCategoryButton.layer.cornerRadius = 18
+        self.editCategoryButton.layer.cornerRadius = 27
         self.editCategoryButton.layer.masksToBounds = true
+        self.editCategoryButton.layer.borderWidth = 1
+        self.editCategoryButton.layer.borderColor = lightGreenColor.cgColor
 
     }
 
