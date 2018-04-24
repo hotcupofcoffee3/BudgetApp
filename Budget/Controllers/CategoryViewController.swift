@@ -125,6 +125,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         refreshAvailableBalanceLabel()
         budget.sortCategoriesByKey(withUncategorized: false)
         displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
         
         
         // No image used, to make the navbar background transparent
@@ -137,6 +138,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         refreshAvailableBalanceLabel()
         budget.sortCategoriesByKey(withUncategorized: false)
         displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
     }
     
     override func didReceiveMemoryWarning() {
