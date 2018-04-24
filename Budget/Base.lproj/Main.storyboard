@@ -54,7 +54,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alloc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNs-0H-0Rl">
                                 <rect key="frame" x="20" y="60" width="335" height="59"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="50"/>
-                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-Rd-fRo">
@@ -725,7 +725,7 @@ amount gets allocated or removed.</string>
                                     <navigationItem title="Categories" id="yTW-7F-kgt">
                                         <barButtonItem key="leftBarButtonItem" title="Home" id="4Tf-XE-nJy">
                                             <connections>
-                                                <action selector="backButton:" destination="7Ou-Sj-yrA" id="Imi-1R-1kY"/>
+                                                <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="crossDissolve" id="OXX-Ft-DJ2"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -871,7 +871,7 @@ amount gets allocated or removed.</string>
                                     <navigationItem title="Transactions" id="guE-RR-0Sb">
                                         <barButtonItem key="leftBarButtonItem" title="Home" id="JFw-at-RPh">
                                             <connections>
-                                                <action selector="backButton:" destination="j2U-Hi-75v" id="Quf-N4-4kw"/>
+                                                <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="crossDissolve" id="tLF-Rh-sKn"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -1110,10 +1110,11 @@ amount gets allocated or removed.</string>
         <image name="bg2-50" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gOi-Bu-AOw"/>
-        <segue reference="sum-Cr-7Ay"/>
-        <segue reference="eXP-Fb-uY0"/>
-        <segue reference="ZXq-hv-ffC"/>
-        <segue reference="mU4-cf-aIR"/>
+        <segue reference="QpK-gN-dzJ"/>
+        <segue reference="Fq3-ws-fhT"/>
+        <segue reference="LCW-GF-oV6"/>
+        <segue reference="KPk-6k-mJN"/>
+        <segue reference="okA-JN-PqX"/>
+        <segue reference="tLF-Rh-sKn"/>
     </inferredMetricsTieBreakers>
 </document>

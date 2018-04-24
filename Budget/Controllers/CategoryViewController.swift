@@ -12,10 +12,6 @@ var editableCategoryName = String()
 
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBOutlet weak var categoryNavBar: UINavigationBar!
     
     

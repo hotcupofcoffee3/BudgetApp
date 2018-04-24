@@ -12,10 +12,6 @@ var editableTransactionIndex = Int()
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func refreshAvailableBalanceLabel() {
         if let availableBalance = budget.categories[uncategorizedKey] {
             availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
