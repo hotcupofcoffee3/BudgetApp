@@ -12,6 +12,10 @@ var editableTransactionIndex = Int()
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func refreshAvailableBalanceLabel() {
         if let availableBalance = budget.categories[uncategorizedKey] {
             availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
@@ -32,7 +36,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "TransactionCell")
         
-        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
+        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
@@ -126,12 +130,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
     }
     
     override func didReceiveMemoryWarning() {

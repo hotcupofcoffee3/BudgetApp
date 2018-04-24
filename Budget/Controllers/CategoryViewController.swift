@@ -12,6 +12,13 @@ var editableCategoryName = String()
 
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var categoryNavBar: UINavigationBar!
+    
+    
     func refreshAvailableBalanceLabel() {
         if let availableBalance = budget.categories[uncategorizedKey] {
             availableBalanceLabel.text = "$\(String(format: "%0.2f", availableBalance.available))"
@@ -37,7 +44,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "CategoryCell")
         
-        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
+        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
@@ -118,6 +125,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         refreshAvailableBalanceLabel()
         budget.sortCategoriesByKey(withUncategorized: false)
         displayedDataTable.reloadData()
+        
+        categoryNavBar.isTranslucent = true
     }
     
     override func viewDidAppear(_ animated: Bool) {

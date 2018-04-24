@@ -40,13 +40,14 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lk-wo-IhG" userLabel="Categories">
-                                <rect key="frame" x="72.5" y="218" width="230" height="75"/>
+                                <rect key="frame" x="72.5" y="363" width="230" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="kQA-Nu-D3G"/>
+                                    <constraint firstAttribute="height" constant="70" id="kQA-Nu-D3G"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="uL2-MW-WOD"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
-                                <state key="normal" title="Categories">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="Categories"/>
+                                <state key="selected">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -54,52 +55,69 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGE-FZ-5ps" userLabel="Transactions">
-                                <rect key="frame" x="73" y="393" width="230" height="75"/>
+                                <rect key="frame" x="73" y="453" width="230" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="9AL-od-oQK"/>
-                                    <constraint firstAttribute="height" constant="75" id="B9z-pa-exv"/>
+                                    <constraint firstAttribute="height" constant="70" id="B9z-pa-exv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                 <state key="normal" title="Transactions"/>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="transactionsButton:" destination="eK1-N9-yax" eventType="touchUpInside" id="bST-L5-TWR"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="L0S-Vm-nIK" userLabel="Left Stack">
-                                <rect key="frame" x="20" y="70" width="335" height="47.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-Rd-fRo">
-                                        <rect key="frame" x="117.5" y="0.0" width="100.5" height="47.5"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="40"/>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alloc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNs-0H-0Rl">
+                                <rect key="frame" x="20" y="60" width="335" height="59"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="50"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-Rd-fRo">
+                                <rect key="frame" x="20" y="159" width="335" height="47.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="40"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCh-QN-yb3">
+                                <rect key="frame" x="333" y="581" width="22" height="22"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="nnJ-PH-CIE" kind="presentation" modalTransitionStyle="coverVertical" id="oiQ-5U-Oeu"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0lk-wo-IhG" firstAttribute="top" secondItem="L0S-Vm-nIK" secondAttribute="bottom" constant="100" id="65n-K9-UgD"/>
-                            <constraint firstItem="L0S-Vm-nIK" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" constant="50" id="Bfs-F2-c9U"/>
+                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="hNs-0H-0Rl" secondAttribute="trailing" constant="20" id="879-Yj-1rG"/>
+                            <constraint firstItem="gWk-Rd-fRo" firstAttribute="top" secondItem="hNs-0H-0Rl" secondAttribute="bottom" constant="40" id="8tT-Mv-gXd"/>
                             <constraint firstItem="Ce1-0O-pu0" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" id="Bqm-uv-J7x"/>
+                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="ZCh-QN-yb3" secondAttribute="trailing" constant="20" id="Gyz-gQ-Xct"/>
+                            <constraint firstItem="hNs-0H-0Rl" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" constant="40" id="INY-2B-CvX"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="zjU-VC-XHn" secondAttribute="trailing" id="IuB-8Z-sjg"/>
+                            <constraint firstItem="Ce1-0O-pu0" firstAttribute="top" secondItem="ZCh-QN-yb3" secondAttribute="bottom" constant="20" id="KtP-Fw-shw"/>
                             <constraint firstItem="Ce1-0O-pu0" firstAttribute="bottom" secondItem="9Mm-NX-eaa" secondAttribute="bottom" id="Nbx-Qf-cT5"/>
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="top" secondItem="7EN-fo-1aW" secondAttribute="top" id="Ofp-9V-PW0"/>
                             <constraint firstAttribute="bottom" secondItem="zjU-VC-XHn" secondAttribute="bottom" id="R4J-2z-TTQ"/>
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" id="S1E-i9-ACm"/>
                             <constraint firstItem="Ce1-0O-pu0" firstAttribute="trailing" secondItem="9Mm-NX-eaa" secondAttribute="trailing" id="WVf-VG-cQs"/>
                             <constraint firstItem="XGE-FZ-5ps" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="WmJ-LS-hgD"/>
-                            <constraint firstItem="L0S-Vm-nIK" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" constant="20" id="YCr-QQ-A7Y"/>
-                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="L0S-Vm-nIK" secondAttribute="trailing" constant="20" id="abd-yZ-FEV"/>
+                            <constraint firstItem="XGE-FZ-5ps" firstAttribute="top" secondItem="0lk-wo-IhG" secondAttribute="bottom" constant="20" id="fMm-DF-Q3e"/>
                             <constraint firstItem="0lk-wo-IhG" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="jSb-Eg-PkQ"/>
-                            <constraint firstItem="XGE-FZ-5ps" firstAttribute="top" secondItem="0lk-wo-IhG" secondAttribute="bottom" constant="100" id="oeu-rt-eJU"/>
+                            <constraint firstItem="gWk-Rd-fRo" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" constant="20" id="otx-zk-LaY"/>
+                            <constraint firstItem="hNs-0H-0Rl" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" constant="20" id="sUM-2b-eg4"/>
+                            <constraint firstItem="Ce1-0O-pu0" firstAttribute="top" secondItem="XGE-FZ-5ps" secondAttribute="bottom" constant="100" id="vtD-jh-1a0"/>
+                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="gWk-Rd-fRo" secondAttribute="trailing" constant="20" id="xko-im-6QN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Mm-NX-eaa"/>
                     </view>
                     <connections>
                         <outlet property="availableBalanceLabel" destination="gWk-Rd-fRo" id="wM3-5i-YSZ"/>
-                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="MainToCategoriesSegue" modalTransitionStyle="flipHorizontal" id="sum-Cr-7Ay"/>
-                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="MainToTransactionsSegue" modalTransitionStyle="flipHorizontal" id="gOi-Bu-AOw"/>
+                        <outlet property="categoriesButtonTitle" destination="0lk-wo-IhG" id="Oet-XT-Cak"/>
+                        <outlet property="transactionsButtonTitle" destination="XGE-FZ-5ps" id="SgV-EF-lTF"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="MainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
+                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="MainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="MainToAddCategorySegue" id="mU4-cf-aIR"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="MainToAddTransactionSegue" id="eXP-Fb-uY0"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="MainToMoveFundsSegue" id="ZXq-hv-ffC"/>
@@ -644,13 +662,21 @@ amount gets allocated or removed.</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg1-75" translatesAutoresizingMaskIntoConstraints="NO" id="Oqe-9k-eXA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LMO-qm-Yz2">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Categories" id="yTW-7F-kgt">
                                         <barButtonItem key="leftBarButtonItem" title="Home" id="4Tf-XE-nJy">
                                             <connections>
-                                                <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="flipHorizontal" id="7Qw-Ty-GlP"/>
+                                                <action selector="backButton:" destination="7Ou-Sj-yrA" id="Imi-1R-1kY"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -658,7 +684,7 @@ amount gets allocated or removed.</string>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cG6-sI-Nir">
                                 <rect key="frame" x="20" y="182" width="335" height="421"/>
-                                <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="Vnx-YE-wlf">
                                         <rect key="frame" x="0.0" y="28" width="335" height="44"/>
@@ -687,10 +713,11 @@ amount gets allocated or removed.</string>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cOB-lx-yyR"/>
                                     <barButtonItem title="Transactions" id="91r-Y9-eUS">
                                         <connections>
-                                            <segue destination="j2U-Hi-75v" kind="presentation" modalTransitionStyle="flipHorizontal" id="QpK-gN-dzJ"/>
+                                            <segue destination="j2U-Hi-75v" kind="presentation" modalTransitionStyle="crossDissolve" id="QpK-gN-dzJ"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BsY-jt-IxA" userLabel="Left Stack">
                                 <rect key="frame" x="20" y="84" width="335" height="78"/>
@@ -710,16 +737,19 @@ amount gets allocated or removed.</string>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Oqe-9k-eXA" secondAttribute="trailing" id="0Xp-BU-bUK"/>
                             <constraint firstItem="cG6-sI-Nir" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" constant="20" id="2TP-41-vuY"/>
+                            <constraint firstItem="Oqe-9k-eXA" firstAttribute="top" secondItem="Spr-Cu-Xki" secondAttribute="top" id="5U5-le-v4E"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" id="PPU-iD-mnD"/>
                             <constraint firstItem="BsY-jt-IxA" firstAttribute="top" secondItem="LMO-qm-Yz2" secondAttribute="bottom" constant="20" id="QaY-hK-dPb"/>
                             <constraint firstItem="cG6-sI-Nir" firstAttribute="top" secondItem="BsY-jt-IxA" secondAttribute="bottom" constant="20" id="UAn-9W-BX0"/>
+                            <constraint firstItem="Oqe-9k-eXA" firstAttribute="leading" secondItem="Spr-Cu-Xki" secondAttribute="leading" id="V2C-iG-6Aj"/>
                             <constraint firstItem="WSI-Fy-dc3" firstAttribute="trailing" secondItem="87e-1P-jCH" secondAttribute="trailing" id="ZnM-ed-56n"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="trailing" secondItem="87e-1P-jCH" secondAttribute="trailing" id="bVq-z5-9VY"/>
                             <constraint firstItem="WSI-Fy-dc3" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" id="eKc-h2-63f"/>
                             <constraint firstItem="87e-1P-jCH" firstAttribute="trailing" secondItem="BsY-jt-IxA" secondAttribute="trailing" constant="20" id="jai-fE-Dtx"/>
+                            <constraint firstAttribute="bottom" secondItem="Oqe-9k-eXA" secondAttribute="bottom" id="kj3-kD-eFK"/>
                             <constraint firstItem="WSI-Fy-dc3" firstAttribute="top" secondItem="cG6-sI-Nir" secondAttribute="bottom" constant="20" id="qEE-pX-eLe"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="top" secondItem="87e-1P-jCH" secondAttribute="top" id="qdc-Vq-Gqy"/>
                             <constraint firstItem="WSI-Fy-dc3" firstAttribute="bottom" secondItem="87e-1P-jCH" secondAttribute="bottom" id="rZk-4b-sQl"/>
@@ -730,6 +760,7 @@ amount gets allocated or removed.</string>
                     </view>
                     <connections>
                         <outlet property="availableBalanceLabel" destination="VuF-MX-zAy" id="7tm-iA-92j"/>
+                        <outlet property="categoryNavBar" destination="LMO-qm-Yz2" id="PrY-0b-NYD"/>
                         <outlet property="displayedDataTable" destination="cG6-sI-Nir" id="TKm-62-9Im"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
@@ -741,6 +772,44 @@ amount gets allocated or removed.</string>
             </objects>
             <point key="canvasLocation" x="-1943" y="-117"/>
         </scene>
+        <!--Details View Controller-->
+        <scene sceneID="v3I-JP-pOm">
+            <objects>
+                <viewController id="nnJ-PH-CIE" customClass="DetailsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d71-rz-luI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg1-75" translatesAutoresizingMaskIntoConstraints="NO" id="ac2-z7-FoF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gd6-L3-7gg">
+                                <rect key="frame" x="20" y="40" width="39" height="30"/>
+                                <state key="normal" title="Close">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButton:" destination="nnJ-PH-CIE" eventType="touchUpInside" id="Kqd-gk-Cut"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ac2-z7-FoF" firstAttribute="top" secondItem="d71-rz-luI" secondAttribute="top" id="4QC-UD-HS3"/>
+                            <constraint firstItem="gd6-L3-7gg" firstAttribute="top" secondItem="eO6-6w-cPY" secondAttribute="top" constant="20" id="BBh-2i-QCh"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gd6-L3-7gg" secondAttribute="trailing" constant="20" symbolic="YES" id="ITn-R5-Dnl"/>
+                            <constraint firstItem="gd6-L3-7gg" firstAttribute="leading" secondItem="eO6-6w-cPY" secondAttribute="leading" constant="20" id="SN0-gg-Nsu"/>
+                            <constraint firstItem="ac2-z7-FoF" firstAttribute="trailing" secondItem="eO6-6w-cPY" secondAttribute="trailing" id="bci-l4-k87"/>
+                            <constraint firstItem="ac2-z7-FoF" firstAttribute="leading" secondItem="eO6-6w-cPY" secondAttribute="leading" id="eoq-p1-uGc"/>
+                            <constraint firstAttribute="bottom" secondItem="ac2-z7-FoF" secondAttribute="bottom" id="kub-bI-7tE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eO6-6w-cPY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Phc-N4-lbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-911" y="-849"/>
+        </scene>
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
             <objects>
@@ -749,13 +818,21 @@ amount gets allocated or removed.</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg1-75" translatesAutoresizingMaskIntoConstraints="NO" id="M66-XD-akg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RNK-ac-8GA">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Transactions" id="guE-RR-0Sb">
                                         <barButtonItem key="leftBarButtonItem" title="Home" id="JFw-at-RPh">
                                             <connections>
-                                                <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="flipHorizontal" id="rVB-tb-xC6"/>
+                                                <action selector="backButton:" destination="j2U-Hi-75v" id="Quf-N4-4kw"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -780,7 +857,7 @@ amount gets allocated or removed.</string>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZqH-WV-HTb">
                                 <rect key="frame" x="20" y="182" width="335" height="421"/>
-                                <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TransactionCell" id="pjl-1b-t6C">
                                         <rect key="frame" x="0.0" y="28" width="335" height="44"/>
@@ -801,7 +878,7 @@ amount gets allocated or removed.</string>
                                 <items>
                                     <barButtonItem title="Categories" id="Zf2-fA-oWm">
                                         <connections>
-                                            <segue destination="7Ou-Sj-yrA" kind="presentation" modalTransitionStyle="flipHorizontal" id="Fq3-ws-fhT"/>
+                                            <segue destination="7Ou-Sj-yrA" kind="presentation" modalTransitionStyle="crossDissolve" id="Fq3-ws-fhT"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="UVw-9J-AzI"/>
@@ -813,13 +890,15 @@ amount gets allocated or removed.</string>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wXI-10-BVN"/>
                                     <barButtonItem enabled="NO" title="Transactions" id="tHv-tY-TeW"/>
                                 </items>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="M66-XD-akg" firstAttribute="top" secondItem="qCS-ud-pZa" secondAttribute="top" id="6qm-WL-dLN"/>
                             <constraint firstItem="RNK-ac-8GA" firstAttribute="top" secondItem="AhG-2g-A3D" secondAttribute="top" id="9ph-vH-SDm"/>
                             <constraint firstItem="RNK-ac-8GA" firstAttribute="trailing" secondItem="AhG-2g-A3D" secondAttribute="trailing" id="BEb-bO-oDi"/>
                             <constraint firstItem="ZqH-WV-HTb" firstAttribute="leading" secondItem="AhG-2g-A3D" secondAttribute="leading" constant="20" id="Ca8-Gj-2og"/>
+                            <constraint firstItem="M66-XD-akg" firstAttribute="leading" secondItem="qCS-ud-pZa" secondAttribute="leading" id="GGE-hI-kep"/>
                             <constraint firstItem="ZqH-WV-HTb" firstAttribute="top" secondItem="NqK-uR-ODJ" secondAttribute="bottom" constant="20" id="OFX-mq-vr6"/>
                             <constraint firstItem="Gw7-7L-Thv" firstAttribute="top" secondItem="ZqH-WV-HTb" secondAttribute="bottom" constant="20" id="Oh7-M7-ogu"/>
                             <constraint firstItem="AhG-2g-A3D" firstAttribute="trailing" secondItem="ZqH-WV-HTb" secondAttribute="trailing" constant="20" id="PKB-3U-LBC"/>
@@ -828,6 +907,8 @@ amount gets allocated or removed.</string>
                             <constraint firstItem="NqK-uR-ODJ" firstAttribute="leading" secondItem="AhG-2g-A3D" secondAttribute="leading" constant="20" id="Xyn-St-pTM"/>
                             <constraint firstItem="Gw7-7L-Thv" firstAttribute="trailing" secondItem="AhG-2g-A3D" secondAttribute="trailing" id="b2h-ES-TFV"/>
                             <constraint firstItem="AhG-2g-A3D" firstAttribute="trailing" secondItem="NqK-uR-ODJ" secondAttribute="trailing" constant="20" id="eOb-g8-yej"/>
+                            <constraint firstAttribute="trailing" secondItem="M66-XD-akg" secondAttribute="trailing" id="jh4-Yh-S82"/>
+                            <constraint firstAttribute="bottom" secondItem="M66-XD-akg" secondAttribute="bottom" id="rlM-4w-SEp"/>
                             <constraint firstItem="RNK-ac-8GA" firstAttribute="leading" secondItem="AhG-2g-A3D" secondAttribute="leading" id="ssk-Rh-nzH"/>
                             <constraint firstItem="NqK-uR-ODJ" firstAttribute="top" secondItem="RNK-ac-8GA" secondAttribute="bottom" constant="20" id="v9i-xt-om6"/>
                         </constraints>
@@ -853,6 +934,9 @@ amount gets allocated or removed.</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg2-50" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-67-jbI">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2w-B5-Ngn">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
@@ -874,12 +958,14 @@ amount gets allocated or removed.</string>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2V-gt-Wvf">
                                                 <rect key="frame" x="0.0" y="0.0" width="162.5" height="30"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New category name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-SM-MAa">
                                                 <rect key="frame" x="172.5" y="0.0" width="162.5" height="30"/>
-                                                <nil key="textColor"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.33326198630136988" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes"/>
                                                 <connections>
@@ -894,12 +980,14 @@ amount gets allocated or removed.</string>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAk-x8-crZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="162.5" height="30"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New budgeted amount" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-Xh-d5c">
                                                 <rect key="frame" x="172.5" y="0.0" width="162.5" height="30"/>
-                                                <nil key="textColor"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.33449272260273971" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 <connections>
@@ -912,14 +1000,13 @@ amount gets allocated or removed.</string>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmD-p8-thG">
                                 <rect key="frame" x="112.5" y="330.5" width="150" height="36"/>
-                                <color key="backgroundColor" red="0.38728559019999997" green="0.26823037859999999" blue="0.2164732516" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="TIG-q8-ISp"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="UXD-q2-KGR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Edit Category">
-                                    <color key="titleColor" red="0.47895878549999998" green="0.55139392610000004" blue="0.2860712111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="editCategory:" destination="6A0-QP-gbR" eventType="touchUpInside" id="cUZ-by-o0C"/>
@@ -928,13 +1015,13 @@ amount gets allocated or removed.</string>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1z5-s3-r4X">
                                 <rect key="frame" x="20" y="104" width="335" height="47.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="40"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeE-OD-52g">
                                 <rect key="frame" x="20" y="161" width="335" height="29.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-lH-q2z" userLabel="Warning Label">
@@ -945,7 +1032,6 @@ amount gets allocated or removed.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.47895878549999998" green="0.55139392610000004" blue="0.2860712111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="LjC-lH-q2z" secondAttribute="trailing" constant="20" id="46r-Kw-8Zm"/>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="1z5-s3-r4X" secondAttribute="trailing" constant="20" id="6BO-BS-ERz"/>
@@ -954,13 +1040,17 @@ amount gets allocated or removed.</string>
                             <constraint firstItem="TeE-OD-52g" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="BKW-uV-fxE"/>
                             <constraint firstItem="GrL-wE-0bw" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="HkZ-K5-ZPL"/>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="GrL-wE-0bw" secondAttribute="trailing" constant="20" id="KCq-C3-hUH"/>
+                            <constraint firstItem="yZK-67-jbI" firstAttribute="top" secondItem="kYs-n1-xmf" secondAttribute="top" id="Kif-Me-B0A"/>
                             <constraint firstItem="LjC-lH-q2z" firstAttribute="top" secondItem="GrL-wE-0bw" secondAttribute="bottom" constant="10" id="Oby-jc-z5h"/>
                             <constraint firstItem="GrL-wE-0bw" firstAttribute="top" secondItem="TeE-OD-52g" secondAttribute="bottom" constant="40" id="QDY-Vy-c4F"/>
                             <constraint firstItem="1z5-s3-r4X" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="Sg8-HA-Q44"/>
                             <constraint firstItem="hmD-p8-thG" firstAttribute="centerX" secondItem="kYs-n1-xmf" secondAttribute="centerX" id="Wua-8a-UYv"/>
+                            <constraint firstItem="yZK-67-jbI" firstAttribute="trailing" secondItem="W4p-ce-q5u" secondAttribute="trailing" id="bjC-j7-GIv"/>
                             <constraint firstItem="LjC-lH-q2z" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="cSG-8g-TfF"/>
                             <constraint firstItem="N2w-B5-Ngn" firstAttribute="trailing" secondItem="W4p-ce-q5u" secondAttribute="trailing" id="f8q-NE-A7M"/>
+                            <constraint firstItem="yZK-67-jbI" firstAttribute="bottom" secondItem="W4p-ce-q5u" secondAttribute="bottom" id="geQ-oq-2X3"/>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="TeE-OD-52g" secondAttribute="trailing" constant="20" id="grb-1u-dGF"/>
+                            <constraint firstItem="yZK-67-jbI" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" id="kk6-FX-O04"/>
                             <constraint firstItem="1z5-s3-r4X" firstAttribute="top" secondItem="N2w-B5-Ngn" secondAttribute="bottom" constant="40" id="qOQ-To-NN1"/>
                             <constraint firstItem="hmD-p8-thG" firstAttribute="top" secondItem="LjC-lH-q2z" secondAttribute="bottom" constant="10" id="sY8-QL-0Z9"/>
                             <constraint firstItem="TeE-OD-52g" firstAttribute="top" secondItem="1z5-s3-r4X" secondAttribute="bottom" constant="10" id="vjU-XH-Rqd"/>
@@ -983,13 +1073,13 @@ amount gets allocated or removed.</string>
     </scenes>
     <resources>
         <image name="bg1-75" width="1024" height="1024"/>
+        <image name="bg2-50" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gOi-Bu-AOw"/>
-        <segue reference="sum-Cr-7Ay"/>
-        <segue reference="eXP-Fb-uY0"/>
-        <segue reference="ZXq-hv-ffC"/>
-        <segue reference="mU4-cf-aIR"/>
-        <segue reference="rVB-tb-xC6"/>
+        <segue reference="QpK-gN-dzJ"/>
+        <segue reference="Fq3-ws-fhT"/>
+        <segue reference="8K3-ts-dmR"/>
+        <segue reference="hxM-AH-nJz"/>
+        <segue reference="8ar-qL-cfd"/>
     </inferredMetricsTieBreakers>
 </document>

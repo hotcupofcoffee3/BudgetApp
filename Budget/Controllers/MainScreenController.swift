@@ -18,6 +18,10 @@ class MainScreen: UIViewController {
         }
     }
     
+    @IBOutlet weak var categoriesButtonTitle: UIButton!
+    
+    @IBOutlet weak var transactionsButtonTitle: UIButton!
+    
     @IBAction func categoriesButton(_ sender: UIButton) {
         performSegue(withIdentifier: mainToCategoriesSegueKey, sender: self)
     }
@@ -75,7 +79,7 @@ class MainScreen: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +90,16 @@ class MainScreen: UIViewController {
 //        for transaction in budget.transactions {
 //            print(transaction.transactionID)
 //        }
+
+        categoriesButtonTitle.layer.cornerRadius = 35
+        categoriesButtonTitle.layer.masksToBounds = true
+        categoriesButtonTitle.layer.borderWidth = 1
+        categoriesButtonTitle.layer.borderColor = UIColor.white.cgColor
+        
+        transactionsButtonTitle.layer.cornerRadius = 35
+        transactionsButtonTitle.layer.masksToBounds = true
+        transactionsButtonTitle.layer.borderWidth = 1
+        transactionsButtonTitle.layer.borderColor = UIColor.white.cgColor
         
     }
     
