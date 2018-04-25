@@ -51,8 +51,12 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
             
             categoryPicked.isUserInteractionEnabled = false
-            categoryPicked.selectRow(0, inComponent: 0, animated: true)
-            categoryPicked.alpha = 0.3
+            
+            guard let unallocatedIndex = budget.sortedCategoryKeys.index(of: unallocatedKey) else { return }
+
+            categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
+            
+            categoryPicked.alpha = 0.5
             
         } else if typeOfTransaction == .withdrawal {
             
@@ -69,7 +73,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
-        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
@@ -199,7 +204,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+                            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
@@ -236,7 +241,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+                            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
@@ -270,7 +275,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         budget.sortCategoriesByKey()
         
         addTransactionButtonTitle.layer.cornerRadius = 27
@@ -281,6 +288,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         updateLeftLabelAtTopRight()
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

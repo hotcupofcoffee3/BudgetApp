@@ -68,6 +68,24 @@ class Budget {
     }
     
     
+    
+    // MARK: - Update Balance
+    
+    func updateBalance() {
+        
+        var newBalance = 0.0
+        
+        for (_, detail) in budget.categories {
+            
+            newBalance += detail.available
+            
+        }
+        
+        balance = newBalance
+        
+    }
+    
+    
     // ************************************************
     // MARK: - Category functions
     // ************************************************

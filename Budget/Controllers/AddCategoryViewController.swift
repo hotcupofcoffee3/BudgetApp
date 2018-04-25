@@ -15,10 +15,16 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     func updateLeftLabelAtTopRight() {
-        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        
+        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        
+        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
     // MARK: Update elements because of success

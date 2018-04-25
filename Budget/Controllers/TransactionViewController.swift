@@ -125,6 +125,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

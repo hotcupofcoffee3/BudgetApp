@@ -14,6 +14,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     
@@ -21,7 +23,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
-        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        
+        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        
+        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
@@ -74,7 +80,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toCategoryPicker.alpha = 1.0
         
         fromCategoryPicker.isUserInteractionEnabled = false
-        fromCategoryPicker.alpha = 0.3
+        fromCategoryPicker.alpha = 0.5
         
         
         // Set disabled 'from' picker to "Uncategorized"
@@ -94,7 +100,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fromCategoryPicker.alpha = 1.0
         
         toCategoryPicker.isUserInteractionEnabled = false
-        toCategoryPicker.alpha = 0.3
+        toCategoryPicker.alpha = 0.5
         
         
         

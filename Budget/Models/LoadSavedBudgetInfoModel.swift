@@ -22,6 +22,9 @@ func loadCategories() {
         guard let savedCategories = savedObject as? [String: [String: Double]] else { return }
         budget.categories = convertCategories(from: savedCategories)
     }
+    
+    budget.updateBalance()
+    
 }
 
 func loadTransactions() {

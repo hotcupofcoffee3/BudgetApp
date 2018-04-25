@@ -157,6 +157,7 @@
                                                 <action selector="backButton:" destination="hY6-l5-vLB" id="eit-ig-hPg"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="6YZ-eR-ZXu"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -229,7 +230,7 @@
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49r-Dq-A83">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49r-Dq-A83">
                                 <rect key="frame" x="20" y="74" width="335" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -265,6 +266,7 @@
                         <outlet property="categoryNameTextField" destination="Ekd-UJ-C6E" id="6gm-UR-6Sf"/>
                         <outlet property="categoryWarningLabel" destination="brs-4a-HOv" id="PtT-Mg-Dpb"/>
                         <outlet property="leftAmountAtTopRight" destination="49r-Dq-A83" id="IoS-CM-WRE"/>
+                        <outlet property="leftLabelOnNavBar" destination="6YZ-eR-ZXu" id="4nb-qi-eCg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -297,10 +299,11 @@
                                                 <action selector="backButton:" destination="ZN3-qu-gHe" id="hVk-Tb-GjI"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="AB6-oh-B2y"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-DU-pLN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-DU-pLN">
                                 <rect key="frame" x="20" y="74" width="335" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -478,6 +481,7 @@ amount gets allocated or removed.</string>
                         <outlet property="fromCategoryPicker" destination="24W-sK-lTp" id="D7e-pm-Roc"/>
                         <outlet property="fundsTextField" destination="gye-NM-XkX" id="6pU-24-oAb"/>
                         <outlet property="leftAmountAtTopRight" destination="9oB-DU-pLN" id="N6a-e3-Zf4"/>
+                        <outlet property="leftLabelOnNavBar" destination="AB6-oh-B2y" id="MY2-Pi-Ztx"/>
                         <outlet property="moveFundsButtonTitle" destination="qFd-YW-dCJ" id="d8H-NH-lIl"/>
                         <outlet property="toCategoryCurrentBalanceLabel" destination="h8E-1m-t2W" id="H74-vY-VxQ"/>
                         <outlet property="toCategoryPicker" destination="Cfh-dz-bdA" id="3Ae-QE-kTa"/>
@@ -517,7 +521,7 @@ amount gets allocated or removed.</string>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZ5-vd-Ehm">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZ5-vd-Ehm">
                                 <rect key="frame" x="20.5" y="74" width="334.5" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
