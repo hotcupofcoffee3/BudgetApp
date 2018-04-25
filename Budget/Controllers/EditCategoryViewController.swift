@@ -128,6 +128,8 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             // ***** All impossible entries are taken care of.
             } else {
                 
+                guard let unallocated = budget.categories[unallocatedKey] else { return }
+                
                 // Sets new Category budgeted amount to an actual amount
                 if let newCategoryAvailableDouble = Double(newCategoryAvailableStringFromTextField) {
                     
@@ -145,7 +147,10 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                     
                     failureWithWarning(message: "You have to enter a positive amount")
                     
+                // *** If there was not enough unallocated funds available.
+                } else if newCategoryAvailable > (unallocated.available + oldCategory.available) {
                     
+                    failureWithWarning(message: "You don't have enough unallocated funds for this")
                     
                     
                 // ****************
@@ -157,17 +162,21 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     
                     
-                    // ***** Checks the fields to assign appropriate Alert and Success messages
+                    // *** Checks the fields to assign appropriate Alert and Success messages
                     
                     var alertMessage = String()
                     var successMessage = String()
                     
                     
-                    // ***** If only amount changed: Sets new category to old category.
+                    // *** If only amount changed: Sets new category to old category.
                     
                     if newCategoryTitleFromTextField == "" || newCategoryTitleFromTextField == oldCategoryTitle {
                         
                         newCategoryTitle = oldCategoryTitle
+                        
+                        // Add the old amount back into "Unallocated", then take out the new amount.
+                        unallocated.available += oldCategory.available
+                        unallocated.available -= newCategoryAvailable
 
                         alertMessage = "Update '\(oldCategoryTitle)' with $\(String(format: doubleFormatKey, newCategoryAvailable))?"
                         
@@ -186,6 +195,10 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                     // ***** If both change: Sets new budgeted amount to text field input.
                     } else {
+                        
+                        // Add the old amount back into "Unallocated", then take out the new amount.
+                        unallocated.available += oldCategory.available
+                        unallocated.available -= newCategoryAvailable
 
                         alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)', and change budgeted amount from $\(String(format: doubleFormatKey, oldCategory.available)) to $\(String(format: doubleFormatKey, newCategoryAvailable))?"
                         
@@ -203,6 +216,8 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                         budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewAvailableAmount: newCategoryAvailable)
                         
+                        
+                        // Update the UI elements with the new info
                         self.currentCategoryNameString = newCategoryTitle
                         self.currentCategoryAmountDouble = newCategoryAvailable
                         
