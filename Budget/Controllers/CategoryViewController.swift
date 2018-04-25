@@ -73,7 +73,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 budget.deleteCategory(named: categoryToDelete)
                 
                 self.refreshAvailableBalanceLabel()
-                budget.sortCategoriesByKey()
+                budget.sortCategoriesByKey(withUnallocated: false)
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -120,7 +120,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: false)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
@@ -133,7 +133,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: false)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
     }

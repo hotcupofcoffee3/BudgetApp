@@ -224,6 +224,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         self.updateUIElementsBecauseOfSuccess(successMessage: successMessage)
                         
                         self.updateLabelsAtTop()
+                        self.updateLeftLabelAtTopRight()
                         
                     }))
                     
@@ -249,6 +250,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         currentCategoryNameString = editableCategoryName
         
         updateLabelsAtTop()
+        updateLeftLabelAtTopRight()
         
         self.editCategoryButton.layer.cornerRadius = 27
         self.editCategoryButton.layer.masksToBounds = true

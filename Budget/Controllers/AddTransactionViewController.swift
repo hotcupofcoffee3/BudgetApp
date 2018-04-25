@@ -56,6 +56,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
 
             categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
             
+            updateCurrentCategoryBalanceLabel(forCategory: unallocatedKey)
+            
             categoryPicked.alpha = 0.5
             
         } else if typeOfTransaction == .withdrawal {
@@ -278,7 +280,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         super.viewDidLoad()
         
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: true)
         
         addTransactionButtonTitle.layer.cornerRadius = 27
         addTransactionButtonTitle.layer.masksToBounds = true
@@ -292,7 +294,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: true)
         categoryPicked.reloadAllComponents()
         
         updateLeftLabelAtTopRight()

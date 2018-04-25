@@ -161,7 +161,7 @@ class Budget {
             
         }
         
-        sortCategoriesByKey()
+        sortCategoriesByKey(withUnallocated: false)
         saveEverything()
     }
     
@@ -194,7 +194,7 @@ class Budget {
         if named != unallocatedKey {
             categories[named] = nil
         }
-        sortCategoriesByKey()
+        sortCategoriesByKey(withUnallocated: false)
         saveEverything()
     }
     
@@ -202,15 +202,32 @@ class Budget {
     
     // MARK: Sort Categories
     
-    func sortCategoriesByKey () {
+    func sortCategoriesByKey(withUnallocated: Bool) {
         
-        // Empties sorted Category Key array
         sortedCategoryKeys = []
+        
+        if withUnallocated == true {
             
-        for key in categories.keys {
-            sortedCategoryKeys.append(key)
+            for key in categories.keys {
+                if key == unallocatedKey {
+                    continue
+                }
+                sortedCategoryKeys.append(key)
+            }
+            sortedCategoryKeys.sort()
+            sortedCategoryKeys = [unallocatedKey] + sortedCategoryKeys
+            
+        } else {
+            
+            for key in categories.keys {
+                if key == unallocatedKey {
+                    continue
+                }
+                sortedCategoryKeys.append(key)
+            }
+            sortedCategoryKeys.sort()
+            
         }
-        sortedCategoryKeys.sort()
         
     }
     

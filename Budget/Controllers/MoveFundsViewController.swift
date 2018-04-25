@@ -450,7 +450,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
@@ -467,7 +467,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     override func viewDidAppear(_ animated: Bool) {
         
-        budget.sortCategoriesByKey()
+        budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
