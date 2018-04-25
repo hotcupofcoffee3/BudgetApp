@@ -20,6 +20,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     @IBOutlet weak var transactionSegmentedControl: UISegmentedControl!
@@ -67,9 +69,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
-        if let uncategorized = budget.categories[uncategorizedKey] {
-            leftAmountAtTopRight.text = "Left: $\(String(format: doubleFormatKey, uncategorized.available))"
-        }
+        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {

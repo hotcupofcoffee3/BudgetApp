@@ -18,9 +18,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     func updateLeftLabelAtTopRight() {
-        if let uncategorized = budget.categories[uncategorizedKey] {
-            leftAmountAtTopRight.text = "Left: $\(String(format: doubleFormatKey, uncategorized.available))"
-        }
+        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     // MARK: Update elements because of success

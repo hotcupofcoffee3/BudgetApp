@@ -14,16 +14,9 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var categoryNavBar: UINavigationBar!
     
-    
     func refreshAvailableBalanceLabel() {
-        if let availableBalance = budget.categories[uncategorizedKey] {
-            availableBalanceLabel.text = "$\(String(format: "%0.2f", availableBalance.available))"
-        }
+        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
-
-    // "Uncategorized" category is excluded from the table presentation of the categories.
-    // The amount left over is the same as the "Uncategorized" category.
-    // It is, therefore, placed on the top as "Left".
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     

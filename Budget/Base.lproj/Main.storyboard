@@ -513,6 +513,7 @@ amount gets allocated or removed.</string>
                                                 <action selector="backButton:" destination="HME-n8-SWE" id="adQ-qp-Cyi"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="uqV-O1-oyU"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -692,6 +693,7 @@ amount gets allocated or removed.</string>
                         <outlet property="categoryPicked" destination="zLF-kf-4gV" id="4g3-Ho-dr0"/>
                         <outlet property="currentCategoryBalanceLabel" destination="fHR-xw-HmO" id="RlM-E9-diV"/>
                         <outlet property="leftAmountAtTopRight" destination="uZ5-vd-Ehm" id="BuC-1R-9dT"/>
+                        <outlet property="leftLabelOnNavBar" destination="uqV-O1-oyU" id="wxB-iD-Z5e"/>
                         <outlet property="transactionAmountTextField" destination="nWl-rx-sNc" id="dJW-A9-m6T"/>
                         <outlet property="transactionDatePicker" destination="mV6-9c-Yco" id="ZGO-gf-iV0"/>
                         <outlet property="transactionNameTextField" destination="h8m-Na-mTR" id="LQl-Mt-oGh"/>

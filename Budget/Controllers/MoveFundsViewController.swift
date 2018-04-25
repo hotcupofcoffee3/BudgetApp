@@ -21,9 +21,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
-        if let uncategorized = budget.categories[uncategorizedKey] {
-            leftAmountAtTopRight.text = "Left: $\(String(format: doubleFormatKey, uncategorized.available))"
-        }
+        leftAmountAtTopRight.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {

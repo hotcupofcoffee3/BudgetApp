@@ -13,9 +13,7 @@ var editableTransactionIndex = Int()
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func refreshAvailableBalanceLabel() {
-        if let availableBalance = budget.categories[uncategorizedKey] {
-            availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
-        }
+        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     @IBOutlet weak var availableBalanceLabel: UILabel!

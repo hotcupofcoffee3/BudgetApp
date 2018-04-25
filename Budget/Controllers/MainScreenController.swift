@@ -15,9 +15,7 @@ class MainScreen: UIViewController {
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     func refreshAvailableBalanceLabel() {
-        if let availableBalance = budget.categories[uncategorizedKey] {
-            availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
-        }
+        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     @IBOutlet weak var categoriesButtonTitle: UIButton!
@@ -96,8 +94,6 @@ class MainScreen: UIViewController {
         
         hiddenDeleteButton.addGestureRecognizer(uilpr)
         
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,7 +108,7 @@ class MainScreen: UIViewController {
     
     
     
-    // Long press recognizer function
+    // MARK: - Long press recognizer function
     @objc func longpress(gestureRecognizer: UILongPressGestureRecognizer) {
         
         // Only does it once, even if it is held down for longer.

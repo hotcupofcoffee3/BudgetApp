@@ -50,6 +50,8 @@ class Transaction {
 
 }
 
+
+
 // ************************************************
 // MARK: - Budget Class
 // ************************************************
@@ -59,9 +61,29 @@ class Budget {
     var categories = [String: Category]()
     var transactions = [Transaction]()
     var sortedCategoryKeys = [String]()
+    var balance = Double()
     
     init() {
         self.categories[uncategorizedKey] = Category(name: uncategorizedKey, budgeted: 0.0)
+        guard let uncategorized = self.categories[uncategorizedKey] else { return }
+        self.balance = uncategorized.budgeted
+    }
+    
+    
+    // MARK: - Update Balance
+    
+    func updateBalance(with typeOfTransaction: TransactionType, inTheAmountOf amount: Double) {
+        
+        if typeOfTransaction == .deposit {
+            
+            balance += amount
+            
+        } else {
+            
+            balance -= amount
+            
+        }
+        
     }
     
     
@@ -339,16 +361,19 @@ class Budget {
     
     func addTransaction (type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
         
+        let amount = inTheAmountOf
+        
         let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
         
         if type == .deposit {
             
             guard let uncategorized = categories[uncategorizedKey] else { return }
-            uncategorized.available += inTheAmountOf
+            uncategorized.available += amount
+            updateBalance(with: .deposit, inTheAmountOf: amount)
             
             let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
             
-            transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+            transactions.append(Transaction(transactionID: formattedTransactionID, type: .deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: amount, year: year, month: month, day: day))
             
             sortTransactionsDescending()
             
@@ -356,10 +381,11 @@ class Budget {
             
         } else if type == .withdrawal {
             
-            transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: inTheAmountOf, year: year, month: month, day: day))
+            transactions.append(Transaction(transactionID: formattedTransactionID, type: .withdrawal, title: title, forCategory: thisCategory, inTheAmountOf: amount, year: year, month: month, day: day))
             
             guard let category = categories[thisCategory]  else { return }
-            category.available -= inTheAmountOf
+            category.available -= amount
+            updateBalance(with: .withdrawal, inTheAmountOf: amount)
             
             sortTransactionsDescending()
             
@@ -396,13 +422,15 @@ class Budget {
         if transactions[index].type == .deposit {
             
             guard let uncategorized = categories[uncategorizedKey] else { return }
-            uncategorized.available -= transactions[index].inTheAmountOf
+            uncategorized.available -= amount
+            updateBalance(with: .withdrawal, inTheAmountOf: amount)
             
         } else if transactions[index].type == .withdrawal {
             
             // Add amount back to category
             guard let categoryToPutBackTo = categories[category] else { return }
             categoryToPutBackTo.available += amount
+            updateBalance(with: .deposit, inTheAmountOf: amount)
             
         }
         
