@@ -46,8 +46,16 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
-        performSegue(withIdentifier: editCategorySegueKey, sender: self)
+       
+        if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
+            
+            editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
+            performSegue(withIdentifier: editCategorySegueKey, sender: self)
+            
+        }
+        
+        displayedDataTable.deselectRow(at: indexPath, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

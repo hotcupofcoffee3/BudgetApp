@@ -17,6 +17,18 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    
+    func updateLeftLabelAtTopRight() {
+        
+        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        
+        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+    }
+    
     func updateLabelsAtTop() {
         
         if let currentCategory = budget.categories[currentCategoryNameString] {

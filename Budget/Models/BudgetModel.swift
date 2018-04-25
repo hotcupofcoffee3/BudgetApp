@@ -75,7 +75,7 @@ class Budget {
         
         var newBalance = 0.0
         
-        for (_, detail) in budget.categories {
+        for (_, detail) in categories {
             
             newBalance += detail.available
             
