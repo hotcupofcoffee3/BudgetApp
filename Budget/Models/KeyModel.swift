@@ -9,11 +9,10 @@
 import Foundation
 import UIKit
 
-let budgetedKey = "Budgeted"
 let availableKey = "Available"
 let categoryKey = "Category"
 let transactionKey = "Transaction"
-let uncategorizedKey = "Uncategorized"
+let unallocatedKey = "Unallocated"
 
 let doubleFormatKey = "%0.2f"
 

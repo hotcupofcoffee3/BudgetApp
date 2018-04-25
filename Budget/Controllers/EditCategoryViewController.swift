@@ -22,7 +22,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         if let currentCategory = budget.categories[currentCategoryNameString] {
             
             currentCategoryName.text = currentCategoryNameString
-            currentCategoryAmount.text = "$\(String(format: doubleFormatKey, currentCategory.budgeted))"
+            currentCategoryAmount.text = "$\(String(format: doubleFormatKey, currentCategory.available))"
             
         }
     
@@ -75,40 +75,40 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func editCategory(_ sender: UIButton) {
         
-        if let oldCategoryTitle = currentCategoryName.text, let newCategoryTitleFromTextField = newCategoryName.text, let newCategoryBudgetedStringFromTextField = newCategoryAmount.text {
+        if let oldCategoryTitle = currentCategoryName.text, let newCategoryTitleFromTextField = newCategoryName.text, let newCategoryAvailableStringFromTextField = newCategoryAmount.text {
             
             var newCategoryTitle = newCategoryTitleFromTextField
-            var newCategoryBudgeted = Double()
+            var newCategoryAvailable = Double()
             
             guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
             
 
             // ***** Are the fields empty?
-            if newCategoryTitleFromTextField == "" && newCategoryBudgetedStringFromTextField == ""  {
+            if newCategoryTitleFromTextField == "" && newCategoryAvailableStringFromTextField == ""  {
                 
                 failureWithWarning(message: "There is nothing to update.")
                
                 
             // ***** Do both fields have info, and it is the exact same as the current info?
-            } else if newCategoryTitleFromTextField == oldCategoryTitle && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
+            } else if newCategoryTitleFromTextField == oldCategoryTitle && Double(newCategoryAvailableStringFromTextField) == oldCategory.available {
                 
                 failureWithWarning(message: "This is the same information that is already set.")
                 
                 
             // ***** Was the new category entered the same as the one already set, if not amount changed?
-            } else if oldCategoryTitle == newCategoryTitleFromTextField && newCategoryBudgetedStringFromTextField == "" {
+            } else if oldCategoryTitle == newCategoryTitleFromTextField && newCategoryAvailableStringFromTextField == "" {
                 
                 failureWithWarning(message: "The category is already named '\(currentCategoryNameString)'")
                 
                 
             // *** Was the amount entered the same as is already budgeted?
-            } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == oldCategory.budgeted {
+            } else if newCategoryTitleFromTextField == "" && Double(newCategoryAvailableStringFromTextField) == oldCategory.available {
                 
-                failureWithWarning(message: "The category is already budgeted $\(String(format: doubleFormatKey, oldCategory.budgeted))")
+                failureWithWarning(message: "The category is already budgeted $\(String(format: doubleFormatKey, oldCategory.available))")
                 
                 
             // *** Was category blank and amount not convertible to a Double?
-            } else if newCategoryTitleFromTextField == "" && Double(newCategoryBudgetedStringFromTextField) == nil {
+            } else if newCategoryTitleFromTextField == "" && Double(newCategoryAvailableStringFromTextField) == nil {
                 
                 failureWithWarning(message: "You have to enter a number.")
                 
@@ -117,19 +117,19 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             } else {
                 
                 // Sets new Category budgeted amount to an actual amount
-                if let newCategoryBudgetedDouble = Double(newCategoryBudgetedStringFromTextField) {
+                if let newCategoryAvailableDouble = Double(newCategoryAvailableStringFromTextField) {
                     
-                    newCategoryBudgeted = newCategoryBudgetedDouble
+                    newCategoryAvailable = newCategoryAvailableDouble
                     
                 } else {
                     
-                    newCategoryBudgeted = oldCategory.budgeted
+                    newCategoryAvailable = oldCategory.available
                     
                 }
                 
                 
                 // *** Was the amount entered less than 0?
-                if newCategoryBudgeted < 0.0 {
+                if newCategoryAvailable < 0.0 {
                     
                     failureWithWarning(message: "You have to enter a positive amount")
                     
@@ -157,15 +157,15 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                         newCategoryTitle = oldCategoryTitle
 
-                        alertMessage = "Update '\(oldCategoryTitle)' with $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
+                        alertMessage = "Update '\(oldCategoryTitle)' with $\(String(format: doubleFormatKey, newCategoryAvailable))?"
                         
-                        successMessage = "'\(oldCategoryTitle)' successfully updated with $\(String(format: doubleFormatKey, newCategoryBudgeted))!"
+                        successMessage = "'\(oldCategoryTitle)' successfully updated with $\(String(format: doubleFormatKey, newCategoryAvailable))!"
                         
                         
                     // ***** If only name changed: Sets new category budgeted to old category budgeted.
-                    } else if newCategoryBudgetedStringFromTextField == "" {
+                    } else if newCategoryAvailableStringFromTextField == "" {
                         
-                        newCategoryBudgeted = oldCategory.budgeted
+                        newCategoryAvailable = oldCategory.available
                         
                         alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)'?"
                         
@@ -175,9 +175,9 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                     // ***** If both change: Sets new budgeted amount to text field input.
                     } else {
 
-                        alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)', and change budgeted amount from $\(String(format: doubleFormatKey, oldCategory.budgeted)) to $\(String(format: doubleFormatKey, newCategoryBudgeted))?"
+                        alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)', and change budgeted amount from $\(String(format: doubleFormatKey, oldCategory.available)) to $\(String(format: doubleFormatKey, newCategoryAvailable))?"
                         
-                        successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)', and the budgeted amount of $\(String(format: doubleFormatKey, oldCategory.budgeted)) was changed to $\(String(format: doubleFormatKey, newCategoryBudgeted))!"
+                        successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)', and the budgeted amount of $\(String(format: doubleFormatKey, oldCategory.available)) was changed to $\(String(format: doubleFormatKey, newCategoryAvailable))!"
                         
                     }
                     
@@ -189,10 +189,10 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                         
                         // Update Category function called & local variables for labels set
                         
-                        budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewBudgetedAmount: newCategoryBudgeted)
+                        budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewAvailableAmount: newCategoryAvailable)
                         
                         self.currentCategoryNameString = newCategoryTitle
-                        self.currentCategoryAmountDouble = newCategoryBudgeted
+                        self.currentCategoryAmountDouble = newCategoryAvailable
                         
                         self.updateUIElementsBecauseOfSuccess(successMessage: successMessage)
                         

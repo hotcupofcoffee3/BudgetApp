@@ -203,12 +203,12 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
-                                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+                                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                                 
                                 self.warningLabel.textColor = successColor
                                 self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) was deposited."
                                 
-                                self.updateUIElementsBecauseOfSuccess(forCategory: uncategorizedKey)
+                                self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
                                 
                             }))
                             
@@ -271,7 +271,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        budget.sortCategoriesByKey(withUncategorized: true)
+        budget.sortCategoriesByKey()
         
         addTransactionButtonTitle.layer.cornerRadius = 27
         addTransactionButtonTitle.layer.masksToBounds = true
@@ -284,7 +284,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        budget.sortCategoriesByKey(withUncategorized: true)
+        budget.sortCategoriesByKey()
         categoryPicked.reloadAllComponents()
         
         updateLeftLabelAtTopRight()

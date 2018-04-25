@@ -61,26 +61,70 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func addCategory(_ sender: UIButton) {
         
+        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        
         if let categoryName = categoryNameTextField.text, let categoryAmount = categoryBudgetedAmountTextField.text {
             
-            if categoryName == "" || categoryAmount == "" {
+            // *** If everything is blank
+            if categoryName == "" && categoryAmount == "" {
                 
-               failureWithWarning(message: "You have to complete all fields.")
+               failureWithWarning(message: "You have to at least give a name.")
+                
+                
+            // *** If only the amount field is completed
+            } else if categoryName == "" && categoryAmount != "" {
+                
+                failureWithWarning(message: "You can't create an unnamed category.")
+            
+            // *** If both are filled out, but the amount is not a double
+            } else if categoryName != "" && categoryAmount != "" && Double(categoryAmount) == nil {
+                
+                 failureWithWarning(message: "You have to enter a number for the amount.")
                 
             } else {
                 
-                // Success
-                if let categoryAmount = Double(categoryAmount){
+                if let categoryAmountAsDouble = Double(categoryAmount) {
                     
-                    let alert = UIAlertController(title: nil, message: "Create category named \"\(categoryName)\" with a budgeted amount of $\(String(format: doubleFormatKey, categoryAmount))?", preferredStyle: .alert)
+                    if categoryAmountAsDouble < 0.0 {
+                        
+                        failureWithWarning(message: "You have to enter a positive number")
+                        
+                    } else if categoryAmountAsDouble > unallocated.available {
+                        
+                        failureWithWarning(message: "You don't have enough unallocated funds for this.")
+                        
+                    } else {
+                        
+                        let alert = UIAlertController(title: nil, message: "Create category named \"\(categoryName)\" with an amount of $\(String(format: doubleFormatKey, categoryAmountAsDouble))?", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                            
+                            budget.addCategory(named: categoryName, withThisAmount: categoryAmountAsDouble)
+                            
+                            self.categoryWarningLabel.textColor = successColor
+                            self.categoryWarningLabel.text = "\"\(categoryName)\" with an amount of $\(String(format: doubleFormatKey, categoryAmountAsDouble)) has been added."
+                            
+                            self.updateUIElementsBecauseOfSuccess()
+                            
+                        }))
+                        
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        
+                        present(alert, animated: true, completion: nil)
+                        
+                    }
+                    
+                } else {
+                    
+                    let alert = UIAlertController(title: nil, message: "Create category named \"\(categoryName)\"?", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                         
-                        budget.addCategory(named: categoryName, withThisAmount: categoryAmount)
+                        budget.addCategory(named: categoryName, withThisAmount: nil)
                         
                         self.categoryWarningLabel.textColor = successColor
-                        self.categoryWarningLabel.text = "\"\(categoryName)\" with a budgeted amount of $\(String(format: doubleFormatKey, categoryAmount)) has been added."
-
+                        self.categoryWarningLabel.text = "\"\(categoryName)\" has been created."
+                        
                         self.updateUIElementsBecauseOfSuccess()
                         
                     }))
@@ -88,10 +132,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                     
                     present(alert, animated: true, completion: nil)
-                    
-                } else {
-                    
-                    failureWithWarning(message: "You have to enter a number for the amount.")
                     
                 }
                 

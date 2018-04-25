@@ -28,13 +28,13 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         if let selectedCategory = budget.categories[categoryName] {
             
-            if categoryName == uncategorizedKey {
+            if categoryName == unallocatedKey {
                 
-                atLabel.text = "Current: $\(String(format: doubleFormatKey, selectedCategory.available))"
+                atLabel.text = "Available: $\(String(format: doubleFormatKey, selectedCategory.available))"
                 
             } else {
                 
-                atLabel.text = "Budgeted: $\(String(format: doubleFormatKey, selectedCategory.budgeted))\nCurrent: $\(String(format: doubleFormatKey, selectedCategory.available))"
+                atLabel.text = "Available: $\(String(format: doubleFormatKey, selectedCategory.available))"
                 
             }
             
@@ -81,7 +81,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fromCategoryPicker.selectRow(0, inComponent: 0, animated: true)
         
         // Update 'from' balance label to 'Uncategorized'
-        updateCategoryBalanceLabel(for: uncategorizedKey, atLabel: fromCategoryCurrentBalanceLabel)
+        updateCategoryBalanceLabel(for: unallocatedKey, atLabel: fromCategoryCurrentBalanceLabel)
         
     }
     
@@ -102,7 +102,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toCategoryPicker.selectRow(0, inComponent: 0, animated: true)
         
         // Update 'to' balance label to 'Uncategorized'
-        updateCategoryBalanceLabel(for: uncategorizedKey, atLabel: toCategoryCurrentBalanceLabel)
+        updateCategoryBalanceLabel(for: unallocatedKey, atLabel: toCategoryCurrentBalanceLabel)
         
     }
     
@@ -248,49 +248,18 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 let toCategorySelectedIndex = toCategoryPicker.selectedRow(inComponent: 0)
                 let toCategorySelectedName = budget.sortedCategoryKeys[toCategorySelectedIndex]
                 
-                guard let selectedCategory = budget.categories[toCategorySelectedName] else { return }
-                guard let uncategorizedCategory = budget.categories[uncategorizedKey] else { return }
-
-                
-                
                 // Allocation submitted, with the amount being the default set budgeted amount
                 if amountFromTextField == "" {
 
-                    if (uncategorizedCategory.available - selectedCategory.budgeted) < 0 {
-                        
-                        failureWithWarning(message: "You don't have enough funds for that.")
-                        
-                    } else {
-                        
-                        let alert = UIAlertController(title: nil, message: "Allocate $\(String(format: doubleFormatKey, selectedCategory.budgeted)) to \(toCategorySelectedName)?", preferredStyle: .alert)
-                        
-                        // Success!!! Adds default amount
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                            
-                            budget.allocateFundsToCategory(withThisAmount: selectedCategory.budgeted, to: toCategorySelectedName)
-                            
-                            self.warningLabel.textColor = successColor
-                            self.warningLabel.text = "$\(String(format: doubleFormatKey, selectedCategory.budgeted)) allocated to \(toCategorySelectedName)"
-                            
-                            // Haptics triggered, labels updated, and text field cleared
-                            self.updateUIElementsBecauseOfSuccess(forFromCategory: uncategorizedKey, forToCategory: toCategorySelectedName)
-                            
-                        }))
-                        
-                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                        
-                        present(alert, animated: true, completion: nil)
-                        
-                    }
+                    failureWithWarning(message: "You have to enter an amount.")
                     
-                    
-                    
+
                 // Allocation submitted, with the amount being specifically set
                 } else if let amount = Double(amountFromTextField) {
                     
-                    guard let uncategorizedCategory = budget.categories[uncategorizedKey] else { return }
+                    guard let unallocatedCategory = budget.categories[unallocatedKey] else { return }
                     
-                    if (uncategorizedCategory.available - amount) < 0 {
+                    if (unallocatedCategory.available - amount) < 0 {
                         
                         failureWithWarning(message: "You don't have enough funds left that.")
                         
@@ -311,7 +280,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                             self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) allocated to \(toCategorySelectedName)"
                             
                             // Haptics triggered, labels updated, and text field cleared
-                            self.updateUIElementsBecauseOfSuccess(forFromCategory: uncategorizedKey, forToCategory: toCategorySelectedName)
+                            self.updateUIElementsBecauseOfSuccess(forFromCategory: unallocatedKey, forToCategory: toCategorySelectedName)
                             
                         }))
                         
@@ -348,33 +317,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 // Removal submitted, with the amount being the default set budgeted amount
                 if amountFromTextField == "" {
                     
-                    if (selectedCategory.available - selectedCategory.budgeted) < 0 {
-                        
-                        failureWithWarning(message: "Not enough funds in this category for that.")
-                        
-                    } else {
-                            
-                        let alert = UIAlertController(title: nil, message: "Remove $\(String(format: doubleFormatKey, selectedCategory.budgeted)) from \(fromCategorySelectedName)?", preferredStyle: .alert)
-                        
-                        // Success!!! Removes default amount
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                            
-                            budget.removeFundsFromCategory(withThisAmount: selectedCategory.budgeted, from: fromCategorySelectedName)
-                            
-                            self.warningLabel.textColor = successColor
-                            self.warningLabel.text = "$\(String(format: doubleFormatKey, selectedCategory.budgeted)) removed from \(fromCategorySelectedName)"
-                            
-                            // Haptics triggered, labels updated, and text field cleared
-                            self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategorySelectedName, forToCategory: uncategorizedKey)
-                            
-                        }))
-                        
-                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                        
-                        present(alert, animated: true, completion: nil)
-                        
-                    }
-                    
+                    failureWithWarning(message: "You have to enter an amount.")
                     
                     
                     // Removal submitted, with the amount being specifically set
@@ -401,7 +344,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                             self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) removed from \(fromCategorySelectedName)"
                             
                             // Haptics triggered, labels updated, and text field cleared
-                            self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategorySelectedName, forToCategory: uncategorizedKey)
+                            self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategorySelectedName, forToCategory: unallocatedKey)
                             
                         }))
                         
@@ -501,7 +444,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        budget.sortCategoriesByKey(withUncategorized: true)
+        budget.sortCategoriesByKey()
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
@@ -518,7 +461,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     override func viewDidAppear(_ animated: Bool) {
         
-        budget.sortCategoriesByKey(withUncategorized: true)
+        budget.sortCategoriesByKey()
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)

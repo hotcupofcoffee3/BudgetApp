@@ -76,7 +76,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 budget.deleteTransaction(at: indexPath.row)
                 
                 self.refreshAvailableBalanceLabel()
-                budget.sortCategoriesByKey(withUncategorized: false)
+                budget.sortCategoriesByKey()
                 self.displayedDataTable.reloadData()
                 
             }))

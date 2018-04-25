@@ -38,8 +38,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         cell.detailTextLabel?.textColor = UIColor.white
         
         if let category = budget.categories[budget.sortedCategoryKeys[indexPath.row]] {
-            cell.textLabel?.text = "\(category.name): $\(String(format: doubleFormatKey, category.available))"
-            cell.detailTextLabel?.text = "Budgeted: $\(String(format: doubleFormatKey, category.budgeted))"
+            cell.textLabel?.text = "\(category.name)"
+            cell.detailTextLabel?.text = "$\(String(format: doubleFormatKey, category.available))"
         }
         
         return cell
@@ -65,7 +65,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 budget.deleteCategory(named: categoryToDelete)
                 
                 self.refreshAvailableBalanceLabel()
-                budget.sortCategoriesByKey(withUncategorized: false)
+                budget.sortCategoriesByKey()
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -112,7 +112,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey(withUncategorized: false)
+        budget.sortCategoriesByKey()
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
@@ -125,7 +125,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey(withUncategorized: false)
+        budget.sortCategoriesByKey()
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
     }

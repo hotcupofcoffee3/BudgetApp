@@ -14,9 +14,9 @@ func convertCategories(from usedCategories: [String: Category]) -> [String: [Str
 
     var convertedCategories = [String: [String: Double]]()
     
-    for (category, amountType) in usedCategories {
+    for (category, amount) in usedCategories {
         convertedCategories[category] = [String: Double]()
-        convertedCategories[category] = [budgetedKey: amountType.budgeted, availableKey: amountType.available]
+        convertedCategories[category] = [availableKey: amount.available]
     }
     
     return convertedCategories
@@ -26,9 +26,9 @@ func convertCategories(from savedCategories: [String: [String: Double]]) -> [Str
     
     var convertedCategories = [String: Category]()
     
-    for (category, amountType) in savedCategories {
-        if let budgeted = amountType[budgetedKey], let available = amountType[availableKey] {
-            convertedCategories[category] = Category(name: category, budgeted: budgeted)
+    for (category, amount) in savedCategories {
+        if let available = amount[availableKey] {
+            convertedCategories[category] = Category(name: category)
             
             if let convertedCategory = convertedCategories[category] {
                 convertedCategory.available = available
