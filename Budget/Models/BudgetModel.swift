@@ -241,22 +241,22 @@ class Budget {
     
     // MARK: Update Category
     
-    func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAvailableAmount newCategoryAvailable: Double) {
+    func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountAdded newCategoryAmount: Double) {
         
-        if newCategoryName == oldCategoryName {
-            
-            guard let oldCategory = categories[oldCategoryName] else { return }
-            
-            oldCategory.available = newCategoryAvailable
-            
-        } else {
+        guard let oldCategory = categories[oldCategoryName] else { return }
+        guard let unallocated = categories[unallocatedKey] else { return }
         
+        
+        // *** If 'newCategoryName' is a new category....
+        if categories[newCategoryName] == nil {
+
             categories[newCategoryName] = Category(name: newCategoryName)
             
-            // New category gets old category's available amount
-            if let nuevoCategory = categories[newCategoryName], let viejoCategory = categories[oldCategoryName] {
+            // New category gets old category's available amount and the new amount entered.
+            if let newCategory = categories[newCategoryName] {
                 
-                nuevoCategory.available = viejoCategory.available
+                unallocated.available -= newCategoryAmount
+                newCategory.available = oldCategory.available + newCategoryAmount
                 
             }
             
@@ -273,6 +273,14 @@ class Budget {
                 }
                         
             }
+            
+            
+        // *** If 'newCategoryName' is the same as the old one...
+        } else {
+            
+            oldCategory.available += newCategoryAmount
+            unallocated.available -= newCategoryAmount
+            
         }
         
         saveEverything()

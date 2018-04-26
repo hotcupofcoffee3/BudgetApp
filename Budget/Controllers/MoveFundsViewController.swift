@@ -36,11 +36,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             if categoryName == unallocatedKey {
                 
-                atLabel.text = "Available: $\(String(format: doubleFormatKey, selectedCategory.available))"
+                atLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
                 
             } else {
                 
-                atLabel.text = "Available: $\(String(format: doubleFormatKey, selectedCategory.available))"
+                atLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
                 
             }
             

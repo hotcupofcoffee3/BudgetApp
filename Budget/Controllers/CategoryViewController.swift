@@ -31,15 +31,28 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "CategoryCell")
+        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        
+        
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
         if let category = budget.categories[budget.sortedCategoryKeys[indexPath.row]] {
+            
+            if category.name == unallocatedKey {
+                
+                cell.accessoryType = .none
+                
+            } else {
+                
+                cell.accessoryType = .disclosureIndicator
+                
+            }
+            
             cell.textLabel?.text = "\(category.name)"
-            cell.detailTextLabel?.text = "$\(String(format: doubleFormatKey, category.available))"
+            cell.detailTextLabel?.text = "Left: $\(String(format: doubleFormatKey, category.available))"
         }
         
         return cell
