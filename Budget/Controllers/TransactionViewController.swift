@@ -58,6 +58,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         editableTransactionIndex = indexPath.row
         
+        displayedDataTable.deselectRow(at: indexPath, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
