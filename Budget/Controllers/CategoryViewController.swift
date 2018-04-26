@@ -33,14 +33,13 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        
-        
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
         if let category = budget.categories[budget.sortedCategoryKeys[indexPath.row]] {
             
+            // Unallocated has no disclosure indicator because you cannot edit it.
             if category.name == unallocatedKey {
                 
                 cell.accessoryType = .none
