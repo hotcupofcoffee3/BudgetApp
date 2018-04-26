@@ -107,6 +107,12 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 failureWithWarning(message: "This is the same information that is already set.")
                 
                 
+            // *** Is the new category name equal to "Unallocated"?
+            } else if newCategoryTitleFromTextField == unallocatedKey {
+                
+                failureWithWarning(message: "You cannot rename a category to \"Unallocated\"")
+                
+                
             // ***** Was the new category entered the same as the one already set, if not amount changed?
             } else if oldCategoryTitle == newCategoryTitleFromTextField && newCategoryAvailableStringFromTextField == "" {
                 

@@ -81,11 +81,25 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             } else if categoryName == "" && categoryAmount != "" {
                 
                 failureWithWarning(message: "You can't create an unnamed category.")
+                
+              
+            // *** If "Unallocated" is the attempted name
+            } else if categoryName == unallocatedKey {
+                
+                failureWithWarning(message: "You cannot create a category called \"Unallocated\"")
+                
+                
+            // *** If the category name already exists.
+            } else if budget.categories[categoryName] != nil {
+                
+                failureWithWarning(message: "A category with this name has already been created.")
             
+                
             // *** If both are filled out, but the amount is not a double
             } else if categoryName != "" && categoryAmount != "" && Double(categoryAmount) == nil {
                 
                  failureWithWarning(message: "You have to enter a number for the amount.")
+                
                 
             } else {
                 

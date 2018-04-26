@@ -62,26 +62,30 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         if editingStyle == .delete {
             
-            let categoryToDelete = budget.sortedCategoryKeys[indexPath.row]
-            
-            let message = "Delete \(categoryToDelete)?"
-            
-            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
                 
-                budget.deleteCategory(named: categoryToDelete)
+                let categoryToDelete = budget.sortedCategoryKeys[indexPath.row]
                 
-                self.refreshAvailableBalanceLabel()
-                budget.sortCategoriesByKey(withUnallocated: false)
-                self.displayedDataTable.reloadData()
+                let message = "Delete \(categoryToDelete)?"
                 
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-            
-            present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                    
+                    budget.deleteCategory(named: categoryToDelete)
+                    
+                    self.refreshAvailableBalanceLabel()
+                    budget.sortCategoriesByKey(withUnallocated: true)
+                    self.displayedDataTable.reloadData()
+                    
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
             
         }
         
@@ -120,7 +124,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey(withUnallocated: false)
+        budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
@@ -133,7 +137,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         refreshAvailableBalanceLabel()
-        budget.sortCategoriesByKey(withUnallocated: false)
+        budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
     }

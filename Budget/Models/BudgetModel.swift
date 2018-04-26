@@ -146,23 +146,28 @@ class Budget {
     
     func addCategory (named: String, withThisAmount amount: Double?) {
         
-        if categories[named] == nil {
+        if named != unallocatedKey {
             
-            categories[named] = Category(name: named)
-            
-            if let amount = amount {
+            if categories[named] == nil {
                 
-                guard let newCategory = categories[named] else { return }
-                guard let unallocated = categories[unallocatedKey] else { return }
-                newCategory.available += amount
-                unallocated.available -= amount
+                categories[named] = Category(name: named)
+                
+                if let amount = amount {
+                    
+                    guard let newCategory = categories[named] else { return }
+                    guard let unallocated = categories[unallocatedKey] else { return }
+                    newCategory.available += amount
+                    unallocated.available -= amount
+                    
+                }
                 
             }
             
+            sortCategoriesByKey(withUnallocated: true)
+            saveEverything()
+            
         }
         
-        sortCategoriesByKey(withUnallocated: false)
-        saveEverything()
     }
     
     
@@ -171,31 +176,34 @@ class Budget {
     
     func deleteCategory (named: String) {
         
-        // Cannot delete "Uncategorized" because it doesn't show up in any place, so it will always be the default in the background.
-        
-        if transactions.count > 0 {
+        if named != unallocatedKey {
             
-            for transaction in transactions {
+            if transactions.count > 0 {
                 
-                if transaction.forCategory == named {
+                for transaction in transactions {
                     
-                    transaction.forCategory = unallocatedKey
+                    if transaction.forCategory == named {
+                        
+                        transaction.forCategory = unallocatedKey
+                        
+                    }
                     
                 }
                 
             }
             
+            if let unallocated = categories[unallocatedKey], let deletedCategory = categories[named] {
+                unallocated.available += deletedCategory.available
+            }
+            
+            if named != unallocatedKey {
+                categories[named] = nil
+            }
+            sortCategoriesByKey(withUnallocated: true)
+            saveEverything()
+            
         }
         
-        if let unallocated = categories[unallocatedKey], let deletedCategory = categories[named] {
-            unallocated.available += deletedCategory.available
-        }
-        
-        if named != unallocatedKey {
-            categories[named] = nil
-        }
-        sortCategoriesByKey(withUnallocated: false)
-        saveEverything()
     }
     
     
