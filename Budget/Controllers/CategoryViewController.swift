@@ -20,6 +20,11 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
+    @IBAction func addCategoryButton(_ sender: UIButton) {
+        performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
+    }
+    
+    
     @IBOutlet weak var displayedDataTable: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

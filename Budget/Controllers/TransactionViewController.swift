@@ -18,6 +18,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
+    @IBAction func addTransactionButton(_ sender: UIButton) {
+        performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
+    }
+    
+    
     @IBOutlet weak var displayedDataTable: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
