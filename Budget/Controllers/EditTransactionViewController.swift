@@ -40,8 +40,8 @@ class EditTransactionViewController: UIViewController {
         let currentTransaction = budget.transactions[index]
         
         titleLabel.text = currentTransaction.title
-        amountLabel.text = String(format: doubleFormatKey, currentTransaction.inTheAmountOf)
-        dateLabel.text = "$\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
+        amountLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
+        dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
         categoryLabel.text = currentTransaction.forCategory
         
         if currentTransaction.type == .deposit {
