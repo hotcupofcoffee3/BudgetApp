@@ -71,10 +71,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8f-P5-Fkt">
-                                <rect key="frame" x="0.0" y="20" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="20" width="75" height="75"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="fdn-BB-Wpl"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="oZy-eM-apy"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="fdn-BB-Wpl"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="oZy-eM-apy"/>
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vzu-Lm-vRr">
@@ -91,6 +91,13 @@
                                     <action selector="addSomething:" destination="eK1-N9-yax" eventType="touchUpInside" id="53T-wL-6e2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKj-aK-g5l">
+                                <rect key="frame" x="300" y="20" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="0wd-LX-RzW"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="qqH-5f-ofC"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="T8f-P5-Fkt" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" id="1lu-58-ZN6"/>
@@ -105,12 +112,14 @@
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="top" secondItem="7EN-fo-1aW" secondAttribute="top" id="Ofp-9V-PW0"/>
                             <constraint firstAttribute="bottom" secondItem="zjU-VC-XHn" secondAttribute="bottom" id="R4J-2z-TTQ"/>
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" id="S1E-i9-ACm"/>
+                            <constraint firstItem="lKj-aK-g5l" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" id="Vfx-Dw-eBw"/>
                             <constraint firstItem="XGE-FZ-5ps" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="WmJ-LS-hgD"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="bottom" secondItem="XGE-FZ-5ps" secondAttribute="bottom" constant="60" id="eqs-PD-gB4"/>
                             <constraint firstItem="XGE-FZ-5ps" firstAttribute="top" secondItem="0lk-wo-IhG" secondAttribute="bottom" constant="20" id="fMm-DF-Q3e"/>
                             <constraint firstItem="vzu-Lm-vRr" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="ieo-Lo-QtT"/>
                             <constraint firstItem="0lk-wo-IhG" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="jSb-Eg-PkQ"/>
                             <constraint firstItem="gWk-Rd-fRo" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" constant="20" id="otx-zk-LaY"/>
+                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="lKj-aK-g5l" secondAttribute="trailing" id="qDi-ix-CJc"/>
                             <constraint firstItem="hNs-0H-0Rl" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" constant="20" id="sUM-2b-eg4"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="gWk-Rd-fRo" secondAttribute="trailing" constant="20" id="xko-im-6QN"/>
                         </constraints>
@@ -120,6 +129,7 @@
                         <outlet property="availableBalanceLabel" destination="gWk-Rd-fRo" id="wM3-5i-YSZ"/>
                         <outlet property="categoriesButtonTitle" destination="0lk-wo-IhG" id="Oet-XT-Cak"/>
                         <outlet property="hiddenDeleteButton" destination="T8f-P5-Fkt" id="e3O-P6-BPC"/>
+                        <outlet property="hiddenResetWithCategoriesAndTransactions" destination="lKj-aK-g5l" id="nvQ-Ax-ouC"/>
                         <outlet property="transactionsButtonTitle" destination="XGE-FZ-5ps" id="SgV-EF-lTF"/>
                         <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="MainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="MainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
@@ -923,6 +933,210 @@
             </objects>
             <point key="canvasLocation" x="-911" y="-849"/>
         </scene>
+        <!--Edit Transaction View Controller-->
+        <scene sceneID="Vft-Fx-lY4">
+            <objects>
+                <viewController id="qcb-an-ift" customClass="EditTransactionViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0O2-A9-IIo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaM-wQ-TNt">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Edit Transaction" id="UdP-HF-OJb">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="4JA-fa-nsg">
+                                            <connections>
+                                                <action selector="backButton:" destination="qcb-an-ift" id="rYG-0e-dDH"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="YOi-1t-T6f"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71Y-na-85j">
+                                <rect key="frame" x="20" y="74" width="335" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gIs-g7-R2k" userLabel="Title Stack">
+                                <rect key="frame" x="20" y="176" width="335" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sprouts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEF-aa-uwj">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="54"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAQ-Wl-MfI" userLabel="Edit Title Button">
+                                        <rect key="frame" x="175" y="0.0" width="160" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="54" id="7aY-w6-TAP"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="haS-vv-9VO"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="v96-WC-a5m"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Edit Title">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editTitle:" destination="qcb-an-ift" eventType="touchUpInside" id="8nt-xH-yo4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jgh-5A-Svs" userLabel="Amount Stack">
+                                <rect key="frame" x="20" y="250" width="335" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57t-Fg-1Yf" userLabel="Amount">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="54"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmX-0z-OKX" userLabel="Edit Amount Button">
+                                        <rect key="frame" x="175" y="0.0" width="160" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="B9A-BW-1J6"/>
+                                            <constraint firstAttribute="height" constant="54" id="DZT-s8-qI0"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="fHk-L8-Dwf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Edit Amount">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editAmount:" destination="qcb-an-ift" eventType="touchUpInside" id="0jx-Wb-WF2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="a4x-Ag-Sen" userLabel="Date Stack">
+                                <rect key="frame" x="20" y="324" width="335" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4/26/2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1K-hV-rz5" userLabel="Date">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="54"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXz-q0-Dlu" userLabel="Edit Date Button">
+                                        <rect key="frame" x="175" y="0.0" width="160" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="54" id="78U-A4-Fsz"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="OpY-WB-CuZ"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="P8S-fv-Xq8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Edit Date">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editDate:" destination="qcb-an-ift" eventType="touchUpInside" id="3Ai-yC-xya"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7yl-1Q-jle" userLabel="Category Stack">
+                                <rect key="frame" x="20" y="398" width="335" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKK-3q-KaP" userLabel="Category">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="54"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2v-Sl-8Wk" userLabel="Edit Category Button">
+                                        <rect key="frame" x="175" y="0.0" width="160" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="7wh-ii-MKU"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="Clk-cc-HYa"/>
+                                            <constraint firstAttribute="height" constant="54" id="oJc-Jr-jJu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Edit Category">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editCategory:" destination="qcb-an-ift" eventType="touchUpInside" id="bzO-O6-WG4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Withdrawal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lXg-46-zln" userLabel="Type">
+                                <rect key="frame" x="20" y="132" width="335" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAb-IZ-Zw1" userLabel="Switch Type Button">
+                                <rect key="frame" x="62.5" y="492" width="250" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="UfC-u4-et6"/>
+                                    <constraint firstAttribute="height" constant="54" id="qje-JD-L2N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Change to Withdrawal">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeType:" destination="qcb-an-ift" eventType="touchUpInside" id="rkk-da-vEJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="gIs-g7-R2k" secondAttribute="trailing" constant="20" id="66G-Od-6ku"/>
+                            <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="jgh-5A-Svs" secondAttribute="trailing" constant="20" id="9y4-JU-4Lh"/>
+                            <constraint firstItem="a4x-Ag-Sen" firstAttribute="top" secondItem="jgh-5A-Svs" secondAttribute="bottom" constant="20" id="AxU-w0-qIN"/>
+                            <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="71Y-na-85j" secondAttribute="trailing" constant="20" id="C3J-jt-WJu"/>
+                            <constraint firstItem="lXg-46-zln" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="Dlv-LI-gnE"/>
+                            <constraint firstItem="71Y-na-85j" firstAttribute="top" secondItem="BaM-wQ-TNt" secondAttribute="bottom" constant="10" id="FVA-g0-9fC"/>
+                            <constraint firstItem="LAb-IZ-Zw1" firstAttribute="top" secondItem="7yl-1Q-jle" secondAttribute="bottom" constant="40" id="LZT-cx-Bku"/>
+                            <constraint firstItem="7yl-1Q-jle" firstAttribute="top" secondItem="a4x-Ag-Sen" secondAttribute="bottom" constant="20" id="NOp-6M-3CO"/>
+                            <constraint firstItem="jgh-5A-Svs" firstAttribute="top" secondItem="gIs-g7-R2k" secondAttribute="bottom" constant="20" id="O0C-Kj-F3F"/>
+                            <constraint firstItem="a4x-Ag-Sen" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="Pjq-6U-a7l"/>
+                            <constraint firstItem="jgh-5A-Svs" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="Th8-rA-3ww"/>
+                            <constraint firstItem="7yl-1Q-jle" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="ZLG-pq-87A"/>
+                            <constraint firstItem="BaM-wQ-TNt" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" id="adG-H0-pD0"/>
+                            <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="lXg-46-zln" secondAttribute="trailing" constant="20" id="gXc-XL-m0t"/>
+                            <constraint firstAttribute="trailing" secondItem="a4x-Ag-Sen" secondAttribute="trailing" constant="20" id="hIH-V7-yKM"/>
+                            <constraint firstItem="71Y-na-85j" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="i17-Up-6nE"/>
+                            <constraint firstItem="BaM-wQ-TNt" firstAttribute="trailing" secondItem="t8G-1C-SiI" secondAttribute="trailing" id="kut-TH-WYl"/>
+                            <constraint firstItem="BaM-wQ-TNt" firstAttribute="top" secondItem="t8G-1C-SiI" secondAttribute="top" id="q8K-TU-dc3"/>
+                            <constraint firstItem="lXg-46-zln" firstAttribute="top" secondItem="71Y-na-85j" secondAttribute="bottom" constant="40" id="q8i-lN-VkW"/>
+                            <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="7yl-1Q-jle" secondAttribute="trailing" constant="20" id="rDO-7k-p47"/>
+                            <constraint firstItem="gIs-g7-R2k" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="tag-dQ-DYu"/>
+                            <constraint firstItem="LAb-IZ-Zw1" firstAttribute="centerX" secondItem="0O2-A9-IIo" secondAttribute="centerX" id="vFI-rq-Imi"/>
+                            <constraint firstItem="gIs-g7-R2k" firstAttribute="top" secondItem="lXg-46-zln" secondAttribute="bottom" constant="20" id="veE-Ce-uJr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="t8G-1C-SiI"/>
+                    </view>
+                    <connections>
+                        <outlet property="amountLabel" destination="57t-Fg-1Yf" id="mq5-vz-UYy"/>
+                        <outlet property="categoryLabel" destination="hKK-3q-KaP" id="WtG-Kz-M28"/>
+                        <outlet property="changeTypeButton" destination="LAb-IZ-Zw1" id="Hv8-pW-ZCa"/>
+                        <outlet property="dateLabel" destination="w1K-hV-rz5" id="IZd-zv-Nfi"/>
+                        <outlet property="editAmountButton" destination="dmX-0z-OKX" id="j9o-0S-ANp"/>
+                        <outlet property="editCategoryButton" destination="k2v-Sl-8Wk" id="D9h-Rc-Fgj"/>
+                        <outlet property="editDateButton" destination="aXz-q0-Dlu" id="Q4h-2H-dQR"/>
+                        <outlet property="editTitleButton" destination="JAQ-Wl-MfI" id="b16-6R-CBF"/>
+                        <outlet property="leftAmountAtTopRight" destination="71Y-na-85j" id="pXw-48-Zwz"/>
+                        <outlet property="leftLabelOnNavBar" destination="YOi-1t-T6f" id="p4y-Od-Tex"/>
+                        <outlet property="titleLabel" destination="aEF-aa-uwj" id="WDL-hc-BdQ"/>
+                        <outlet property="typeLabel" destination="lXg-46-zln" id="SNf-xh-G3o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6eX-Vj-eIM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-95.200000000000003" y="-845.1274362818591"/>
+        </scene>
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
             <objects>
@@ -1055,6 +1269,7 @@
                         <segue destination="hY6-l5-vLB" kind="show" identifier="TransactionsToAddCategorySegue" id="okA-JN-PqX"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="TransactionsToMoveFundsSegue" id="KPk-6k-mJN"/>
+                        <segue destination="qcb-an-ift" kind="show" identifier="EditTransactionSegue" id="q2x-au-qIl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1275,11 +1490,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QpK-gN-dzJ"/>
-        <segue reference="Fq3-ws-fhT"/>
-        <segue reference="LCW-GF-oV6"/>
-        <segue reference="KPk-6k-mJN"/>
-        <segue reference="okA-JN-PqX"/>
+        <segue reference="gOi-Bu-AOw"/>
+        <segue reference="sum-Cr-7Ay"/>
+        <segue reference="eXP-Fb-uY0"/>
+        <segue reference="ZXq-hv-ffC"/>
+        <segue reference="mU4-cf-aIR"/>
         <segue reference="tLF-Rh-sKn"/>
     </inferredMetricsTieBreakers>
 </document>

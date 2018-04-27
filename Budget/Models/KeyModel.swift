@@ -55,6 +55,7 @@ let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
 // Edit Segues
 
 let editCategorySegueKey = "EditCategorySegue"
+let editTransactionSegueKey = "EditTransactionSegue"
 
 
 

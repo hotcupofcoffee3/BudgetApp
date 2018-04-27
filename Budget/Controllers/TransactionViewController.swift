@@ -39,6 +39,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
+        cell.accessoryType = .disclosureIndicator
+        
         if !budget.transactions.isEmpty {
             let transaction = budget.transactions[indexPath.row]
             cell.textLabel?.text = "\(transaction.title): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
@@ -57,6 +59,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         editableTransactionIndex = indexPath.row
+        
+        performSegue(withIdentifier: editTransactionSegueKey, sender: self)
         
         displayedDataTable.deselectRow(at: indexPath, animated: true)
         

@@ -11,6 +11,7 @@ import UIKit
 class MainScreen: UIViewController {
     
     @IBOutlet weak var hiddenDeleteButton: UIButton!
+    @IBOutlet weak var hiddenResetWithCategoriesAndTransactions: UIButton!
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
@@ -87,12 +88,16 @@ class MainScreen: UIViewController {
         transactionsButtonTitle.layer.borderColor = tealColor.cgColor
         
         
-        // Long press gesture recognizer
-        let uilpr = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpress(gestureRecognizer:)))
+        // Long press gesture recognizers
+        let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
         
-        uilpr.minimumPressDuration = 2
+        let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddCategoriesAndTransactions(gestureRecognizer:)))
         
-        hiddenDeleteButton.addGestureRecognizer(uilpr)
+        uilprDELETE.minimumPressDuration = 2
+        uilprADD.minimumPressDuration = 2
+        
+        hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
+        hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
         
     }
     
@@ -108,8 +113,8 @@ class MainScreen: UIViewController {
     
     
     
-    // MARK: - Long press recognizer function
-    @objc func longpress(gestureRecognizer: UILongPressGestureRecognizer) {
+    // MARK: - Long press recognizer function to - DELETE EVERYTHING
+    @objc func longpressDeleteEverything(gestureRecognizer: UILongPressGestureRecognizer) {
         
         // Only does it once, even if it is held down for longer.
         // If this isn't done, then it'll keep adding a new one of these every 2 seconds (the amount of time we have it set).
@@ -125,6 +130,44 @@ class MainScreen: UIViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    // MARK: - Long press recognizer function to - Add Categories and Transactions
+    @objc func longpressAddCategoriesAndTransactions(gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        // Only does it once, even if it is held down for longer.
+        // If this isn't done, then it'll keep adding a new one of these every 2 seconds (the amount of time we have it set).
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            
+            if budget.transactions.count == 0 && budget.categories.count == 1 {
+                
+                let alert = UIAlertController(title: nil, message: "Populate from scratch?", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                    
+                    // An initial Deposit
+                    budget.addTransaction(type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
+                    
+                    // Two categories with some amounts
+                    budget.addCategory(named: "Food", withThisAmount: 200.0)
+                    budget.addCategory(named: "Extra", withThisAmount: 50.0)
+                    
+                    // Two transactions with some amounts.
+                    budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
+                    budget.addTransaction(type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 4, day: 27)
+                    
+                    
+                    self.refreshAvailableBalanceLabel()
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
             
         }
         
