@@ -62,7 +62,7 @@ class EditTransactionViewController: UIViewController {
     @IBOutlet weak var editTitleButton: UIButton!
     
     @IBAction func editTitle(_ sender: UIButton) {
-        print(titleLabel.text!)
+        performSegue(withIdentifier: editTransactionTitleSegueKey, sender: self)
     }
     
     
@@ -72,7 +72,7 @@ class EditTransactionViewController: UIViewController {
     @IBOutlet weak var editAmountButton: UIButton!
     
     @IBAction func editAmount(_ sender: UIButton) {
-        print(amountLabel.text!)
+        performSegue(withIdentifier: editTransactionAmountSegueKey, sender: self)
     }
     
     // MARK: - Date
@@ -81,7 +81,7 @@ class EditTransactionViewController: UIViewController {
     @IBOutlet weak var editDateButton: UIButton!
     
     @IBAction func editDate(_ sender: UIButton) {
-        print(dateLabel.text!)
+        performSegue(withIdentifier: editTransactionDateSegueKey, sender: self)
     }
     
     
@@ -92,7 +92,7 @@ class EditTransactionViewController: UIViewController {
     @IBOutlet weak var editCategoryButton: UIButton!
     
     @IBAction func editCategory(_ sender: UIButton) {
-        print(categoryLabel.text!)
+        performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
     }
     
     
@@ -127,6 +127,13 @@ class EditTransactionViewController: UIViewController {
         self.addCircleAroundButton(named: self.editDateButton)
         self.addCircleAroundButton(named: self.editCategoryButton)
         self.addCircleAroundButton(named: self.changeTypeButton)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.updateLeftLabelAtTopRight()
+        self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
         
     }
 

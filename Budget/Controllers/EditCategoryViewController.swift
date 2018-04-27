@@ -211,7 +211,11 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                     
                     failureWithWarning(label: amountWarningLabel, message: "You don't have enough unallocated funds for this")
                     
+                    
+                // ***** SUCCESS!
                 } else {
+                    
+                    newCategoryName.resignFirstResponder()
                     
                     var alertMessage = String()
                     var successMessage = String()
@@ -279,6 +283,9 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         self.changeNameButton.layer.masksToBounds = true
         self.changeNameButton.layer.borderWidth = 1
         self.changeNameButton.layer.borderColor = lightGreenColor.cgColor
+        
+        self.newCategoryName.delegate = self
+        self.newCategoryAmount.delegate = self
 
     }
 
@@ -295,6 +302,15 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         newCategoryName.resignFirstResponder()
         newCategoryAmount.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        nameWarningLabel.text = ""
+        amountWarningLabel.text = ""
+    }
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        nameWarningLabel.text = ""
+        amountWarningLabel.text = ""
     }
     
 

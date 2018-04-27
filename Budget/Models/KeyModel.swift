@@ -56,6 +56,10 @@ let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
 
 let editCategorySegueKey = "EditCategorySegue"
 let editTransactionSegueKey = "EditTransactionSegue"
+let editTransactionTitleSegueKey = "EditTransactionTitleSegue"
+let editTransactionAmountSegueKey = "EditTransactionAmountSegue"
+let editTransactionDateSegueKey = "EditTransactionDateSegue"
+let editTransactionCategorySegueKey = "EditTransactionCategorySegue"
 
 
 

@@ -453,7 +453,7 @@ class Budget {
     
     // MARK: Update Transaction
     
-    func updateTransaction(named updatedTransaction: Transaction, atIndex index: Int) {
+    func updateTransaction(named updatedTransaction: Transaction, forOldTransactionAtIndex index: Int) {
         if transactions[index].type == .deposit {
             
             deleteTransaction(at: index)
