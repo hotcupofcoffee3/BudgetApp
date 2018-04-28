@@ -287,6 +287,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
+        self.transactionNameTextField.delegate = self
+        self.transactionAmountTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

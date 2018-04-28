@@ -463,6 +463,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         updateUIForAllocate()
         
+        self.fundsTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

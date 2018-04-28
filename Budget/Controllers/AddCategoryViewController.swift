@@ -171,6 +171,9 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         addCategoryButton.layer.borderWidth = 1
         addCategoryButton.layer.borderColor = lightGreenColor.cgColor
         
+        self.categoryNameTextField.delegate = self
+        self.categoryBudgetedAmountTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
