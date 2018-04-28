@@ -131,7 +131,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         self.updateLeftLabelAtTopRight()
         
-        self.editingItemLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
+        self.editingItemLabel.text = "\(currentTransaction.forCategory)"
         
         if let currentCategory = budget.categories[currentTransaction.forCategory] {
             
