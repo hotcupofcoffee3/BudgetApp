@@ -12,7 +12,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
     
 
     var currentTransaction = budget.transactions[editableTransactionIndex]
-    var newCategory = String()
+    var newCategorySelected = String()
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -68,32 +68,37 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         return budget.sortedCategoryKeys.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return budget.sortedCategoryKeys[row]
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+        newCategorySelected = budget.sortedCategoryKeys[row]
+        
         guard let currentCategory = budget.categories[budget.sortedCategoryKeys[row]] else { return }
         
-        leftInCategoryLabel.text = "~ Left in \(budget.sortedCategoryKeys[row]): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+        leftInCategoryLabel.text = "~ Left in \(newCategorySelected): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+        
+        warningLabel.text = ""
     }
     
     
     
     
     
-    func showAlertToConfirmUpdate(newAmount: Double) {
+    func showAlertToConfirmUpdate(newCategoryName: String) {
         
         // *** Alert message to pop up to confirmation
         
-        let alert = UIAlertController(title: nil, message: "Change transaction amount from $\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf)) to $\(String(format: doubleFormatKey, newAmount))?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change transaction category from \"\(currentTransaction.forCategory)\" to \"\(newCategoryName)\"?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
             let current = self.currentTransaction
             
-            let newTransaction = Transaction(transactionID: current.transactionID, type: current.type, title: current.title, forCategory: current.forCategory, inTheAmountOf: newAmount, year: current.year, month: current.month, day: current.day)
+            let newTransaction = Transaction(transactionID: current.transactionID, type: current.type, title: current.title, forCategory: newCategoryName, inTheAmountOf: current.inTheAmountOf, year: current.year, month: current.month, day: current.day)
             
             budget.updateTransaction(named: newTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
@@ -104,7 +109,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
                 
             }
             
-            self.editingItemLabel.text = newTransaction.title
+            self.editingItemLabel.text = newTransaction.forCategory
             
             self.dismiss(animated: true, completion: nil)
             
@@ -116,9 +121,25 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
     }
     
-    func changeAmountSubmittedForReview () {
+    func changeCategorySubmittedForReview () {
         
+        let indexOfNewCategory = newCategoryPicker.selectedRow(inComponent: 0)
+        let newSelectedCategoryName = budget.sortedCategoryKeys[indexOfNewCategory]
+        guard let newCategoryItself = budget.categories[newSelectedCategoryName] else { return }
         
+        if newSelectedCategoryName == currentTransaction.forCategory {
+            
+            failureWithWarning(label: warningLabel, message: "The category is already set to \(currentTransaction.forCategory)")
+            
+        } else if currentTransaction.inTheAmountOf > newCategoryItself.available {
+            
+            failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
+            
+        } else {
+            
+            showAlertToConfirmUpdate(newCategoryName: newSelectedCategoryName)
+            
+        }
         
     }
     
@@ -127,7 +148,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
     
     @IBAction func updateItem(_ sender: UIButton) {
         
-        changeAmountSubmittedForReview()
+        changeCategorySubmittedForReview()
         
     }
     
@@ -149,9 +170,9 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         budget.sortCategoriesByKey(withUnallocated: true)
         
-        self.newCategory = currentTransaction.forCategory
+        self.newCategorySelected = currentTransaction.forCategory
         
-        guard let indexOfCurrentCategory = budget.sortedCategoryKeys.index(of: self.newCategory) else { return }
+        guard let indexOfCurrentCategory = budget.sortedCategoryKeys.index(of: self.newCategorySelected) else { return }
         self.newCategoryPicker.selectRow(indexOfCurrentCategory, inComponent: 0, animated: true)
         
         

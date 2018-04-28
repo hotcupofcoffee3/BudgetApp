@@ -1387,8 +1387,8 @@
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOZ-nh-8QR" userLabel="Amount Warning Label">
-                                <rect key="frame" x="20" y="469" width="335" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOZ-nh-8QR" userLabel="Amount Warning Label">
+                                <rect key="frame" x="20" y="459" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1407,7 +1407,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O05-Jb-I0b" userLabel="Edit Category Button">
-                                <rect key="frame" x="87.5" y="499" width="200" height="54"/>
+                                <rect key="frame" x="87.5" y="469" width="200" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="9q7-G4-xFa"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="JZE-NK-jD8"/>
@@ -1419,10 +1419,11 @@
                                 </state>
                                 <connections>
                                     <action selector="updateItem:" destination="IHv-uQ-HKr" eventType="touchUpInside" id="7XO-pq-09n"/>
+                                    <action selector="updateItem:" destination="yVu-Vm-6vp" eventType="touchUpInside" id="oPV-kK-3xn"/>
                                 </connections>
                             </button>
                             <pickerView clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="5K4-xn-kNu">
-                                <rect key="frame" x="20" y="275" width="335" height="150"/>
+                                <rect key="frame" x="20" y="265" width="335" height="150"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="yzc-HT-upp"/>
@@ -1433,7 +1434,7 @@
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~ Left in category: $100.00 ~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErI-uN-7Nl">
-                                <rect key="frame" x="20" y="435" width="335" height="24"/>
+                                <rect key="frame" x="20" y="425" width="335" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1448,7 +1449,7 @@
                             <constraint firstItem="ITs-K0-CJo" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="HFy-ee-Ei5"/>
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="ITs-K0-CJo" secondAttribute="trailing" constant="20" id="JMk-5g-q44"/>
                             <constraint firstItem="GI7-2X-gj0" firstAttribute="top" secondItem="mOf-ed-Vd5" secondAttribute="bottom" constant="20" id="L4I-l8-KNb"/>
-                            <constraint firstItem="5K4-xn-kNu" firstAttribute="top" secondItem="GI7-2X-gj0" secondAttribute="bottom" constant="20" id="OWa-W6-xCw"/>
+                            <constraint firstItem="5K4-xn-kNu" firstAttribute="top" secondItem="GI7-2X-gj0" secondAttribute="bottom" constant="10" id="OWa-W6-xCw"/>
                             <constraint firstItem="NOZ-nh-8QR" firstAttribute="top" secondItem="ErI-uN-7Nl" secondAttribute="bottom" constant="10" id="Qzk-RH-fKr"/>
                             <constraint firstItem="GI7-2X-gj0" firstAttribute="centerX" secondItem="aso-n3-A4X" secondAttribute="centerX" id="Swe-cf-tnf"/>
                             <constraint firstItem="ErI-uN-7Nl" firstAttribute="top" secondItem="5K4-xn-kNu" secondAttribute="bottom" constant="10" id="V4c-1Z-x5C"/>
@@ -1467,7 +1468,13 @@
                         <viewLayoutGuide key="safeArea" id="wwN-2o-fpV"/>
                     </view>
                     <connections>
+                        <outlet property="editingItemLabel" destination="mOf-ed-Vd5" id="x4R-xb-4YT"/>
+                        <outlet property="leftAmountAtTopRight" destination="ITs-K0-CJo" id="XPM-kX-sIO"/>
+                        <outlet property="leftInCategoryLabel" destination="ErI-uN-7Nl" id="py5-Cb-sWU"/>
+                        <outlet property="leftLabelOnNavBar" destination="vIM-aQ-Ihu" id="MLP-nI-ZwW"/>
                         <outlet property="newCategoryPicker" destination="5K4-xn-kNu" id="yAU-by-Cex"/>
+                        <outlet property="updateItemButton" destination="O05-Jb-I0b" id="RqD-FC-gfX"/>
+                        <outlet property="warningLabel" destination="NOZ-nh-8QR" id="xWh-En-lic"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itv-l3-11o" userLabel="First Responder" sceneMemberID="firstResponder"/>

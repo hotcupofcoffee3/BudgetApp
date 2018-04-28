@@ -88,7 +88,7 @@ class EditTransactionDateViewController: UIViewController {
     }
     
     
-    func changeAmountSubmittedForReview () {
+    func changeDateSubmittedForReview () {
         
         let newDateDictionary = convertDateToInts(dateToConvert: newDatePicker.date)
         guard let newMonth = newDateDictionary[monthKey] else { return }
@@ -97,7 +97,7 @@ class EditTransactionDateViewController: UIViewController {
         
         if currentTransaction.month == newMonth && currentTransaction.day == newDay && currentTransaction.year == newYear {
             
-            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+            failureWithWarning(label: warningLabel, message: "This is already the date.")
             
         } else {
             
@@ -114,7 +114,7 @@ class EditTransactionDateViewController: UIViewController {
     
     @IBAction func updateItem(_ sender: UIButton) {
         
-        changeAmountSubmittedForReview()
+        changeDateSubmittedForReview()
         
     }
     
