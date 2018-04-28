@@ -12,6 +12,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
     
 
     var currentTransaction = budget.transactions[editableTransactionIndex]
+    var newCategory = String()
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -53,14 +54,29 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
     @IBOutlet weak var warningLabel: UILabel!
     
     
+    
+    
     // MARK: - Picker
+    
+    @IBOutlet weak var newCategoryPicker: UIPickerView!
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 1
+        return budget.sortedCategoryKeys.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return budget.sortedCategoryKeys[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        guard let currentCategory = budget.categories[budget.sortedCategoryKeys[row]] else { return }
+        
+        leftInCategoryLabel.text = "~ Left in \(budget.sortedCategoryKeys[row]): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
     }
     
     
@@ -130,6 +146,14 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         super.viewDidLoad()
         
         self.updateLeftLabelAtTopRight()
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        self.newCategory = currentTransaction.forCategory
+        
+        guard let indexOfCurrentCategory = budget.sortedCategoryKeys.index(of: self.newCategory) else { return }
+        self.newCategoryPicker.selectRow(indexOfCurrentCategory, inComponent: 0, animated: true)
+        
         
         self.editingItemLabel.text = "\(currentTransaction.forCategory)"
         

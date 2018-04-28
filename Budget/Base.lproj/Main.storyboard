@@ -1466,6 +1466,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wwN-2o-fpV"/>
                     </view>
+                    <connections>
+                        <outlet property="newCategoryPicker" destination="5K4-xn-kNu" id="yAU-by-Cex"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itv-l3-11o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

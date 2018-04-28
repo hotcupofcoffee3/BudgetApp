@@ -54,7 +54,7 @@ class EditTransactionDateViewController: UIViewController {
         
         // *** Alert message to pop up to confirmation
         
-        let alert = UIAlertController(title: nil, message: "Change transaction date from \(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year) to \(newMonth)/\(newDay)/\(newYear)?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change transaction date to \(newMonth)/\(newDay)/\(newYear)?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
