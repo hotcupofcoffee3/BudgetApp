@@ -38,7 +38,7 @@
 		B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		B52879A8208A42970011D04C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		B531F86A208929CF00D0E05D /* MoveFundsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveFundsViewController.swift; sourceTree = "<group>"; };
-		B533E35A20700B01007A72E0 /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B533E35A20700B01007A72E0 /* Alloc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alloc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B533E35D20700B01007A72E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B533E36220700B01007A72E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B533E36420700B01007A72E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		B533E35B20700B01007A72E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B533E35A20700B01007A72E0 /* Budget.app */,
+				B533E35A20700B01007A72E0 /* Alloc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,7 +159,7 @@
 			);
 			name = Budget;
 			productName = Budget;
-			productReference = B533E35A20700B01007A72E0 /* Budget.app */;
+			productReference = B533E35A20700B01007A72E0 /* Alloc.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -379,7 +379,7 @@
 				INFOPLIST_FILE = Budget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Budget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Alloc;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -394,7 +394,7 @@
 				INFOPLIST_FILE = Budget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Budget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Alloc;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
