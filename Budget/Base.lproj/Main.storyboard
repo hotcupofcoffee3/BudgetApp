@@ -1388,7 +1388,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOZ-nh-8QR" userLabel="Amount Warning Label">
-                                <rect key="frame" x="20" y="459" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="493" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1400,14 +1400,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="GI7-2X-gj0">
-                                <rect key="frame" x="150" y="180" width="75" height="75"/>
+                                <rect key="frame" x="150" y="214" width="75" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="5Ra-aj-yHC"/>
                                     <constraint firstAttribute="width" constant="75" id="8xt-2X-PVi"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O05-Jb-I0b" userLabel="Edit Category Button">
-                                <rect key="frame" x="87.5" y="469" width="200" height="54"/>
+                                <rect key="frame" x="87.5" y="503" width="200" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="9q7-G4-xFa"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="JZE-NK-jD8"/>
@@ -1423,7 +1423,7 @@
                                 </connections>
                             </button>
                             <pickerView clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="5K4-xn-kNu">
-                                <rect key="frame" x="20" y="265" width="335" height="150"/>
+                                <rect key="frame" x="20" y="299" width="335" height="150"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="yzc-HT-upp"/>
@@ -1434,7 +1434,13 @@
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~ Left in category: $100.00 ~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErI-uN-7Nl">
-                                <rect key="frame" x="20" y="425" width="335" height="24"/>
+                                <rect key="frame" x="20" y="459" width="335" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~ Transaction amount: $6.00 ~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Al3-WC-hX5">
+                                <rect key="frame" x="20" y="170" width="335" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1444,11 +1450,11 @@
                         <constraints>
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="5K4-xn-kNu" secondAttribute="trailing" constant="20" id="1Uv-Nh-IWv"/>
                             <constraint firstItem="myR-tH-TXF" firstAttribute="trailing" secondItem="wwN-2o-fpV" secondAttribute="trailing" id="2bl-dw-9UA"/>
+                            <constraint firstItem="Al3-WC-hX5" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="6HD-AL-Maj"/>
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="ErI-uN-7Nl" secondAttribute="trailing" constant="20" id="6jH-PX-4bQ"/>
                             <constraint firstItem="myR-tH-TXF" firstAttribute="top" secondItem="wwN-2o-fpV" secondAttribute="top" id="FSw-Ox-JR1"/>
                             <constraint firstItem="ITs-K0-CJo" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="HFy-ee-Ei5"/>
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="ITs-K0-CJo" secondAttribute="trailing" constant="20" id="JMk-5g-q44"/>
-                            <constraint firstItem="GI7-2X-gj0" firstAttribute="top" secondItem="mOf-ed-Vd5" secondAttribute="bottom" constant="20" id="L4I-l8-KNb"/>
                             <constraint firstItem="5K4-xn-kNu" firstAttribute="top" secondItem="GI7-2X-gj0" secondAttribute="bottom" constant="10" id="OWa-W6-xCw"/>
                             <constraint firstItem="NOZ-nh-8QR" firstAttribute="top" secondItem="ErI-uN-7Nl" secondAttribute="bottom" constant="10" id="Qzk-RH-fKr"/>
                             <constraint firstItem="GI7-2X-gj0" firstAttribute="centerX" secondItem="aso-n3-A4X" secondAttribute="centerX" id="Swe-cf-tnf"/>
@@ -1456,10 +1462,13 @@
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="mOf-ed-Vd5" secondAttribute="trailing" constant="20" id="XMo-P4-HZK"/>
                             <constraint firstItem="ITs-K0-CJo" firstAttribute="top" secondItem="myR-tH-TXF" secondAttribute="bottom" constant="10" id="ayx-kA-eLh"/>
                             <constraint firstItem="O05-Jb-I0b" firstAttribute="top" secondItem="NOZ-nh-8QR" secondAttribute="bottom" constant="10" id="bd8-oe-UCP"/>
+                            <constraint firstItem="Al3-WC-hX5" firstAttribute="top" secondItem="mOf-ed-Vd5" secondAttribute="bottom" constant="10" id="cjd-x0-IPF"/>
                             <constraint firstItem="O05-Jb-I0b" firstAttribute="centerX" secondItem="aso-n3-A4X" secondAttribute="centerX" id="doA-95-eGp"/>
+                            <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="Al3-WC-hX5" secondAttribute="trailing" constant="20" id="eyc-t1-5XE"/>
                             <constraint firstItem="mOf-ed-Vd5" firstAttribute="top" secondItem="ITs-K0-CJo" secondAttribute="bottom" constant="20" id="hyr-dZ-Guc"/>
                             <constraint firstItem="ErI-uN-7Nl" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="mXu-Hg-H3w"/>
                             <constraint firstItem="5K4-xn-kNu" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="msi-w8-Psl"/>
+                            <constraint firstItem="GI7-2X-gj0" firstAttribute="top" secondItem="Al3-WC-hX5" secondAttribute="bottom" constant="20" id="nie-1i-vJg"/>
                             <constraint firstItem="mOf-ed-Vd5" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" constant="20" id="nil-5J-Tug"/>
                             <constraint firstItem="wwN-2o-fpV" firstAttribute="trailing" secondItem="NOZ-nh-8QR" secondAttribute="trailing" constant="20" id="pox-cs-eoo"/>
                             <constraint firstItem="myR-tH-TXF" firstAttribute="leading" secondItem="wwN-2o-fpV" secondAttribute="leading" id="pv7-0m-gMW"/>
@@ -1468,6 +1477,7 @@
                         <viewLayoutGuide key="safeArea" id="wwN-2o-fpV"/>
                     </view>
                     <connections>
+                        <outlet property="editingItemAmountLabel" destination="Al3-WC-hX5" id="fLu-CZ-Lui"/>
                         <outlet property="editingItemLabel" destination="mOf-ed-Vd5" id="x4R-xb-4YT"/>
                         <outlet property="leftAmountAtTopRight" destination="ITs-K0-CJo" id="XPM-kX-sIO"/>
                         <outlet property="leftInCategoryLabel" destination="ErI-uN-7Nl" id="py5-Cb-sWU"/>
@@ -1623,20 +1633,6 @@
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAb-IZ-Zw1" userLabel="Switch Type Button">
-                                <rect key="frame" x="62.5" y="492" width="250" height="54"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="UfC-u4-et6"/>
-                                    <constraint firstAttribute="height" constant="54" id="qje-JD-L2N"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="Change to Withdrawal">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeType:" destination="qcb-an-ift" eventType="touchUpInside" id="rkk-da-vEJ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1646,7 +1642,6 @@
                             <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="71Y-na-85j" secondAttribute="trailing" constant="20" id="C3J-jt-WJu"/>
                             <constraint firstItem="lXg-46-zln" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="Dlv-LI-gnE"/>
                             <constraint firstItem="71Y-na-85j" firstAttribute="top" secondItem="BaM-wQ-TNt" secondAttribute="bottom" constant="10" id="FVA-g0-9fC"/>
-                            <constraint firstItem="LAb-IZ-Zw1" firstAttribute="top" secondItem="7yl-1Q-jle" secondAttribute="bottom" constant="40" id="LZT-cx-Bku"/>
                             <constraint firstItem="7yl-1Q-jle" firstAttribute="top" secondItem="a4x-Ag-Sen" secondAttribute="bottom" constant="20" id="NOp-6M-3CO"/>
                             <constraint firstItem="jgh-5A-Svs" firstAttribute="top" secondItem="gIs-g7-R2k" secondAttribute="bottom" constant="20" id="O0C-Kj-F3F"/>
                             <constraint firstItem="a4x-Ag-Sen" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="Pjq-6U-a7l"/>
@@ -1661,7 +1656,6 @@
                             <constraint firstItem="lXg-46-zln" firstAttribute="top" secondItem="71Y-na-85j" secondAttribute="bottom" constant="40" id="q8i-lN-VkW"/>
                             <constraint firstItem="t8G-1C-SiI" firstAttribute="trailing" secondItem="7yl-1Q-jle" secondAttribute="trailing" constant="20" id="rDO-7k-p47"/>
                             <constraint firstItem="gIs-g7-R2k" firstAttribute="leading" secondItem="t8G-1C-SiI" secondAttribute="leading" constant="20" id="tag-dQ-DYu"/>
-                            <constraint firstItem="LAb-IZ-Zw1" firstAttribute="centerX" secondItem="0O2-A9-IIo" secondAttribute="centerX" id="vFI-rq-Imi"/>
                             <constraint firstItem="gIs-g7-R2k" firstAttribute="top" secondItem="lXg-46-zln" secondAttribute="bottom" constant="20" id="veE-Ce-uJr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="t8G-1C-SiI"/>
@@ -1669,7 +1663,6 @@
                     <connections>
                         <outlet property="amountLabel" destination="57t-Fg-1Yf" id="mq5-vz-UYy"/>
                         <outlet property="categoryLabel" destination="hKK-3q-KaP" id="WtG-Kz-M28"/>
-                        <outlet property="changeTypeButton" destination="LAb-IZ-Zw1" id="Hv8-pW-ZCa"/>
                         <outlet property="dateLabel" destination="w1K-hV-rz5" id="IZd-zv-Nfi"/>
                         <outlet property="editAmountButton" destination="dmX-0z-OKX" id="j9o-0S-ANp"/>
                         <outlet property="editCategoryButton" destination="k2v-Sl-8Wk" id="D9h-Rc-Fgj"/>

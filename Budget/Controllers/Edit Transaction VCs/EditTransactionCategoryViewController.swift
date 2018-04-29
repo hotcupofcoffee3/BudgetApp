@@ -47,7 +47,14 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
     }
     
+    
+    
     @IBOutlet weak var editingItemLabel: UILabel!
+    
+    @IBOutlet weak var editingItemAmountLabel: UILabel!
+    
+    
+    
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
     
@@ -177,6 +184,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         
         self.editingItemLabel.text = "\(currentTransaction.forCategory)"
+        self.editingItemAmountLabel.text = "~ Transaction amount: $\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf)) ~"
         
         if let currentCategory = budget.categories[currentTransaction.forCategory] {
             

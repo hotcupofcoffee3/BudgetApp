@@ -46,10 +46,8 @@ class EditTransactionViewController: UIViewController {
         
         if currentTransaction.type == .deposit {
             typeLabel.text = "Deposit"
-            changeTypeButton.setTitle("Change to Withdrawal", for: .normal)
         } else {
             typeLabel.text = "Withdrawal"
-            changeTypeButton.setTitle("Change to Deposit", for: .normal)
         }
         
     }
@@ -94,15 +92,7 @@ class EditTransactionViewController: UIViewController {
     @IBAction func editCategory(_ sender: UIButton) {
         performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
     }
-    
-    
-    // MARK: - Change Type Button
-    
-    @IBOutlet weak var changeTypeButton: UIButton!
-    
-    @IBAction func changeType(_ sender: UIButton) {
-        print(currentTransaction.type)
-    }
+   
     
     
     // MARK: - Button Formatter
@@ -126,7 +116,6 @@ class EditTransactionViewController: UIViewController {
         self.addCircleAroundButton(named: self.editAmountButton)
         self.addCircleAroundButton(named: self.editDateButton)
         self.addCircleAroundButton(named: self.editCategoryButton)
-        self.addCircleAroundButton(named: self.changeTypeButton)
         
     }
     
