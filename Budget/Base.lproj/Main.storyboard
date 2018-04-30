@@ -13,7 +13,7 @@
         <!--Main Screen-->
         <scene sceneID="0hO-QJ-DGJ">
             <objects>
-                <viewController id="eK1-N9-yax" customClass="MainScreen" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="eK1-N9-yax" customClass="MainScreen" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7EN-fo-1aW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -145,7 +145,7 @@
         <!--Add Category View Controller-->
         <scene sceneID="PnU-1q-BOK">
             <objects>
-                <viewController storyboardIdentifier="AddCategoryViewController" id="hY6-l5-vLB" customClass="AddCategoryViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddCategoryViewController" id="hY6-l5-vLB" customClass="AddCategoryViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZZe-xD-g1E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,7 +188,7 @@
                                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="next"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="hY6-l5-vLB" id="1Ux-TL-KCA"/>
                                                         </connections>
@@ -289,7 +289,7 @@
                     </view>
                     <connections>
                         <outlet property="addCategoryButton" destination="c8V-Gw-KiM" id="Slh-Td-eHH"/>
-                        <outlet property="categoryBudgetedAmountTextField" destination="0qq-T4-TeK" id="oAr-e1-Bsw"/>
+                        <outlet property="categoryAmountTextField" destination="0qq-T4-TeK" id="Po0-WG-6On"/>
                         <outlet property="categoryNameTextField" destination="Ekd-UJ-C6E" id="6gm-UR-6Sf"/>
                         <outlet property="categoryWarningLabel" destination="brs-4a-HOv" id="PtT-Mg-Dpb"/>
                         <outlet property="leftAmountAtTopRight" destination="49r-Dq-A83" id="IoS-CM-WRE"/>
@@ -303,7 +303,7 @@
         <!--Move Funds View Controller-->
         <scene sceneID="Bcg-ZU-BHL">
             <objects>
-                <viewController id="ZN3-qu-gHe" customClass="MoveFundsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZN3-qu-gHe" customClass="MoveFundsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i7U-YQ-tJM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -515,7 +515,7 @@
         <!--Add Transaction View Controller-->
         <scene sceneID="qUh-bf-mVd">
             <objects>
-                <viewController storyboardIdentifier="AddWithdrawalViewController" id="HME-n8-SWE" customClass="AddTransactionViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddWithdrawalViewController" id="HME-n8-SWE" customClass="AddTransactionViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zPg-4m-eTn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -572,7 +572,7 @@
                                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="HME-n8-SWE" id="WA4-Uo-5ag"/>
                                                 </connections>
@@ -761,7 +761,7 @@
         <!--Category View Controller-->
         <scene sceneID="jGS-FH-vSd">
             <objects>
-                <viewController id="7Ou-Sj-yrA" customClass="CategoryViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7Ou-Sj-yrA" customClass="CategoryViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Spr-Cu-Xki">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -901,7 +901,7 @@
         <!--Details View Controller-->
         <scene sceneID="v3I-JP-pOm">
             <objects>
-                <viewController id="nnJ-PH-CIE" customClass="DetailsViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="nnJ-PH-CIE" customClass="DetailsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d71-rz-luI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -939,7 +939,7 @@
         <!--Edit Transaction Title View Controller-->
         <scene sceneID="cHS-4G-8nc">
             <objects>
-                <viewController id="2IZ-CE-W0p" customClass="EditTransactionTitleViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2IZ-CE-W0p" customClass="EditTransactionTitleViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cFr-EC-mNe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1078,7 +1078,7 @@
         <!--Edit Transaction Amount View Controller-->
         <scene sceneID="44u-kr-Khh">
             <objects>
-                <viewController id="IHv-uQ-HKr" customClass="EditTransactionAmountViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="IHv-uQ-HKr" customClass="EditTransactionAmountViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vE3-ER-10g">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1227,7 +1227,7 @@
         <!--Edit Transaction Date View Controller-->
         <scene sceneID="Vxx-Bb-gtx">
             <objects>
-                <viewController id="ahO-Sf-nkQ" customClass="EditTransactionDateViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ahO-Sf-nkQ" customClass="EditTransactionDateViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SGZ-3O-ND9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1358,7 +1358,7 @@
         <!--Edit Transaction Category View Controller-->
         <scene sceneID="eyZ-VL-qzd">
             <objects>
-                <viewController id="yVu-Vm-6vp" customClass="EditTransactionCategoryViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yVu-Vm-6vp" customClass="EditTransactionCategoryViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aso-n3-A4X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1494,7 +1494,7 @@
         <!--Edit Transaction View Controller-->
         <scene sceneID="Vft-Fx-lY4">
             <objects>
-                <viewController id="qcb-an-ift" customClass="EditTransactionViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qcb-an-ift" customClass="EditTransactionViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0O2-A9-IIo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1685,7 +1685,7 @@
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
             <objects>
-                <viewController id="j2U-Hi-75v" customClass="TransactionViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="j2U-Hi-75v" customClass="TransactionViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qCS-ud-pZa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1824,7 +1824,7 @@
         <!--Edit Category View Controller-->
         <scene sceneID="Yzs-XX-Nqe">
             <objects>
-                <viewController id="6A0-QP-gbR" customClass="EditCategoryViewController" customModule="Budget" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6A0-QP-gbR" customClass="EditCategoryViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kYs-n1-xmf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1871,12 +1871,12 @@
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-SM-MAa">
+                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-SM-MAa">
                                                 <rect key="frame" x="112" y="0.0" width="203" height="30"/>
                                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="6A0-QP-gbR" id="E8f-iW-PSE"/>
                                                 </connections>
@@ -1932,12 +1932,12 @@
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-Xh-d5c">
+                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-Xh-d5c">
                                                 <rect key="frame" x="68" y="0.0" width="247" height="30"/>
                                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" keyboardAppearance="alert"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" keyboardAppearance="alert" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="6A0-QP-gbR" id="TLG-TG-cm1"/>
                                                 </connections>

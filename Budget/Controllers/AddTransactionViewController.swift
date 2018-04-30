@@ -169,12 +169,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    @IBOutlet weak var addTransactionButtonTitle: UIButton!
     
-    @IBAction func addTransaction(_ sender: UIButton) {
-        
-        transactionNameTextField.resignFirstResponder()
-        transactionAmountTextField.resignFirstResponder()
+    
+    
+    
+    // MARK: Add Transaction Check
+    
+    
+    // Error Check
+    
+    func submitAddTransactionForReview() {
         
         if let title = transactionNameTextField.text, let amount = transactionAmountTextField.text {
             
@@ -210,27 +214,12 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                                
-                                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
-                                
-                                self.warningLabel.textColor = successColor
-                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(categoryName)"
-                                
-                                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
-                                
-                            }))
-                            
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                            
-                            present(alert, animated: true, completion: nil)
+                            showAlertToConfirmTransaction(type: .withdrawal, title: title, amount: amount, categoryName: categoryName, year: year, month: month, day: day)
                             
                         }
                         
                         
-                    // MARK: Deposit - Only can deposit into 'Uncategorized' category
+                        // MARK: Deposit - Only can deposit into 'Uncategorized' category
                     } else if transactionSelection == .deposit {
                         
                         if amount <= 0 {
@@ -239,22 +228,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                                
-                                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
-                                
-                                self.warningLabel.textColor = successColor
-                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) was deposited."
-                                
-                                self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
-                                
-                            }))
-                            
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                            
-                            present(alert, animated: true, completion: nil)
+                            showAlertToConfirmTransaction(type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
                             
                         }
                         
@@ -269,6 +243,68 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             }
             
         }
+        
+    }
+    
+    
+    // Alert Confirmation
+    
+    func showAlertToConfirmTransaction(type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
+        
+        transactionNameTextField.resignFirstResponder()
+        transactionAmountTextField.resignFirstResponder()
+        
+        if type == .withdrawal {
+            
+            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
+                
+                self.warningLabel.textColor = successColor
+                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(categoryName)"
+                
+                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        } else if type == .deposit {
+            
+            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+                
+                self.warningLabel.textColor = successColor
+                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) was deposited."
+                
+                self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    @IBOutlet weak var addTransactionButtonTitle: UIButton!
+    
+    @IBAction func addTransaction(_ sender: UIButton) {
+        
+        submitAddTransactionForReview()
         
     }
     
@@ -315,7 +351,15 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
+            
+            submitAddTransactionForReview()
+            
+        } else {
+            textField.resignFirstResponder()
+        }
+        
         return true
     }
     

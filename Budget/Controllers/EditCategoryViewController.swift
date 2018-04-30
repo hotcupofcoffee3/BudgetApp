@@ -100,13 +100,14 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    // MARK: - Update Buttons
+    // MARK: - Edit Category Name Check
     
-    @IBAction func changeName(_ sender: UIButton) {
+    
+    // Name Error Check
+    
+    func submitEditCategoryNameForReview() {
         
         if let oldCategoryTitle = currentCategoryName.text, let newCategoryTitleFromTextField = newCategoryName.text {
-            
-            let newCategoryTitle = newCategoryTitleFromTextField
             
             // *** Is the field empty?
             if newCategoryTitleFromTextField == "" {
@@ -114,61 +115,79 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 failureWithWarning(label: nameWarningLabel, message: "There is nothing to update.")
                 
                 
-            // *** Is the new category name equal to "Unallocated"?
+                // *** Is the new category name equal to "Unallocated"?
             } else if newCategoryTitleFromTextField == unallocatedKey {
                 
                 failureWithWarning(label: nameWarningLabel, message: "You cannot rename a category to \"Unallocated\"")
                 
                 
-            // *** Was the new category entered the same as the one already set?
+                // *** Was the new category entered the same as the one already set?
             } else if oldCategoryTitle == newCategoryTitleFromTextField {
                 
                 failureWithWarning(label: nameWarningLabel, message: "The category is already named '\(currentCategoryNameString)'")
                 
                 
-            // *** All impossible entries are taken care of.
+                // *** All impossible entries are taken care of.
             } else {
                 
-                var alertMessage = String()
-                var successMessage = String()
-                
-                alertMessage = "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)'?"
-                
-                successMessage = "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)'!"
-                
-
                 // *** Alert message to pop up to confirmation
                 
-                let alert = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
+                showAlertToConfirmEditCategoryName(oldCategoryTitle: oldCategoryTitle, newCategoryTitle: newCategoryTitleFromTextField)
                 
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                    
-                    budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewAmountAdded: 0.0)
-                    
-                    
-                    // Update the UI elements with the new info
-                    self.currentCategoryNameString = newCategoryTitle
-                    
-                    self.updateUIElementsBecauseOfSuccess(label: self.nameWarningLabel, textFieldUsed: self.newCategoryName, successMessage: successMessage)
-                    
-                    self.updateLabelsAtTop()
-                    self.updateLeftLabelAtTopRight()
-                    
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                
-                present(alert, animated: true, completion: nil)
-
             }
             
         }
         
     }
     
+    // Name Alert Confirmation
+    
+    func showAlertToConfirmEditCategoryName(oldCategoryTitle: String, newCategoryTitle: String) {
+        
+        let alert = UIAlertController(title: nil, message: "Change '\(oldCategoryTitle)' to '\(newCategoryTitle)'?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            budget.updateCategory(named: oldCategoryTitle, updatedNewName: newCategoryTitle, andNewAmountAdded: 0.0)
+            
+            
+            // Update the UI elements with the new info
+            self.currentCategoryNameString = newCategoryTitle
+            
+            self.updateUIElementsBecauseOfSuccess(label: self.nameWarningLabel, textFieldUsed: self.newCategoryName, successMessage: "'\(oldCategoryTitle)' successfully changed to '\(newCategoryTitle)'!")
+            
+            self.updateLabelsAtTop()
+            self.updateLeftLabelAtTopRight()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
-    @IBAction func addFunds(_ sender: UIButton) {
+    
+    
+    // MARK: - Update Name Button
+    
+    @IBAction func changeName(_ sender: UIButton) {
+        
+        submitEditCategoryNameForReview()
+        
+    }
+    
+    
+    
+    
+    
+    // MARK: - Edit Category Amount Check
+    
+    
+    // Amount Error Check
+    
+    func submitEditCategoryAmountForReview() {
         
         if let oldCategoryTitle = currentCategoryName.text, let newCategoryAmountStringFromTextField = newCategoryAmount.text {
             
@@ -176,20 +195,20 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             
             guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
             
-
+            
             // *** Is the field empty?
             if newCategoryAmountStringFromTextField == ""  {
                 
                 failureWithWarning(label: amountWarningLabel, message: "There is nothing to update.")
-               
-
-            // *** Was the amount not convertible to a Double?
+                
+                
+                // *** Was the amount not convertible to a Double?
             } else if Double(newCategoryAmountStringFromTextField) == nil {
                 
                 failureWithWarning(label: amountWarningLabel, message: "You have to enter a number.")
                 
-            
-            // *** All impossible entries are taken care of.
+                
+                // *** All impossible entries are taken care of.
             } else {
                 
                 guard let unallocated = budget.categories[unallocatedKey] else { return }
@@ -206,59 +225,71 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                     
                     failureWithWarning(label: amountWarningLabel, message: "You have to enter a positive amount")
                     
-                // *** If there was not enough unallocated funds available.
+                    // *** If there was not enough unallocated funds available.
                 } else if newCategoryAmount > unallocated.available {
                     
                     failureWithWarning(label: amountWarningLabel, message: "You don't have enough unallocated funds for this")
                     
                     
-                // ***** SUCCESS!
+                    // ***** SUCCESS!
                 } else {
-                    
-                    newCategoryName.resignFirstResponder()
-                    
-                    var alertMessage = String()
-                    var successMessage = String()
-                    
-                    alertMessage = "Add $\(String(format: doubleFormatKey, newCategoryAmount)) to '\(oldCategoryTitle)'?"
-                    
-                    successMessage = "$\(String(format: doubleFormatKey, newCategoryAmount)) successfully added to '\(oldCategoryTitle)'! \nNew '\(oldCategoryTitle)' balance: $\(String(format: doubleFormatKey, (oldCategory.available + newCategoryAmount)))"
-                    
                     
                     // ***** Alert message to pop up to confirmation
                     
-                    let alert = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                        
-                        // Update Category function called & local variables for labels set
-                        
-                        print(newCategoryAmount)
-                        
-                        budget.updateCategory(named: oldCategoryTitle, updatedNewName: oldCategoryTitle, andNewAmountAdded: newCategoryAmount)
-                        
-                        
-                        // Update the UI element with the new info
-                        self.currentCategoryAmountDouble = newCategoryAmount
-                        
-                        self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: successMessage)
-                        
-                        self.updateLabelsAtTop()
-                        self.updateLeftLabelAtTopRight()
-                        
-                    }))
-                    
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    
-                    present(alert, animated: true, completion: nil)
+                    showAlertToConfirmEditCategoryAmount(newCategoryAmount: newCategoryAmount, oldCategoryTitle: oldCategoryTitle, oldCategory: oldCategory)
                     
                 }
-            
+                
             }
             
         }
         
     }
+    
+    // Amount Alert Confirmation
+    
+    func showAlertToConfirmEditCategoryAmount(newCategoryAmount: Double, oldCategoryTitle: String, oldCategory: Category) {
+        
+        let alert = UIAlertController(title: nil, message: "Add $\(String(format: doubleFormatKey, newCategoryAmount)) to '\(oldCategoryTitle)'?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            // Update Category function called & local variables for labels set
+            
+            print(newCategoryAmount)
+            
+            budget.updateCategory(named: oldCategoryTitle, updatedNewName: oldCategoryTitle, andNewAmountAdded: newCategoryAmount)
+            
+            
+            // Update the UI element with the new info
+            self.currentCategoryAmountDouble = newCategoryAmount
+            
+            self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: "$\(String(format: doubleFormatKey, newCategoryAmount)) successfully added to '\(oldCategoryTitle)'! \nNew '\(oldCategoryTitle)' balance: $\(String(format: doubleFormatKey, (oldCategory.available + newCategoryAmount)))")
+            
+            self.updateLabelsAtTop()
+            self.updateLeftLabelAtTopRight()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    // MARK: - Update Amount Button
+    
+    @IBAction func addFunds(_ sender: UIButton) {
+        
+        submitEditCategoryAmountForReview()
+        
+    }
+    
+    
+    
+    // MARK: - Buttons as outets for rounded borders.
     
     @IBOutlet weak var addFundsButton: UIButton!
     
@@ -299,8 +330,17 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        newCategoryName.resignFirstResponder()
-        newCategoryAmount.resignFirstResponder()
+        
+        if textField.tag == 1 {
+            
+            submitEditCategoryNameForReview()
+            
+        } else {
+            
+            submitEditCategoryAmountForReview()
+            
+        }
+        
         return true
     }
     
