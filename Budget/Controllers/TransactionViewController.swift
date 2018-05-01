@@ -45,7 +45,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             let transaction = budget.transactions[indexPath.row]
             cell.textLabel?.text = "\(transaction.title): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
             
-            if transaction.type == .deposit {
+            if transaction.type == depositKey {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(depositKey)"
             } else {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory)"
@@ -136,6 +136,18 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        
+        
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(rightSwipe)
+        
+    }
+    
+    @objc func swipe() {
+        
+        performSegue(withIdentifier: transactionsToCategoriesSegueKey, sender: self)
         
     }
     

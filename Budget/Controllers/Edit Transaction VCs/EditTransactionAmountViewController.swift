@@ -112,7 +112,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
                 
                 failureWithWarning(label: warningLabel, message: "You have to enter an amount greater than 0")
                 
-            } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.available) && currentTransaction.type == .withdrawal {
+            } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.available) && currentTransaction.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "You don't have enough funds for this.")
                 

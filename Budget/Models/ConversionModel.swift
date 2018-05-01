@@ -8,6 +8,28 @@
 
 import Foundation
 
+// Convert Saved Array Categories to Local Dictionary Categories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Category Conversions
 
 func convertCategories(from usedCategories: [String: Category]) -> [String: [String: Double]] {
@@ -58,12 +80,12 @@ func convertTransactions(from usedTransactions: [Transaction]) -> [String: [Stri
         
         var typeOfTransaction = ""
         
-        if transaction.type == .deposit {
+        if transaction.type == depositKey {
             typeOfTransaction = depositKey
         } else {
             typeOfTransaction = withdrawalKey
         }
-            
+        
         convertedTransactions[String(transaction.transactionID)] = [
             typeKey: typeOfTransaction,
             yearKey: String(transaction.year),
@@ -84,15 +106,14 @@ func convertTransactions(from savedTransactions: [String: [String: String]]) -> 
     var convertedTransactions = [Transaction]()
     
     var transactionID = Int()
-    // 'type' set to '.deposit' as a starting point.
-    var type = TransactionType.deposit
+    var type = String()
     var year = Int()
     var month = Int()
     var day = Int()
     var title = String()
     var amount = Double()
     var category = String()
-        
+    
     for (id, details) in savedTransactions {
         
         if let convertedID = Int(id) {
@@ -103,9 +124,9 @@ func convertTransactions(from savedTransactions: [String: [String: String]]) -> 
             
             if key == typeKey {
                 if value == depositKey {
-                    type = TransactionType.deposit
+                    type = depositKey
                 } else {
-                    type = TransactionType.withdrawal
+                    type = withdrawalKey
                 }
                 
             } else if key == yearKey {

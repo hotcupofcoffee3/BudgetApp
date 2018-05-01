@@ -892,6 +892,7 @@
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="CategoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
                         <segue destination="6A0-QP-gbR" kind="show" identifier="EditCategorySegue" id="fek-yf-plG"/>
+                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="CategoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1815,6 +1816,7 @@
                         <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="TransactionsToMoveFundsSegue" id="KPk-6k-mJN"/>
                         <segue destination="qcb-an-ift" kind="show" identifier="EditTransactionSegue" id="q2x-au-qIl"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="TransactionsToCategoriesSegue" modalTransitionStyle="crossDissolve" id="LyT-nl-dpa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2036,11 +2038,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QpK-gN-dzJ"/>
-        <segue reference="sum-Cr-7Ay"/>
-        <segue reference="8K3-ts-dmR"/>
-        <segue reference="hxM-AH-nJz"/>
-        <segue reference="8ar-qL-cfd"/>
-        <segue reference="OXX-Ft-DJ2"/>
+        <segue reference="1AE-Ye-tTi"/>
+        <segue reference="LyT-nl-dpa"/>
+        <segue reference="LCW-GF-oV6"/>
+        <segue reference="KPk-6k-mJN"/>
+        <segue reference="okA-JN-PqX"/>
+        <segue reference="tLF-Rh-sKn"/>
     </inferredMetricsTieBreakers>
 </document>

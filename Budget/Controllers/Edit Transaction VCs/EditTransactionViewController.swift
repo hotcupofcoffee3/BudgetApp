@@ -44,7 +44,7 @@ class EditTransactionViewController: UIViewController {
         dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
         categoryLabel.text = currentTransaction.forCategory
         
-        if currentTransaction.type == .deposit {
+        if currentTransaction.type == depositKey {
             typeLabel.text = "Deposit"
         } else {
             typeLabel.text = "Withdrawal"

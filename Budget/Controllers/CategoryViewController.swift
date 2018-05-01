@@ -150,6 +150,21 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
 //        categoryNavBar.setBackgroundImage(UIImage(), for: .default)
 //        categoryNavBar.shadowImage = UIImage()
         
+        
+        // ******** Swipe
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(leftSwipe)
+        
+        
+    }
+    
+    // ***** Swipe
+    @objc func swipe() {
+        
+        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

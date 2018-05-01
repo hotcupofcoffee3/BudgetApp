@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreData
 
 class MainScreen: UIViewController {
+  
     
     @IBOutlet weak var hiddenDeleteButton: UIButton!
     @IBOutlet weak var hiddenResetWithCategoriesAndTransactions: UIButton!
@@ -69,6 +71,21 @@ class MainScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
+        // ********************
+        // Core Data Testing
+        // ********************
+        
+       
+        
+        
+        // ********************
+        // ********************
+        // ********************
+        
+ 
         refreshAvailableBalanceLabel()
         loadCategories()
         loadTransactions()
