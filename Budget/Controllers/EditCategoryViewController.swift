@@ -130,6 +130,18 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 // *** All impossible entries are taken care of.
             } else {
                 
+                for categoryName in budget.sortedCategoryKeys {
+                    
+                    if categoryName == newCategoryTitleFromTextField {
+                        
+                        failureWithWarning(label: nameWarningLabel, message: "There is already a category named '\(categoryName)'")
+                        
+                        return
+                        
+                    }
+                    
+                }
+                
                 // *** Alert message to pop up to confirmation
                 
                 showAlertToConfirmEditCategoryName(oldCategoryTitle: oldCategoryTitle, newCategoryTitle: newCategoryTitleFromTextField)
@@ -211,8 +223,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 // *** All impossible entries are taken care of.
             } else {
                 
-                guard let unallocated = budget.categories[unallocatedKey] else { return }
-                
                 // Sets 'newCategoryAmount' to the number entered.
                 if let newCategoryAmountDouble = Double(newCategoryAmountStringFromTextField) {
                     
@@ -224,11 +234,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
                 if newCategoryAmount < 0.0 {
                     
                     failureWithWarning(label: amountWarningLabel, message: "You have to enter a positive amount")
-                    
-                    // *** If there was not enough unallocated funds available.
-                } else if newCategoryAmount > unallocated.available {
-                    
-                    failureWithWarning(label: amountWarningLabel, message: "You don't have enough unallocated funds for this")
                     
                     
                     // ***** SUCCESS!
@@ -250,7 +255,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     func showAlertToConfirmEditCategoryAmount(newCategoryAmount: Double, oldCategoryTitle: String, oldCategory: Category) {
         
-        let alert = UIAlertController(title: nil, message: "Add $\(String(format: doubleFormatKey, newCategoryAmount)) to '\(oldCategoryTitle)'?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change budgeted amount to $\(String(format: doubleFormatKey, newCategoryAmount)) for '\(oldCategoryTitle)'?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
@@ -264,7 +269,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             // Update the UI element with the new info
             self.currentCategoryAmountDouble = newCategoryAmount
             
-            self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: "$\(String(format: doubleFormatKey, newCategoryAmount)) successfully added to '\(oldCategoryTitle)'! \nNew '\(oldCategoryTitle)' balance: $\(String(format: doubleFormatKey, (oldCategory.available + newCategoryAmount)))")
+            self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: "New '\(oldCategoryTitle)' budgeted amount: $\(String(format: doubleFormatKey, newCategoryAmount))")
             
             self.updateLabelsAtTop()
             self.updateLeftLabelAtTopRight()
