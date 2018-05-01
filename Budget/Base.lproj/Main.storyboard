@@ -211,14 +211,14 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QSS-nP-gcy" userLabel="Amount">
                                                 <rect key="frame" x="10" y="10" width="315" height="30"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUk-aS-uEQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="30"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUk-aS-uEQ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="90.5" height="30"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0qq-T4-TeK">
-                                                        <rect key="frame" x="83.5" y="0.0" width="231.5" height="30"/>
+                                                        <rect key="frame" x="100.5" y="0.0" width="214.5" height="30"/>
                                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
@@ -2036,11 +2036,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gOi-Bu-AOw"/>
+        <segue reference="QpK-gN-dzJ"/>
         <segue reference="sum-Cr-7Ay"/>
-        <segue reference="eXP-Fb-uY0"/>
-        <segue reference="ZXq-hv-ffC"/>
-        <segue reference="mU4-cf-aIR"/>
-        <segue reference="tLF-Rh-sKn"/>
+        <segue reference="8K3-ts-dmR"/>
+        <segue reference="hxM-AH-nJz"/>
+        <segue reference="8ar-qL-cfd"/>
+        <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>
 </document>

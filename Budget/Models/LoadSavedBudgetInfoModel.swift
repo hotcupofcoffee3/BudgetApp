@@ -15,7 +15,7 @@ func loadCategories() {
     let savedObject = UserDefaults.standard.object(forKey: categoryKey)
     
     if savedObject == nil {
-        let defaultCategory = [unallocatedKey: Category(name: unallocatedKey)]
+        let defaultCategory = [unallocatedKey: Category(name: unallocatedKey, budgeted: 0.0)]
         let convertedCategories = convertCategories(from: defaultCategory)
         UserDefaults.standard.set(convertedCategories, forKey: categoryKey)
     } else {

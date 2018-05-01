@@ -80,15 +80,9 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         if let categoryName = categoryNameTextField.text, let categoryAmount = categoryAmountTextField.text {
             
             // *** If everything is blank
-            if categoryName == "" && categoryAmount == "" {
+            if categoryName == "" || categoryAmount == "" {
                 
-                failureWithWarning(message: "You have to at least give a name.")
-                
-                
-                // *** If only the amount field is completed
-            } else if categoryName == "" && categoryAmount != "" {
-                
-                failureWithWarning(message: "You can't create an unnamed category.")
+                failureWithWarning(message: "You have to complete both fields.")
                 
                 
                 // *** If "Unallocated" is the attempted name
@@ -154,29 +148,12 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
-                budget.addCategory(named: newCategoryName, withThisAmount: amount)
+                budget.addCategory(named: newCategoryName, withThisAmount: nil)
+                guard let newCategory = budget.categories[newCategoryName] else { return }
+                newCategory.budgeted = amount
                 
                 self.categoryWarningLabel.textColor = successColor
                 self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of $\(String(format: doubleFormatKey, amount)) has been added."
-                
-                self.updateUIElementsBecauseOfSuccess()
-                
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
-            
-        } else {
-            
-            let alert = UIAlertController(title: nil, message: "Create category named \"\(newCategoryName)\"?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                
-                budget.addCategory(named: newCategoryName, withThisAmount: nil)
-                
-                self.categoryWarningLabel.textColor = successColor
-                self.categoryWarningLabel.text = "\"\(newCategoryName)\" has been created."
                 
                 self.updateUIElementsBecauseOfSuccess()
                 

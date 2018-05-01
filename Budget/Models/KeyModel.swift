@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 let availableKey = "Available"
+let budgetedKey = "Budgeted"
 let categoryKey = "Category"
 let transactionKey = "Transaction"
 let unallocatedKey = "Unallocated"
