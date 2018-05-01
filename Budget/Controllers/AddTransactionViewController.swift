@@ -312,6 +312,28 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         super.viewDidLoad()
         
+        
+        
+        // MARK: - Add done button
+            
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        transactionAmountTextField.inputAccessoryView = toolbar
+
+        
+        
+        
+        
         budget.sortCategoriesByKey(withUnallocated: true)
         
         addTransactionButtonTitle.layer.cornerRadius = 27
@@ -345,23 +367,49 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     
     
-    // Keyboard dismissals
+    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
         
         if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
             
             submitAddTransactionForReview()
             
         } else {
-            textField.resignFirstResponder()
+            specificTextField.resignFirstResponder()
         }
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
         
         return true
     }
     
     
+    @objc func dismissNumberKeyboard() {
+        
+        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
+        
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

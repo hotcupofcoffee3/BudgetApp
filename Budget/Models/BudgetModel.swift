@@ -16,9 +16,11 @@ enum TransactionType {
 
 class Category {
     var name: String
+    var budgeted: Double
     var available = 0.00
-    init(name: String) {
+    init(name: String, budgeted: Double) {
         self.name = name
+        self.budgeted = budgeted
     }
 }
 
@@ -62,7 +64,7 @@ class Budget {
     var balance = Double()
     
     init() {
-        self.categories[unallocatedKey] = Category(name: unallocatedKey)
+        self.categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
         guard let unallocated = self.categories[unallocatedKey] else { return }
         self.balance = unallocated.available
     }
@@ -150,7 +152,7 @@ class Budget {
             
             if categories[named] == nil {
                 
-                categories[named] = Category(name: named)
+                categories[named] = Category(name: named, budgeted: 0.0)
                 
                 if let amount = amount {
                     
@@ -250,7 +252,7 @@ class Budget {
         // *** If 'newCategoryName' is a new category....
         if categories[newCategoryName] == nil {
 
-            categories[newCategoryName] = Category(name: newCategoryName)
+            categories[newCategoryName] = Category(name: newCategoryName, budgeted: 0.0)
             
             // New category gets old category's available amount and the new amount entered.
             if let newCategory = categories[newCategoryName] {
@@ -487,7 +489,7 @@ class Budget {
         categories = [:]
         transactions = []
         balance = 0.0
-        categories[unallocatedKey] = Category(name: unallocatedKey)
+        categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
         
         UserDefaults.standard.set(nil, forKey: transactionKey)
         UserDefaults.standard.set(nil, forKey: categoryKey)

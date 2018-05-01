@@ -149,6 +149,26 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        // MARK: - Add done button
+        
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        newAmountTextField.inputAccessoryView = toolbar
+        
+        
+        
         self.updateLeftLabelAtTopRight()
         
         self.editingItemLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
@@ -169,14 +189,38 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    
+    // MARK: - Keyboard dismissals
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        newAmountTextField.resignFirstResponder()
+    
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc func dismissNumberKeyboard() {
+        
         changeAmountSubmittedForReview()
-        return true
+        newAmountTextField.resignFirstResponder()
+        
+    }
+    
+    // Remove warning label text
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        warningLabel.text = ""
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+

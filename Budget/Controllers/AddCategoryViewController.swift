@@ -200,6 +200,28 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        // MARK: - Toolbar with 'Done' button
+        
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        categoryAmountTextField.inputAccessoryView = toolbar
+        
+        
+        
+        
+        
         updateLeftLabelAtTopRight()
         
         addCategoryButton.layer.cornerRadius = 27
@@ -223,16 +245,43 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    // Keyboard dismissals
+    // MARK: - Keyboard dismissals
+    
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    
+    // Test for submitability
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if categoryNameTextField.text != "" {
+            
+            submitAddCategoryForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
+    // Submit for review of final submitability
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        submitAddCategoryForReview()
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
         return true
     }
     
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc func dismissNumberKeyboard() {
+        
+        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
+        
+    }
+    
+    // Remove warning label text
     func textFieldDidBeginEditing(_ textField: UITextField) {
         categoryWarningLabel.text = ""
     }

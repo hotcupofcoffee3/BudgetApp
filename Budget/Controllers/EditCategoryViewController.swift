@@ -298,6 +298,26 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        // MARK: - Add done button
+        
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        newCategoryAmount.inputAccessoryView = toolbar
+        
+        
 
         // Do any additional setup after loading the view.
         currentCategoryNameString = editableCategoryName
@@ -325,25 +345,36 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    
+    // Submit for review of final submitability
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField.tag == 1 {
             
             submitEditCategoryNameForReview()
             
-        } else {
-            
-            submitEditCategoryAmountForReview()
-            
         }
         
         return true
     }
     
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc func dismissNumberKeyboard() {
+        
+        submitEditCategoryAmountForReview()
+        
+        newCategoryAmount.resignFirstResponder()
+        
+    }
+    
+    // Remove warning label text
     func textFieldDidBeginEditing(_ textField: UITextField) {
         nameWarningLabel.text = ""
         amountWarningLabel.text = ""
@@ -353,7 +384,8 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         amountWarningLabel.text = ""
     }
     
-
+    
+    
 }
 
 
