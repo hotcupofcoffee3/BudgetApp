@@ -71,12 +71,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         if editingStyle == .delete {
             
-            func deleteTransaction() {
-                budget.deleteTransaction(at: indexPath.row)
-                displayedDataTable.reloadData()
-                refreshAvailableBalanceLabel()
-            }
-            
             let transactionToDelete = budget.transactions[indexPath.row]
             
             let message = "Delete \(transactionToDelete.title!) with \(convertedAmountToDollars(amount: transactionToDelete.inTheAmountOf))?"
@@ -88,7 +82,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 budget.deleteTransaction(at: indexPath.row)
                 
                 self.refreshAvailableBalanceLabel()
-                budget.sortCategoriesByKey(withUnallocated: true)
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -153,7 +146,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none

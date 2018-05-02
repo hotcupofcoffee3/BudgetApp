@@ -172,6 +172,8 @@ class Budget {
     // MARK: Sort Categories
 
     func sortCategoriesByKey(withUnallocated: Bool) {
+        
+        loadSavedCategories()
 
         sortedCategoryKeys = []
 

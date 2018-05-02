@@ -82,46 +82,6 @@ func createUnallocatedCategory(){
 
 
 
-// MARK: - Update Saved Category
-
-func updateSavedCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
-    
-    
-    
-}
-
-
-
-// MARK: - Update Saved Transaction
-
-func updateSavedTransaction(id: Int, type: String, title: String, year: Int, month: Int, day: Int, inTheAmountOf: Double, forCategory: String) {
-    
-    
-    
-}
-
-
-
-// MARK: - Delete Saved Category
-
-func deleteSavedCategory(named: String) {
-    
-    
-    
-}
-
-
-
-// MARK: - Delete Saved Transaction
-
-func deleteSavedTransaction(withID id: Int) {
-    
-//    let id = Int64(id)
-    
-//    context.delete(<#T##object: NSManagedObject##NSManagedObject#>)
-    
-}
-
 
 
 
