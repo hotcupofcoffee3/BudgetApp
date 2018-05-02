@@ -14,7 +14,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func refreshAvailableBalanceLabel() {
         budget.updateBalance()
-        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
     }
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
@@ -44,10 +44,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         if !budget.transactions.isEmpty {
             let transaction = budget.transactions[indexPath.row]
-            cell.textLabel?.text = "\(transaction.title!): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
+            cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
             if transaction.type == depositKey {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(depositKey)"
+                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): Deposit"
             } else {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory!)"
             }
@@ -79,7 +79,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
             let transactionToDelete = budget.transactions[indexPath.row]
             
-            let message = "Delete \(transactionToDelete.title!) with $\(String(format: doubleFormatKey, transactionToDelete.inTheAmountOf))?"
+            let message = "Delete \(transactionToDelete.title!) with \(convertedAmountToDollars(amount: transactionToDelete.inTheAmountOf))?"
             
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
             

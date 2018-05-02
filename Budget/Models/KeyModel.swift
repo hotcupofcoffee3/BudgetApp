@@ -19,10 +19,6 @@ let categoryKey = "Category"
 let transactionKey = "Transaction"
 
 
-// Format Keys
-let doubleFormatKey = "%0.2f"
-
-
 // Category Keys
 let nameKey = "name"
 let budgetedKey = "budgeted"

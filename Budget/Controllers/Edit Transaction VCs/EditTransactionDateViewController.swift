@@ -26,10 +26,10 @@ class EditTransactionDateViewController: UIViewController {
     func updateLeftLabelAtTopRight() {
         
         budget.updateBalance()
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     
@@ -139,6 +139,9 @@ class EditTransactionDateViewController: UIViewController {
         
         
         self.addCircleAroundButton(named: self.updateItemButton)
+        
+        
+        
         
     }
     

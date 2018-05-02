@@ -26,10 +26,10 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     func updateLeftLabelAtTopRight() {
         
         budget.updateBalance()
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     
@@ -63,7 +63,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         // *** Alert message to pop up to confirmation
         
-        let alert = UIAlertController(title: nil, message: "Change transaction amount from $\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf)) to $\(String(format: doubleFormatKey, newAmount))?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change transaction amount from \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) to \(convertedAmountToDollars(amount: newAmount))?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
@@ -170,13 +170,23 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         
         
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        
+        
+        
         self.updateLeftLabelAtTopRight()
         
-        self.editingItemLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
+        self.editingItemLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
         
         if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
             
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
             
         }
         
@@ -205,6 +215,13 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         changeAmountSubmittedForReview()
         newAmountTextField.resignFirstResponder()
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
         
     }
     

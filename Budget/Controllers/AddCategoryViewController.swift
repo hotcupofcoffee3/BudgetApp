@@ -22,10 +22,10 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     func updateLeftLabelAtTopRight() {
         
         budget.updateBalance()
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     // MARK: Update elements because of success
@@ -146,7 +146,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         categoryNameTextField.resignFirstResponder()
         categoryAmountTextField.resignFirstResponder()
             
-        let alert = UIAlertController(title: nil, message: "Create category named \"\(newCategoryName)\" with an amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Create category named \"\(newCategoryName)\" with an amount of \(convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
@@ -155,7 +155,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             newCategory.budgeted = amount
             
             self.categoryWarningLabel.textColor = successColor
-            self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of $\(String(format: doubleFormatKey, amount)) has been added."
+            self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
             
             self.updateUIElementsBecauseOfSuccess()
             
@@ -194,6 +194,14 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
         
         categoryAmountTextField.inputAccessoryView = toolbar
+        
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
         
         
         
@@ -255,6 +263,13 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     @objc func dismissNumberKeyboard() {
         
         submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
         
     }
     

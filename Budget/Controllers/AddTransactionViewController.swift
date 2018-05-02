@@ -76,16 +76,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     func updateLeftLabelAtTopRight() {
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
         
         budget.updateBalance()
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
     }
     
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
         if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            currentCategoryBalanceLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
+            currentCategoryBalanceLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
         }
         
     }
@@ -258,14 +258,14 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         if type == .withdrawal {
             
-            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
                 budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
-                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(categoryName)"
+                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
                 
                 self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
                 
@@ -277,14 +277,14 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
         } else if type == .deposit {
             
-            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of $\(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
                 budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
-                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) was deposited."
+                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
                 
                 self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
                 
@@ -332,6 +332,14 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         transactionAmountTextField.inputAccessoryView = toolbar
 
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
         
         
         
@@ -393,10 +401,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         return true
     }
     
-    
     @objc func dismissNumberKeyboard() {
         
         submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
         
     }
     

@@ -19,7 +19,7 @@ class MainScreen: UIViewController {
     
     func refreshAvailableBalanceLabel() {
         budget.updateBalance()
-        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
     }
     
     @IBOutlet weak var categoriesButtonTitle: UIButton!
@@ -165,9 +165,15 @@ class MainScreen: UIViewController {
                     // An initial Deposit
                     budget.addTransaction(type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
                     
-                    // Two categories with some amounts
+                    // Two categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0)
                     budget.addCategory(named: "Extra", withBudgeted: 50.0)
+                    
+                    // Allocate their budgeted amounts into their available amounts
+                    budget.allocateFundsToCategory(withThisAmount: 200, to: "Food")
+                    budget.allocateFundsToCategory(withThisAmount: 50, to: "Extra")
+                    
+                    
                     
                     // Two transactions with some amounts.
                     budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
@@ -192,12 +198,43 @@ class MainScreen: UIViewController {
     
     
     
-    
-    
-    
-    
-    
-    
-    
 
 }
+
+
+
+// MARK: - Convert Amount to Dollars
+
+extension UIViewController {
+    
+    func convertedAmountToDollars(amount: Double) -> String {
+        
+        var convertedAmount = ""
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        
+        if let convertedAmountOptional = numberFormatter.string(from: NSNumber(value: amount)) {
+            
+            convertedAmount = convertedAmountOptional
+            
+        }
+        
+        return convertedAmount
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

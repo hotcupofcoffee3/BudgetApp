@@ -25,27 +25,17 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     func updateLeftLabelAtTopRight() {
         
         budget.updateBalance()
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
         
-        if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            
-            if categoryName == unallocatedKey {
-                
-                atLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
-                
-            } else {
-                
-                atLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
-                
-            }
-            
-        }
+        guard let selectedCategory = loadSpecificCategory(named: categoryName) else { return }
+        
+        atLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
         
     }
     
@@ -279,7 +269,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func showAlertToConfirmAllocate(amount: Double, toCategory: String) {
         
-        let alert = UIAlertController(title: nil, message: "Allocate $\(String(format: doubleFormatKey, amount)) to \(toCategory)?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Allocate \(self.convertedAmountToDollars(amount: amount)) to \(toCategory)?", preferredStyle: .alert)
         
         // Success!!! Adds specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
@@ -287,7 +277,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
             
             self.warningLabel.textColor = successColor
-            self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) allocated to \(toCategory)"
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) allocated to \(toCategory)"
             
             // Haptics triggered, labels updated, and text field cleared
             self.updateUIElementsBecauseOfSuccess(forFromCategory: unallocatedKey, forToCategory: toCategory)
@@ -352,7 +342,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func showAlertToConfirmRemove(amount: Double, fromCategory: String) {
         
-        let alert = UIAlertController(title: nil, message: "Remove $\(String(format: doubleFormatKey, amount)) from \(fromCategory)?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Remove \(self.convertedAmountToDollars(amount: amount)) from \(fromCategory)?", preferredStyle: .alert)
         
         // Success!!! Removes specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
@@ -360,7 +350,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategory)
             
             self.warningLabel.textColor = successColor
-            self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) removed from \(fromCategory)"
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) removed from \(fromCategory)"
             
             // Haptics triggered, labels updated, and text field cleared
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: unallocatedKey)
@@ -430,7 +420,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func showAlertToConfirmShift(amount: Double, fromCategory: String, toCategory: String) {
         
-        let alert = UIAlertController(title: nil, message: "Shift $\(String(format: doubleFormatKey, amount)) from \(fromCategory) to \(toCategory)?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Shift \(self.convertedAmountToDollars(amount: amount)) from \(fromCategory) to \(toCategory)?", preferredStyle: .alert)
         
         // Adds specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
@@ -439,7 +429,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
             
             self.warningLabel.textColor = successColor
-            self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) shifted from \(fromCategory) to \(toCategory)"
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) shifted from \(fromCategory) to \(toCategory)"
             
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: toCategory)
             
@@ -521,6 +511,15 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
 
         
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        
+        
         
         budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight()
@@ -590,6 +589,13 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @objc func dismissNumberKeyboard() {
         
         submissionFromKeyboardReturnKey(specificTextField: fundsTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
         
     }
     
