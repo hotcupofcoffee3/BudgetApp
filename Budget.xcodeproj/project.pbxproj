@@ -24,7 +24,6 @@
 		B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */; };
 		B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58816C82084F85D00CA0C4D /* DateFormatModel.swift */; };
 		B58B8A9F2098AC54009C55A3 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */; };
-		B5E052422074660D00C69153 /* ConversionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E052412074660D00C69153 /* ConversionModel.swift */; };
 		B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */; };
 		B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */; };
 		B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */; };
@@ -53,7 +52,6 @@
 		B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		B58816C82084F85D00CA0C4D /* DateFormatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatModel.swift; sourceTree = "<group>"; };
 		B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
-		B5E052412074660D00C69153 /* ConversionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionModel.swift; sourceTree = "<group>"; };
 		B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSavedBudgetInfoModel.swift; sourceTree = "<group>"; };
 		B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBudgetInfoModel.swift; sourceTree = "<group>"; };
 		B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionTitleViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				B5759A262076690700410FF9 /* KeyModel.swift */,
 				B58816C82084F85D00CA0C4D /* DateFormatModel.swift */,
 				B5380EB22073D3430061C9E5 /* BudgetModel.swift */,
-				B5E052412074660D00C69153 /* ConversionModel.swift */,
 				B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */,
 				B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */,
 				B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */,
@@ -221,7 +218,6 @@
 				B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */,
 				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
-				B5E052422074660D00C69153 /* ConversionModel.swift in Sources */,
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,
 				B52879A9208A42970011D04C /* AddTransactionViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,

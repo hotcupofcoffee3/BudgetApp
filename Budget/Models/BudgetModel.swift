@@ -446,6 +446,9 @@ class Budget {
 
         loadSavedCategories()
         loadSavedTransactions(descending: true)
+        
+        UserDefaults.standard.set(nil, forKey: categoryKey)
+        UserDefaults.standard.set(nil, forKey: transactionKey)
 
     }
 
