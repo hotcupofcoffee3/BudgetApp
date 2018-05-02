@@ -30,6 +30,8 @@ func saveData() {
         
     }
     
+    budget.updateBalance()
+    
 }
 
 

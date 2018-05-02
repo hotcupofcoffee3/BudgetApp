@@ -13,6 +13,7 @@ var editableTransactionIndex = Int()
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func refreshAvailableBalanceLabel() {
+        budget.updateBalance()
         availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     

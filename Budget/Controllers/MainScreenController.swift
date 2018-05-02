@@ -18,6 +18,7 @@ class MainScreen: UIViewController {
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     func refreshAvailableBalanceLabel() {
+        budget.updateBalance()
         availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
@@ -77,11 +78,7 @@ class MainScreen: UIViewController {
         // ********************
         // Core Data Testing
         // ********************
-        
-       UserDefaults.standard.object(forKey: categoryKey)
-        
-        
-        
+      
        
         
         
@@ -89,10 +86,10 @@ class MainScreen: UIViewController {
         // ********************
         // ********************
         
- 
-        refreshAvailableBalanceLabel()
         loadSavedCategories()
         loadSavedTransactions(descending: true)
+        
+        refreshAvailableBalanceLabel()
 
         categoriesButtonTitle.layer.cornerRadius = 35
         categoriesButtonTitle.layer.masksToBounds = true
@@ -176,8 +173,11 @@ class MainScreen: UIViewController {
                     budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
                     budget.addTransaction(type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 4, day: 27)
                     
+                    loadSavedCategories()
+                    loadSavedTransactions(descending: true)
                     
                     self.refreshAvailableBalanceLabel()
+                    
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

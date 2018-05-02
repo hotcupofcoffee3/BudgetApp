@@ -15,6 +15,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var categoryNavBar: UINavigationBar!
     
     func refreshAvailableBalanceLabel() {
+        budget.updateBalance()
         availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     

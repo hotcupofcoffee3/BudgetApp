@@ -25,6 +25,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     func updateLeftLabelAtTopRight() {
         
+        budget.updateBalance()
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }

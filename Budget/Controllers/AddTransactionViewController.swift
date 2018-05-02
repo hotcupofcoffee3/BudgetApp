@@ -77,6 +77,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     func updateLeftLabelAtTopRight() {
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        
+        budget.updateBalance()
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     

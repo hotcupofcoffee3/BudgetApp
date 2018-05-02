@@ -18,43 +18,6 @@ enum TransactionType {
     case deposit
 }
 
-//class Category {
-//    var name: String
-//    var budgeted: Double
-//    var available = 0.00
-//    init(name: String, budgeted: Double) {
-//        self.name = name
-//        self.budgeted = budgeted
-//    }
-//}
-//
-//class Transaction {
-//    var transactionID: Int
-//    var type: String
-//    var title: String
-//    var year: Int
-//    var month: Int
-//    var day: Int
-//    var inTheAmountOf: Double
-//    var forCategory: String
-//
-//    init (transactionID: Int, type: String, title: String, forCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-//        self.type = type
-//        self.title = title
-//        self.forCategory = forCategory
-//        self.inTheAmountOf = inTheAmountOf
-//
-//        self.year = year
-//        self.month = month
-//        self.day = day
-//
-//        // Placeholder until functions get written
-//        self.transactionID = transactionID
-//    }
-//
-//}
-
-
 
 // ************************************************
 // MARK: - Budget Class
@@ -66,16 +29,6 @@ class Budget {
     var transactions = [Transaction]()
     var sortedCategoryKeys = [String]()
     var balance = Double()
-
-//    init() {
-//        self.categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
-//        guard let unallocated = self.categories[unallocatedKey] else { return }
-//        self.balance = unallocated.available
-//
-//
-//    }
-
-
 
     // MARK: - Update Balance
 
@@ -490,9 +443,6 @@ class Budget {
         }
         
         createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
-
-        UserDefaults.standard.set(nil, forKey: transactionKey)
-        UserDefaults.standard.set(nil, forKey: categoryKey)
 
         loadSavedCategories()
         loadSavedTransactions(descending: true)
