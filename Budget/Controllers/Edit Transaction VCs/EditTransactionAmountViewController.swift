@@ -27,7 +27,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
@@ -66,20 +66,20 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let current = self.currentTransaction
+            let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            let newTransaction = Transaction(transactionID: current.transactionID, type: current.type, title: current.title, forCategory: current.forCategory, inTheAmountOf: newAmount, year: current.year, month: current.month, day: current.day)
+            updatedTransaction.inTheAmountOf = newAmount
             
-            budget.updateTransaction(named: newTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.transactionID == newTransaction.transactionID }) {
+            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
                 
                 editableTransactionIndex = newTransactionIndex
                 
             }
             
-            self.editingItemLabel.text = newTransaction.title
+            self.editingItemLabel.text = updatedTransaction.title
             
             self.dismiss(animated: true, completion: nil)
             
@@ -106,7 +106,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         } else {
             
             guard let newAmount = Double(newAmountText) else { return }
-            guard let currentCategory = budget.categories[currentTransaction.forCategory] else { return }
+            guard let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) else { return }
             
             if newAmount < 0.0 {
                 
@@ -173,9 +173,9 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         self.editingItemLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
         
-        if let currentCategory = budget.categories[currentTransaction.forCategory] {
+        if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
             
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
             
         }
         

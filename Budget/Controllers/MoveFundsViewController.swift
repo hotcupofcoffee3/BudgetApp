@@ -26,13 +26,13 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
         
-        if let selectedCategory = budget.categories[categoryName] {
+        if let selectedCategory = loadSpecificCategory(named: categoryName) {
             
             if categoryName == unallocatedKey {
                 
@@ -249,7 +249,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Allocation submitted, with the amount being specifically set
         } else if let amount = Double(amountFromTextField) {
             
-            guard let unallocatedCategory = budget.categories[unallocatedKey] else { return }
+            guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
             
             if (unallocatedCategory.available - amount) < 0 {
                 
@@ -313,7 +313,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         let fromCategorySelectedIndex = fromCategoryPicker.selectedRow(inComponent: 0)
         let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategorySelectedIndex]
         
-        guard let selectedCategory = budget.categories[fromCategorySelectedName] else { return }
+        guard let selectedCategory = loadSpecificCategory(named: fromCategorySelectedName) else { return }
         
         // Removal submitted, with the amount being the default set budgeted amount
         if amountFromTextField == "" {
@@ -397,7 +397,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             if let amount = Double(amountFromTextField) {
                 
-                guard let fromCategory = budget.categories[fromCategorySelectedName] else { return }
+                guard let fromCategory = loadSpecificCategory(named: fromCategorySelectedName) else { return }
                 
                 if (fromCategory.available - amount) < 0 {
                     

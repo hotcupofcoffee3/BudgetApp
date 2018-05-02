@@ -78,6 +78,10 @@ class MainScreen: UIViewController {
         // Core Data Testing
         // ********************
         
+       UserDefaults.standard.object(forKey: categoryKey)
+        
+        
+        
        
         
         
@@ -87,12 +91,8 @@ class MainScreen: UIViewController {
         
  
         refreshAvailableBalanceLabel()
-        loadCategories()
-        loadTransactions()
-        
-//        for transaction in budget.transactions {
-//            print(transaction.transactionID)
-//        }
+        loadSavedCategories()
+        loadSavedTransactions(descending: true)
 
         categoriesButtonTitle.layer.cornerRadius = 35
         categoriesButtonTitle.layer.masksToBounds = true
@@ -169,8 +169,8 @@ class MainScreen: UIViewController {
                     budget.addTransaction(type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
                     
                     // Two categories with some amounts
-                    budget.addCategory(named: "Food", withThisAmount: 200.0)
-                    budget.addCategory(named: "Extra", withThisAmount: 50.0)
+                    budget.addCategory(named: "Food", withBudgeted: 200.0)
+                    budget.addCategory(named: "Extra", withBudgeted: 50.0)
                     
                     // Two transactions with some amounts.
                     budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)

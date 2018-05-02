@@ -29,7 +29,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
@@ -84,7 +84,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         newCategorySelected = budget.sortedCategoryKeys[row]
         
-        guard let currentCategory = budget.categories[budget.sortedCategoryKeys[row]] else { return }
+        guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
         
         leftInCategoryLabel.text = "~ Left in \(newCategorySelected): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
         
@@ -99,24 +99,24 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         // *** Alert message to pop up to confirmation
         
-        let alert = UIAlertController(title: nil, message: "Change transaction category from \"\(currentTransaction.forCategory)\" to \"\(newCategoryName)\"?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change transaction category from \"\(currentTransaction.forCategory!)\" to \"\(newCategoryName)\"?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let current = self.currentTransaction
+            let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            let newTransaction = Transaction(transactionID: current.transactionID, type: current.type, title: current.title, forCategory: newCategoryName, inTheAmountOf: current.inTheAmountOf, year: current.year, month: current.month, day: current.day)
+            updatedTransaction.forCategory = newCategoryName
             
-            budget.updateTransaction(named: newTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.transactionID == newTransaction.transactionID }) {
+            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
                 
                 editableTransactionIndex = newTransactionIndex
                 
             }
             
-            self.editingItemLabel.text = newTransaction.forCategory
+            self.editingItemLabel.text = updatedTransaction.forCategory
             
             self.dismiss(animated: true, completion: nil)
             
@@ -132,11 +132,11 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         let indexOfNewCategory = newCategoryPicker.selectedRow(inComponent: 0)
         let newSelectedCategoryName = budget.sortedCategoryKeys[indexOfNewCategory]
-        guard let newCategoryItself = budget.categories[newSelectedCategoryName] else { return }
+        guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
         if newSelectedCategoryName == currentTransaction.forCategory {
             
-            failureWithWarning(label: warningLabel, message: "The category is already set to \(currentTransaction.forCategory)")
+            failureWithWarning(label: warningLabel, message: "The category is already set to \(currentTransaction.forCategory!)")
             
         } else if currentTransaction.inTheAmountOf > newCategoryItself.available {
             
@@ -177,18 +177,18 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         budget.sortCategoriesByKey(withUnallocated: true)
         
-        self.newCategorySelected = currentTransaction.forCategory
+        self.newCategorySelected = currentTransaction.forCategory!
         
         guard let indexOfCurrentCategory = budget.sortedCategoryKeys.index(of: self.newCategorySelected) else { return }
         self.newCategoryPicker.selectRow(indexOfCurrentCategory, inComponent: 0, animated: true)
         
         
-        self.editingItemLabel.text = "\(currentTransaction.forCategory)"
+        self.editingItemLabel.text = "\(currentTransaction.forCategory!)"
         self.editingItemAmountLabel.text = "~ Transaction amount: $\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf)) ~"
         
-        if let currentCategory = budget.categories[currentTransaction.forCategory] {
+        if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
             
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
             
         }
         

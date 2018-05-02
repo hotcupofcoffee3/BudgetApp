@@ -25,13 +25,13 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
     func updateLabelsAtTop() {
         
-        if let currentCategory = budget.categories[currentCategoryNameString] {
+        if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
             
             currentCategoryName.text = currentCategoryNameString
             currentCategoryAmount.text = "Left: $\(String(format: doubleFormatKey, currentCategory.available))"
@@ -205,7 +205,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             
             var newCategoryAmount = Double()
             
-            guard let oldCategory = budget.categories[oldCategoryTitle] else { return }
+            guard let oldCategory = loadSpecificCategory(named: oldCategoryTitle) else { return }
             
             
             // *** Is the field empty?

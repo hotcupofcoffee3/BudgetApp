@@ -11,22 +11,16 @@ import UIKit
 import CoreData
 
 
-// MARK: - Load from CoreData
-
-var categoryArray = [CategorySaved]()
-var transactionArray = [TransactionSaved]()
-
-
 
 // MARK: - Load All Categories
 
 func loadSavedCategories() {
     
-    let request: NSFetchRequest<CategorySaved> = CategorySaved.fetchRequest()
+    let request: NSFetchRequest<Category> = Category.fetchRequest()
     
     do {
         
-        categoryArray = try context.fetch(request)
+        budget.categories = try context.fetch(request)
         
     } catch {
         
@@ -37,17 +31,18 @@ func loadSavedCategories() {
 }
 
 
+
 // MARK: - Load All Transactions
 
-func loadSavedTransactions() {
+func loadSavedTransactions(descending: Bool) {
     
-    let request: NSFetchRequest<TransactionSaved> = TransactionSaved.fetchRequest()
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
-    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: !descending)]
     
     do {
         
-        transactionArray = try context.fetch(request)
+        budget.transactions = try context.fetch(request)
         
     } catch {
         
@@ -61,13 +56,13 @@ func loadSavedTransactions() {
 
 // MARK: - Load Specific Category
 
-func loadSpecificCategory(named: String) -> String? {
+func loadSpecificCategory(named: String) -> Category? {
     
-    var categoryName: String?
+    var category: Category?
     
-    var matchingCategory = [CategorySaved]()
+    var matchingCategory = [Category]()
     
-    let request: NSFetchRequest<CategorySaved> = CategorySaved.fetchRequest()
+    let request: NSFetchRequest<Category> = Category.fetchRequest()
     
     let predicate = NSPredicate(format: nameMatchesKey, named)
     
@@ -86,20 +81,20 @@ func loadSpecificCategory(named: String) -> String? {
     if matchingCategory.count > 1 {
         
         print("Error. There were \(matchingCategory.count) entries that matched that category name.")
-        categoryName = nil
+        category = nil
         
     } else if matchingCategory.count == 0 {
         
         print("There was nothing in the array")
-        categoryName = nil
+        category = nil
         
     } else if matchingCategory.count == 1 {
         
-        categoryName = matchingCategory[0].name
+        category = matchingCategory[0]
         
     }
     
-    return categoryName
+    return category
     
 }
 
@@ -107,23 +102,21 @@ func loadSpecificCategory(named: String) -> String? {
 
 // MARK: - Load Specific Transaction
 
-func loadSpecificTransaction(idSubmitted: Int) -> Int? {
+func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
     
-    var convertedTransactionId: Int?
+    var transaction: Transaction?
     
-    var matchingTransaction = [TransactionSaved]()
+    var matchingTransactionArray = [Transaction]()
     
     let id = Int64(idSubmitted)
     
-    let request: NSFetchRequest<TransactionSaved> = TransactionSaved.fetchRequest()
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
-    let predicate = NSPredicate(format: idMatchesKey, id)
-    
-    request.predicate = predicate
+    request.predicate = NSPredicate(format: idMatchesKey, id)
     
     do {
         
-        matchingTransaction = try context.fetch(request)
+        matchingTransactionArray = try context.fetch(request)
         
     } catch {
         
@@ -131,25 +124,23 @@ func loadSpecificTransaction(idSubmitted: Int) -> Int? {
         
     }
     
-    if matchingTransaction.count > 1 {
+    if matchingTransactionArray.count > 1 {
         
-        print("Error. There were \(matchingTransaction.count) entries that matched that id.")
-        convertedTransactionId = nil
+        print("Error. There were \(matchingTransactionArray.count) entries that matched that id.")
+        transaction = nil
         
-    } else if matchingTransaction.count == 0 {
+    } else if matchingTransactionArray.count == 0 {
         
         print("There was nothing in the array")
-        convertedTransactionId = nil
+        transaction = nil
         
-    } else if matchingTransaction.count == 1 {
+    } else if matchingTransactionArray.count == 1 {
         
-        let transactionId = matchingTransaction[0].id
-        
-        convertedTransactionId = Int(transactionId)
+        transaction = matchingTransactionArray[0]
         
     }
     
-    return convertedTransactionId
+    return transaction
     
 }
 
@@ -157,54 +148,6 @@ func loadSpecificTransaction(idSubmitted: Int) -> Int? {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-func loadCategories() {
-    
-//    UserDefaults.standard.set(nil, forKey: categoryKey)
-    
-    let savedObject = UserDefaults.standard.object(forKey: categoryKey)
-    
-    if savedObject == nil {
-        let defaultCategory = [unallocatedKey: Category(name: unallocatedKey, budgeted: 0.0)]
-        let convertedCategories = convertCategories(from: defaultCategory)
-        UserDefaults.standard.set(convertedCategories, forKey: categoryKey)
-    } else {
-        guard let savedCategories = savedObject as? [String: [String: Double]] else { return }
-        budget.categories = convertCategories(from: savedCategories)
-    }
-    
-    budget.updateBalance()
-    
-}
-
-func loadTransactions() {
-    
-//    UserDefaults.standard.set(nil, forKey: transactionKey)
-    
-    let savedObject = UserDefaults.standard.object(forKey: transactionKey)
-    
-    if savedObject == nil {
-        UserDefaults.standard.set([String: [String: String]](), forKey: transactionKey)
-    } else {
-        guard let savedTransactions = savedObject as? [String: [String: String]] else { return }
-        budget.transactions = convertTransactions(from: savedTransactions)
-    }
-    
-    budget.sortTransactionsDescending()
-    
-}
 
 
 

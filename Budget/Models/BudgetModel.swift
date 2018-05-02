@@ -18,41 +18,41 @@ enum TransactionType {
     case deposit
 }
 
-class Category {
-    var name: String
-    var budgeted: Double
-    var available = 0.00
-    init(name: String, budgeted: Double) {
-        self.name = name
-        self.budgeted = budgeted
-    }
-}
-
-class Transaction {
-    var transactionID: Int
-    var type: String
-    var title: String
-    var year: Int
-    var month: Int
-    var day: Int
-    var inTheAmountOf: Double
-    var forCategory: String
-
-    init (transactionID: Int, type: String, title: String, forCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
-        self.type = type
-        self.title = title
-        self.forCategory = forCategory
-        self.inTheAmountOf = inTheAmountOf
-
-        self.year = year
-        self.month = month
-        self.day = day
-
-        // Placeholder until functions get written
-        self.transactionID = transactionID
-    }
-
-}
+//class Category {
+//    var name: String
+//    var budgeted: Double
+//    var available = 0.00
+//    init(name: String, budgeted: Double) {
+//        self.name = name
+//        self.budgeted = budgeted
+//    }
+//}
+//
+//class Transaction {
+//    var transactionID: Int
+//    var type: String
+//    var title: String
+//    var year: Int
+//    var month: Int
+//    var day: Int
+//    var inTheAmountOf: Double
+//    var forCategory: String
+//
+//    init (transactionID: Int, type: String, title: String, forCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+//        self.type = type
+//        self.title = title
+//        self.forCategory = forCategory
+//        self.inTheAmountOf = inTheAmountOf
+//
+//        self.year = year
+//        self.month = month
+//        self.day = day
+//
+//        // Placeholder until functions get written
+//        self.transactionID = transactionID
+//    }
+//
+//}
 
 
 
@@ -62,18 +62,18 @@ class Transaction {
 
 class Budget {
 
-    var categories = [String: Category]()
+    var categories = [Category]()
     var transactions = [Transaction]()
     var sortedCategoryKeys = [String]()
     var balance = Double()
 
-    init() {
-        self.categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
-        guard let unallocated = self.categories[unallocatedKey] else { return }
-        self.balance = unallocated.available
-
-
-    }
+//    init() {
+//        self.categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
+//        guard let unallocated = self.categories[unallocatedKey] else { return }
+//        self.balance = unallocated.available
+//
+//
+//    }
 
 
 
@@ -83,9 +83,9 @@ class Budget {
 
         var newBalance = 0.0
 
-        for (_, detail) in categories {
+        for category in categories {
 
-            newBalance += detail.available
+            newBalance += category.available
 
         }
 
@@ -108,7 +108,7 @@ class Budget {
         // It can't be, but this just makes it clearer
         if thisCategory != unallocatedKey {
 
-            guard let currentCategory = categories[thisCategory] else { return }
+            guard let currentCategory = loadSpecificCategory(named: thisCategory) else { return }
 
             let amount = withThisAmount
 
@@ -116,12 +116,12 @@ class Budget {
             currentCategory.available += amount
 
             // Takes funds from Uncategorized category
-            guard let unallocated = categories[unallocatedKey] else { return }
+            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             unallocated.available -= amount
 
         }
 
-        saveEverything()
+        saveData()
 
     }
 
@@ -133,18 +133,18 @@ class Budget {
 
         if thisCategory != unallocatedKey {
 
-            guard let currentCategory = categories[thisCategory] else { return }
+            guard let currentCategory = loadSpecificCategory(named: thisCategory) else { return }
 
             // Adds funds to specified category
             currentCategory.available -= withThisAmount
 
             // Takes funds from Uncategorized category
-            guard let unallocated = categories[unallocatedKey] else { return }
+            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             unallocated.available += withThisAmount
 
         }
 
-        saveEverything()
+        saveData()
 
     }
 
@@ -152,27 +152,24 @@ class Budget {
 
     // MARK: Add Category
 
-    func addCategory (named: String, withThisAmount amount: Double?) {
+    func addCategory (named: String, withBudgeted amount: Double) {
 
         if named != unallocatedKey {
-
-            if categories[named] == nil {
-
-                categories[named] = Category(name: named, budgeted: 0.0)
-
-                if let amount = amount {
-
-                    guard let newCategory = categories[named] else { return }
-                    guard let unallocated = categories[unallocatedKey] else { return }
-                    newCategory.available += amount
-                    unallocated.available -= amount
-
+            
+            for category in categories {
+                
+                if category.name == named {
+                    
+                    return
+                    
                 }
-
+                
             }
 
+            createAndSaveNewCategory(named: named, withBudgeted: amount, andAvailable: 0.0)
+
             sortCategoriesByKey(withUnallocated: true)
-            saveEverything()
+            saveData()
 
         }
 
@@ -200,15 +197,18 @@ class Budget {
 
             }
 
-            if let unallocated = categories[unallocatedKey], let deletedCategory = categories[named] {
-                unallocated.available += deletedCategory.available
-            }
+            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+            guard let deletedCategory = loadSpecificCategory(named: named) else { return }
+            
+            unallocated.available += deletedCategory.available
 
             if named != unallocatedKey {
-                categories[named] = nil
+                context.delete(deletedCategory)
             }
+            
+            loadSavedCategories()
             sortCategoriesByKey(withUnallocated: true)
-            saveEverything()
+            saveData()
 
         }
 
@@ -224,22 +224,22 @@ class Budget {
 
         if withUnallocated == true {
 
-            for key in categories.keys {
-                if key == unallocatedKey {
+            for category in categories {
+                if category.name == unallocatedKey {
                     continue
                 }
-                sortedCategoryKeys.append(key)
+                sortedCategoryKeys.append(category.name!)
             }
             sortedCategoryKeys.sort()
             sortedCategoryKeys = [unallocatedKey] + sortedCategoryKeys
 
-        } else {
+        } else if withUnallocated == false {
 
-            for key in categories.keys {
-                if key == unallocatedKey {
+            for category in categories {
+                if category.name == unallocatedKey {
                     continue
                 }
-                sortedCategoryKeys.append(key)
+                sortedCategoryKeys.append(category.name!)
             }
             sortedCategoryKeys.sort()
 
@@ -251,47 +251,29 @@ class Budget {
 
     func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountAdded newCategoryAmount: Double) {
 
-        guard let oldCategory = categories[oldCategoryName] else { return }
-
-
-        // *** If 'newCategoryName' is a new category....
-        if categories[newCategoryName] == nil {
-
-            categories[newCategoryName] = Category(name: newCategoryName, budgeted: newCategoryAmount)
-
-            // New category gets old category's available amount and the new amount entered.
-            if let newCategory = categories[newCategoryName] {
-
-                newCategory.available = oldCategory.available
-                newCategory.budgeted = newCategoryAmount
-
-            }
-
-            // Old category removed
-            categories[oldCategoryName] = nil
-
+        guard let categoryToUpdate = loadSpecificCategory(named: oldCategoryName) else { return }
+        
+        categoryToUpdate.name = newCategoryName
+        categoryToUpdate.budgeted = newCategoryAmount
+        
+        if oldCategoryName != newCategoryName {
+            
             // Transactions with old category name get set to new category's name
             for transaction in transactions {
-
+                
                 if transaction.forCategory == oldCategoryName {
-
+                    
                     transaction.forCategory = newCategoryName
-
+                    
                 }
-
+                
             }
-
-
-        // *** If 'newCategoryName' is the same as the old one...
-        } else {
-
-            oldCategory.budgeted += newCategoryAmount
-
+            
         }
 
         budget.sortCategoriesByKey(withUnallocated: true)
 
-        saveEverything()
+        saveData()
 
     }
 
@@ -358,7 +340,7 @@ class Budget {
         sortTransactionsAscending()
 
         for transaction in transactions {
-            if convertedID == transaction.transactionID {
+            if convertedID == transaction.id {
                 convertedID += 1
             }
         }
@@ -384,31 +366,25 @@ class Budget {
 
         if type == .deposit {
 
-            guard let unallocated = categories[unallocatedKey] else { return }
+            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             unallocated.available += amount
             balance += amount
 
-            let formattedTransactionID = convertedDateComponentsToTransactionID(year: year, month: month, day: day)
-
-            transactions.append(Transaction(transactionID: formattedTransactionID, type: depositKey, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day))
-
-            sortTransactionsDescending()
-
-            saveEverything()
+            createAndSaveNewTransaction(id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
         } else if type == .withdrawal {
 
-            transactions.append(Transaction(transactionID: formattedTransactionID, type: withdrawalKey, title: title, forCategory: thisCategory, inTheAmountOf: amount, year: year, month: month, day: day))
+            createAndSaveNewTransaction(id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
-            guard let category = categories[thisCategory]  else { return }
+            guard let category = loadSpecificCategory(named: thisCategory)  else { return }
             category.available -= amount
             balance -= amount
-
-            sortTransactionsDescending()
-
-            saveEverything()
-
+            
         }
+        
+        sortTransactionsDescending()
+        
+        saveData()
 
     }
 
@@ -417,14 +393,14 @@ class Budget {
     // MARK: Sort Transactions
 
     func sortTransactionsDescending() {
-
-        transactions.sort(by: {$0.transactionID > $1.transactionID})
+        
+        loadSavedTransactions(descending: true)
 
     }
 
     func sortTransactionsAscending() {
-
-        transactions.sort(by: {$0.transactionID < $1.transactionID})
+        
+        loadSavedTransactions(descending: false)
 
     }
 
@@ -433,28 +409,30 @@ class Budget {
     // MARK: Delete transaction
 
     func deleteTransaction (at index: Int) {
-        let category = transactions[index].forCategory
+        let categoryName = transactions[index].forCategory
         let amount = transactions[index].inTheAmountOf
 
         if transactions[index].type == depositKey {
 
-            guard let unallocated = categories[unallocatedKey] else { return }
+            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             unallocated.available -= amount
             balance -= amount
 
         } else if transactions[index].type == withdrawalKey {
 
             // Add amount back to category
-            guard let categoryToPutBackTo = categories[category] else { return }
+            guard let categoryToPutBackTo = loadSpecificCategory(named: categoryName!) else { return }
             categoryToPutBackTo.available += amount
             balance += amount
 
         }
 
         // Delete transaction from the index in transaction array
+        context.delete(transactions[index])
         transactions.remove(at: index)
 
-        saveEverything()
+        saveData()
+        
     }
 
 
@@ -464,17 +442,23 @@ class Budget {
     func updateTransaction(named updatedTransaction: Transaction, forOldTransactionAtIndex index: Int) {
         if transactions[index].type == depositKey {
 
-            deleteTransaction(at: index)
+            context.delete(transactions[index])
+            transactions.remove(at: index)
 
-            addTransaction(type: .deposit, title: updatedTransaction.title, forCategory: unallocatedKey, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
+            createAndSaveNewTransaction(id: updatedTransaction.id, type: depositKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
 
         } else {
 
-            deleteTransaction(at: index)
+            context.delete(transactions[index])
+            transactions.remove(at: index)
 
-            addTransaction(type: .withdrawal, title: updatedTransaction.title, forCategory: updatedTransaction.forCategory, inTheAmountOf: updatedTransaction.inTheAmountOf, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day)
+            createAndSaveNewTransaction(id: updatedTransaction.id, type: withdrawalKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
 
         }
+        
+        loadSavedTransactions(descending: true)
+        
+        saveData()
 
     }
 
@@ -492,16 +476,26 @@ class Budget {
 
     func deleteEVERYTHING(){
 
-        categories = [:]
-        transactions = []
         balance = 0.0
-        categories[unallocatedKey] = Category(name: unallocatedKey, budgeted: 0.0)
+        
+        for category in categories {
+            
+            context.delete(category)
+            
+        }
+        for transaction in transactions {
+            
+            context.delete(transaction)
+            
+        }
+        
+        createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
 
         UserDefaults.standard.set(nil, forKey: transactionKey)
         UserDefaults.standard.set(nil, forKey: categoryKey)
 
-        loadCategories()
-        loadTransactions()
+        loadSavedCategories()
+        loadSavedTransactions(descending: true)
 
     }
 

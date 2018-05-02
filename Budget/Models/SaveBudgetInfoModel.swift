@@ -10,8 +10,14 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
+// MARK: - Context created
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+
+
+// MARK: - Saves everything
 func saveData() {
     
     do {
@@ -29,9 +35,9 @@ func saveData() {
 
 
 // MARK: - Saves a new category to saved categories
-func saveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
+func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
     
-    let categoryToSave = CategorySaved(context: context)
+    let categoryToSave = Category(context: context)
     
     categoryToSave.name = named
     categoryToSave.budgeted = budgeted
@@ -45,16 +51,16 @@ func saveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable 
 
 // MARK: - Saves a new transaction to saved transactions
 
-func saveNewTransaction(id: Int, type: String, title: String, year: Int, month: Int, day: Int, inTheAmountOf: Double, forCategory: String) {
+func createAndSaveNewTransaction(id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
     
-    let transactionToSave = TransactionSaved(context: context)
+    let transactionToSave = Transaction(context: context)
     
-    transactionToSave.id = Int64(id)
+    transactionToSave.id = id
     transactionToSave.type = type
     transactionToSave.title = title
-    transactionToSave.year = Int64(year)
-    transactionToSave.month = Int64(month)
-    transactionToSave.day = Int64(day)
+    transactionToSave.year = year
+    transactionToSave.month = month
+    transactionToSave.day = day
     transactionToSave.inTheAmountOf = inTheAmountOf
     transactionToSave.forCategory = forCategory
     
@@ -68,7 +74,7 @@ func saveNewTransaction(id: Int, type: String, title: String, year: Int, month: 
 
 func createUnallocatedCategory(){
     
-    saveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
+    createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
     
 }
 
@@ -113,46 +119,6 @@ func deleteSavedTransaction(withID id: Int) {
 //    context.delete(<#T##object: NSManagedObject##NSManagedObject#>)
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-func saveCategories() {
-    
-    let convertedCategories = convertCategories(from: budget.categories)
-    
-    UserDefaults.standard.set(convertedCategories, forKey: categoryKey)
-    
-}
-
-func saveTransactions() {
-    
-    let convertedTransactions = convertTransactions(from: budget.transactions)
-    
-    UserDefaults.standard.set(convertedTransactions, forKey: transactionKey)
-    
-}
-
-
-func saveEverything() {
-    saveTransactions()
-    saveCategories()
-}
-
-
-
-
-
-
-
 
 
 

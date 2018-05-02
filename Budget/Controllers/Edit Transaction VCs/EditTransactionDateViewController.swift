@@ -27,7 +27,7 @@ class EditTransactionDateViewController: UIViewController {
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
@@ -58,18 +58,18 @@ class EditTransactionDateViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let current = self.currentTransaction
-            
             let newID = budget.convertedDateComponentsToTransactionID(year: newYear, month: newMonth, day: newDay)
             
-            let newTransaction = Transaction(transactionID: newID, type: current.type, title: current.title, forCategory: current.forCategory, inTheAmountOf: current.inTheAmountOf, year: newYear, month: newMonth, day: newDay)
+            let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            budget.updateTransaction(named: newTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            updatedTransaction.id = Int64(newID)
+            
+            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
             budget.sortTransactionsDescending()
             
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.transactionID == newTransaction.transactionID }) {
+            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
                 
                 editableTransactionIndex = newTransactionIndex
                 

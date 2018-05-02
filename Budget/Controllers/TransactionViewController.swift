@@ -43,12 +43,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         if !budget.transactions.isEmpty {
             let transaction = budget.transactions[indexPath.row]
-            cell.textLabel?.text = "\(transaction.title): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
+            cell.textLabel?.text = "\(transaction.title!): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
             
             if transaction.type == depositKey {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(depositKey)"
             } else {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory)"
+                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory!)"
             }
 
         }
@@ -78,7 +78,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
             let transactionToDelete = budget.transactions[indexPath.row]
             
-            let message = "Delete \(transactionToDelete.title) with $\(String(format: doubleFormatKey, transactionToDelete.inTheAmountOf))?"
+            let message = "Delete \(transactionToDelete.title!) with $\(String(format: doubleFormatKey, transactionToDelete.inTheAmountOf))?"
             
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
             

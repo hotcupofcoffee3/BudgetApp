@@ -27,7 +27,7 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
         
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
     }
     
@@ -60,24 +60,24 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         
         // *** Alert message to pop up to confirmation
         
-        let alert = UIAlertController(title: nil, message: "Change transaction title from \"\(currentTransaction.title)\" to \"\(newTitle)\"?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change transaction title from \"\(currentTransaction.title!)\" to \"\(newTitle)\"?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let current = self.currentTransaction
+            let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            let newTransaction = Transaction(transactionID: current.transactionID, type: current.type, title: newTitle, forCategory: current.forCategory, inTheAmountOf: current.inTheAmountOf, year: current.year, month: current.month, day: current.day)
+            updatedTransaction.title = newTitle
             
-            budget.updateTransaction(named: newTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.transactionID == newTransaction.transactionID }) {
+            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
             
                 editableTransactionIndex = newTransactionIndex
                 
             }
             
-            self.editingItemLabel.text = newTransaction.title
+            self.editingItemLabel.text = updatedTransaction.title
             
             self.dismiss(animated: true, completion: nil)
             

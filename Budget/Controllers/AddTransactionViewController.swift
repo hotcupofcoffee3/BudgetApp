@@ -75,14 +75,14 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
-        guard let unallocated = budget.categories[unallocatedKey] else { return }
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
         leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
     }
     
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
-        if let selectedCategory = budget.categories[categoryName] {
+        if let selectedCategory = loadSpecificCategory(named: categoryName) {
             currentCategoryBalanceLabel.text = "Left: $\(String(format: doubleFormatKey, selectedCategory.available))"
         }
         
@@ -202,7 +202,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                     
                     if transactionSelection == .withdrawal {
                         
-                        guard let categoryBeingWithdrawnFrom = budget.categories[categoryName] else { return }
+                        guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: categoryName) else { return }
                         
                         if (categoryBeingWithdrawnFrom.available - amount) < 0 {
                             

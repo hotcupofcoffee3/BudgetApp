@@ -42,7 +42,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
-        if let category = budget.categories[budget.sortedCategoryKeys[indexPath.row]] {
+        if let category = loadSpecificCategory(named: budget.sortedCategoryKeys[indexPath.row]) {
             
             // Unallocated has no disclosure indicator because you cannot edit it.
             if category.name == unallocatedKey {
@@ -55,7 +55,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
-            cell.textLabel?.text = "\(category.name)"
+            cell.textLabel?.text = "\(category.name!)"
             cell.detailTextLabel?.text = "Left: $\(String(format: doubleFormatKey, category.available))"
         }
         
