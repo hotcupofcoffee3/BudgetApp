@@ -10,7 +10,7 @@ import UIKit
 
 class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var transactionSelection = TransactionType.deposit
+    var transactionSelection = TransactionType.withdrawal
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         
@@ -28,13 +28,13 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         if transactionSegmentedControl.selectedSegmentIndex == 0 {
             
-            transactionSelection = .deposit
+            transactionSelection = .withdrawal
             
             updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
             
         } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
             
-            transactionSelection = .withdrawal
+            transactionSelection = .deposit
             
             updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
             
@@ -44,20 +44,26 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     func updatePickerBasedOnTransactionChoice(typeOfTransaction: TransactionType) {
         
-        if typeOfTransaction == .deposit {
-            
-            addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
-            
-            categoryPicked.isUserInteractionEnabled = false
-            categoryPicked.selectRow(0, inComponent: 0, animated: true)
-            categoryPicked.alpha = 0.3
-            
-        } else if typeOfTransaction == .withdrawal {
+        if typeOfTransaction == .withdrawal {
             
             addTransactionButtonTitle.setTitle("Add Withdrawal", for: .normal)
             
             categoryPicked.isUserInteractionEnabled = true
             categoryPicked.alpha = 1.0
+            
+        } else if typeOfTransaction == .deposit {
+            
+            addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
+            
+            categoryPicked.isUserInteractionEnabled = false
+            
+            guard let unallocatedIndex = budget.sortedCategoryKeys.index(of: unallocatedKey) else { return }
+
+            categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
+            
+            updateCurrentCategoryBalanceLabel(forCategory: unallocatedKey)
+            
+            categoryPicked.alpha = 0.5
             
         }
         
@@ -67,15 +73,23 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
+<<<<<<< HEAD
         if let uncategorized = budget.categories[uncategorizedKey] {
             leftAmountAtTopRight.text = "Left: $\(String(format: doubleFormatKey, uncategorized.available))"
         }
+=======
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
+        
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
+>>>>>>> switchToCoreData
     }
     
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
-        if let selectedCategory = budget.categories[categoryName] {
-            currentCategoryBalanceLabel.text = "\(categoryName) balance: $\(String(format: doubleFormatKey, selectedCategory.available))"
+        if let selectedCategory = loadSpecificCategory(named: categoryName) {
+            currentCategoryBalanceLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
         }
         
     }
@@ -160,12 +174,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    @IBOutlet weak var addTransactionButtonTitle: UIButton!
     
-    @IBAction func addTransaction(_ sender: UIButton) {
-        
-        transactionNameTextField.resignFirstResponder()
-        transactionAmountTextField.resignFirstResponder()
+    
+    
+    
+    // MARK: Add Transaction Check
+    
+    
+    // Error Check
+    
+    func submitAddTransactionForReview() {
         
         if let title = transactionNameTextField.text, let amount = transactionAmountTextField.text {
             
@@ -185,20 +203,19 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                 
                 if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
                     
+                    // MARK: Withdrawal
                     
-                    
-                    // MARK: Deposit - Only can deposit into 'Uncategorized' category
-                    
-                    if transactionSelection == .deposit {
+                    if transactionSelection == .withdrawal {
                         
-                        if amount <= 0 {
+                        guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: categoryName) else { return }
+                        
+                        if (categoryBeingWithdrawnFrom.available - amount) < 0 {
                             
-                            failureWithWarning(message: "You have to enter a number greater than 0.")
+                            failureWithWarning(message: "You don't have enough funds in this category.")
                             
-                        } else {
+                        } else if amount <= 0 {
                             
-                            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
-                            
+<<<<<<< HEAD
                             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                                 
                                 budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: uncategorizedKey, inTheAmountOf: amount, year: year, month: month, day: day)
@@ -209,47 +226,27 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                                 self.updateUIElementsBecauseOfSuccess(forCategory: uncategorizedKey)
                                 
                             }))
+=======
+                            failureWithWarning(message: "You have to enter a number greater than 0.")
+>>>>>>> switchToCoreData
                             
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        } else {
                             
-                            present(alert, animated: true, completion: nil)
+                            showAlertToConfirmTransaction(type: .withdrawal, title: title, amount: amount, categoryName: categoryName, year: year, month: month, day: day)
                             
                         }
                         
                         
+                        // MARK: Deposit - Only can deposit into 'Uncategorized' category
+                    } else if transactionSelection == .deposit {
                         
-                        // MARK: Withdrawal
-                        
-                    } else if transactionSelection == .withdrawal {
-                        
-                        guard let categoryBeingWithdrawnFrom = budget.categories[categoryName] else { return }
-                        
-                        if (categoryBeingWithdrawnFrom.available - amount) < 0 {
-                            
-                            failureWithWarning(message: "You don't have enough funds in this category.")
-                            
-                        } else if amount <= 0 {
+                        if amount <= 0 {
                             
                             failureWithWarning(message: "You have to enter a number greater than 0.")
                             
                         } else {
                             
-                            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(String(format: doubleFormatKey, amount))?", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                                
-                                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
-                                
-                                self.warningLabel.textColor = successColor
-                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) withdrawn from \(categoryName)"
-                                
-                                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
-                                
-                            }))
-                            
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                            
-                            present(alert, animated: true, completion: nil)
+                            showAlertToConfirmTransaction(type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
                             
                         }
                         
@@ -267,9 +264,107 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
+    
+    // Alert Confirmation
+    
+    func showAlertToConfirmTransaction(type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
+        
+        transactionNameTextField.resignFirstResponder()
+        transactionAmountTextField.resignFirstResponder()
+        
+        if type == .withdrawal {
+            
+            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
+                
+                self.warningLabel.textColor = successColor
+                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
+                
+                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        } else if type == .deposit {
+            
+            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+                
+                self.warningLabel.textColor = successColor
+                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
+                
+                self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    @IBOutlet weak var addTransactionButtonTitle: UIButton!
+    
+    @IBAction func addTransaction(_ sender: UIButton) {
+        
+        submitAddTransactionForReview()
+        
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+<<<<<<< HEAD
         budget.sortCategoriesByKey(withUncategorized: true)
+=======
+        
+        
+        
+        // MARK: - Add done button
+            
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        transactionAmountTextField.inputAccessoryView = toolbar
+
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        
+        
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+>>>>>>> switchToCoreData
         
         addTransactionButtonTitle.layer.cornerRadius = 18
         addTransactionButtonTitle.layer.masksToBounds = true
@@ -277,10 +372,18 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         updateLeftLabelAtTopRight()
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        
+        self.transactionNameTextField.delegate = self
+        self.transactionAmountTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+<<<<<<< HEAD
         budget.sortCategoriesByKey(withUncategorized: true)
+=======
+        budget.sortCategoriesByKey(withUnallocated: true)
+>>>>>>> switchToCoreData
         categoryPicked.reloadAllComponents()
         
         updateLeftLabelAtTopRight()
@@ -296,15 +399,55 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     
     
-    // Keyboard dismissals
+    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
+            
+            submitAddTransactionForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
         return true
     }
     
+    @objc func dismissNumberKeyboard() {
+        
+        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

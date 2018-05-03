@@ -7,25 +7,84 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
-func saveCategories() {
+
+
+// MARK: - Context created
+let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+
+
+// MARK: - Saves everything
+func saveData() {
     
-    let convertedCategories = convertCategories(from: budget.categories)
+    do {
+        
+        try context.save()
+        
+    } catch {
+        
+        print("Error saving data: \(error)")
+        
+    }
     
-    UserDefaults.standard.set(convertedCategories, forKey: categoryKey)
+    budget.updateBalance()
     
 }
 
-func saveTransactions() {
+
+
+// MARK: - Saves a new category to saved categories
+func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
     
-    let convertedTransactions = convertTransactions(from: budget.transactions)
+    let categoryToSave = Category(context: context)
     
-    UserDefaults.standard.set(convertedTransactions, forKey: transactionKey)
+    categoryToSave.name = named
+    categoryToSave.budgeted = budgeted
+    categoryToSave.available = available
+    
+    saveData()
     
 }
 
 
-func saveEverything() {
-    saveTransactions()
-    saveCategories()
+
+// MARK: - Saves a new transaction to saved transactions
+
+func createAndSaveNewTransaction(id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
+    
+    let transactionToSave = Transaction(context: context)
+    
+    transactionToSave.id = id
+    transactionToSave.type = type
+    transactionToSave.title = title
+    transactionToSave.year = year
+    transactionToSave.month = month
+    transactionToSave.day = day
+    transactionToSave.inTheAmountOf = inTheAmountOf
+    transactionToSave.forCategory = forCategory
+    
+    saveData()
+    
 }
+
+
+
+// MARK: - Create Unallocated Category
+
+func createUnallocatedCategory(){
+    
+    createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
+    
+}
+
+
+
+
+
+
+
+
+

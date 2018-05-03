@@ -13,12 +13,22 @@ var editableTransactionIndex = Int()
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func refreshAvailableBalanceLabel() {
+<<<<<<< HEAD
         if let availableBalance = budget.categories[uncategorizedKey] {
             availableBalanceLabel.text = "$\(String(format: doubleFormatKey, availableBalance.available))"
         }
+=======
+        budget.updateBalance()
+        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
+>>>>>>> switchToCoreData
     }
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
+    
+    @IBAction func addTransactionButton(_ sender: UIButton) {
+        performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
+    }
+    
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
@@ -30,20 +40,22 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "TransactionCell")
+        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         
+        cell.accessoryType = .disclosureIndicator
+        
         if !budget.transactions.isEmpty {
             let transaction = budget.transactions[indexPath.row]
-            cell.textLabel?.text = "\(transaction.title): $\(String(format: doubleFormatKey, transaction.inTheAmountOf))"
+            cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
-            if transaction.type == .deposit {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(depositKey)"
+            if transaction.type == depositKey {
+                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): Deposit"
             } else {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory)"
+                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory!)"
             }
 
         }
@@ -55,21 +67,19 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         editableTransactionIndex = indexPath.row
         
+        performSegue(withIdentifier: editTransactionSegueKey, sender: self)
+        
+        displayedDataTable.deselectRow(at: indexPath, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
-            func deleteTransaction() {
-                budget.deleteTransaction(at: indexPath.row)
-                displayedDataTable.reloadData()
-                refreshAvailableBalanceLabel()
-            }
-            
             let transactionToDelete = budget.transactions[indexPath.row]
             
-            let message = "Delete \(transactionToDelete.title) with $\(String(format: doubleFormatKey, transactionToDelete.inTheAmountOf))?"
+            let message = "Delete \(transactionToDelete.title!) with \(convertedAmountToDollars(amount: transactionToDelete.inTheAmountOf))?"
             
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
             
@@ -78,7 +88,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 budget.deleteTransaction(at: indexPath.row)
                 
                 self.refreshAvailableBalanceLabel()
+<<<<<<< HEAD
                 budget.sortCategoriesByKey(withUncategorized: false)
+=======
+>>>>>>> switchToCoreData
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -126,10 +139,26 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
+<<<<<<< HEAD
+=======
+        displayedDataTable.separatorStyle = .none
+        
+        
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(rightSwipe)
+        
+>>>>>>> switchToCoreData
+    }
+    
+    @objc func swipe() {
+        
+        performSegue(withIdentifier: transactionsToCategoriesSegueKey, sender: self)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
         refreshAvailableBalanceLabel()
         displayedDataTable.reloadData()
     }

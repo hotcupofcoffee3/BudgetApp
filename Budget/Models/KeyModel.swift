@@ -9,26 +9,51 @@
 import Foundation
 import UIKit
 
+<<<<<<< HEAD
 let budgetedKey = "Budgeted"
 let availableKey = "Available"
 let categoryKey = "Category"
 let transactionKey = "Transaction"
 let uncategorizedKey = "Uncategorized"
+=======
+// Query Keys
+let nameMatchesKey = "name MATCHES %@"
+let idMatchesKey = "id MATCHES %@"
 
-let doubleFormatKey = "%0.2f"
 
-let titleKey = "Title"
-let yearKey = "Year"
-let monthKey = "Month"
-let dayKey = "Day"
-let amountKey = "Amount"
+// Class keys
+let categoryKey = "Category"
+let transactionKey = "Transaction"
 
-var typeKey = "Type"
-let depositKey = "Deposit"
-let withdrawalKey = "Withdrawal"
 
-// Other universal variables
+// Category Keys
+let nameKey = "name"
+let budgetedKey = "budgeted"
+let availableKey = "available"
+let unallocatedKey = "Unallocated"
+>>>>>>> switchToCoreData
+
+
+// Transaction Keys
+let idKey = "id"
+let typeKey = "type"
+let depositKey = "deposit"
+let withdrawalKey = "withdrawal"
+let titleKey = "title"
+let amountKey = "amount"
+let inTheAmountOfKey = "inTheAmountOf"
+let forCategoryKey = "forCategoryKey"
+let yearKey = "year"
+let monthKey = "month"
+let dayKey = "day"
+
+
+// Color Keys
 let successColor = UIColor.init(red: 100/255, green: 158/255, blue: 55/255, alpha: 1)
+
+
+
+// MARK: - Segue Keys
 
 // Main to others
 let mainToCategoriesSegueKey = "MainToCategoriesSegue"
@@ -39,21 +64,30 @@ let mainToAddTransactionSegueKey = "MainToAddTransactionSegue"
 let mainToAddDepositSegueKey = "MainToAddDepositSegue"
 let mainToMoveFundsSegueKey = "MainToMoveFundsSegue"
 
+
 // Categories to others
 let categoriesToAddCategorySegueKey = "CategoriesToAddCategorySegue"
 let categoriesToAddTransactionSegueKey = "CategoriesToAddTransactionSegue"
 let categoriesToAddDepositSegueKey = "CategoriesToAddDepositSegue"
 let categoriesToMoveFundsSegueKey = "CategoriesToMoveFundsSegue"
+let categoriesToTransactionsSegueKey = "CategoriesToTransactionsSegue"
+
 
 // Transactions to others
 let transactionsToAddCategorySegueKey = "TransactionsToAddCategorySegue"
 let transactionsToAddTransactionSegueKey = "TransactionsToAddTransactionSegue"
 let transactionsToAddDepositSegueKey = "TransactionsToAddDepositSegue"
 let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
+let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
 
 // Edit Segues
 
 let editCategorySegueKey = "EditCategorySegue"
+let editTransactionSegueKey = "EditTransactionSegue"
+let editTransactionTitleSegueKey = "EditTransactionTitleSegue"
+let editTransactionAmountSegueKey = "EditTransactionAmountSegue"
+let editTransactionDateSegueKey = "EditTransactionDateSegue"
+let editTransactionCategorySegueKey = "EditTransactionCategorySegue"
 
 
 

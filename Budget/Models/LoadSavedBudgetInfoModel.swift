@@ -7,13 +7,78 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
-func loadCategories() {
+
+
+// MARK: - Load All Categories
+
+func loadSavedCategories() {
     
-//    UserDefaults.standard.set(nil, forKey: categoryKey)
+    let request: NSFetchRequest<Category> = Category.fetchRequest()
     
-    let savedObject = UserDefaults.standard.object(forKey: categoryKey)
+    do {
+        
+        budget.categories = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading categories: \(error)")
+        
+    }
     
+}
+
+
+
+// MARK: - Load All Transactions
+
+func loadSavedTransactions(descending: Bool) {
+    
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+    
+    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: !descending)]
+    
+    do {
+        
+        budget.transactions = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
+    }
+    
+}
+
+
+
+// MARK: - Load Specific Category
+
+func loadSpecificCategory(named: String) -> Category? {
+    
+    var category: Category?
+    
+    var matchingCategory = [Category]()
+    
+    let request: NSFetchRequest<Category> = Category.fetchRequest()
+    
+    let predicate = NSPredicate(format: nameMatchesKey, named)
+    
+    request.predicate = predicate
+    
+    do {
+        
+        matchingCategory = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
+    }
+    
+<<<<<<< HEAD
     if savedObject == nil {
         let defaultCategory = [uncategorizedKey: Category(name: uncategorizedKey, budgeted: 0.0)]
         let convertedCategories = convertCategories(from: defaultCategory)
@@ -21,25 +86,78 @@ func loadCategories() {
     } else {
         guard let savedCategories = savedObject as? [String: [String: Double]] else { return }
         budget.categories = convertCategories(from: savedCategories)
+=======
+    if matchingCategory.count > 1 {
+        
+        print("Error. There were \(matchingCategory.count) entries that matched that category name.")
+        category = nil
+        
+    } else if matchingCategory.count == 0 {
+        
+        print("There was nothing in the array")
+        category = nil
+        
+    } else if matchingCategory.count == 1 {
+        
+        category = matchingCategory[0]
+        
+>>>>>>> switchToCoreData
     }
+    
+    return category
+    
 }
 
-func loadTransactions() {
+
+
+// MARK: - Load Specific Transaction
+
+func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
     
-//    UserDefaults.standard.set(nil, forKey: transactionKey)
+    var transaction: Transaction?
     
-    let savedObject = UserDefaults.standard.object(forKey: transactionKey)
+    var matchingTransactionArray = [Transaction]()
     
-    if savedObject == nil {
-        UserDefaults.standard.set([String: [String: String]](), forKey: transactionKey)
-    } else {
-        guard let savedTransactions = savedObject as? [String: [String: String]] else { return }
-        budget.transactions = convertTransactions(from: savedTransactions)
+    let id = Int64(idSubmitted)
+    
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+    
+    request.predicate = NSPredicate(format: idMatchesKey, id)
+    
+    do {
+        
+        matchingTransactionArray = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
     }
     
-    budget.sortTransactionsDescending()
+    if matchingTransactionArray.count > 1 {
+        
+        print("Error. There were \(matchingTransactionArray.count) entries that matched that id.")
+        transaction = nil
+        
+    } else if matchingTransactionArray.count == 0 {
+        
+        print("There was nothing in the array")
+        transaction = nil
+        
+    } else if matchingTransactionArray.count == 1 {
+        
+        transaction = matchingTransactionArray[0]
+        
+    }
+    
+    return transaction
     
 }
+
+
+
+
+
 
 
 

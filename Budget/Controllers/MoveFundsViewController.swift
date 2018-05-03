@@ -14,6 +14,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     
@@ -21,13 +23,23 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     // MARK: Update labels
     
     func updateLeftLabelAtTopRight() {
+<<<<<<< HEAD
         if let uncategorized = budget.categories[uncategorizedKey] {
             leftAmountAtTopRight.text = "Left: $\(String(format: doubleFormatKey, uncategorized.available))"
         }
+=======
+        
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
+        
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
+>>>>>>> switchToCoreData
     }
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
         
+<<<<<<< HEAD
         if let selectedCategory = budget.categories[categoryName] {
             
             if categoryName == uncategorizedKey {
@@ -41,6 +53,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             }
             
         }
+=======
+        guard let selectedCategory = loadSpecificCategory(named: categoryName) else { return }
+        
+        atLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
+>>>>>>> switchToCoreData
         
     }
     
@@ -76,7 +93,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toCategoryPicker.alpha = 1.0
         
         fromCategoryPicker.isUserInteractionEnabled = false
-        fromCategoryPicker.alpha = 0.3
+        fromCategoryPicker.alpha = 0.5
         
         
         // Set disabled 'from' picker to "Uncategorized"
@@ -96,7 +113,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fromCategoryPicker.alpha = 1.0
         
         toCategoryPicker.isUserInteractionEnabled = false
-        toCategoryPicker.alpha = 0.3
+        toCategoryPicker.alpha = 0.5
         
         
         
@@ -228,29 +245,31 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     
     
-    // MARK: Funds Button
+    // MARK: - Allocate Check
     
-    @IBOutlet weak var moveFundsButtonTitle: UIButton!
+    // Error Check
     
-    
-    
-    @IBAction func moveFundsButton(_ sender: UIButton) {
+    func submitAllocateForReview (amountFromTextField: String) {
         
-        fundsTextField.resignFirstResponder()
+        let toCategorySelectedIndex = toCategoryPicker.selectedRow(inComponent: 0)
+        let toCategorySelectedName = budget.sortedCategoryKeys[toCategorySelectedIndex]
         
-        if let amountFromTextField = fundsTextField.text {
+        // Allocation submitted, with the amount being the default set budgeted amount
+        if amountFromTextField == "" {
             
-            // *************************************
+            failureWithWarning(message: "You have to enter an amount.")
             
-            // MARK: Allocate
             
-            // *************************************
+        // Allocation submitted, with the amount being specifically set
+        } else if let amount = Double(amountFromTextField) {
             
-            if allocateRemoveOrShift.selectedSegmentIndex == 0 {
+            guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
+            
+            if (unallocatedCategory.available - amount) < 0 {
                 
-                let toCategorySelectedIndex = toCategoryPicker.selectedRow(inComponent: 0)
-                let toCategorySelectedName = budget.sortedCategoryKeys[toCategorySelectedIndex]
+                failureWithWarning(message: "You don't have enough funds left that.")
                 
+<<<<<<< HEAD
                 guard let selectedCategory = budget.categories[toCategorySelectedName] else { return }
                 guard let uncategorizedCategory = budget.categories[uncategorizedKey] else { return }
 
@@ -329,25 +348,90 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                     failureWithWarning(message: "You can't have letters for the amount.")
                     
                 }
+=======
+            } else if amount <= 0 {
+>>>>>>> switchToCoreData
                 
+                failureWithWarning(message: "The amount can't be negative.")
                 
+            } else {
                 
-              
-            // *************************************
+                showAlertToConfirmAllocate(amount: amount, toCategory: toCategorySelectedName)
+                
+            }
             
-            // MARK: Remove
+        } else {
             
-            // *************************************
+            failureWithWarning(message: "You can't have letters for the amount.")
+            
+        }
+        
+    }
+    
+    
+    // Alert Confirmation
+    
+    func showAlertToConfirmAllocate(amount: Double, toCategory: String) {
+        
+        let alert = UIAlertController(title: nil, message: "Allocate \(self.convertedAmountToDollars(amount: amount)) to \(toCategory)?", preferredStyle: .alert)
+        
+        // Success!!! Adds specified amount
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
+            
+            self.warningLabel.textColor = successColor
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) allocated to \(toCategory)"
+            
+            // Haptics triggered, labels updated, and text field cleared
+            self.updateUIElementsBecauseOfSuccess(forFromCategory: unallocatedKey, forToCategory: toCategory)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    
+    
+    // MARK: - Remove Check
+    
+    // Error Check
+    
+    func submitRemoveForReview (amountFromTextField: String) {
+        
+        let fromCategorySelectedIndex = fromCategoryPicker.selectedRow(inComponent: 0)
+        let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategorySelectedIndex]
+        
+        guard let selectedCategory = loadSpecificCategory(named: fromCategorySelectedName) else { return }
+        
+        // Removal submitted, with the amount being the default set budgeted amount
+        if amountFromTextField == "" {
+            
+            failureWithWarning(message: "You have to enter an amount.")
+            
+            
+            // Removal submitted, with the amount being specifically set
+        } else if let amount = Double(amountFromTextField) {
+            
+            if (selectedCategory.available - amount) < 0 {
                 
-            } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
+                failureWithWarning(message: "You don't have enough funds in there for that.")
                 
-                let fromCategorySelectedIndex = fromCategoryPicker.selectedRow(inComponent: 0)
-                let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategorySelectedIndex]
+            } else if amount <= 0 {
                 
-                guard let selectedCategory = budget.categories[fromCategorySelectedName] else { return }
+                failureWithWarning(message: "The amount has to be greater than 0.")
                 
+            } else {
                 
+                showAlertToConfirmRemove(amount: amount, fromCategory: fromCategorySelectedName)
                 
+<<<<<<< HEAD
                 // Removal submitted, with the amount being the default set budgeted amount
                 if amountFromTextField == "" {
                     
@@ -378,11 +462,78 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                         
                     }
                     
+=======
+            }
+            
+        } else {
+            
+            failureWithWarning(message: "You can't have letters for the amount.")
+            
+        }
+        
+    }
+    
+    
+    // Alert Confirmation
+    
+    func showAlertToConfirmRemove(amount: Double, fromCategory: String) {
+        
+        let alert = UIAlertController(title: nil, message: "Remove \(self.convertedAmountToDollars(amount: amount)) from \(fromCategory)?", preferredStyle: .alert)
+        
+        // Success!!! Removes specified amount
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategory)
+            
+            self.warningLabel.textColor = successColor
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) removed from \(fromCategory)"
+            
+            // Haptics triggered, labels updated, and text field cleared
+            self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: unallocatedKey)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    
+    // MARK: - Shift Check
+    
+    // Error Check
+    
+    func submitShiftForReview (amountFromTextField: String) {
+        
+        let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
+        let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategoryIndexSelected]
+        
+        let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
+        let toCategorySelectedName = budget.sortedCategoryKeys[toCategoryIndexSelected]
+        
+        
+        if fundsTextField.text == "" {
+            
+            failureWithWarning(message: "You have to enter an amount first.")
+            
+        } else {
+            
+            if let amount = Double(amountFromTextField) {
+                
+                guard let fromCategory = loadSpecificCategory(named: fromCategorySelectedName) else { return }
+                
+                if (fromCategory.available - amount) < 0 {
+>>>>>>> switchToCoreData
                     
+                    failureWithWarning(message: "You don't enough to shift from this category.")
                     
-                    // Removal submitted, with the amount being specifically set
-                } else if let amount = Double(amountFromTextField) {
+                } else if amount <= 0 {
                     
+<<<<<<< HEAD
                     if (selectedCategory.available - amount) < 0 {
                         
                         failureWithWarning(message: "You don't have enough funds in there for that.")
@@ -413,89 +564,96 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                         present(alert, animated: true, completion: nil)
                         
                     }
+=======
+                    failureWithWarning(message: "The amount has to be greater than 0.")
+>>>>>>> switchToCoreData
                     
                 } else {
                     
-                    failureWithWarning(message: "You can't have letters for the amount.")
+                    showAlertToConfirmShift(amount: amount, fromCategory: fromCategorySelectedName, toCategory: toCategorySelectedName)
                     
                 }
                 
+            } else {
                 
-                
-                
-                
-            // *************************************
-            
-            // MARK: Shift
-            
-            // *************************************
-                
-            } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
-                
-                // Enable both pickers
-                fromCategoryPicker.isUserInteractionEnabled = true
-                toCategoryPicker.isUserInteractionEnabled = true
-                
-                
-                let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
-                let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategoryIndexSelected]
-                
-                let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
-                let toCategorySelectedName = budget.sortedCategoryKeys[toCategoryIndexSelected]
-                
-                
-                if fundsTextField.text == "" {
-                    
-                    failureWithWarning(message: "You have to enter an amount first.")
-                    
-                } else {
-                    
-                    if let amount = Double(amountFromTextField) {
-                        
-                        guard let fromCategory = budget.categories[fromCategorySelectedName] else { return }
-                        
-                        if (fromCategory.available - amount) < 0 {
-                            
-                            failureWithWarning(message: "You don't enough to shift from this category.")
-                            
-                        } else if amount <= 0 {
-                            
-                            failureWithWarning(message: "The amount has to be greater than 0.")
-                            
-                        } else {
-                            
-                            let alert = UIAlertController(title: nil, message: "Shift $\(String(format: doubleFormatKey, amount)) from \(fromCategorySelectedName) to \(toCategorySelectedName)?", preferredStyle: .alert)
-                            
-                            // Adds specified amount
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                                
-                                budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategorySelectedName)
-                                budget.allocateFundsToCategory(withThisAmount: amount, to: toCategorySelectedName)
-                                
-                                self.warningLabel.textColor = successColor
-                                self.warningLabel.text = "$\(String(format: doubleFormatKey, amount)) shifted from \(fromCategorySelectedName) to \(toCategorySelectedName)"
-                                
-                                self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategorySelectedName, forToCategory: toCategorySelectedName)
-                                
-                            }))
-                            
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                            
-                            present(alert, animated: true, completion: nil)
-                            
-                        }
-                        
-                    } else {
-                        
-                        failureWithWarning(message: "You can't use letters for the amount.")
-                        
-                    }
-                    
-                }
+                failureWithWarning(message: "You can't use letters for the amount.")
                 
             }
             
         }
+        
+    }
+    
+    
+    
+    // Alert Confirmation
+    
+    func showAlertToConfirmShift(amount: Double, fromCategory: String, toCategory: String) {
+        
+        let alert = UIAlertController(title: nil, message: "Shift \(self.convertedAmountToDollars(amount: amount)) from \(fromCategory) to \(toCategory)?", preferredStyle: .alert)
+        
+        // Adds specified amount
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategory)
+            budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
+            
+            self.warningLabel.textColor = successColor
+            self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) shifted from \(fromCategory) to \(toCategory)"
+            
+            self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: toCategory)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    // MARK: - Consolidated function for when the "Move Funds" button is pressed or "Done" is pressed.
+    func submitAllOptionsForReview() {
+        
+        fundsTextField.resignFirstResponder()
+        
+        guard let amountFromTextField = fundsTextField.text else { return }
+        
+        
+        // *** Allocate
+        if allocateRemoveOrShift.selectedSegmentIndex == 0 {
+            
+            submitAllocateForReview(amountFromTextField: amountFromTextField)
+            
+            
+            // *** Remove
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
+            
+            submitRemoveForReview(amountFromTextField: amountFromTextField)
+            
+            
+            // *** Shift
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
+            
+            submitShiftForReview(amountFromTextField: amountFromTextField)
+            
+            
+        }
+        
+    }
+    
+    
+    
+    // MARK: Funds Button
+    
+    @IBOutlet weak var moveFundsButtonTitle: UIButton!
+    
+    
+    
+    @IBAction func moveFundsButton(_ sender: UIButton) {
+        
+        submitAllOptionsForReview()
         
     }
 
@@ -504,7 +662,40 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
         budget.sortCategoriesByKey(withUncategorized: true)
+=======
+        
+        // MARK: - Toolbar with 'Done' button
+        
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        fundsTextField.inputAccessoryView = toolbar
+        
+
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        
+        
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+>>>>>>> switchToCoreData
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
@@ -515,11 +706,17 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         updateUIForAllocate()
         
+        self.fundsTextField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
+<<<<<<< HEAD
         budget.sortCategoriesByKey(withUncategorized: true)
+=======
+        budget.sortCategoriesByKey(withUnallocated: true)
+>>>>>>> switchToCoreData
         updateLeftLabelAtTopRight()
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
@@ -534,14 +731,57 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    
+    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    
+    // Test for submitability
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if fundsTextField.text != "" {
+            
+            submitAllOptionsForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
+    // Submit for review of final submitability
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
         return true
     }
+    
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc func dismissNumberKeyboard() {
+        
+        submissionFromKeyboardReturnKey(specificTextField: fundsTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    // Remove warning label text
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        warningLabel.text = ""
+    }
+    
+    
+    
     
 
 }

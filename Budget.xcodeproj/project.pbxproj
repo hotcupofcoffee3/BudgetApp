@@ -18,12 +18,17 @@
 		B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B533E36620700B01007A72E0 /* LaunchScreen.storyboard */; };
 		B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EAC2073CC830061C9E5 /* MainScreenController.swift */; };
 		B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EB22073D3430061C9E5 /* BudgetModel.swift */; };
+		B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56D4458209372DA005000CF /* EditTransactionViewController.swift */; };
 		B5759A272076690700410FF9 /* KeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5759A262076690700410FF9 /* KeyModel.swift */; };
 		B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */; };
 		B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58816C82084F85D00CA0C4D /* DateFormatModel.swift */; };
-		B5E052422074660D00C69153 /* ConversionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E052412074660D00C69153 /* ConversionModel.swift */; };
+		B58B8A9F2098AC54009C55A3 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */; };
 		B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */; };
 		B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */; };
+		B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */; };
+		B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */; };
+		B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */; };
+		B5F33CC52093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +37,7 @@
 		B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		B52879A8208A42970011D04C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		B531F86A208929CF00D0E05D /* MoveFundsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveFundsViewController.swift; sourceTree = "<group>"; };
-		B533E35A20700B01007A72E0 /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B533E35A20700B01007A72E0 /* Alloc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alloc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B533E35D20700B01007A72E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B533E36220700B01007A72E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B533E36420700B01007A72E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,12 +45,17 @@
 		B533E36920700B01007A72E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5380EAC2073CC830061C9E5 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		B5380EB22073D3430061C9E5 /* BudgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetModel.swift; sourceTree = "<group>"; };
+		B56D4458209372DA005000CF /* EditTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionViewController.swift; sourceTree = "<group>"; };
 		B5759A262076690700410FF9 /* KeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyModel.swift; sourceTree = "<group>"; };
 		B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		B58816C82084F85D00CA0C4D /* DateFormatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatModel.swift; sourceTree = "<group>"; };
-		B5E052412074660D00C69153 /* ConversionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionModel.swift; sourceTree = "<group>"; };
+		B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
 		B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSavedBudgetInfoModel.swift; sourceTree = "<group>"; };
 		B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBudgetInfoModel.swift; sourceTree = "<group>"; };
+		B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionTitleViewController.swift; sourceTree = "<group>"; };
+		B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionAmountViewController.swift; sourceTree = "<group>"; };
+		B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionDateViewController.swift; sourceTree = "<group>"; };
+		B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionCategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +80,7 @@
 		B533E35B20700B01007A72E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B533E35A20700B01007A72E0 /* Budget.app */,
+				B533E35A20700B01007A72E0 /* Alloc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,9 +104,9 @@
 				B5759A262076690700410FF9 /* KeyModel.swift */,
 				B58816C82084F85D00CA0C4D /* DateFormatModel.swift */,
 				B5380EB22073D3430061C9E5 /* BudgetModel.swift */,
-				B5E052412074660D00C69153 /* ConversionModel.swift */,
 				B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */,
 				B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */,
+				B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,12 +118,29 @@
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
+<<<<<<< HEAD
+=======
+				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
+				B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */,
+>>>>>>> switchToCoreData
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
 				B52879A8208A42970011D04C /* AddTransactionViewController.swift */,
 				B531F86A208929CF00D0E05D /* MoveFundsViewController.swift */,
 				B533E35D20700B01007A72E0 /* AppDelegate.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */ = {
+			isa = PBXGroup;
+			children = (
+				B56D4458209372DA005000CF /* EditTransactionViewController.swift */,
+				B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */,
+				B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */,
+				B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */,
+				B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */,
+			);
+			path = "Edit Transaction VCs";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,7 +160,7 @@
 			);
 			name = Budget;
 			productName = Budget;
-			productReference = B533E35A20700B01007A72E0 /* Budget.app */;
+			productReference = B533E35A20700B01007A72E0 /* Alloc.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -188,9 +215,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */,
 				B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */,
+				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
-				B5E052422074660D00C69153 /* ConversionModel.swift in Sources */,
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,
 				B52879A9208A42970011D04C /* AddTransactionViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,
@@ -199,9 +227,17 @@
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddCategoryViewController.swift in Sources */,
 				B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */,
+				B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */,
+				B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */,
 				B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */,
 				B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */,
 				B531F86B208929CF00D0E05D /* MoveFundsViewController.swift in Sources */,
+<<<<<<< HEAD
+=======
+				B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */,
+				B58B8A9F2098AC54009C55A3 /* Data.xcdatamodeld in Sources */,
+				B5F33CC52093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift in Sources */,
+>>>>>>> switchToCoreData
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +383,7 @@
 				INFOPLIST_FILE = Budget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Budget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Alloc;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -362,7 +398,7 @@
 				INFOPLIST_FILE = Budget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Budget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Alloc;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -390,6 +426,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */,
+			);
+			currentVersion = B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */;
+			path = Data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B533E35220700B01007A72E0 /* Project object */;
 }
