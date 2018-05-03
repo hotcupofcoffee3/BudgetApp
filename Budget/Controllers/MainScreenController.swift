@@ -18,7 +18,8 @@ class MainScreen: UIViewController {
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     func refreshAvailableBalanceLabel() {
-        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
     }
     
     @IBOutlet weak var categoriesButtonTitle: UIButton!
@@ -77,11 +78,7 @@ class MainScreen: UIViewController {
         // ********************
         // Core Data Testing
         // ********************
-        
-       UserDefaults.standard.object(forKey: categoryKey)
-        
-        
-        
+      
        
         
         
@@ -89,10 +86,10 @@ class MainScreen: UIViewController {
         // ********************
         // ********************
         
- 
-        refreshAvailableBalanceLabel()
         loadSavedCategories()
         loadSavedTransactions(descending: true)
+        
+        refreshAvailableBalanceLabel()
 
         categoriesButtonTitle.layer.cornerRadius = 35
         categoriesButtonTitle.layer.masksToBounds = true
@@ -168,16 +165,25 @@ class MainScreen: UIViewController {
                     // An initial Deposit
                     budget.addTransaction(type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
                     
-                    // Two categories with some amounts
+                    // Two categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0)
                     budget.addCategory(named: "Extra", withBudgeted: 50.0)
+                    
+                    // Allocate their budgeted amounts into their available amounts
+                    budget.allocateFundsToCategory(withThisAmount: 200, to: "Food")
+                    budget.allocateFundsToCategory(withThisAmount: 50, to: "Extra")
+                    
+                    
                     
                     // Two transactions with some amounts.
                     budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
                     budget.addTransaction(type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 4, day: 27)
                     
+                    loadSavedCategories()
+                    loadSavedTransactions(descending: true)
                     
                     self.refreshAvailableBalanceLabel()
+                    
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -192,12 +198,43 @@ class MainScreen: UIViewController {
     
     
     
-    
-    
-    
-    
-    
-    
-    
 
 }
+
+
+
+// MARK: - Convert Amount to Dollars
+
+extension UIViewController {
+    
+    func convertedAmountToDollars(amount: Double) -> String {
+        
+        var convertedAmount = ""
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        
+        if let convertedAmountOptional = numberFormatter.string(from: NSNumber(value: amount)) {
+            
+            convertedAmount = convertedAmountOptional
+            
+        }
+        
+        return convertedAmount
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

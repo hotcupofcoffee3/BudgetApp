@@ -1856,13 +1856,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1z5-s3-r4X">
-                                <rect key="frame" x="20" y="112" width="335" height="47.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="40"/>
+                                <rect key="frame" x="20" y="102" width="335" height="41.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="35"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQY-UA-fQL" userLabel="Title View">
-                                <rect key="frame" x="20" y="179.5" width="335" height="50"/>
+                                <rect key="frame" x="20" y="153.5" width="335" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EdS-pm-kby" userLabel="Title Stack">
                                         <rect key="frame" x="10" y="10" width="315" height="30"/>
@@ -1897,13 +1897,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAf-Ei-B6S" userLabel="Name Warning Label">
-                                <rect key="frame" x="20" y="239" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="213" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSp-EW-jaE" userLabel="Change Name Button">
-                                <rect key="frame" x="96" y="249.5" width="183" height="54"/>
+                                <rect key="frame" x="96" y="223.5" width="183" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="ADa-bF-71H"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="183" id="TlE-Jk-JVr"/>
@@ -1917,13 +1917,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted: $200.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeE-OD-52g">
-                                <rect key="frame" x="20" y="343.5" width="335" height="35.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="30"/>
+                                <rect key="frame" x="20" y="307.5" width="335" height="29.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eW0-m2-nGt" userLabel="Amount View">
-                                <rect key="frame" x="20" y="399" width="335" height="50"/>
+                                <rect key="frame" x="20" y="347" width="335" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9KN-JY-2Mp" userLabel="Amount Stack">
                                         <rect key="frame" x="10" y="10" width="315" height="30"/>
@@ -1959,13 +1959,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-lH-q2z" userLabel="Amount Warning Label">
-                                <rect key="frame" x="20" y="459" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="407" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmD-p8-thG" userLabel="Add $ Button">
-                                <rect key="frame" x="75" y="469.5" width="225" height="54"/>
+                                <rect key="frame" x="75" y="417.5" width="225" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="UXD-q2-KGR"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="v2T-dr-1Sg"/>
@@ -1989,12 +1989,12 @@
                             <constraint firstItem="N2w-B5-Ngn" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" id="AqX-vl-njN"/>
                             <constraint firstItem="TeE-OD-52g" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="BKW-uV-fxE"/>
                             <constraint firstItem="hHL-VB-sn6" firstAttribute="top" secondItem="N2w-B5-Ngn" secondAttribute="bottom" constant="10" id="EVm-dm-5G7"/>
-                            <constraint firstItem="eW0-m2-nGt" firstAttribute="top" secondItem="TeE-OD-52g" secondAttribute="bottom" constant="20" id="FyW-kO-SsK"/>
+                            <constraint firstItem="eW0-m2-nGt" firstAttribute="top" secondItem="TeE-OD-52g" secondAttribute="bottom" constant="10" id="FyW-kO-SsK"/>
                             <constraint firstItem="lQY-UA-fQL" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="Rg3-h2-UlF"/>
                             <constraint firstItem="1z5-s3-r4X" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="Sg8-HA-Q44"/>
                             <constraint firstItem="LjC-lH-q2z" firstAttribute="top" secondItem="eW0-m2-nGt" secondAttribute="bottom" constant="10" id="Sss-CB-J5Z"/>
                             <constraint firstItem="hmD-p8-thG" firstAttribute="centerX" secondItem="kYs-n1-xmf" secondAttribute="centerX" id="Wua-8a-UYv"/>
-                            <constraint firstItem="TeE-OD-52g" firstAttribute="top" secondItem="aSp-EW-jaE" secondAttribute="bottom" constant="40" id="YiK-SK-jGE"/>
+                            <constraint firstItem="TeE-OD-52g" firstAttribute="top" secondItem="aSp-EW-jaE" secondAttribute="bottom" constant="30" id="YiK-SK-jGE"/>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="AAf-Ei-B6S" secondAttribute="trailing" constant="20" id="ZSX-D8-44E"/>
                             <constraint firstItem="aSp-EW-jaE" firstAttribute="centerX" secondItem="kYs-n1-xmf" secondAttribute="centerX" id="bVG-8v-iUW"/>
                             <constraint firstItem="LjC-lH-q2z" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="cSG-8g-TfF"/>
@@ -2003,12 +2003,12 @@
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="lQY-UA-fQL" secondAttribute="trailing" constant="20" id="jaH-Jj-FsU"/>
                             <constraint firstItem="hHL-VB-sn6" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="jlz-3d-eYw"/>
                             <constraint firstItem="eW0-m2-nGt" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="l18-FY-9UH"/>
-                            <constraint firstItem="lQY-UA-fQL" firstAttribute="top" secondItem="1z5-s3-r4X" secondAttribute="bottom" constant="20" id="mHG-LX-x0i"/>
+                            <constraint firstItem="lQY-UA-fQL" firstAttribute="top" secondItem="1z5-s3-r4X" secondAttribute="bottom" constant="10" id="mHG-LX-x0i"/>
                             <constraint firstItem="W4p-ce-q5u" firstAttribute="trailing" secondItem="eW0-m2-nGt" secondAttribute="trailing" constant="20" id="mtn-eW-q5l"/>
                             <constraint firstItem="hmD-p8-thG" firstAttribute="top" secondItem="LjC-lH-q2z" secondAttribute="bottom" constant="10" id="sY8-QL-0Z9"/>
                             <constraint firstItem="AAf-Ei-B6S" firstAttribute="top" secondItem="lQY-UA-fQL" secondAttribute="bottom" constant="10" id="xNC-A4-3Mi"/>
                             <constraint firstItem="AAf-Ei-B6S" firstAttribute="leading" secondItem="W4p-ce-q5u" secondAttribute="leading" constant="20" id="zMz-Pq-HKL"/>
-                            <constraint firstItem="1z5-s3-r4X" firstAttribute="top" secondItem="hHL-VB-sn6" secondAttribute="bottom" constant="20" id="zYv-c7-Fm7"/>
+                            <constraint firstItem="1z5-s3-r4X" firstAttribute="top" secondItem="hHL-VB-sn6" secondAttribute="bottom" constant="10" id="zYv-c7-Fm7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="W4p-ce-q5u"/>
                     </view>
@@ -2040,9 +2040,9 @@
     <inferredMetricsTieBreakers>
         <segue reference="1AE-Ye-tTi"/>
         <segue reference="LyT-nl-dpa"/>
-        <segue reference="LCW-GF-oV6"/>
-        <segue reference="KPk-6k-mJN"/>
-        <segue reference="okA-JN-PqX"/>
-        <segue reference="tLF-Rh-sKn"/>
+        <segue reference="8K3-ts-dmR"/>
+        <segue reference="hxM-AH-nJz"/>
+        <segue reference="8ar-qL-cfd"/>
+        <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>
 </document>

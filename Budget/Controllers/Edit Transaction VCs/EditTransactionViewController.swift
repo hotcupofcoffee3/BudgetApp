@@ -25,10 +25,11 @@ class EditTransactionViewController: UIViewController {
     
     func updateLeftLabelAtTopRight() {
         
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     @IBOutlet weak var typeLabel: UILabel!
@@ -40,7 +41,7 @@ class EditTransactionViewController: UIViewController {
         let currentTransaction = budget.transactions[index]
         
         titleLabel.text = currentTransaction.title
-        amountLabel.text = "$\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf))"
+        amountLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
         dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
         categoryLabel.text = currentTransaction.forCategory
         

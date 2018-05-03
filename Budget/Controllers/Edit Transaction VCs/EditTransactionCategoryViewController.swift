@@ -27,10 +27,11 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
     
     func updateLeftLabelAtTopRight() {
         
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     
@@ -86,7 +87,7 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
         
-        leftInCategoryLabel.text = "~ Left in \(newCategorySelected): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+        leftInCategoryLabel.text = "~ Left in \(newCategorySelected): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
         
         warningLabel.text = ""
     }
@@ -184,11 +185,11 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
         
         self.editingItemLabel.text = "\(currentTransaction.forCategory!)"
-        self.editingItemAmountLabel.text = "~ Transaction amount: $\(String(format: doubleFormatKey, currentTransaction.inTheAmountOf)) ~"
+        self.editingItemAmountLabel.text = "~ Transaction amount: \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) ~"
         
         if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
             
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): $\(String(format: doubleFormatKey, currentCategory.available)) ~"
+            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
             
         }
         

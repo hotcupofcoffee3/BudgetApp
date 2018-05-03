@@ -25,10 +25,11 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     
     func updateLeftLabelAtTopRight() {
         
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     
@@ -138,8 +139,18 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         self.addCircleAroundButton(named: self.updateItemButton)
         
         self.newTitleTextField.delegate = self
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
     }
-
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -153,6 +164,13 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         newTitleTextField.resignFirstResponder()
         changeTitleSubmittedForReview()
         return true
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
     }
 
 }

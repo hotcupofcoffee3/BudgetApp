@@ -23,10 +23,11 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     func updateLeftLabelAtTopRight() {
         
-        leftLabelOnNavBar.title = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: $\(String(format: doubleFormatKey, unallocated.available))"
+        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
     func updateLabelsAtTop() {
@@ -34,7 +35,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
             
             currentCategoryName.text = currentCategoryNameString
-            currentCategoryAmount.text = "Left: $\(String(format: doubleFormatKey, currentCategory.available))"
+            currentCategoryAmount.text = "Left: \(convertedAmountToDollars(amount: currentCategory.budgeted))"
             
         }
     
@@ -201,6 +202,8 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     func submitEditCategoryAmountForReview() {
         
+        newCategoryAmount.resignFirstResponder()
+        
         if let oldCategoryTitle = currentCategoryName.text, let newCategoryAmountStringFromTextField = newCategoryAmount.text {
             
             var newCategoryAmount = Double()
@@ -255,7 +258,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     func showAlertToConfirmEditCategoryAmount(newCategoryAmount: Double, oldCategoryTitle: String, oldCategory: Category) {
         
-        let alert = UIAlertController(title: nil, message: "Change budgeted amount to $\(String(format: doubleFormatKey, newCategoryAmount)) for '\(oldCategoryTitle)'?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Change budgeted amount to \(convertedAmountToDollars(amount: newCategoryAmount)) for '\(oldCategoryTitle)'?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
@@ -269,7 +272,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             // Update the UI element with the new info
             self.currentCategoryAmountDouble = newCategoryAmount
             
-            self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: "New '\(oldCategoryTitle)' budgeted amount: $\(String(format: doubleFormatKey, newCategoryAmount))")
+            self.updateUIElementsBecauseOfSuccess(label: self.amountWarningLabel, textFieldUsed: self.newCategoryAmount, successMessage: "New '\(oldCategoryTitle)' budgeted amount: \(self.convertedAmountToDollars(amount: newCategoryAmount))")
             
             self.updateLabelsAtTop()
             self.updateLeftLabelAtTopRight()
@@ -323,6 +326,14 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         newCategoryAmount.inputAccessoryView = toolbar
         
         
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+
 
         // Do any additional setup after loading the view.
         currentCategoryNameString = editableCategoryName
@@ -375,7 +386,14 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         
         submitEditCategoryAmountForReview()
         
-        newCategoryAmount.resignFirstResponder()
+//        newCategoryAmount.resignFirstResponder()
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
         
     }
     

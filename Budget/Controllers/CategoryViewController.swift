@@ -15,7 +15,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var categoryNavBar: UINavigationBar!
     
     func refreshAvailableBalanceLabel() {
-        availableBalanceLabel.text = "$\(String(format: doubleFormatKey, budget.balance))"
+        budget.updateBalance()
+        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
     }
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
@@ -56,7 +57,17 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             cell.textLabel?.text = "\(category.name!)"
-            cell.detailTextLabel?.text = "Left: $\(String(format: doubleFormatKey, category.available))"
+            
+            if category.name == unallocatedKey {
+                
+                cell.detailTextLabel?.text = "Left: \(convertedAmountToDollars(amount: category.available))"
+                
+            } else {
+                
+                cell.detailTextLabel?.text = "Budgeted: \(convertedAmountToDollars(amount: category.budgeted)) - Left: \(convertedAmountToDollars(amount: category.available))"
+                
+            }
+            
         }
         
         return cell
