@@ -81,6 +81,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 budget.deleteTransaction(at: indexPath.row)
                 
+                // Success notification haptic
+                let successHaptic = UINotificationFeedbackGenerator()
+                successHaptic.notificationOccurred(.success)
+                
                 self.refreshAvailableBalanceLabel()
                 self.displayedDataTable.reloadData()
                 
