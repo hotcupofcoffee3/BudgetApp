@@ -908,23 +908,32 @@
                                     <action selector="closeButton:" destination="nnJ-PH-CIE" eventType="touchUpInside" id="Kqd-gk-Cut"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Background image courtesy of this one guy" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FY-GN-PuV">
+                                <rect key="frame" x="20" y="170" width="335" height="59"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4FY-GN-PuV" secondAttribute="trailing" constant="20" id="0a4-Dd-eTp"/>
                             <constraint firstItem="ac2-z7-FoF" firstAttribute="top" secondItem="d71-rz-luI" secondAttribute="top" id="4QC-UD-HS3"/>
                             <constraint firstItem="gd6-L3-7gg" firstAttribute="top" secondItem="eO6-6w-cPY" secondAttribute="top" constant="20" id="BBh-2i-QCh"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gd6-L3-7gg" secondAttribute="trailing" constant="20" symbolic="YES" id="ITn-R5-Dnl"/>
                             <constraint firstItem="gd6-L3-7gg" firstAttribute="leading" secondItem="eO6-6w-cPY" secondAttribute="leading" constant="20" id="SN0-gg-Nsu"/>
                             <constraint firstItem="ac2-z7-FoF" firstAttribute="trailing" secondItem="eO6-6w-cPY" secondAttribute="trailing" id="bci-l4-k87"/>
+                            <constraint firstItem="4FY-GN-PuV" firstAttribute="leading" secondItem="d71-rz-luI" secondAttribute="leading" constant="20" id="dx3-Pv-7GZ"/>
                             <constraint firstItem="ac2-z7-FoF" firstAttribute="leading" secondItem="eO6-6w-cPY" secondAttribute="leading" id="eoq-p1-uGc"/>
                             <constraint firstAttribute="bottom" secondItem="ac2-z7-FoF" secondAttribute="bottom" id="kub-bI-7tE"/>
+                            <constraint firstItem="4FY-GN-PuV" firstAttribute="top" secondItem="gd6-L3-7gg" secondAttribute="bottom" constant="100" id="zko-lK-5dh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eO6-6w-cPY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Phc-N4-lbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-911" y="-849"/>
+            <point key="canvasLocation" x="-911.20000000000005" y="-849.62518740629696"/>
         </scene>
         <!--Edit Transaction Title View Controller-->
         <scene sceneID="cHS-4G-8nc">

@@ -94,11 +94,10 @@
 		B533E35C20700B01007A72E0 /* Budget */ = {
 			isa = PBXGroup;
 			children = (
-				B5759A292076699600410FF9 /* Controllers */,
 				B5759A282076695F00410FF9 /* Models */,
-				B533E36120700B01007A72E0 /* Main.storyboard */,
+				B5F401D5209BB05C00103C7F /* Views */,
+				B5759A292076699600410FF9 /* Controllers */,
 				B533E36420700B01007A72E0 /* Assets.xcassets */,
-				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
 				B533E36920700B01007A72E0 /* Info.plist */,
 			);
 			path = Budget;
@@ -125,7 +124,6 @@
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
 				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
-				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
 				B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
@@ -146,6 +144,16 @@
 				B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */,
 			);
 			path = "Edit Transaction VCs";
+			sourceTree = "<group>";
+		};
+		B5F401D5209BB05C00103C7F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B533E36120700B01007A72E0 /* Main.storyboard */,
+				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
+				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
