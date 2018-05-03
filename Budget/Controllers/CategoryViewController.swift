@@ -181,7 +181,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCustomCell")
         
-        displayedDataTable.rowHeight = 120
+        displayedDataTable.rowHeight = 90
         
         // Do any additional setup after loading the view, typically from a nib.
         
