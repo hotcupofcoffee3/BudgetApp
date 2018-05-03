@@ -159,6 +159,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     // MARK: Funds Text Field
     
+    @IBOutlet weak var amountView: UIView!
+    
     @IBOutlet weak var fundsTextField: UITextField!
     
     
@@ -493,6 +495,17 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         super.viewDidLoad()
         
         
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        amountView.addGestureRecognizer(amountViewTap)
+        
+        
+        
+        
         // MARK: - Toolbar with 'Done' button
         
         let toolbar = UIToolbar()
@@ -555,6 +568,17 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    @objc func amountTapped() {
+        
+        fundsTextField.becomeFirstResponder()
+        
+    }
     
     
     

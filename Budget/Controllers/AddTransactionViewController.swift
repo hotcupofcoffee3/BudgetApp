@@ -123,7 +123,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
+    @IBOutlet weak var nameView: UIView!
+    
     @IBOutlet weak var transactionNameTextField: UITextField!
+    
+    @IBOutlet weak var amountView: UIView!
     
     @IBOutlet weak var transactionAmountTextField: UITextField!
     
@@ -316,6 +320,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         
         
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        
+        
+        
         // MARK: - Add done button
             
         let toolbar = UIToolbar()
@@ -374,6 +388,22 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    @objc func nameTapped() {
+        
+        transactionNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        transactionAmountTextField.becomeFirstResponder()
+        
+    }
     
     
     

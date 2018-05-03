@@ -307,7 +307,13 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: Add tap gesture to textfields and their labels
         
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        titleView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
         
         // MARK: - Add done button
         
@@ -361,6 +367,26 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    @objc func nameTapped() {
+        
+        newCategoryName.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        newCategoryAmount.becomeFirstResponder()
+        
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true
+    }
     
     
     // MARK: - Keyboard dismissals

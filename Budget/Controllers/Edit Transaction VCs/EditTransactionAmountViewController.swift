@@ -56,6 +56,8 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
     
+    @IBOutlet weak var amountView: UIView!
+    
     @IBOutlet weak var newAmountTextField: UITextField!
     
     
@@ -151,6 +153,13 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
         
         
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        amountView.addGestureRecognizer(amountViewTap)
+        
+        
         
         // MARK: - Add done button
         
@@ -201,6 +210,16 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     }
     
     
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    @objc func amountTapped() {
+        
+        newAmountTextField.becomeFirstResponder()
+        
+    }
     
     
     // MARK: - Keyboard dismissals

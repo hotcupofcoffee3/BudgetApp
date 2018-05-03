@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,67 +29,51 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Mq8-vf-sZP" userLabel="Amount Stack">
-                        <rect key="frame" x="10" y="40" width="300" height="53"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-sc-KQo" userLabel="Available Stack">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eky-bC-HeF">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="gDh-0C-rlU"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNe-ER-bwz">
-                                        <rect key="frame" x="100" y="0.0" width="200" height="24"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="CEC-nk-qFd" userLabel="Budgeted Stack">
-                                <rect key="frame" x="0.0" y="29" width="300" height="24"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shZ-3f-5e9">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="9mm-vo-31M"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiW-WD-1Zt">
-                                        <rect key="frame" x="100" y="0.0" width="200" height="24"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eky-bC-HeF">
+                        <rect key="frame" x="26" y="40" width="100" height="24"/>
                         <constraints>
-                            <constraint firstItem="wyH-sc-KQo" firstAttribute="leading" secondItem="Mq8-vf-sZP" secondAttribute="leading" id="Ky6-cE-9mc"/>
-                            <constraint firstItem="wyH-sc-KQo" firstAttribute="top" secondItem="Mq8-vf-sZP" secondAttribute="top" id="VTO-Vp-rLZ"/>
-                            <constraint firstItem="CEC-nk-qFd" firstAttribute="leading" secondItem="Mq8-vf-sZP" secondAttribute="leading" id="j8R-7G-Uj9"/>
-                            <constraint firstAttribute="trailing" secondItem="wyH-sc-KQo" secondAttribute="trailing" id="rZp-Dw-TDG"/>
-                            <constraint firstAttribute="bottom" secondItem="CEC-nk-qFd" secondAttribute="bottom" id="sGm-8Q-JuQ"/>
-                            <constraint firstAttribute="trailing" secondItem="CEC-nk-qFd" secondAttribute="trailing" id="xkd-rZ-Boc"/>
+                            <constraint firstAttribute="width" constant="100" id="gDh-0C-rlU"/>
                         </constraints>
-                    </stackView>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNe-ER-bwz">
+                        <rect key="frame" x="126" y="40" width="178" height="24"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shZ-3f-5e9">
+                        <rect key="frame" x="26" y="69" width="100" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="9mm-vo-31M"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiW-WD-1Zt">
+                        <rect key="frame" x="126" y="69" width="178" height="24"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="DiW-WD-1Zt" secondAttribute="trailing" id="2Ri-Sc-dPg"/>
                     <constraint firstAttribute="trailing" secondItem="y5f-VT-80C" secondAttribute="trailing" constant="10" id="6dY-np-Zxa"/>
-                    <constraint firstItem="Mq8-vf-sZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DCu-GE-VmL"/>
-                    <constraint firstAttribute="trailing" secondItem="Mq8-vf-sZP" secondAttribute="trailing" constant="10" id="EQV-Hl-INi"/>
+                    <constraint firstItem="FNe-ER-bwz" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Fec-GL-dLZ"/>
+                    <constraint firstItem="eky-bC-HeF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="GeI-Qk-bD4"/>
                     <constraint firstItem="y5f-VT-80C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="IiP-gd-7Aj"/>
-                    <constraint firstItem="Mq8-vf-sZP" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="arT-Q7-ygT"/>
+                    <constraint firstItem="DiW-WD-1Zt" firstAttribute="top" secondItem="FNe-ER-bwz" secondAttribute="bottom" constant="5" id="POC-Ie-Mqt"/>
+                    <constraint firstItem="eky-bC-HeF" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="Pcl-ZF-T28"/>
+                    <constraint firstItem="shZ-3f-5e9" firstAttribute="top" secondItem="eky-bC-HeF" secondAttribute="bottom" constant="5" id="Y6M-Kh-3j6"/>
+                    <constraint firstItem="FNe-ER-bwz" firstAttribute="leading" secondItem="eky-bC-HeF" secondAttribute="trailing" id="YLi-vP-ahA"/>
                     <constraint firstItem="y5f-VT-80C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hF7-hd-23h"/>
+                    <constraint firstItem="shZ-3f-5e9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="lD7-zv-evR"/>
+                    <constraint firstItem="FNe-ER-bwz" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="qvb-8o-Spf"/>
+                    <constraint firstItem="DiW-WD-1Zt" firstAttribute="leading" secondItem="shZ-3f-5e9" secondAttribute="trailing" id="vVQ-dw-oAR"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

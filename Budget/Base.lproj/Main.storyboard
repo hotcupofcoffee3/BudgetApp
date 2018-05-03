@@ -289,11 +289,13 @@
                     </view>
                     <connections>
                         <outlet property="addCategoryButton" destination="c8V-Gw-KiM" id="Slh-Td-eHH"/>
+                        <outlet property="amountView" destination="cng-ed-s01" id="WLe-Az-SRO"/>
                         <outlet property="categoryAmountTextField" destination="0qq-T4-TeK" id="Po0-WG-6On"/>
                         <outlet property="categoryNameTextField" destination="Ekd-UJ-C6E" id="6gm-UR-6Sf"/>
                         <outlet property="categoryWarningLabel" destination="brs-4a-HOv" id="PtT-Mg-Dpb"/>
                         <outlet property="leftAmountAtTopRight" destination="49r-Dq-A83" id="IoS-CM-WRE"/>
                         <outlet property="leftLabelOnNavBar" destination="6YZ-eR-ZXu" id="4nb-qi-eCg"/>
+                        <outlet property="nameView" destination="6hU-hF-N6u" id="kng-g5-Siv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -497,6 +499,7 @@
                     </view>
                     <connections>
                         <outlet property="allocateRemoveOrShift" destination="bwI-dc-nKQ" id="UGL-FS-KIR"/>
+                        <outlet property="amountView" destination="uNF-eB-ReN" id="7w4-ji-dpF"/>
                         <outlet property="fromCategoryCurrentBalanceLabel" destination="ubg-Uo-pCO" id="FkL-4e-SF2"/>
                         <outlet property="fromCategoryPicker" destination="24W-sK-lTp" id="D7e-pm-Roc"/>
                         <outlet property="fundsTextField" destination="gye-NM-XkX" id="6pU-24-oAb"/>
@@ -743,10 +746,12 @@
                     </view>
                     <connections>
                         <outlet property="addTransactionButtonTitle" destination="VfQ-0L-VWK" id="bvE-Af-XZF"/>
+                        <outlet property="amountView" destination="egd-tT-UCT" id="QYT-7b-M4S"/>
                         <outlet property="categoryPicked" destination="zLF-kf-4gV" id="4g3-Ho-dr0"/>
                         <outlet property="currentCategoryBalanceLabel" destination="fHR-xw-HmO" id="RlM-E9-diV"/>
                         <outlet property="leftAmountAtTopRight" destination="uZ5-vd-Ehm" id="BuC-1R-9dT"/>
                         <outlet property="leftLabelOnNavBar" destination="uqV-O1-oyU" id="wxB-iD-Z5e"/>
+                        <outlet property="nameView" destination="kuR-VC-H4K" id="iLe-17-Kwk"/>
                         <outlet property="transactionAmountTextField" destination="nWl-rx-sNc" id="dJW-A9-m6T"/>
                         <outlet property="transactionDatePicker" destination="mV6-9c-Yco" id="ZGO-gf-iV0"/>
                         <outlet property="transactionNameTextField" destination="h8m-Na-mTR" id="LQl-Mt-oGh"/>
@@ -796,28 +801,12 @@
                                 <rect key="frame" x="20" y="221.5" width="335" height="381.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" textLabel="ByZ-H3-G1Z" detailTextLabel="HPi-zt-Fsd" style="IBUITableViewCellStyleSubtitle" id="Vnx-YE-wlf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="Vnx-YE-wlf">
                                         <rect key="frame" x="0.0" y="28" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vnx-YE-wlf" id="yus-3m-KQX">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ByZ-H3-G1Z">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HPi-zt-Fsd">
-                                                    <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -1067,6 +1056,7 @@
                         <outlet property="editingItemLabel" destination="OHV-67-QbX" id="nqF-YG-8Qg"/>
                         <outlet property="leftAmountAtTopRight" destination="Kdf-qN-TpU" id="PVD-vM-6Br"/>
                         <outlet property="leftLabelOnNavBar" destination="nlK-eG-gX7" id="S02-FF-f10"/>
+                        <outlet property="nameView" destination="9i8-yO-aZD" id="4gl-kY-cDa"/>
                         <outlet property="newTitleTextField" destination="GaZ-5E-1p9" id="PEH-tw-eG6"/>
                         <outlet property="updateItemButton" destination="X0W-gp-DpZ" id="wbm-2X-HZ6"/>
                         <outlet property="warningLabel" destination="bDa-al-GyU" id="VAZ-Zg-O5G"/>
@@ -1127,7 +1117,7 @@
                                     <constraint firstAttribute="width" constant="75" id="Nqa-kT-nto"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uh4-S1-L8i" userLabel="Title View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uh4-S1-L8i" userLabel="Amount View">
                                 <rect key="frame" x="20" y="308.5" width="335" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eaD-LX-dLZ" userLabel="Title Stack">
@@ -1212,6 +1202,7 @@
                         <viewLayoutGuide key="safeArea" id="vrc-jw-NNy"/>
                     </view>
                     <connections>
+                        <outlet property="amountView" destination="Uh4-S1-L8i" id="dqf-5E-QUY"/>
                         <outlet property="editingItemLabel" destination="7F9-Y1-jQ1" id="8d4-Gg-5kR"/>
                         <outlet property="leftAmountAtTopRight" destination="nve-bG-cHN" id="yaP-3d-ljK"/>
                         <outlet property="leftInCategoryLabel" destination="5eo-Vw-wXV" id="IZD-cx-Brj"/>

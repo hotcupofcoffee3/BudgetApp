@@ -58,7 +58,12 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    
+    @IBOutlet weak var nameView: UIView!
+    
     @IBOutlet weak var categoryNameTextField: UITextField!
+    
+    @IBOutlet weak var amountView: UIView!
     
     @IBOutlet weak var categoryAmountTextField: UITextField!
     
@@ -179,6 +184,18 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
         
         
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        
+        
+        
+        
         // MARK: - Toolbar with 'Done' button
         
         let toolbar = UIToolbar()
@@ -228,6 +245,23 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    @objc func nameTapped() {
+        
+        categoryNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        categoryAmountTextField.becomeFirstResponder()
+        
+    }
     
     
     // MARK: - Keyboard dismissals
