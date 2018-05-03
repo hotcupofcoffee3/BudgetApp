@@ -100,15 +100,27 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                     
-                    budget.deleteCategory(named: categoryToDelete)
+                    // *** Additional check before deleting a Category, as this is a big deal.
+                    let additionalAlert = UIAlertController(title: nil, message: "Deleting \(categoryToDelete) will put all transactions into 'Unallocated', and you cannot undo this. Do it anyway?", preferredStyle: .alert)
                     
-                    // Success notification haptic
-                    let successHaptic = UINotificationFeedbackGenerator()
-                    successHaptic.notificationOccurred(.success)
+                    additionalAlert.addAction(UIAlertAction(title: "Yes, do it anyway", style: .destructive, handler: { (action) in
+                        
+                        budget.deleteCategory(named: categoryToDelete)
+                        
+                        // Success notification haptic
+                        let successHaptic = UINotificationFeedbackGenerator()
+                        successHaptic.notificationOccurred(.success)
+                        
+                        self.refreshAvailableBalanceLabel()
+                        budget.sortCategoriesByKey(withUnallocated: true)
+                        self.displayedDataTable.reloadData()
+                        
+                    }))
                     
-                    self.refreshAvailableBalanceLabel()
-                    budget.sortCategoriesByKey(withUnallocated: true)
-                    self.displayedDataTable.reloadData()
+                    additionalAlert.addAction(UIAlertAction(title: "No, don't do it.", style: .cancel, handler: nil))
+                    
+                    self.present(additionalAlert, animated: true, completion: nil)
+                    
                     
                 }))
                 
