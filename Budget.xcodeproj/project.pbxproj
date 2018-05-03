@@ -30,6 +30,8 @@
 		B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */; };
 		B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */; };
 		B5F33CC52093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */; };
+		B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */; };
+		B5F401D4209B958F00103C7F /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionAmountViewController.swift; sourceTree = "<group>"; };
 		B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionDateViewController.swift; sourceTree = "<group>"; };
 		B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionCategoryViewController.swift; sourceTree = "<group>"; };
+		B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
+				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
+				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
 				B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
@@ -204,6 +210,7 @@
 				B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */,
 				B533E36520700B01007A72E0 /* Assets.xcassets in Resources */,
 				B533E36320700B01007A72E0 /* Main.storyboard in Resources */,
+				B5F401D4209B958F00103C7F /* CategoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +232,7 @@
 				B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */,
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddCategoryViewController.swift in Sources */,
+				B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */,
 				B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */,
 				B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */,
 				B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */,

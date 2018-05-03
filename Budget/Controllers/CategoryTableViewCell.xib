@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="CategoryCustomCell" selectionStyle="default" indentationWidth="10" rowHeight="79" id="KGk-i7-Jjw" customClass="CategoryTableViewCell" customModule="Alloc" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5f-VT-80C">
+                        <rect key="frame" x="10" y="5" width="300" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="fkj-tt-syb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="25"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Mq8-vf-sZP" userLabel="Amount Stack">
+                        <rect key="frame" x="10" y="40" width="300" height="53"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-sc-KQo" userLabel="Available Stack">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eky-bC-HeF">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="gDh-0C-rlU"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNe-ER-bwz">
+                                        <rect key="frame" x="100" y="0.0" width="200" height="24"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="CEC-nk-qFd" userLabel="Budgeted Stack">
+                                <rect key="frame" x="0.0" y="29" width="300" height="24"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shZ-3f-5e9">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="9mm-vo-31M"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$200.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiW-WD-1Zt">
+                                        <rect key="frame" x="100" y="0.0" width="200" height="24"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="wyH-sc-KQo" firstAttribute="leading" secondItem="Mq8-vf-sZP" secondAttribute="leading" id="Ky6-cE-9mc"/>
+                            <constraint firstItem="wyH-sc-KQo" firstAttribute="top" secondItem="Mq8-vf-sZP" secondAttribute="top" id="VTO-Vp-rLZ"/>
+                            <constraint firstItem="CEC-nk-qFd" firstAttribute="leading" secondItem="Mq8-vf-sZP" secondAttribute="leading" id="j8R-7G-Uj9"/>
+                            <constraint firstAttribute="trailing" secondItem="wyH-sc-KQo" secondAttribute="trailing" id="rZp-Dw-TDG"/>
+                            <constraint firstAttribute="bottom" secondItem="CEC-nk-qFd" secondAttribute="bottom" id="sGm-8Q-JuQ"/>
+                            <constraint firstAttribute="trailing" secondItem="CEC-nk-qFd" secondAttribute="trailing" id="xkd-rZ-Boc"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="y5f-VT-80C" secondAttribute="trailing" constant="10" id="6dY-np-Zxa"/>
+                    <constraint firstItem="Mq8-vf-sZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DCu-GE-VmL"/>
+                    <constraint firstAttribute="trailing" secondItem="Mq8-vf-sZP" secondAttribute="trailing" constant="10" id="EQV-Hl-INi"/>
+                    <constraint firstItem="y5f-VT-80C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="IiP-gd-7Aj"/>
+                    <constraint firstItem="Mq8-vf-sZP" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="arT-Q7-ygT"/>
+                    <constraint firstItem="y5f-VT-80C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hF7-hd-23h"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryAvailableLabel" destination="FNe-ER-bwz" id="oJt-X5-Jx1"/>
+                <outlet property="categoryAvailableTitleLabel" destination="eky-bC-HeF" id="igd-Ga-ldk"/>
+                <outlet property="categoryBudgetedLabel" destination="DiW-WD-1Zt" id="PHK-yj-zIx"/>
+                <outlet property="categoryBudgetedTitleLabel" destination="shZ-3f-5e9" id="m4k-4e-rva"/>
+                <outlet property="categoryNameLabel" destination="y5f-VT-80C" id="8Uu-w7-TXI"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="71"/>
+        </tableViewCell>
+    </objects>
+</document>

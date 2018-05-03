@@ -37,11 +37,19 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+//        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCustomCell", for: indexPath) as! CategoryTableViewCell
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-        cell.textLabel?.textColor = UIColor.white
-        cell.detailTextLabel?.textColor = UIColor.white
+        
+//        cell.textLabel?.textColor = UIColor.white
+//        cell.detailTextLabel?.textColor = UIColor.white
+        cell.categoryNameLabel?.textColor = UIColor.white
+        cell.categoryBudgetedTitleLabel?.textColor = UIColor.white
+        cell.categoryBudgetedLabel?.textColor = UIColor.white
+        cell.categoryAvailableTitleLabel?.textColor = UIColor.white
+        cell.categoryAvailableLabel?.textColor = UIColor.white
+        
         
         if let category = loadSpecificCategory(named: budget.sortedCategoryKeys[indexPath.row]) {
             
@@ -56,15 +64,20 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
-            cell.textLabel?.text = "\(category.name!)"
+//            cell.textLabel?.text = "\(category.name!)"
+            cell.categoryNameLabel?.text = "\(category.name!)"
             
             if category.name == unallocatedKey {
                 
-                cell.detailTextLabel?.text = "Left: \(convertedAmountToDollars(amount: category.available))"
+//                cell.detailTextLabel?.text = "Left: \(convertedAmountToDollars(amount: category.available))"
+                cell.categoryBudgetedLabel?.text = "N/A"
+                cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
             } else {
                 
-                cell.detailTextLabel?.text = "Budgeted: \(convertedAmountToDollars(amount: category.budgeted)) - Left: \(convertedAmountToDollars(amount: category.available))"
+//                cell.detailTextLabel?.text = "Budgeted: \(convertedAmountToDollars(amount: category.budgeted)) - Left: \(convertedAmountToDollars(amount: category.available))"
+                cell.categoryBudgetedLabel?.text = "\(convertedAmountToDollars(amount: category.budgeted))"
+                cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
             }
             
@@ -165,6 +178,11 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCustomCell")
+        
+        displayedDataTable.rowHeight = 120
+        
         // Do any additional setup after loading the view, typically from a nib.
         
         refreshAvailableBalanceLabel()
