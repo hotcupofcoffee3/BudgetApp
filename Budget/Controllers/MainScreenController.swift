@@ -17,11 +17,6 @@ class MainScreen: UIViewController {
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
-    func refreshAvailableBalanceLabel() {
-        budget.updateBalance()
-        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
-    }
-    
     @IBOutlet weak var categoriesButtonTitle: UIButton!
     
     @IBOutlet weak var transactionsButtonTitle: UIButton!
@@ -36,36 +31,7 @@ class MainScreen: UIViewController {
     
     @IBAction func addSomething(_ sender: UIButton) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
-            
-            // Just so I don't forget the structure, this is the only one being left like this.
-            // All the rest use the "performSegue()" function.
-            
-//            let addACategoryViewController = self.storyboard?.instantiateViewController(withIdentifier: addACategoryViewControllerKey) as! AddCategoryViewController
-//
-//            self.present(addACategoryViewController, animated: true, completion: nil)
-            
-            self.performSegue(withIdentifier: mainToAddCategorySegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
-          
-            self.performSegue(withIdentifier: mainToAddTransactionSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: mainToMoveFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        addSomethingAlertPopup()
         
     }
 
@@ -90,18 +56,10 @@ class MainScreen: UIViewController {
         loadSavedCategories()
         loadSavedTransactions(descending: true)
         
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
 
-        categoriesButtonTitle.layer.cornerRadius = 35
-        categoriesButtonTitle.layer.masksToBounds = true
-        categoriesButtonTitle.layer.borderWidth = 2
-        categoriesButtonTitle.layer.borderColor = tealColor.cgColor
-        
-        transactionsButtonTitle.layer.cornerRadius = 35
-        transactionsButtonTitle.layer.masksToBounds = true
-        transactionsButtonTitle.layer.borderWidth = 2
-        transactionsButtonTitle.layer.borderColor = tealColor.cgColor
-        
+        addCircleAroundMainButtons(named: categoriesButtonTitle)
+        addCircleAroundMainButtons(named: transactionsButtonTitle)
         
         // Long press gesture recognizers
         let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
@@ -117,7 +75,7 @@ class MainScreen: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         
     }
     
@@ -139,7 +97,7 @@ class MainScreen: UIViewController {
             
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                 budget.deleteEVERYTHING()
-                self.refreshAvailableBalanceLabel()
+                self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -183,7 +141,7 @@ class MainScreen: UIViewController {
                     loadSavedCategories()
                     loadSavedTransactions(descending: true)
                     
-                    self.refreshAvailableBalanceLabel()
+                    self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     
                 }))
                 

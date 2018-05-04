@@ -19,14 +19,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
     
     // MARK: Update elements because of success
     
@@ -35,26 +27,10 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         // Success notification haptic
         let successHaptic = UINotificationFeedbackGenerator()
         successHaptic.notificationOccurred(.success)
-        
-        // Update Left label at top right
-        updateLeftLabelAtTopRight()
-        
+      
         // Set text fields back to being empty
         categoryNameTextField.text = nil
         categoryAmountTextField.text = nil
-        
-    }
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(message: String) {
-        
-        // Warning notification haptic
-        let warningHaptic = UINotificationFeedbackGenerator()
-        warningHaptic.notificationOccurred(.error)
-        
-        categoryWarningLabel.textColor = UIColor.red
-        categoryWarningLabel.text = message
         
     }
     
@@ -99,25 +75,25 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             // *** If everything is blank
             if categoryName == "" || categoryAmount == "" {
                 
-                failureWithWarning(message: "You have to complete both fields.")
+                failureWithWarning(label: categoryWarningLabel, message: "You have to complete both fields.")
                 
                 
                 // *** If "Unallocated" is the attempted name
             } else if categoryName == unallocatedKey {
                 
-                failureWithWarning(message: "You cannot create a category called \"Unallocated\"")
+                failureWithWarning(label: categoryWarningLabel, message: "You cannot create a category called \"Unallocated\"")
                 
                 
                 // *** If the category name already exists.
             } else if isAlreadyCreated == true {
                 
-                failureWithWarning(message: "A category with this name has already been created.")
+                failureWithWarning(label: categoryWarningLabel, message: "A category with this name has already been created.")
                 
                 
                 // *** If both are filled out, but the amount is not a double
             } else if categoryName != "" && categoryAmount != "" && Double(categoryAmount) == nil {
                 
-                failureWithWarning(message: "You have to enter a number for the amount.")
+                failureWithWarning(label: categoryWarningLabel, message: "You have to enter a number for the amount.")
                 
                 
             } else {
@@ -126,7 +102,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                     
                     if categoryAmountAsDouble < 0.0 {
                         
-                        failureWithWarning(message: "You have to enter a positive number")
+                        failureWithWarning(label: categoryWarningLabel, message: "You have to enter a positive number")
                         
                     } else {
                         
@@ -163,6 +139,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
             
             self.updateUIElementsBecauseOfSuccess()
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
         }))
         
@@ -213,7 +190,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         categoryAmountTextField.inputAccessoryView = toolbar
         
         
-        
         // MARK: - Add swipe gesture to close keyboard
         
         let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
@@ -221,15 +197,9 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
         
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
-        
-        
-        updateLeftLabelAtTopRight()
-        
-        addCategoryButton.layer.cornerRadius = 27
-        addCategoryButton.layer.masksToBounds = true
-        addCategoryButton.layer.borderWidth = 1
-        addCategoryButton.layer.borderColor = lightGreenColor.cgColor
+        addCircleAroundButton(named: addCategoryButton)
         
         self.categoryNameTextField.delegate = self
         self.categoryAmountTextField.delegate = self
@@ -237,7 +207,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
     }
 
     override func didReceiveMemoryWarning() {

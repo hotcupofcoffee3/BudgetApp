@@ -23,15 +23,6 @@ class EditTransactionViewController: UIViewController {
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
     @IBOutlet weak var typeLabel: UILabel!
     
     // MARK: - Update Labels for Current Transaction
@@ -93,23 +84,11 @@ class EditTransactionViewController: UIViewController {
     @IBAction func editCategory(_ sender: UIButton) {
         performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
     }
-   
-    
-    
-    // MARK: - Button Formatter
-    func addCircleAroundButton(named button: UIButton) {
-        
-        button.layer.cornerRadius = 27
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = lightGreenColor.cgColor
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
 
         self.titleLabel.text = currentTransaction.title
@@ -122,7 +101,7 @@ class EditTransactionViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
         
     }

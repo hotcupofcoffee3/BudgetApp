@@ -22,15 +22,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     // MARK: Update labels
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
         
         guard let selectedCategory = loadSpecificCategory(named: categoryName) else { return }
@@ -50,7 +41,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         successHaptic.notificationOccurred(.success)
         
         // Update Left label at top right & balance labels
-        updateLeftLabelAtTopRight()
         updateCategoryBalanceLabel(for: forFromCategory, atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: forToCategory, atLabel: toCategoryCurrentBalanceLabel)
         
@@ -115,22 +105,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toCategoryPicker.alpha = 1.0
         
     }
-    
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(message: String) {
-        
-        // Warning notification haptic
-        let warning = UINotificationFeedbackGenerator()
-        warning.notificationOccurred(.error)
-        
-        warningLabel.textColor = UIColor.red
-        warningLabel.text = message
-        
-    }
-    
-    
+
     // MARK: Allocate, Remove, or Shift Switch
     
     @IBOutlet weak var allocateRemoveOrShift: UISegmentedControl!
@@ -236,7 +211,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Allocation submitted, with the amount being the default set budgeted amount
         if amountFromTextField == "" {
             
-            failureWithWarning(message: "You have to enter an amount.")
+            failureWithWarning(label: warningLabel, message: "You have to enter an amount.")
             
             
         // Allocation submitted, with the amount being specifically set
@@ -246,11 +221,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             if (unallocatedCategory.available - amount) < 0 {
                 
-                failureWithWarning(message: "You don't have enough funds left that.")
+                failureWithWarning(label: warningLabel, message: "You don't have enough funds left that.")
                 
             } else if amount <= 0 {
                 
-                failureWithWarning(message: "The amount can't be negative.")
+                failureWithWarning(label: warningLabel, message: "The amount can't be negative.")
                 
             } else {
                 
@@ -260,7 +235,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
         } else {
             
-            failureWithWarning(message: "You can't have letters for the amount.")
+            failureWithWarning(label: warningLabel, message: "You can't have letters for the amount.")
             
         }
         
@@ -283,6 +258,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             // Haptics triggered, labels updated, and text field cleared
             self.updateUIElementsBecauseOfSuccess(forFromCategory: unallocatedKey, forToCategory: toCategory)
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
         }))
         
@@ -311,7 +287,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Removal submitted, with the amount being the default set budgeted amount
         if amountFromTextField == "" {
             
-            failureWithWarning(message: "You have to enter an amount.")
+            failureWithWarning(label: warningLabel, message: "You have to enter an amount.")
             
             
             // Removal submitted, with the amount being specifically set
@@ -319,11 +295,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             if (selectedCategory.available - amount) < 0 {
                 
-                failureWithWarning(message: "You don't have enough funds in there for that.")
+                failureWithWarning(label: warningLabel, message: "You don't have enough funds in there for that.")
                 
             } else if amount <= 0 {
                 
-                failureWithWarning(message: "The amount has to be greater than 0.")
+                failureWithWarning(label: warningLabel, message: "The amount has to be greater than 0.")
                 
             } else {
                 
@@ -333,7 +309,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
         } else {
             
-            failureWithWarning(message: "You can't have letters for the amount.")
+            failureWithWarning(label: warningLabel, message: "You can't have letters for the amount.")
             
         }
         
@@ -356,6 +332,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             // Haptics triggered, labels updated, and text field cleared
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: unallocatedKey)
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
         }))
         
@@ -384,7 +361,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         if fundsTextField.text == "" {
             
-            failureWithWarning(message: "You have to enter an amount first.")
+            failureWithWarning(label: warningLabel, message: "You have to enter an amount first.")
             
         } else {
             
@@ -394,11 +371,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 
                 if (fromCategory.available - amount) < 0 {
                     
-                    failureWithWarning(message: "You don't enough to shift from this category.")
+                    failureWithWarning(label: warningLabel, message: "You don't enough to shift from this category.")
                     
                 } else if amount <= 0 {
                     
-                    failureWithWarning(message: "The amount has to be greater than 0.")
+                    failureWithWarning(label: warningLabel, message: "The amount has to be greater than 0.")
                     
                 } else {
                     
@@ -408,7 +385,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 
             } else {
                 
-                failureWithWarning(message: "You can't use letters for the amount.")
+                failureWithWarning(label: warningLabel, message: "You can't use letters for the amount.")
                 
             }
             
@@ -433,6 +410,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) shifted from \(fromCategory) to \(toCategory)"
             
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: toCategory)
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
         }))
         
@@ -530,20 +508,15 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
         
-        
-        
-        
+
         budget.sortCategoriesByKey(withUnallocated: true)
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
-        moveFundsButtonTitle.layer.cornerRadius = 27
-        moveFundsButtonTitle.layer.masksToBounds = true
-        moveFundsButtonTitle.layer.borderWidth = 1
-        moveFundsButtonTitle.layer.borderColor = lightGreenColor.cgColor
-        
+        addCircleAroundButton(named: moveFundsButtonTitle)
+    
         updateUIForAllocate()
         
         self.fundsTextField.delegate = self
@@ -553,7 +526,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     override func viewDidAppear(_ animated: Bool) {
         
         budget.sortCategoriesByKey(withUnallocated: true)
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)

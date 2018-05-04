@@ -138,9 +138,9 @@
 		B5759A292076699600410FF9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
-				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B56A0D91209CA2B20016634B /* Edit Category VCs */,
 				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,

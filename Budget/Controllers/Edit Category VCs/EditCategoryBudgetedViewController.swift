@@ -24,30 +24,6 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
-    
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(label: UILabel, message: String) {
-        
-        // Warning notification haptic
-        let warning = UINotificationFeedbackGenerator()
-        warning.notificationOccurred(.error)
-        
-        label.textColor = UIColor.red
-        label.text = message
-        
-    }
-    
     @IBOutlet weak var warningLabel: UILabel!
     
     
@@ -140,7 +116,7 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
             // Update the UI element with the new info
             self.currentCategoryBudgetedDouble = newCategoryBudgeted
             
-            self.updateLeftLabelAtTopRight()
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
             self.currentCategoryBudgeted.text = "\(self.convertedAmountToDollars(amount: newCategoryBudgeted))"
             
@@ -166,17 +142,6 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     }
     
 
-    
-    // MARK: - Button Formatter
-    func addCircleAroundButton(named button: UIButton) {
-        
-        button.layer.cornerRadius = 27
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = lightGreenColor.cgColor
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -215,7 +180,7 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
         
         
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.currentCategoryName.text = "~ \(currentCategoryNameString) ~"
         self.currentCategoryBudgeted.text = "\(convertedAmountToDollars(amount: currentCategoryBudgetedDouble))"
@@ -234,7 +199,7 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
     }
     

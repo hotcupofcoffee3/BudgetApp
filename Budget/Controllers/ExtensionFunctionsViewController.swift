@@ -9,12 +9,12 @@
 import UIKit
 
 class ExtensionFunctionsViewController: UIViewController {
-
     
-
 }
 
 extension UIViewController {
+    
+    
     
     // MARK: - Convert Amount to Dollars
         
@@ -35,4 +35,119 @@ extension UIViewController {
         
     }
     
+    
+    
+    // MARK: - Main Views Updating Budget Balance Label
+    
+    func refreshAvailableBalanceLabel(label: UILabel) {
+        
+        budget.updateBalance()
+        
+        label.text = "\(convertedAmountToDollars(amount: budget.balance))"
+        
+    }
+    
+    
+    
+    // MARK: - Button for Editing Screens Formatter
+    func addCircleAroundButton(named button: UIButton) {
+        
+        button.layer.cornerRadius = 27
+        button.layer.masksToBounds = true
+        button.layer.borderWidth = 1
+        button.layer.borderColor = lightGreenColor.cgColor
+        
+    }
+    
+    
+    
+    // MARK: - Button for Main Views Formatter
+    func addCircleAroundMainButtons(named button: UIButton) {
+        
+        button.layer.cornerRadius = 35
+        button.layer.masksToBounds = true
+        button.layer.borderWidth = 2
+        button.layer.borderColor = tealColor.cgColor
+        
+    }
+    
+    
+    
+    // MARK: - Add Something Alert Popup Function
+    
+    func addSomethingAlertPopup() {
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // Just so I don't forget the structure, this is the only one being left like this.
+        // All the rest use the "performSegue()" function.
+        
+        //  let addACategoryViewController = self.storyboard?.instantiateViewController(withIdentifier: addACategoryViewControllerKey) as! AddCategoryViewController
+        //
+        //  self.present(addACategoryViewController, animated: true, completion: nil)
+        
+        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
+            
+        })
+        
+        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: categoriesToAddTransactionSegueKey, sender: self)
+            
+        })
+        
+        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
+            
+            self.performSegue(withIdentifier: categoriesToMoveFundsSegueKey, sender: self)
+            
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    // MARK: Update Budget Balance & Unallocated Balance on Top Right of Nav Bars
+    
+    func updateLeftLabelAtTopRight(barButton: UIBarButtonItem, unallocatedButton: UILabel) {
+        
+        budget.updateBalance()
+        barButton.title = "\(convertedAmountToDollars(amount: budget.balance))"
+        
+        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+        unallocatedButton.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
+    }
+    
+    
+    
+    // MARK: Failure message
+    
+    func failureWithWarning(label: UILabel, message: String) {
+        
+        // Warning notification haptic
+        let warning = UINotificationFeedbackGenerator()
+        warning.notificationOccurred(.error)
+        
+        label.textColor = UIColor.red
+        label.text = message
+        
+    }
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+

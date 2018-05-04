@@ -26,30 +26,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
-    
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(label: UILabel, message: String) {
-        
-        // Warning notification haptic
-        let warning = UINotificationFeedbackGenerator()
-        warning.notificationOccurred(.error)
-        
-        label.textColor = UIColor.red
-        label.text = message
-        
-    }
-    
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
@@ -160,7 +136,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
             // Update the UI element with the new info
             self.currentCategoryAvailableDouble = newCategoryAvailable
             
-            self.updateLeftLabelAtTopRight()
+            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
             self.currentCategoryAvailable.text = "\(self.convertedAmountToDollars(amount: newCategoryAvailable))"
             
@@ -219,18 +195,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         submitEditCategoryAvailableForReview()
         
     }
-    
-    
-    
-    // MARK: - Button Formatter
-    func addCircleAroundButton(named button: UIButton) {
-        
-        button.layer.cornerRadius = 27
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = lightGreenColor.cgColor
-        
-    }
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -271,7 +236,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
         
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.currentCategoryName.text = "~ \(currentCategoryNameString) ~"
         self.currentCategoryAvailable.text = "\(convertedAmountToDollars(amount: currentCategoryAvailableDouble))"
@@ -294,7 +259,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     override func viewDidAppear(_ animated: Bool) {
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
     }
     

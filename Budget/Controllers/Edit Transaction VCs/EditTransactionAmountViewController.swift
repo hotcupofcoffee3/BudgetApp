@@ -23,29 +23,6 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
-    
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(label: UILabel, message: String) {
-        
-        // Warning notification haptic
-        let warning = UINotificationFeedbackGenerator()
-        warning.notificationOccurred(.error)
-        
-        label.textColor = UIColor.red
-        label.text = message
-        
-    }
     
     @IBOutlet weak var warningLabel: UILabel!
     
@@ -137,18 +114,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         changeAmountSubmittedForReview()
         
     }
-    
-    
-    // MARK: - Button Formatter
-    func addCircleAroundButton(named button: UIButton) {
-        
-        button.layer.cornerRadius = 27
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = lightGreenColor.cgColor
-        
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -178,18 +144,14 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         newAmountTextField.inputAccessoryView = toolbar
         
         
-        
         // MARK: - Add swipe gesture to close keyboard
         
         let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
         closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
-        
-        
-        
-        
-        self.updateLeftLabelAtTopRight()
+
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.editingItemLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
         

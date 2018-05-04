@@ -13,37 +13,27 @@ var editableCategoryName = String()
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var categoryNavBar: UINavigationBar!
-    
-    func refreshAvailableBalanceLabel() {
-        budget.updateBalance()
-        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
-    }
-    
+ 
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     @IBAction func addCategoryButton(_ sender: UIButton) {
         performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
     }
     
-    
     @IBOutlet weak var displayedDataTable: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        // "Uncategorized" category excluded.
         return budget.sortedCategoryKeys.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "CategoryCustomCell", for: indexPath) as! CategoryTableViewCell
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-//        cell.textLabel?.textColor = UIColor.white
-//        cell.detailTextLabel?.textColor = UIColor.white
         cell.categoryNameLabel?.textColor = UIColor.white
         cell.categoryBudgetedTitleLabel?.textColor = UIColor.white
         cell.categoryBudgetedLabel?.textColor = UIColor.white
@@ -64,18 +54,15 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
-//            cell.textLabel?.text = "\(category.name!)"
             cell.categoryNameLabel?.text = "\(category.name!)"
             
             if category.name == unallocatedKey {
-                
-//                cell.detailTextLabel?.text = "Left: \(convertedAmountToDollars(amount: category.available))"
+
                 cell.categoryBudgetedLabel?.text = "N/A"
                 cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
             } else {
                 
-//                cell.detailTextLabel?.text = "Budgeted: \(convertedAmountToDollars(amount: category.budgeted)) - Left: \(convertedAmountToDollars(amount: category.available))"
                 cell.categoryBudgetedLabel?.text = "\(convertedAmountToDollars(amount: category.budgeted))"
                 cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
@@ -124,7 +111,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                         let successHaptic = UINotificationFeedbackGenerator()
                         successHaptic.notificationOccurred(.success)
                         
-                        self.refreshAvailableBalanceLabel()
+                        self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                         budget.sortCategoriesByKey(withUnallocated: true)
                         self.displayedDataTable.reloadData()
                         
@@ -150,29 +137,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addSomething(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
-           
-            self.performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: categoriesToAddTransactionSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: categoriesToMoveFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        addSomethingAlertPopup()
         
     }
     
@@ -183,18 +148,10 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         displayedDataTable.rowHeight = 90
         
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
-        
-        
-        // No image used, to make the navbar background transparent
-//        categoryNavBar.setBackgroundImage(UIImage(), for: .default)
-//        categoryNavBar.shadowImage = UIImage()
-        
         
         // ******** Swipe
         
@@ -213,7 +170,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none

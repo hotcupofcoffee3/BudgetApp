@@ -12,17 +12,11 @@ var editableTransactionIndex = Int()
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    func refreshAvailableBalanceLabel() {
-        budget.updateBalance()
-        availableBalanceLabel.text = "\(convertedAmountToDollars(amount: budget.balance))"
-    }
-    
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     @IBAction func addTransactionButton(_ sender: UIButton) {
         performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
     }
-    
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
@@ -85,7 +79,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 let successHaptic = UINotificationFeedbackGenerator()
                 successHaptic.notificationOccurred(.success)
                 
-                self.refreshAvailableBalanceLabel()
+                self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -101,29 +95,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func addSomething(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToAddCategorySegueKey, sender: self)
-            
-        })
-
-        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: transactionsToMoveFundsSegueKey, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        addSomethingAlertPopup()
         
     }
     
@@ -131,10 +103,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
-        
         
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
@@ -150,7 +121,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        refreshAvailableBalanceLabel()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
     }

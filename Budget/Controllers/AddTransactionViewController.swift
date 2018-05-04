@@ -74,14 +74,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     // MARK: Update labels
     
-    func updateLeftLabelAtTopRight() {
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-    }
-    
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
         if let selectedCategory = loadSpecificCategory(named: categoryName) {
@@ -101,25 +93,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         successHaptic.notificationOccurred(.success)
         
         // Update Left label at top right & current balance
-        updateLeftLabelAtTopRight()
         updateCurrentCategoryBalanceLabel(forCategory: category)
         
         // Clearing text fields
         transactionNameTextField.text = nil
         transactionAmountTextField.text = nil
-        
-    }
-    
-    // MARK: Failure message
-    
-    func failureWithWarning(message: String) {
-        
-        // Warning notification haptic
-        let warning = UINotificationFeedbackGenerator()
-        warning.notificationOccurred(.error)
-        
-        warningLabel.textColor = UIColor.red
-        warningLabel.text = message
         
     }
     
@@ -198,7 +176,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             if title == "" || amount == "" {
                 
-                failureWithWarning(message: "You have to fill in all fields.")
+                failureWithWarning(label: warningLabel, message: "You have to fill in all fields.")
                 
             } else {
                 
@@ -212,11 +190,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                         
                         if (categoryBeingWithdrawnFrom.available - amount) < 0 {
                             
-                            failureWithWarning(message: "You don't have enough funds in this category.")
+                            failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
                             
                         } else if amount <= 0 {
                             
-                            failureWithWarning(message: "You have to enter a number greater than 0.")
+                            failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
                             
                         } else {
                             
@@ -230,7 +208,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                         
                         if amount <= 0 {
                             
-                            failureWithWarning(message: "You have to enter a number greater than 0.")
+                            failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
                             
                         } else {
                             
@@ -242,7 +220,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                     
                 } else {
                     
-                    failureWithWarning(message: "You have to enter a number for the amount.")
+                    failureWithWarning(label: warningLabel, message: "You have to enter a number for the amount.")
                     
                 }
                 
@@ -272,6 +250,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
                 
                 self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
+                self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
                 
             }))
             
@@ -360,12 +339,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         budget.sortCategoriesByKey(withUnallocated: true)
         
-        addTransactionButtonTitle.layer.cornerRadius = 27
-        addTransactionButtonTitle.layer.masksToBounds = true
-        addTransactionButtonTitle.layer.borderWidth = 1
-        addTransactionButtonTitle.layer.borderColor = lightGreenColor.cgColor
+        addCircleAroundButton(named: addTransactionButtonTitle)
         
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
@@ -378,7 +354,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         budget.sortCategoriesByKey(withUnallocated: true)
         categoryPicked.reloadAllComponents()
         
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
     }

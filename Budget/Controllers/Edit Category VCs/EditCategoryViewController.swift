@@ -22,15 +22,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    func updateLeftLabelAtTopRight() {
-        
-        budget.updateBalance()
-        leftLabelOnNavBar.title = "\(convertedAmountToDollars(amount: budget.balance))"
-        
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-        leftAmountAtTopRight.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
-    }
-    
     func updateLabels() {
         
         if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
@@ -81,10 +72,8 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         
         currentCategoryNameString = editableCategoryName
         
-        
-        
         updateLabels()
-        updateLeftLabelAtTopRight()
+        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.addCircleAroundButton(named: self.editNameButton)
         self.addCircleAroundButton(named: self.editBudgetedButton)
@@ -97,23 +86,11 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    // MARK: - Button Formatter
-    func addCircleAroundButton(named button: UIButton) {
-        
-        button.layer.cornerRadius = 27
-        button.layer.masksToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = lightGreenColor.cgColor
-        
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         
         currentCategoryNameString = editableCategoryName
         
-        self.updateLeftLabelAtTopRight()
+        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         self.updateLabels()
         
     }
