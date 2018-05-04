@@ -76,12 +76,16 @@ let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
 
 // Edit Segues
 
-let editCategorySegueKey = "EditCategorySegue"
 let editTransactionSegueKey = "EditTransactionSegue"
 let editTransactionTitleSegueKey = "EditTransactionTitleSegue"
 let editTransactionAmountSegueKey = "EditTransactionAmountSegue"
 let editTransactionDateSegueKey = "EditTransactionDateSegue"
 let editTransactionCategorySegueKey = "EditTransactionCategorySegue"
+
+let editCategorySegueKey = "EditCategorySegue"
+let editCategoryNameSegueKey = "EditCategoryNameSegue"
+let editCategoryBudgetedSegueKey = "EditCategoryBudgetedSegue"
+let editCategoryAvailableSegueKey = "EditCategoryAvailableSegue"
 
 
 

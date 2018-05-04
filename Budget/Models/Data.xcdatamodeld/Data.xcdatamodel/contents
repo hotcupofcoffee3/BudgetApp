@@ -3,7 +3,12 @@
     <entity name="Category" representedClassName=".Category" syncable="YES" codeGenerationType="class">
         <attribute name="available" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="budgeted" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dueDay" optional="YES" attributeType="Integer 64" minValueString="1" maxValueString="31" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Period" representedClassName=".Period" syncable="YES" codeGenerationType="class">
+        <attribute name="end" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="start" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName=".Transaction" syncable="YES" codeGenerationType="class">
         <attribute name="day" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -16,7 +21,8 @@
         <attribute name="year" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Category" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Transaction" positionX="133" positionY="-27" width="128" height="165"/>
+        <element name="Period" positionX="36" positionY="36" width="128" height="75"/>
     </elements>
 </model>

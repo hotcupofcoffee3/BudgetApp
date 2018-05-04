@@ -76,11 +76,12 @@ class MainScreen: UIViewController {
         
         
         // ********************
-        // Core Data Testing
+        // Core Data Testing (& Other Testing)
         // ********************
       
        
-        // A
+        
+        
         
         // ********************
         // ********************
@@ -170,8 +171,8 @@ class MainScreen: UIViewController {
                     budget.addCategory(named: "Extra", withBudgeted: 50.0)
                     
                     // Allocate their budgeted amounts into their available amounts
-                    budget.allocateFundsToCategory(withThisAmount: 200, to: "Food")
-                    budget.allocateFundsToCategory(withThisAmount: 50, to: "Extra")
+                    budget.shiftFunds(withThisAmount: 200, from: unallocatedKey, to: "Food")
+                    budget.shiftFunds(withThisAmount: 50, from: unallocatedKey, to: "Extra")
                     
                     
                     
@@ -199,31 +200,6 @@ class MainScreen: UIViewController {
     
     
 
-}
-
-
-
-// MARK: - Convert Amount to Dollars
-
-extension UIViewController {
-    
-    func convertedAmountToDollars(amount: Double) -> String {
-        
-        var convertedAmount = ""
-        
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        
-        if let convertedAmountOptional = numberFormatter.string(from: NSNumber(value: amount)) {
-            
-            convertedAmount = convertedAmountOptional
-            
-        }
-        
-        return convertedAmount
-        
-    }
-    
 }
 
 

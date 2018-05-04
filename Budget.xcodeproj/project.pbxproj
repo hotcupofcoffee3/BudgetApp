@@ -18,6 +18,10 @@
 		B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B533E36620700B01007A72E0 /* LaunchScreen.storyboard */; };
 		B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EAC2073CC830061C9E5 /* MainScreenController.swift */; };
 		B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EB22073D3430061C9E5 /* BudgetModel.swift */; };
+		B56A0D93209CA2E10016634B /* EditCategoryNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D92209CA2E10016634B /* EditCategoryNameViewController.swift */; };
+		B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */; };
+		B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */; };
+		B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */; };
 		B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56D4458209372DA005000CF /* EditTransactionViewController.swift */; };
 		B5759A272076690700410FF9 /* KeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5759A262076690700410FF9 /* KeyModel.swift */; };
 		B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B576FD2B208F86BD00565082 /* DetailsViewController.swift */; };
@@ -48,6 +52,10 @@
 		B533E36920700B01007A72E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5380EAC2073CC830061C9E5 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		B5380EB22073D3430061C9E5 /* BudgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetModel.swift; sourceTree = "<group>"; };
+		B56A0D92209CA2E10016634B /* EditCategoryNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryNameViewController.swift; sourceTree = "<group>"; };
+		B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryBudgetedViewController.swift; sourceTree = "<group>"; };
+		B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryAvailableViewController.swift; sourceTree = "<group>"; };
+		B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFunctionsViewController.swift; sourceTree = "<group>"; };
 		B56D4458209372DA005000CF /* EditTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionViewController.swift; sourceTree = "<group>"; };
 		B5759A262076690700410FF9 /* KeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyModel.swift; sourceTree = "<group>"; };
 		B576FD2B208F86BD00565082 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +111,17 @@
 			path = Budget;
 			sourceTree = "<group>";
 		};
+		B56A0D91209CA2B20016634B /* Edit Category VCs */ = {
+			isa = PBXGroup;
+			children = (
+				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
+				B56A0D92209CA2E10016634B /* EditCategoryNameViewController.swift */,
+				B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */,
+				B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */,
+			);
+			path = "Edit Category VCs";
+			sourceTree = "<group>";
+		};
 		B5759A282076695F00410FF9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,8 +140,9 @@
 			children = (
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
+				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
-				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
+				B56A0D91209CA2B20016634B /* Edit Category VCs */,
 				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
 				B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */,
@@ -232,12 +252,16 @@
 				B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */,
 				B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */,
 				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
+				B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,
 				B52879A9208A42970011D04C /* AddTransactionViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,
+				B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */,
 				B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */,
+				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
+				B56A0D93209CA2E10016634B /* EditCategoryNameViewController.swift in Sources */,
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddCategoryViewController.swift in Sources */,
 				B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */,

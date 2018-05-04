@@ -53,49 +53,16 @@ class Budget {
 
 
 
-    // MARK: Allocate Funds
+    // MARK: Shift Funds
 
 
-    func allocateFundsToCategory (withThisAmount: Double, to thisCategory: String) {
+    func shiftFunds (withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
 
-        // It can't be, but this just makes it clearer
-        if thisCategory != unallocatedKey {
+        guard let fromCategory = loadSpecificCategory(named: fromCategory) else { return }
+        guard let toCategory = loadSpecificCategory(named: toCategory) else { return }
 
-            guard let currentCategory = loadSpecificCategory(named: thisCategory) else { return }
-
-            let amount = withThisAmount
-
-            // Adds funds to specified category
-            currentCategory.available += amount
-
-            // Takes funds from Uncategorized category
-            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            unallocated.available -= amount
-
-        }
-
-        saveData()
-
-    }
-
-
-
-    // MARK: Remove Funds
-
-    func removeFundsFromCategory (withThisAmount: Double, from thisCategory: String) {
-
-        if thisCategory != unallocatedKey {
-
-            guard let currentCategory = loadSpecificCategory(named: thisCategory) else { return }
-
-            // Adds funds to specified category
-            currentCategory.available -= withThisAmount
-
-            // Takes funds from Uncategorized category
-            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            unallocated.available += withThisAmount
-
-        }
+        toCategory.available += amount
+        fromCategory.available -= amount
 
         saveData()
 

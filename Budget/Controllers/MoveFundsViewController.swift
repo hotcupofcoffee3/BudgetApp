@@ -276,7 +276,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Success!!! Adds specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
+            budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: toCategory)
             
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) allocated to \(toCategory)"
@@ -349,7 +349,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Success!!! Removes specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategory)
+            budget.shiftFunds(withThisAmount: amount, from: fromCategory, to: unallocatedKey)
             
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) removed from \(fromCategory)"
@@ -427,8 +427,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         // Adds specified amount
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            budget.removeFundsFromCategory(withThisAmount: amount, from: fromCategory)
-            budget.allocateFundsToCategory(withThisAmount: amount, to: toCategory)
+            budget.shiftFunds(withThisAmount: amount, from: fromCategory, to: toCategory)
             
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) shifted from \(fromCategory) to \(toCategory)"
