@@ -16,6 +16,26 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
  
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
+    var editCategory = false
+    @IBOutlet weak var editCategoryBarButton: UIBarButtonItem!
+    @IBAction func editCategory(_ sender: UIBarButtonItem) {
+        
+        editCategory = !editCategory
+        
+        if editCategory == true {
+            
+            editCategoryBarButton.title = "Done"
+            displayedDataTable.reloadData()
+            
+        } else {
+            
+            editCategoryBarButton.title = "Edit"
+            displayedDataTable.reloadData()
+            
+        }
+        
+    }
+    
     @IBAction func addCategoryButton(_ sender: UIButton) {
         performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
     }
@@ -50,7 +70,16 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
             } else {
                 
-                cell.accessoryType = .disclosureIndicator
+                if editCategory == true {
+                    
+                    cell.accessoryType = .detailButton
+                    
+                } else {
+                    
+                    cell.accessoryType = .disclosureIndicator
+                    
+                }
+                
                 
             }
             
@@ -74,11 +103,23 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-        if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
+        
+        if editCategoryBarButton.title == "Done" {
             
-            editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
-            performSegue(withIdentifier: editCategorySegueKey, sender: self)
+            editCategoryBarButton.title = "Edit"
+            
+            if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
+                
+                editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
+                performSegue(withIdentifier: editCategorySegueKey, sender: self)
+                
+            }
+            
+        } else {
+            
+            // TODO: - Add filter by Category
+            
+            performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
             
         }
         
@@ -135,7 +176,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addSomething(_ sender: UIBarButtonItem) {
         
-        addSomethingAlertPopup()
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
         
     }
     
@@ -150,6 +191,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        editCategory = false
         
         // ******** Swipe
         
@@ -172,10 +214,40 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        editCategory = false
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if editCategory == false && displayedDataTable.indexPathForSelectedRow != nil {
+            
+            let transactionVC = segue.destination as! TransactionViewController
+            
+            if let selectedCategoryIndexPath = displayedDataTable.indexPathForSelectedRow {
+                
+                let selectedCategory = budget.sortedCategoryKeys[selectedCategoryIndexPath.row]
+                
+                transactionVC.currentCategory = selectedCategory
+                
+            }
+            
+        }
+        
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+

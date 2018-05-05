@@ -146,6 +146,32 @@ func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
 
 
 
+// MARK: - Load Specific Transactions
+
+func loadSpecificTransactions(selectedCategory: String) -> [Transaction] {
+    
+    var transactionWithSelectedCategory = [Transaction]()
+    
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+    
+    request.predicate = NSPredicate(format: categoryMatchesKey, selectedCategory)
+    
+    do {
+        
+        transactionWithSelectedCategory = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
+    }
+    
+    return transactionWithSelectedCategory
+    
+}
+
+
+
 
 
 

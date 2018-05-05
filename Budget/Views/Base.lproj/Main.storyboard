@@ -788,6 +788,11 @@
                                                 <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="crossDissolve" id="OXX-Ft-DJ2"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="DOY-LF-cIS">
+                                            <connections>
+                                                <action selector="editCategory:" destination="7Ou-Sj-yrA" id="4nr-Kl-Zma"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -801,13 +806,14 @@
                                 <rect key="frame" x="20" y="221.5" width="335" height="381.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="Vnx-YE-wlf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="Vnx-YE-wlf">
                                         <rect key="frame" x="0.0" y="28" width="335" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vnx-YE-wlf" id="yus-3m-KQX">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -877,6 +883,7 @@
                         <outlet property="availableBalanceLabel" destination="VuF-MX-zAy" id="7tm-iA-92j"/>
                         <outlet property="categoryNavBar" destination="LMO-qm-Yz2" id="PrY-0b-NYD"/>
                         <outlet property="displayedDataTable" destination="cG6-sI-Nir" id="TKm-62-9Im"/>
+                        <outlet property="editCategoryBarButton" destination="DOY-LF-cIS" id="aY0-Mc-srB"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="ZN3-qu-gHe" kind="show" identifier="CategoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
@@ -2433,11 +2440,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gOi-Bu-AOw"/>
-        <segue reference="sum-Cr-7Ay"/>
-        <segue reference="eXP-Fb-uY0"/>
-        <segue reference="ZXq-hv-ffC"/>
-        <segue reference="mU4-cf-aIR"/>
+        <segue reference="QpK-gN-dzJ"/>
+        <segue reference="LyT-nl-dpa"/>
+        <segue reference="LCW-GF-oV6"/>
+        <segue reference="KPk-6k-mJN"/>
+        <segue reference="okA-JN-PqX"/>
         <segue reference="tLF-Rh-sKn"/>
     </inferredMetricsTieBreakers>
 </document>

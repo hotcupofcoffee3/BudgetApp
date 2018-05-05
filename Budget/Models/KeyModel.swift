@@ -12,6 +12,7 @@ import UIKit
 // Query Keys
 let nameMatchesKey = "name MATCHES %@"
 let idMatchesKey = "id MATCHES %@"
+let categoryMatchesKey = "forCategory MATCHES %@"
 
 
 // Class keys

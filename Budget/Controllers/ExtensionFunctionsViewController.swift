@@ -75,7 +75,7 @@ extension UIViewController {
     
     // MARK: - Add Something Alert Popup Function
     
-    func addSomethingAlertPopup() {
+    func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String, moveFundsSegue: String) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -88,19 +88,19 @@ extension UIViewController {
         
         alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
+            self.performSegue(withIdentifier: addCategorySegue, sender: self)
             
         })
         
         alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: categoriesToAddTransactionSegueKey, sender: self)
+            self.performSegue(withIdentifier: addTransactionSegue, sender: self)
             
         })
         
         alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
             
-            self.performSegue(withIdentifier: categoriesToMoveFundsSegueKey, sender: self)
+            self.performSegue(withIdentifier: moveFundsSegue, sender: self)
             
         })
         

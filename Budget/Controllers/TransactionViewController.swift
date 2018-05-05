@@ -12,6 +12,21 @@ var editableTransactionIndex = Int()
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var transactionsToDisplay = [Transaction]()
+    
+    var currentCategory: String? {
+        
+        didSet {
+            
+            guard let category = currentCategory else { return }
+            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
+            
+        }
+        
+    }
+    
+    
+    
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     @IBAction func addTransactionButton(_ sender: UIButton) {
@@ -22,7 +37,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return budget.transactions.count
+//        return budget.transactions.count
+        return transactionsToDisplay.count
         
     }
     
@@ -37,7 +53,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.accessoryType = .disclosureIndicator
         
         if !budget.transactions.isEmpty {
-            let transaction = budget.transactions[indexPath.row]
+//            let transaction = budget.transactions[indexPath.row]
+            let transaction = transactionsToDisplay[indexPath.row]
             cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
             if transaction.type == depositKey {
@@ -52,8 +69,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        let selectedTransaction = transactionsToDisplay[indexPath.row]
         
-        editableTransactionIndex = indexPath.row
+        guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
+        
+        editableTransactionIndex = selectedTransactionIndexPath
         
         performSegue(withIdentifier: editTransactionSegueKey, sender: self)
         
@@ -65,7 +86,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         if editingStyle == .delete {
             
-            let transactionToDelete = budget.transactions[indexPath.row]
+//            let transactionToDelete = budget.transactions[indexPath.row]
+            let transactionToDelete = transactionsToDisplay[indexPath.row]
             
             let message = "Delete \(transactionToDelete.title!) with \(convertedAmountToDollars(amount: transactionToDelete.inTheAmountOf))?"
             
@@ -73,7 +95,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                 
-                budget.deleteTransaction(at: indexPath.row)
+                let selectedTransaction = self.transactionsToDisplay[indexPath.row]
+                
+                guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
+                
+                budget.deleteTransaction(at: selectedTransactionIndexPath)
                 
                 self.successHaptic()
                 
@@ -93,7 +119,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func addSomething(_ sender: UIBarButtonItem) {
         
-        addSomethingAlertPopup()
+        addSomethingAlertPopup(addCategorySegue: transactionsToAddCategorySegueKey, addTransactionSegue: transactionsToAddTransactionSegueKey, moveFundsSegue: transactionsToMoveFundsSegueKey)
         
     }
     
@@ -105,6 +131,13 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
+        loadSavedTransactions(descending: true)
+        
+        if currentCategory == nil {
+            
+            transactionsToDisplay = budget.transactions
+            
+        }
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
         rightSwipe.direction = UISwipeGestureRecognizerDirection.right

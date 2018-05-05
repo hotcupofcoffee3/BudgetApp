@@ -31,7 +31,7 @@ class MainScreen: UIViewController {
     
     @IBAction func addSomething(_ sender: UIButton) {
         
-        addSomethingAlertPopup()
+        addSomethingAlertPopup(addCategorySegue: mainToAddCategorySegueKey, addTransactionSegue: mainToAddTransactionSegueKey, moveFundsSegue: mainToMoveFundsSegueKey)
         
     }
 
