@@ -86,6 +86,10 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
             
             budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
             
+            self.successHaptic()
+            
+            budget.sortTransactionsDescending()
+            
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
             if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
                 

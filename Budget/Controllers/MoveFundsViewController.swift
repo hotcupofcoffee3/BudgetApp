@@ -19,7 +19,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
     
-    
     // MARK: Update labels
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
@@ -256,7 +255,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) allocated to \(toCategory)"
             
-            // Haptics triggered, labels updated, and text field cleared
+            self.successHaptic()
+            
             self.updateUIElementsBecauseOfSuccess(forFromCategory: unallocatedKey, forToCategory: toCategory)
             self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
@@ -330,7 +330,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) removed from \(fromCategory)"
             
-            // Haptics triggered, labels updated, and text field cleared
+            self.successHaptic()
+            
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: unallocatedKey)
             self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
@@ -409,6 +410,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             self.warningLabel.textColor = successColor
             self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) shifted from \(fromCategory) to \(toCategory)"
             
+            self.successHaptic()
+            
             self.updateUIElementsBecauseOfSuccess(forFromCategory: fromCategory, forToCategory: toCategory)
             self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
@@ -471,16 +474,12 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
+
         // MARK: Add tap gesture to textfields and their labels
         
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         
         amountView.addGestureRecognizer(amountViewTap)
-        
-        
         
         
         // MARK: - Toolbar with 'Done' button
@@ -541,7 +540,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     
-    
     // *****
     // MARK: - Keyboard functions
     // *****
@@ -551,7 +549,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fundsTextField.becomeFirstResponder()
         
     }
-    
     
     
     // MARK: - Keyboard dismissals

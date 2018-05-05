@@ -111,6 +111,8 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
             
             self.currentCategoryName.text = newCategoryName
             
+            self.successHaptic()
+            
             editableCategoryName = newCategoryName
             
             self.dismiss(animated: true, completion: nil)

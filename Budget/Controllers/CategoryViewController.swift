@@ -107,9 +107,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         budget.deleteCategory(named: categoryToDelete)
                         
-                        // Success notification haptic
-                        let successHaptic = UINotificationFeedbackGenerator()
-                        successHaptic.notificationOccurred(.success)
+                        self.successHaptic()
                         
                         self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                         budget.sortCategoriesByKey(withUnallocated: true)

@@ -249,6 +249,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
                 
+                self.successHaptic()
+                
                 self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
                 self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
                 
@@ -269,7 +271,10 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
                 
+                self.successHaptic()
+                
                 self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
+                self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
                 
             }))
             

@@ -139,6 +139,15 @@ extension UIViewController {
     }
     
     
+    
+    // MARK: Success Haptic
+    func successHaptic() {
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+    }
+    
+    
+    
 }
 
 

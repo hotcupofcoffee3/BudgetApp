@@ -132,6 +132,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
             
             budget.shiftFunds(withThisAmount: newCategoryAvailable, from: selectedCategoryName, to: currentCategoryName)
             
+            self.successHaptic()
             
             // Update the UI element with the new info
             self.currentCategoryAvailableDouble = newCategoryAvailable

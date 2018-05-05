@@ -112,6 +112,7 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
             
             budget.updateCategory(named: oldCategoryName, updatedNewName: oldCategoryName, andNewAmountAdded: newCategoryBudgeted)
             
+            self.successHaptic()
             
             // Update the UI element with the new info
             self.currentCategoryBudgetedDouble = newCategoryBudgeted

@@ -139,6 +139,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
             
             self.updateUIElementsBecauseOfSuccess()
+            self.successHaptic()
             self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
         }))
