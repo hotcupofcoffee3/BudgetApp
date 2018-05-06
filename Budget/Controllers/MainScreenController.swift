@@ -55,6 +55,7 @@ class MainScreen: UIViewController {
         
         loadSavedCategories()
         loadSavedTransactions(descending: true)
+        selectedCategory = nil
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
 
@@ -75,7 +76,9 @@ class MainScreen: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        selectedCategory = nil
         
     }
     

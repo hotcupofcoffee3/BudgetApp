@@ -10,22 +10,11 @@ import UIKit
 
 var editableTransactionIndex = Int()
 
+var selectedCategory: String?
+
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var transactionsToDisplay = [Transaction]()
-    
-    var currentCategory: String? {
-        
-        didSet {
-            
-            guard let category = currentCategory else { return }
-            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
-            
-        }
-        
-    }
-    
-    
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
@@ -133,9 +122,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         loadSavedTransactions(descending: true)
         
-        if currentCategory == nil {
+        if selectedCategory == nil {
             
             transactionsToDisplay = budget.transactions
+            
+        } else {
+            
+            guard let category = selectedCategory else { return }
+            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
             
         }
         
@@ -155,6 +149,19 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        
+        loadSavedTransactions(descending: true)
+        
+        if selectedCategory == nil {
+            
+            transactionsToDisplay = budget.transactions
+            
+        } else {
+            
+            guard let category = selectedCategory else { return }
+            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {

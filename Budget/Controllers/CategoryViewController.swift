@@ -104,8 +104,9 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if editCategoryBarButton.title == "Done" {
+        if editCategory == true {
             
+            // Sets back to edit after editing is done.
             editCategoryBarButton.title = "Edit"
             
             if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
@@ -117,8 +118,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             
         } else {
             
-            // TODO: - Add filter by Category
-            
+            selectedCategory = budget.sortedCategoryKeys[indexPath.row]
             performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
             
         }
@@ -192,6 +192,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         editCategory = false
+        selectedCategory = nil
         
         // ******** Swipe
         
@@ -215,6 +216,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         editCategory = false
+        selectedCategory = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -222,23 +224,26 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if editCategory == false && displayedDataTable.indexPathForSelectedRow != nil {
-            
-            let transactionVC = segue.destination as! TransactionViewController
-            
-            if let selectedCategoryIndexPath = displayedDataTable.indexPathForSelectedRow {
-                
-                let selectedCategory = budget.sortedCategoryKeys[selectedCategoryIndexPath.row]
-                
-                transactionVC.currentCategory = selectedCategory
-                
-            }
-            
-        }
-        
-    }
+    
+    // MARK: - Prepare for Segue for Selected Category As Delegate, but couldn't get it to work with editing transactions.
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        if editCategory == false && displayedDataTable.indexPathForSelectedRow != nil {
+//
+//            let transactionVC = segue.destination as! TransactionViewController
+//
+//            if let selectedCategoryIndexPath = displayedDataTable.indexPathForSelectedRow {
+//
+//                let category = budget.sortedCategoryKeys[selectedCategoryIndexPath.row]
+//
+//                selectedCategory = category
+//
+//            }
+//
+//        }
+//
+//    }
     
 }
 
