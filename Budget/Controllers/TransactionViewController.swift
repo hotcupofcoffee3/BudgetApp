@@ -52,7 +52,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.accessoryType = .disclosureIndicator
         
-        if !budget.transactions.isEmpty {
+        if !transactionsToDisplay.isEmpty {
 //            let transaction = budget.transactions[indexPath.row]
             let transaction = transactionsToDisplay[indexPath.row]
             cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
@@ -83,7 +83,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == .delete {
             
 //            let transactionToDelete = budget.transactions[indexPath.row]
@@ -100,6 +99,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
                 
                 budget.deleteTransaction(at: selectedTransactionIndexPath)
+                self.transactionsToDisplay.remove(at: indexPath.row)
                 
                 self.successHaptic()
                 

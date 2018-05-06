@@ -156,6 +156,8 @@ func loadSpecificTransactions(selectedCategory: String) -> [Transaction] {
     
     request.predicate = NSPredicate(format: categoryMatchesKey, selectedCategory)
     
+    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: false)]
+    
     do {
         
         transactionWithSelectedCategory = try context.fetch(request)
