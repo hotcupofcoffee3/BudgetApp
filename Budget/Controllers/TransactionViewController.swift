@@ -11,14 +11,20 @@ import UIKit
 var editableTransactionIndex = Int()
 
 var selectedCategory: String?
+var selectedStartDate: Date?
+var selectedEndDate: Date?
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var transactionsToDisplay = [Transaction]()
     
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
-    @IBAction func addTransactionButton(_ sender: UIButton) {
+    @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
     }
     
@@ -106,36 +112,24 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    @IBAction func addSomething(_ sender: UIBarButtonItem) {
-        
-        addSomethingAlertPopup(addCategorySegue: transactionsToAddCategorySegueKey, addTransactionSegue: transactionsToAddTransactionSegueKey, moveFundsSegue: transactionsToMoveFundsSegueKey)
-        
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        transactionsToDisplay = loadChosenTransactions()
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
-        loadSavedTransactions(descending: true)
-        
-        if selectedCategory == nil {
-            
-            transactionsToDisplay = budget.transactions
-            
-        } else {
-            
-            guard let category = selectedCategory else { return }
-            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
-            
-        }
-        
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
         rightSwipe.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(rightSwipe)
+        
+        for transaction in transactionsToDisplay {
+            
+            print(transaction.id)
+            
+        }
         
     }
     
@@ -146,22 +140,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        transactionsToDisplay = loadChosenTransactions()
+        
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
-        loadSavedTransactions(descending: true)
         
-        if selectedCategory == nil {
-            
-            transactionsToDisplay = budget.transactions
-            
-        } else {
-            
-            guard let category = selectedCategory else { return }
-            transactionsToDisplay = loadSpecificTransactions(selectedCategory: category)
-            
-        }
     }
     
     override func didReceiveMemoryWarning() {

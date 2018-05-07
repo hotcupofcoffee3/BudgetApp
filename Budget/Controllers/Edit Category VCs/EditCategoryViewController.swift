@@ -40,7 +40,13 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var currentCategoryAvailable: UILabel!
     
+    @IBOutlet weak var currentRecurringStatus: UISwitch!
     
+    @IBAction func recurringToggleSwitch(_ sender: UISwitch) {
+        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
+        category.recurring = !category.recurring
+        saveData()
+    }
     
     
     // MARK: - Buttons
@@ -78,6 +84,18 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         self.addCircleAroundButton(named: self.editNameButton)
         self.addCircleAroundButton(named: self.editBudgetedButton)
         self.addCircleAroundButton(named: self.editAvailableButton)
+        
+        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
+        
+        if category.recurring {
+            
+            currentRecurringStatus.isOn = true
+            
+        } else {
+            
+            currentRecurringStatus.isOn = false
+            
+        }
 
     }
 

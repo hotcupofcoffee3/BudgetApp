@@ -17,9 +17,15 @@ class MainScreen: UIViewController {
     
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
+    @IBOutlet weak var budgetButtonTitle: UIButton!
+    
     @IBOutlet weak var categoriesButtonTitle: UIButton!
     
     @IBOutlet weak var transactionsButtonTitle: UIButton!
+
+    @IBAction func budgetButton(_ sender: UIButton) {
+        performSegue(withIdentifier: mainToBudgetSegueKey, sender: self)
+    }
     
     @IBAction func categoriesButton(_ sender: UIButton) {
         performSegue(withIdentifier: mainToCategoriesSegueKey, sender: self)
@@ -56,11 +62,14 @@ class MainScreen: UIViewController {
         loadSavedCategories()
         loadSavedTransactions(descending: true)
         selectedCategory = nil
+        selectedStartDate = nil
+        selectedEndDate = nil
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
 
         addCircleAroundMainButtons(named: categoriesButtonTitle)
         addCircleAroundMainButtons(named: transactionsButtonTitle)
+        addCircleAroundMainButtons(named: budgetButtonTitle)
         
         // Long press gesture recognizers
         let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
@@ -79,6 +88,8 @@ class MainScreen: UIViewController {
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         selectedCategory = nil
+        selectedStartDate = nil
+        selectedEndDate = nil
         
     }
     
@@ -124,8 +135,7 @@ class MainScreen: UIViewController {
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                     
-                    // An initial Deposit
-                    budget.addTransaction(type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
+                    
                     
                     // Two categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0)
@@ -135,14 +145,19 @@ class MainScreen: UIViewController {
                     budget.shiftFunds(withThisAmount: 200, from: unallocatedKey, to: "Food")
                     budget.shiftFunds(withThisAmount: 50, from: unallocatedKey, to: "Extra")
                     
-                    
-                    
-                    // Two transactions with some amounts.
-                    budget.addTransaction(type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
-                    budget.addTransaction(type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 4, day: 27)
-                    
                     loadSavedCategories()
                     loadSavedTransactions(descending: true)
+                    loadSavedBudgetedTimeFrames()
+                    
+                    if budget.budgetedTimeFrames.count == 0 {
+                        
+                        let start = Date.distantPast
+                        let end = Date()
+                        
+                        budget.addTimeFrame(start: start, end: end)
+                        loadSavedBudgetedTimeFrames()
+                        
+                    }
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

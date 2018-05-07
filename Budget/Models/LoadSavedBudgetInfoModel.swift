@@ -54,6 +54,28 @@ func loadSavedTransactions(descending: Bool) {
 
 
 
+// MARK: - Load All BudgetedTimeFrames
+
+func loadSavedBudgetedTimeFrames() {
+    
+    let request: NSFetchRequest<Period> = Period.fetchRequest()
+    
+    request.sortDescriptors = [NSSortDescriptor(key: startKey, ascending: false)]
+    
+    do {
+        
+        budget.budgetedTimeFrames = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading budgeted time frames: \(error)")
+        
+    }
+    
+}
+
+
+
 // MARK: - Load Specific Category
 
 func loadSpecificCategory(named: String) -> Category? {
@@ -146,11 +168,11 @@ func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
 
 
 
-// MARK: - Load Specific Transactions
+// MARK: - Load Transactions By Category
 
-func loadSpecificTransactions(selectedCategory: String) -> [Transaction] {
+func loadTransactionsByCategory(selectedCategory: String) -> [Transaction] {
     
-    var transactionWithSelectedCategory = [Transaction]()
+    var transactionsWithSelectedCategory = [Transaction]()
     
     let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
@@ -160,7 +182,7 @@ func loadSpecificTransactions(selectedCategory: String) -> [Transaction] {
     
     do {
         
-        transactionWithSelectedCategory = try context.fetch(request)
+        transactionsWithSelectedCategory = try context.fetch(request)
         
     } catch {
         
@@ -168,7 +190,83 @@ func loadSpecificTransactions(selectedCategory: String) -> [Transaction] {
         
     }
     
-    return transactionWithSelectedCategory
+    return transactionsWithSelectedCategory
+    
+}
+
+
+
+// MARK: - Load Transactions By Date
+
+func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [Transaction] {
+    
+    var transactionsInDateRange = [Transaction]()
+    
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+    
+    let startDate = NSPredicate(format: dateLaterThanKey, selectedStartDate as CVarArg)
+
+    let endDate = NSPredicate(format: dateEarlierThanKey, selectedEndDate as CVarArg)
+
+    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startDate, endDate])
+    
+    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: false)]
+    
+    do {
+        
+        transactionsInDateRange = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions in date range: \(error)")
+        
+    }
+    
+    return transactionsInDateRange
+    
+}
+
+
+
+// MARK: - Load Specific Budgeted Time Frame
+
+func loadSpecificBudgetedTimeFrame(start: Date) -> Period? {
+    
+    var period: Period?
+    
+    var matchingTimeFrameArray = [Period]()
+    
+    let request: NSFetchRequest<Period> = Period.fetchRequest()
+    
+    request.predicate = NSPredicate(format: startMatchesKey, start as CVarArg)
+    
+    do {
+        
+        matchingTimeFrameArray = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading selected budgeted time frames: \(error)")
+        
+    }
+    
+    if matchingTimeFrameArray.count > 1 {
+        
+        print("Error. There were \(matchingTimeFrameArray.count) entries that matched that start date.")
+        period = nil
+        
+    } else if matchingTimeFrameArray.count == 0 {
+        
+        print("There was nothing in the array")
+        period = nil
+        
+    } else if matchingTimeFrameArray.count == 1 {
+        
+        period = matchingTimeFrameArray[0]
+        
+    }
+    
+    return period
     
 }
 

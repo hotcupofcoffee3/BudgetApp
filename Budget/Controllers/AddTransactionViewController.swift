@@ -119,6 +119,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         transactionNameTextField.resignFirstResponder()
         transactionAmountTextField.resignFirstResponder()
         
+        print(transactionDatePicker.date)
+        
     }
     
     
@@ -198,7 +200,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            showAlertToConfirmTransaction(type: .withdrawal, title: title, amount: amount, categoryName: categoryName, year: year, month: month, day: day)
+                            showAlertToConfirmTransaction(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: categoryName, year: year, month: month, day: day)
                             
                         }
                         
@@ -212,7 +214,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
                             
                         } else {
                             
-                            showAlertToConfirmTransaction(type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
+                            showAlertToConfirmTransaction(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
                             
                         }
                         
@@ -233,7 +235,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     // Alert Confirmation
     
-    func showAlertToConfirmTransaction(type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
+    func showAlertToConfirmTransaction(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
         
         transactionNameTextField.resignFirstResponder()
         transactionAmountTextField.resignFirstResponder()
@@ -244,7 +246,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
-                budget.addTransaction(type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
+                budget.addTransaction(fullDate: fullDate, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
@@ -266,7 +268,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
-                budget.addTransaction(type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+                budget.addTransaction(fullDate: fullDate, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
@@ -302,6 +304,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         super.viewDidLoad()
         
+        // MARK: Sets picker based on Category selection.
+        
+        if let category = selectedCategory {
+            
+            guard let indexOfSelectedCategory = budget.sortedCategoryKeys.index(of: category) else { return }
+            
+            self.categoryPicked.selectRow(indexOfSelectedCategory, inComponent: 0, animated: true)
+            
+        }
+    
         
         
         // MARK: Add tap gesture to textfields and their labels

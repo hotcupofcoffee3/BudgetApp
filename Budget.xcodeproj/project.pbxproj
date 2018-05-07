@@ -18,6 +18,7 @@
 		B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B533E36620700B01007A72E0 /* LaunchScreen.storyboard */; };
 		B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EAC2073CC830061C9E5 /* MainScreenController.swift */; };
 		B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EB22073D3430061C9E5 /* BudgetModel.swift */; };
+		B54EFF3A20A0A19600EF3FB8 /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */; };
 		B56A0D93209CA2E10016634B /* EditCategoryNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D92209CA2E10016634B /* EditCategoryNameViewController.swift */; };
 		B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */; };
 		B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */; };
@@ -52,6 +53,7 @@
 		B533E36920700B01007A72E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5380EAC2073CC830061C9E5 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		B5380EB22073D3430061C9E5 /* BudgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetModel.swift; sourceTree = "<group>"; };
+		B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
 		B56A0D92209CA2E10016634B /* EditCategoryNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryNameViewController.swift; sourceTree = "<group>"; };
 		B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryBudgetedViewController.swift; sourceTree = "<group>"; };
 		B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryAvailableViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
+				B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B56A0D91209CA2B20016634B /* Edit Category VCs */,
@@ -254,6 +257,7 @@
 				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
 				B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
+				B54EFF3A20A0A19600EF3FB8 /* BudgetViewController.swift in Sources */,
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,
 				B52879A9208A42970011D04C /* AddTransactionViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,

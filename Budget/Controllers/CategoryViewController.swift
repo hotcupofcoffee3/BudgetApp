@@ -17,6 +17,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var availableBalanceLabel: UILabel!
     
     var editCategory = false
+    
     @IBOutlet weak var editCategoryBarButton: UIBarButtonItem!
     @IBAction func editCategory(_ sender: UIBarButtonItem) {
         
@@ -36,9 +37,23 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    @IBAction func addCategoryButton(_ sender: UIButton) {
-        performSegue(withIdentifier: categoriesToAddCategorySegueKey, sender: self)
+    @IBAction func addSomethingButton(_ sender: UIButton) {
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
     }
+    
+    
+    @IBOutlet weak var viewAllTransactionsButton: UIButton!
+    
+    @IBAction func viewAllTransactions(_ sender: UIButton) {
+        
+        selectedCategory = nil
+        selectedStartDate = nil
+        selectedEndDate = nil
+        
+        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
+        
+    }
+    
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
@@ -174,18 +189,14 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    @IBAction func addSomething(_ sender: UIBarButtonItem) {
-        
-        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCustomCell")
         
         displayedDataTable.rowHeight = 90
+        
+        addCircleAroundButton(named: viewAllTransactionsButton)
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         budget.sortCategoriesByKey(withUnallocated: true)
@@ -217,6 +228,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.separatorStyle = .none
         editCategory = false
         selectedCategory = nil
+        selectedStartDate = nil
+        selectedEndDate = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -224,26 +237,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    
-    // MARK: - Prepare for Segue for Selected Category As Delegate, but couldn't get it to work with editing transactions.
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        if editCategory == false && displayedDataTable.indexPathForSelectedRow != nil {
-//
-//            let transactionVC = segue.destination as! TransactionViewController
-//
-//            if let selectedCategoryIndexPath = displayedDataTable.indexPathForSelectedRow {
-//
-//                let category = budget.sortedCategoryKeys[selectedCategoryIndexPath.row]
-//
-//                selectedCategory = category
-//
-//            }
-//
-//        }
-//
-//    }
     
 }
 

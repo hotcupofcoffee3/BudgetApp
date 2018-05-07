@@ -53,10 +53,11 @@ func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andA
 
 // MARK: - Saves a new transaction to saved transactions
 
-func createAndSaveNewTransaction(id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
+func createAndSaveNewTransaction(fullDate: Date, id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
     
     let transactionToSave = Transaction(context: context)
     
+    transactionToSave.fullDate = fullDate
     transactionToSave.id = id
     transactionToSave.type = type
     transactionToSave.title = title
@@ -65,6 +66,20 @@ func createAndSaveNewTransaction(id: Int64, type: String, title: String, year: I
     transactionToSave.day = day
     transactionToSave.inTheAmountOf = inTheAmountOf
     transactionToSave.forCategory = forCategory
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Saves a new Budgeted Time Frame
+func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
+    
+    let budgetedTimeFrameToSave = Period(context: context)
+    
+    budgetedTimeFrameToSave.start = start
+    budgetedTimeFrameToSave.end = end
     
     saveData()
     

@@ -132,8 +132,20 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
             budget.addCategory(named: newCategoryName, withBudgeted: amount)
+            
             guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
-            newCategory.budgeted = amount
+            
+            if self.currentRecurringStatus.isOn {
+                
+                newCategory.recurring = true
+                
+            }
+            
+            if self.currentAllocationStatus.isOn {
+                
+                budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
+                
+            }
             
             self.categoryWarningLabel.textColor = successColor
             self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
@@ -149,6 +161,23 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     
     }
+    
+    
+    @IBOutlet weak var currentRecurringStatus: UISwitch!
+    
+    @IBOutlet weak var currentAllocationStatus: UISwitch!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     @IBAction func addCategory(_ sender: UIButton) {

@@ -13,6 +13,9 @@ import UIKit
 let nameMatchesKey = "name MATCHES %@"
 let idMatchesKey = "id MATCHES %@"
 let categoryMatchesKey = "forCategory MATCHES %@"
+let startMatchesKey = "start MATCHES %@"
+let dateEarlierThanKey = "fullDate <= %@"
+let dateLaterThanKey = "fullDate >= %@"
 
 
 // Class keys
@@ -41,6 +44,11 @@ let monthKey = "month"
 let dayKey = "day"
 
 
+// Period Keys
+let startKey = "start"
+let endKey = "end"
+
+
 // Color Keys
 let successColor = UIColor.init(red: 100/255, green: 158/255, blue: 55/255, alpha: 1)
 let tealColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
@@ -51,6 +59,7 @@ let lightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, 
 // MARK: - Segue Keys
 
 // Main to others
+let mainToBudgetSegueKey = "MainToBudgetSegue"
 let mainToCategoriesSegueKey = "MainToCategoriesSegue"
 let mainToTransactionsSegueKey = "MainToTransactionsSegue"
 
@@ -74,6 +83,11 @@ let transactionsToAddTransactionSegueKey = "TransactionsToAddTransactionSegue"
 let transactionsToAddDepositSegueKey = "TransactionsToAddDepositSegue"
 let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
 let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
+
+
+// Budget to others
+let budgetToTransactionsSegueKey = "BudgetToTransactionsSegue"
+
 
 // Edit Segues
 

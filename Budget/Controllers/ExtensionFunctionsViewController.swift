@@ -112,7 +112,7 @@ extension UIViewController {
     
     
     
-    // MARK: Update Budget Balance & Unallocated Balance on Top Right of Nav Bars
+    // MARK: - Update Budget Balance & Unallocated Balance on Top Right of Nav Bars
     
     func updateLeftLabelAtTopRight(barButton: UIBarButtonItem, unallocatedButton: UILabel) {
         
@@ -125,7 +125,7 @@ extension UIViewController {
     
     
     
-    // MARK: Failure message
+    // MARK: - Failure message
     
     func failureWithWarning(label: UILabel, message: String) {
         
@@ -140,10 +140,46 @@ extension UIViewController {
     
     
     
-    // MARK: Success Haptic
+    // MARK: - Success Haptic
     func successHaptic() {
         let successHaptic = UINotificationFeedbackGenerator()
         successHaptic.notificationOccurred(.success)
+    }
+    
+    
+    
+    // MARK: - Load Chosen Transactions
+    
+    func loadChosenTransactions() -> [Transaction] {
+        
+        var transactionsToDisplay = [Transaction]()
+        
+        if selectedCategory == nil && selectedStartDate == nil {
+            
+            loadSavedTransactions(descending: true)
+            
+            transactionsToDisplay = budget.transactions
+            
+        } else if selectedCategory != nil && selectedStartDate == nil {
+            
+            if let category = selectedCategory {
+                
+                transactionsToDisplay = loadTransactionsByCategory(selectedCategory: category)
+                
+            }
+            
+        } else if selectedCategory == nil && selectedStartDate != nil && selectedEndDate != nil {
+            
+            if let start = selectedStartDate, let end = selectedEndDate {
+                
+                transactionsToDisplay = loadTransactionsByDate(selectedStartDate: start, selectedEndDate: end)
+                
+            }
+            
+        }
+        
+        return transactionsToDisplay
+        
     }
     
     
