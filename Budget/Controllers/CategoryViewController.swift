@@ -12,13 +12,35 @@ var editableCategoryName = String()
 
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var categoryNavBar: UINavigationBar!
- 
-    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
+    // *****
+    // MARK: - Variables
+    // *****
     
     var editCategory = false
     
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var categoryNavBar: UINavigationBar!
+    
+    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
     @IBOutlet weak var editCategoryBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var viewAllTransactionsButton: UIButton!
+    
+    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
     @IBAction func editCategory(_ sender: UIBarButtonItem) {
         
         editCategory = !editCategory
@@ -41,9 +63,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
     }
     
-    
-    @IBOutlet weak var viewAllTransactionsButton: UIButton!
-    
     @IBAction func viewAllTransactions(_ sender: UIButton) {
         
         selectedCategory = nil
@@ -55,7 +74,10 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    // *****
+    // MARK: - TableView
+    // *****
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -101,7 +123,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             cell.categoryNameLabel?.text = "\(category.name!)"
             
             if category.name == unallocatedKey {
-
+                
                 cell.categoryBudgetedLabel?.text = "N/A"
                 cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
@@ -189,6 +211,41 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    // ***** Swipe
+//    @objc func swipe() {
+//
+//        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
+//
+//    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -206,18 +263,11 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         selectedCategory = nil
         
         // ******** Swipe
-        
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
-        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
-        self.view.addGestureRecognizer(leftSwipe)
-        
-        
-    }
-    
-    // ***** Swipe
-    @objc func swipe() {
-        
-        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
+//
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
+//        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
+//        self.view.addGestureRecognizer(leftSwipe)
+//        
         
     }
     
@@ -232,11 +282,23 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         selectedEndDate = nil
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    
+   
     
 }
 

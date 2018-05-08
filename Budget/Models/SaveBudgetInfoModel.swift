@@ -13,11 +13,13 @@ import CoreData
 
 
 // MARK: - Context created
+
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
 
 
-// MARK: - Saves everything
+// MARK: - Save everything
+
 func saveData() {
     
     do {
@@ -36,7 +38,8 @@ func saveData() {
 
 
 
-// MARK: - Saves a new category to saved categories
+// MARK: - Save a new category to saved categories
+
 func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
     
     let categoryToSave = Category(context: context)
@@ -51,7 +54,7 @@ func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andA
 
 
 
-// MARK: - Saves a new transaction to saved transactions
+// MARK: - Save a new transaction to saved transactions
 
 func createAndSaveNewTransaction(fullDate: Date, id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
     
@@ -73,7 +76,8 @@ func createAndSaveNewTransaction(fullDate: Date, id: Int64, type: String, title:
 
 
 
-// MARK: - Saves a new Budgeted Time Frame
+// MARK: - Save a new Budgeted Time Frame
+
 func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     
     let budgetedTimeFrameToSave = Period(context: context)

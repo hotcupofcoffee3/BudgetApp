@@ -10,7 +10,47 @@ import UIKit
 
 class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var transactionSelection = TransactionType.withdrawal
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    
+    @IBOutlet weak var transactionSegmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var nameView: UIView!
+    
+    @IBOutlet weak var transactionNameTextField: UITextField!
+    
+    @IBOutlet weak var amountView: UIView!
+    
+    @IBOutlet weak var transactionAmountTextField: UITextField!
+    
+    @IBOutlet weak var transactionDatePicker: UIDatePicker!
+    
+    @IBOutlet weak var categoryPicked: UIPickerView!
+    
+    @IBOutlet weak var currentCategoryBalanceLabel: UILabel!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var addTransactionButtonTitle: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         
@@ -19,12 +59,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         dismiss(animated: true, completion: nil)
     }
-    
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
-    
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
-    
-    @IBOutlet weak var transactionSegmentedControl: UISegmentedControl!
     
     @IBAction func transactionSelected(_ sender: UISegmentedControl) {
         
@@ -44,76 +78,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
-    func updatePickerBasedOnTransactionChoice(typeOfTransaction: TransactionType) {
-        
-        if typeOfTransaction == .withdrawal {
-            
-            addTransactionButtonTitle.setTitle("Add Withdrawal", for: .normal)
-            
-            categoryPicked.isUserInteractionEnabled = true
-            categoryPicked.alpha = 1.0
-            
-        } else if typeOfTransaction == .deposit {
-            
-            addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
-            
-            categoryPicked.isUserInteractionEnabled = false
-            
-            guard let unallocatedIndex = budget.sortedCategoryKeys.index(of: unallocatedKey) else { return }
-
-            categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
-            
-            updateCurrentCategoryBalanceLabel(forCategory: unallocatedKey)
-            
-            categoryPicked.alpha = 0.5
-            
-        }
-        
-    }
-    
-    
-    // MARK: Update labels
-    
-    func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
-        
-        if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            currentCategoryBalanceLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
-        }
-        
-    }
-    
-    
-    
-    // MARK: Update elements because of success
-    
-    func updateUIElementsBecauseOfSuccess(forCategory category: String) {
-        
-        // Success notification haptic
-        let successHaptic = UINotificationFeedbackGenerator()
-        successHaptic.notificationOccurred(.success)
-        
-        // Update Left label at top right & current balance
-        updateCurrentCategoryBalanceLabel(forCategory: category)
-        
-        // Clearing text fields
-        transactionNameTextField.text = nil
-        transactionAmountTextField.text = nil
-        
-    }
-    
-    @IBOutlet weak var nameView: UIView!
-    
-    @IBOutlet weak var transactionNameTextField: UITextField!
-    
-    @IBOutlet weak var amountView: UIView!
-    
-    @IBOutlet weak var transactionAmountTextField: UITextField!
-    
-    
-    //MARK:  Date Picker
-    
-    @IBOutlet weak var transactionDatePicker: UIDatePicker!
-    
     @IBAction func changeDateOnPicker(_ sender: UIDatePicker) {
         
         transactionNameTextField.resignFirstResponder()
@@ -123,10 +87,25 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
+    @IBAction func addTransaction(_ sender: UIButton) {
+        
+        submitAddTransactionForReview()
+        
+    }
     
-    //MARK:  Category Picker
     
-    @IBOutlet weak var categoryPicked: UIPickerView!
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -151,16 +130,76 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         updateCurrentCategoryBalanceLabel(forCategory: categorySelected)
     }
     
-    @IBOutlet weak var currentCategoryBalanceLabel: UILabel!
-    
-    @IBOutlet weak var warningLabel: UILabel!
     
     
+    // *****
+    // MARK: - DatePickerView
+    // *****
     
     
     
-    // MARK: Add Transaction Check
     
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    // Update labels
+    
+    func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
+        
+        if let selectedCategory = loadSpecificCategory(named: categoryName) {
+            currentCategoryBalanceLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
+        }
+        
+    }
+    
+    // Update elements because of success
+    
+    func updateUIElementsBecauseOfSuccess(forCategory category: String) {
+        
+        // Success notification haptic
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+        
+        // Update Left label at top right & current balance
+        updateCurrentCategoryBalanceLabel(forCategory: category)
+        
+        // Clearing text fields
+        transactionNameTextField.text = nil
+        transactionAmountTextField.text = nil
+        
+    }
+    
+    func updatePickerBasedOnTransactionChoice(typeOfTransaction: TransactionType) {
+        
+        if typeOfTransaction == .withdrawal {
+            
+            addTransactionButtonTitle.setTitle("Add Withdrawal", for: .normal)
+            
+            categoryPicked.isUserInteractionEnabled = true
+            categoryPicked.alpha = 1.0
+            
+        } else if typeOfTransaction == .deposit {
+            
+            addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
+            
+            categoryPicked.isUserInteractionEnabled = false
+            
+            guard let unallocatedIndex = budget.sortedCategoryKeys.index(of: unallocatedKey) else { return }
+            
+            categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
+            
+            updateCurrentCategoryBalanceLabel(forCategory: unallocatedKey)
+            
+            categoryPicked.alpha = 0.5
+            
+        }
+        
+    }
+    
+    // *** Add Transaction Check
     
     // Error Check
     
@@ -290,15 +329,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     
     
-    
-    
-    @IBOutlet weak var addTransactionButtonTitle: UIButton!
-    
-    @IBAction func addTransaction(_ sender: UIButton) {
-        
-        submitAddTransactionForReview()
-        
-    }
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         
@@ -313,7 +346,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             self.categoryPicked.selectRow(indexOfSelectedCategory, inComponent: 0, animated: true)
             
         }
-    
+        
         
         
         // MARK: Add tap gesture to textfields and their labels
@@ -327,7 +360,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         
         // MARK: - Add done button
-            
+        
         let toolbar = UIToolbar()
         toolbar.barTintColor = UIColor.black
         
@@ -341,7 +374,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
         
         transactionAmountTextField.inputAccessoryView = toolbar
-
+        
         
         
         // MARK: - Add swipe gesture to close keyboard
@@ -376,10 +409,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     
     // *****
@@ -398,9 +427,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
-    
-    
-    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -437,7 +463,16 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
+    
+  
+    
+   
+    
 }
+
+
+
+
 
 
 

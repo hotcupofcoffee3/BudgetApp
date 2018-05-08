@@ -11,8 +11,12 @@ import UIKit
 import CoreData
 
 
+// *****
+// MARK: - Categories
+// *****
 
-// MARK: - Load All Categories
+
+// Load All Categories
 
 func loadSavedCategories() {
     
@@ -31,52 +35,7 @@ func loadSavedCategories() {
 }
 
 
-
-// MARK: - Load All Transactions
-
-func loadSavedTransactions(descending: Bool) {
-    
-    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-    
-    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: !descending)]
-    
-    do {
-        
-        budget.transactions = try context.fetch(request)
-        
-    } catch {
-        
-        print("Error loading transactions: \(error)")
-        
-    }
-    
-}
-
-
-
-// MARK: - Load All BudgetedTimeFrames
-
-func loadSavedBudgetedTimeFrames() {
-    
-    let request: NSFetchRequest<Period> = Period.fetchRequest()
-    
-    request.sortDescriptors = [NSSortDescriptor(key: startKey, ascending: false)]
-    
-    do {
-        
-        budget.budgetedTimeFrames = try context.fetch(request)
-        
-    } catch {
-        
-        print("Error loading budgeted time frames: \(error)")
-        
-    }
-    
-}
-
-
-
-// MARK: - Load Specific Category
+// Load Specific Category
 
 func loadSpecificCategory(named: String) -> Category? {
     
@@ -122,7 +81,33 @@ func loadSpecificCategory(named: String) -> Category? {
 
 
 
-// MARK: - Load Specific Transaction
+// *****
+// MARK: - Transactions
+// *****
+
+
+// Load All Transactions
+
+func loadSavedTransactions(descending: Bool) {
+    
+    let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+    
+    request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: !descending)]
+    
+    do {
+        
+        budget.transactions = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
+    }
+    
+}
+
+
+// Load Specific Transaction
 
 func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
     
@@ -168,7 +153,7 @@ func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
 
 
 
-// MARK: - Load Transactions By Category
+// Load Transactions By Category
 
 func loadTransactionsByCategory(selectedCategory: String) -> [Transaction] {
     
@@ -196,7 +181,7 @@ func loadTransactionsByCategory(selectedCategory: String) -> [Transaction] {
 
 
 
-// MARK: - Load Transactions By Date
+// Load Transactions By Date
 
 func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [Transaction] {
     
@@ -205,9 +190,9 @@ func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [
     let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
     let startDate = NSPredicate(format: dateLaterThanKey, selectedStartDate as CVarArg)
-
+    
     let endDate = NSPredicate(format: dateEarlierThanKey, selectedEndDate as CVarArg)
-
+    
     request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startDate, endDate])
     
     request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: false)]
@@ -228,7 +213,33 @@ func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [
 
 
 
-// MARK: - Load Specific Budgeted Time Frame
+// *****
+// MARK: - Budgeted Time Frames
+// *****
+
+
+// Load All Budgeted Time Frames
+
+func loadSavedBudgetedTimeFrames() {
+    
+    let request: NSFetchRequest<Period> = Period.fetchRequest()
+    
+    request.sortDescriptors = [NSSortDescriptor(key: startKey, ascending: false)]
+    
+    do {
+        
+        budget.budgetedTimeFrames = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading budgeted time frames: \(error)")
+        
+    }
+    
+}
+
+
+// Load Specific Budgeted Time Frame
 
 func loadSpecificBudgetedTimeFrame(start: Date) -> Period? {
     
@@ -269,6 +280,24 @@ func loadSpecificBudgetedTimeFrame(start: Date) -> Period? {
     return period
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

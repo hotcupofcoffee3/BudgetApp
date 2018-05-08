@@ -10,14 +10,17 @@ import UIKit
 
 class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentCategoryNameString = String()
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
@@ -25,16 +28,62 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    
     @IBOutlet weak var currentCategoryName: UILabel!
     
     @IBOutlet weak var editNameView: UIView!
     
     @IBOutlet weak var newCategoryName: UITextField!
     
+    @IBOutlet weak var updateItemButton: UIButton!
     
-    // MARK: - Edit Category Name Check
     
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        
+        submitEditCategoryNameForReview()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    // *** Edit Category Name Check
     
     // Name Error Check
     
@@ -106,7 +155,7 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
             
             // Update the UI elements with the new info
             self.currentCategoryNameString = newCategoryName
-
+            
             self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
             
             self.currentCategoryName.text = newCategoryName
@@ -127,17 +176,9 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    
-    // MARK: - Update Item Button
-    
-    @IBOutlet weak var updateItemButton: UIButton!
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        submitEditCategoryNameForReview()
-        
-    }
-    
-    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,12 +218,6 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     // *****
     // MARK: - Keyboard functions
     // *****
@@ -210,4 +245,20 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
         
     }
 
+    
+
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

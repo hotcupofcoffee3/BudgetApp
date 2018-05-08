@@ -10,17 +10,21 @@ import UIKit
 
 class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentCategoryNameString = String()
+    
     var currentCategoryAvailableDouble = Double()
     
     var selectedCategoryName = String()
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
@@ -30,22 +34,89 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
     
-    
-    
     @IBOutlet weak var currentCategoryName: UILabel!
     
     @IBOutlet weak var currentCategoryAvailable: UILabel!
-    
     
     @IBOutlet weak var editAmountView: UIView!
     
     @IBOutlet weak var newCategoryAvailable: UITextField!
     
+    @IBOutlet weak var newAvailablePicker: UIPickerView!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
     
     
     
-    // MARK: - Edit Category Available Check
+    // *****
+    // MARK: - IBActions
+    // *****
     
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        
+        submitEditCategoryAvailableForReview()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return budget.sortedCategoryKeys.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        return title
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        selectedCategoryName = budget.sortedCategoryKeys[row]
+        
+        guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
+        
+        leftInCategoryLabel.text = "~ Left in \(selectedCategoryName): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
+        
+        warningLabel.text = ""
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    // *** Edit Category Available Check
     
     // Amount Error Check
     
@@ -88,13 +159,13 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
                     
-                // *** Is the selected Category the same as the current one?
+                    // *** Is the selected Category the same as the current one?
                 } else if selectedCategoryName == currentCategory.name! {
                     
                     failureWithWarning(label: warningLabel, message: "This is the same category. There is no point in putting money from your left hand to your right hand.")
                     
                     
-                // *** Were there enough funds available in the 'From' Category?
+                    // *** Were there enough funds available in the 'From' Category?
                 } else if newCategoryAvailable > selectedCategory.available {
                     
                     failureWithWarning(label: warningLabel, message: "There are not enough funds in the \"From\" Category.")
@@ -153,50 +224,9 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     
     
-    
-    
-    // MARK: - Picker
-    
-    @IBOutlet weak var newAvailablePicker: UIPickerView!
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        selectedCategoryName = budget.sortedCategoryKeys[row]
-        
-        guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
-        
-        leftInCategoryLabel.text = "~ Left in \(selectedCategoryName): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
-        
-        warningLabel.text = ""
-    }
-    
-    
-    
-    
-    
-    
-    // MARK: - Update Amount Button
-    
-    @IBOutlet weak var updateItemButton: UIButton!
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        submitEditCategoryAvailableForReview()
-        
-    }
- 
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -266,12 +296,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     // *****
     // MARK: - Keyboard functions
     // *****
@@ -306,13 +330,21 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         newCategoryAvailable.resignFirstResponder()
         
     }
+   
     
-    
+ 
     
 
     
 
 }
+
+
+
+
+
+
+
 
 
 

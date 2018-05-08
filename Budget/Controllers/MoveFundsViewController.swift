@@ -10,16 +10,138 @@ import UIKit
 
 class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
+    @IBOutlet weak var allocateRemoveOrShift: UISegmentedControl!
     
-    // MARK: Update labels
+    @IBOutlet weak var amountView: UIView!
+    
+    @IBOutlet weak var fundsTextField: UITextField!
+    
+    @IBOutlet weak var fromCategoryPicker: UIPickerView!
+    
+    @IBOutlet weak var toCategoryPicker: UIPickerView!
+    
+    @IBOutlet weak var fromCategoryCurrentBalanceLabel: UILabel!
+    
+    @IBOutlet weak var toCategoryCurrentBalanceLabel: UILabel!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var moveFundsButtonTitle: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func allocateRemoveOrShiftSwitch(_ sender: UISegmentedControl) {
+        
+        if allocateRemoveOrShift.selectedSegmentIndex == 0 {
+            
+            updateUIForAllocate()
+            
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
+            
+            updateUIForRemove()
+            
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
+            
+            updateUIForShift()
+            
+        }
+        
+        fundsTextField.resignFirstResponder()
+    }
+    
+    @IBAction func moveFundsButton(_ sender: UIButton) {
+        
+        submitAllOptionsForReview()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return budget.sortedCategoryKeys.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        return title
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        fundsTextField.resignFirstResponder()
+        
+        if pickerView.tag == 1 {
+            
+            let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
+            let fromCategorySelected = budget.sortedCategoryKeys[fromCategoryIndexSelected]
+            
+            updateCategoryBalanceLabel(for: fromCategorySelected, atLabel: fromCategoryCurrentBalanceLabel)
+            
+        } else {
+            
+            let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
+            let toCategorySelected = budget.sortedCategoryKeys[toCategoryIndexSelected]
+            
+            updateCategoryBalanceLabel(for: toCategorySelected, atLabel: toCategoryCurrentBalanceLabel)
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
         
@@ -28,10 +150,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         atLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
         
     }
-    
-    
-    
-    // MARK: Update elements because of success
     
     func updateUIElementsBecauseOfSuccess(forFromCategory: String, forToCategory: String) {
         
@@ -47,9 +165,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fundsTextField.text = nil
         
     }
-    
-    // MARK:  Update for Move Funds Switch
-    
+
     func updateUIForAllocate() {
         
         moveFundsButtonTitle.setTitle("Allocate Funds", for: .normal)
@@ -104,101 +220,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toCategoryPicker.alpha = 1.0
         
     }
-
-    // MARK: Allocate, Remove, or Shift Switch
     
-    @IBOutlet weak var allocateRemoveOrShift: UISegmentedControl!
-    
-    @IBAction func allocateRemoveOrShiftSwitch(_ sender: UISegmentedControl) {
-        
-        if allocateRemoveOrShift.selectedSegmentIndex == 0 {
-            
-            updateUIForAllocate()
-       
-        } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
-            
-            updateUIForRemove()
-        
-        } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
-           
-            updateUIForShift()
-       
-        }
-        
-        fundsTextField.resignFirstResponder()
-    }
-    
-    
-    
-    
-    // MARK: Funds Text Field
-    
-    @IBOutlet weak var amountView: UIView!
-    
-    @IBOutlet weak var fundsTextField: UITextField!
-    
-    
-    
-    
-    // MARK: Picker
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        fundsTextField.resignFirstResponder()
-        
-        if pickerView.tag == 1 {
-            
-            let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
-            let fromCategorySelected = budget.sortedCategoryKeys[fromCategoryIndexSelected]
-            
-            updateCategoryBalanceLabel(for: fromCategorySelected, atLabel: fromCategoryCurrentBalanceLabel)
-            
-        } else {
-            
-            let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
-            let toCategorySelected = budget.sortedCategoryKeys[toCategoryIndexSelected]
-            
-            updateCategoryBalanceLabel(for: toCategorySelected, atLabel: toCategoryCurrentBalanceLabel)
-            
-        }
-        
-    }
-    
-    @IBOutlet weak var fromCategoryPicker: UIPickerView!
-    
-    @IBOutlet weak var toCategoryPicker: UIPickerView!
-    
-    
-    // MARK: From and To Labels
-    
-    @IBOutlet weak var fromCategoryCurrentBalanceLabel: UILabel!
-    
-    @IBOutlet weak var toCategoryCurrentBalanceLabel: UILabel!
-    
-    
-    
-    
-    // MARK: Warning Label
-    
-    @IBOutlet weak var warningLabel: UILabel!
-    
-    
-    
-    
-    // MARK: - Allocate Check
+    // *** Allocate Check
     
     // Error Check
     
@@ -213,7 +236,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             failureWithWarning(label: warningLabel, message: "You have to enter an amount.")
             
             
-        // Allocation submitted, with the amount being specifically set
+            // Allocation submitted, with the amount being specifically set
         } else if let amount = Double(amountFromTextField) {
             
             guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
@@ -269,11 +292,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     
-    
-    
-    
-    
-    // MARK: - Remove Check
+    // *** Remove Check
     
     // Error Check
     
@@ -344,10 +363,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     
-    
-    
-    
-    // MARK: - Shift Check
+    // *** Shift Check
     
     // Error Check
     
@@ -394,8 +410,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
     }
     
-    
-    
     // Alert Confirmation
     
     func showAlertToConfirmShift(amount: Double, fromCategory: String, toCategory: String) {
@@ -424,8 +438,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     
+    // *** Consolidated function for when the "Move Funds" button is pressed or "Done" is pressed.
     
-    // MARK: - Consolidated function for when the "Move Funds" button is pressed or "Done" is pressed.
     func submitAllOptionsForReview() {
         
         fundsTextField.resignFirstResponder()
@@ -457,24 +471,14 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     
     
-    // MARK: Funds Button
-    
-    @IBOutlet weak var moveFundsButtonTitle: UIButton!
-    
-    
-    
-    @IBAction func moveFundsButton(_ sender: UIButton) {
-        
-        submitAllOptionsForReview()
-        
-    }
-
-    // MARK: Loading stuff
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         // MARK: Add tap gesture to textfields and their labels
         
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
@@ -498,7 +502,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         fundsTextField.inputAccessoryView = toolbar
         
-
+        
         
         // MARK: - Add swipe gesture to close keyboard
         
@@ -507,7 +511,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
         
-
+        
         budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
@@ -515,7 +519,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
         addCircleAroundButton(named: moveFundsButtonTitle)
-    
+        
         updateUIForAllocate()
         
         self.fundsTextField.delegate = self
@@ -533,11 +537,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         updateUIForAllocate()
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
     
     
     // *****
@@ -550,8 +550,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
     }
     
-    
-    // MARK: - Keyboard dismissals
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -600,5 +598,31 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     
     
+    
+    
+
+    
+    
+    
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

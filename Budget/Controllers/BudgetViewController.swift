@@ -10,8 +10,32 @@ import UIKit
 
 class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var displayedDataTable: UITableView!
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return budget.budgetedTimeFrames.count
@@ -49,7 +73,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 
             }
-
+            
         }
         
         return cell
@@ -65,20 +89,65 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         performSegue(withIdentifier: budgetToTransactionsSegueKey, sender: self)
     }
     
-
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         displayedDataTable.separatorStyle = .none
         loadSavedBudgetedTimeFrames()
         displayedDataTable.reloadData()
         // Do any additional setup after loading the view.
     }
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
 }
+
+
+
+
+
+
+
+

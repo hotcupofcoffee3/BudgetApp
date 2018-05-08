@@ -10,15 +10,19 @@ import UIKit
 
 class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentCategoryNameString = String()
+    
     var currentCategoryBudgetedDouble = Double()
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
@@ -26,21 +30,64 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    
-    
-    
     @IBOutlet weak var currentCategoryName: UILabel!
     
     @IBOutlet weak var currentCategoryBudgeted: UILabel!
-    
     
     @IBOutlet weak var editAmountView: UIView!
     
     @IBOutlet weak var newCategoryBudgeted: UITextField!
     
+    @IBOutlet weak var updateItemButton: UIButton!
     
-    // MARK: - Edit Category Budgeted Check
     
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        
+        submitEditCategoryBudgetedForReview()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    // *** Edit Budgeted Error Check
     
     // Amount Error Check
     
@@ -133,16 +180,10 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     
     
     
-    // MARK: - Update Amount Button
+    // *****
+    // MARK: - Loadables
+    // *****
     
-    @IBOutlet weak var updateItemButton: UIButton!
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        submitEditCategoryBudgetedForReview()
-        
-    }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -206,12 +247,6 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
     
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     // *****
     // MARK: - Keyboard functions
     // *****
@@ -246,4 +281,24 @@ class EditCategoryBudgetedViewController: UIViewController, UITextFieldDelegate 
         self.view.endEditing(true)
         
     }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

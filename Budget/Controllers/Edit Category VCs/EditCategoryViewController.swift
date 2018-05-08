@@ -10,17 +10,104 @@ import UIKit
 
 class EditCategoryViewController: UIViewController, UITextFieldDelegate {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentCategoryNameString = String()
+    
     var currentCategoryBudgetedDouble = Double()
+    
     var currentCategoryAvailableDouble = Double()
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    
+    @IBOutlet weak var currentCategoryName: UILabel!
+    
+    @IBOutlet weak var currentCategoryBudgeted: UILabel!
+    
+    @IBOutlet weak var currentCategoryAvailable: UILabel!
+    
+    @IBOutlet weak var currentRecurringStatus: UISwitch!
+    
+    @IBOutlet weak var editNameButton: UIButton!
+    
+    @IBOutlet weak var editBudgetedButton: UIButton!
+    
+    @IBOutlet weak var editAvailableButton: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    @IBAction func recurringToggleSwitch(_ sender: UISwitch) {
+        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
+        category.recurring = !category.recurring
+        saveData()
+    }
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    
+    @IBAction func editName(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: editCategoryNameSegueKey, sender: self)
+        
+    }
+    
+    @IBAction func editBudgeted(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: editCategoryBudgetedSegueKey, sender: self)
+        
+    }
+    
+    @IBAction func editAvailable(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: editCategoryAvailableSegueKey, sender: self)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func updateLabels() {
         
@@ -31,47 +118,14 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             currentCategoryAvailable.text = "\(convertedAmountToDollars(amount: currentCategory.available))"
             
         }
-    
-    }
-    
-    @IBOutlet weak var currentCategoryName: UILabel!
-    
-    @IBOutlet weak var currentCategoryBudgeted: UILabel!
-    
-    @IBOutlet weak var currentCategoryAvailable: UILabel!
-    
-    @IBOutlet weak var currentRecurringStatus: UISwitch!
-    
-    @IBAction func recurringToggleSwitch(_ sender: UISwitch) {
-        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
-        category.recurring = !category.recurring
-        saveData()
-    }
-    
-    
-    // MARK: - Buttons
-    
-    @IBOutlet weak var editNameButton: UIButton!
-    @IBAction func editName(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: editCategoryNameSegueKey, sender: self)
         
     }
     
-    @IBOutlet weak var editBudgetedButton: UIButton!
-    @IBAction func editBudgeted(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: editCategoryBudgetedSegueKey, sender: self)
-        
-    }
     
-    @IBOutlet weak var editAvailableButton: UIButton!
-    @IBAction func editAvailable(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: editCategoryAvailableSegueKey, sender: self)
-        
-    }
     
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,12 +150,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
             currentRecurringStatus.isOn = false
             
         }
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,6 +161,24 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate {
         self.updateLabels()
         
     }
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 

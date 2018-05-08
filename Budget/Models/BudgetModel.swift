@@ -18,11 +18,6 @@ enum TransactionType {
     case deposit
 }
 
-
-// ************************************************
-// MARK: - Budget Class
-// ************************************************
-
 class Budget {
 
     var categories = [Category]()
@@ -31,7 +26,7 @@ class Budget {
     var sortedCategoryKeys = [String]()
     var balance = Double()
 
-    // MARK: - Update Balance
+    // *** Update Balance
 
     func updateBalance() {
 
@@ -49,11 +44,12 @@ class Budget {
     
     
     
-    // ************************************************
+    // *****
     // MARK: - Budgeted Time Frame functions
-    // ************************************************
+    // *****
 
-    // MARK: Add Time Frame
+    
+    // *** Add Time Frame
     
     func addTimeFrame (start: Date, end: Date) {
         
@@ -65,30 +61,12 @@ class Budget {
     
     
     
-    // ************************************************
+    // *****
     // MARK: - Category functions
-    // ************************************************
+    // *****
 
-
-
-    // MARK: Shift Funds
-
-
-    func shiftFunds (withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
-
-        guard let fromCategory = loadSpecificCategory(named: fromCategory) else { return }
-        guard let toCategory = loadSpecificCategory(named: toCategory) else { return }
-
-        toCategory.available += amount
-        fromCategory.available -= amount
-        
-        saveData()
-
-    }
-
-
-
-    // MARK: Add Category
+    
+    // *** Add Category
 
     func addCategory (named: String, withBudgeted amount: Double) {
 
@@ -114,8 +92,7 @@ class Budget {
     }
 
 
-
-    // MARK: Delete Category
+    // *** Delete Category
 
     func deleteCategory (named: String) {
 
@@ -153,8 +130,7 @@ class Budget {
     }
 
 
-
-    // MARK: Sort Categories
+    // *** Sort Categories
 
     func sortCategoriesByKey(withUnallocated: Bool) {
         
@@ -187,7 +163,8 @@ class Budget {
 
     }
 
-    // MARK: Update Category
+    
+    // *** Update Category
 
     func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountAdded newCategoryAmount: Double) {
 
@@ -217,86 +194,32 @@ class Budget {
 
     }
 
-
-
-
-
-    // ************************************************
-    //MARK: - Transaction functions
-    // ************************************************
-
-
-
-    // MARK: Convert Date into YYYYMMDD
-
-    func convertDateInfoToYYYYMMDD(year: Int, month: Int, day: Int) -> Int {
-
-        var convertedDateString = String()
-        var convertedDateInt = Int()
-
-        let yearAsString = "\(year)"
-        var monthAsString = ""
-        var dayAsString = ""
-
-        if month < 10 {
-            monthAsString = "0\(month)"
-        } else {
-            monthAsString = "\(month)"
-        }
-
-        if day < 10 {
-            dayAsString = "0\(day)"
-        } else {
-            dayAsString = "\(day)"
-        }
-
-        convertedDateString = yearAsString + monthAsString + dayAsString
-
-        if let convertedDate = Int(convertedDateString) {
-
-            convertedDateInt = convertedDate
-
-        }
-
-        return convertedDateInt
-
+    
+    // *** Shift Funds
+    
+    func shiftFunds (withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
+        
+        guard let fromCategory = loadSpecificCategory(named: fromCategory) else { return }
+        guard let toCategory = loadSpecificCategory(named: toCategory) else { return }
+        
+        toCategory.available += amount
+        fromCategory.available -= amount
+        
+        saveData()
+        
     }
 
 
 
-    // MARK: Convert Date into ID
-
-    func convertedDateComponentsToTransactionID(year: Int, month: Int, day: Int) -> Int {
-
-        var formattedID = Int()
-
-        var convertedID = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
-
-        // Multiplied by 100000, then 1 added, to make it have the same format as the other IDs
-        convertedID *= 100000
-        convertedID += 1
-
-        // Sorts them in ascending order to run through correctly.
-        sortTransactionsAscending()
-
-        for transaction in transactions {
-            if convertedID == transaction.id {
-                convertedID += 1
-            }
-        }
-
-        formattedID = convertedID
-
-        // Sorts them with most recent first.
-        sortTransactionsDescending()
-
-        return formattedID
-
-    }
+    // *****
+    // MARK: - Transaction functions
+    // *****
 
 
+    
 
-    // MARK: Add Transaction
+
+    // *** Add Transaction
 
     func addTransaction (fullDate: Date, type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
 
@@ -329,8 +252,7 @@ class Budget {
     }
 
 
-
-    // MARK: Sort Transactions
+    // *** Sort Transactions
 
     func sortTransactionsDescending() {
         
@@ -346,7 +268,7 @@ class Budget {
 
 
 
-    // MARK: Delete transaction
+    // *** Delete transaction
 
     func deleteTransaction (at index: Int) {
         let categoryName = transactions[index].forCategory
@@ -376,8 +298,7 @@ class Budget {
     }
 
 
-
-    // MARK: Update Transaction
+    // *** Update Transaction
 
     func updateTransaction(named updatedTransaction: Transaction, forOldTransactionAtIndex index: Int) {
         if transactions[index].type == depositKey {

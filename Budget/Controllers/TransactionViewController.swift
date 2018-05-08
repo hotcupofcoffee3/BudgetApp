@@ -16,23 +16,45 @@ var selectedEndDate: Date?
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var transactionsToDisplay = [Transaction]()
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
+    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBOutlet weak var availableBalanceLabel: UILabel!
-    
     @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
     }
     
-    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        return budget.transactions.count
         return transactionsToDisplay.count
         
     }
@@ -48,7 +70,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.accessoryType = .disclosureIndicator
         
         if !transactionsToDisplay.isEmpty {
-//            let transaction = budget.transactions[indexPath.row]
+            //            let transaction = budget.transactions[indexPath.row]
             let transaction = transactionsToDisplay[indexPath.row]
             cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
@@ -57,14 +79,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             } else {
                 cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory!)"
             }
-
+            
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
         let selectedTransaction = transactionsToDisplay[indexPath.row]
         
         guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
@@ -80,7 +102,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-//            let transactionToDelete = budget.transactions[indexPath.row]
             let transactionToDelete = transactionsToDisplay[indexPath.row]
             
             let message = "Delete \(transactionToDelete.title!) with \(convertedAmountToDollars(amount: transactionToDelete.inTheAmountOf))?"
@@ -112,6 +133,43 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    // *** Swipe
+    //    @objc func swipe() {
+    //
+    //        performSegue(withIdentifier: transactionsToCategoriesSegueKey, sender: self)
+    //
+    //    }
+
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,21 +179,15 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
-        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
-        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
-        self.view.addGestureRecognizer(rightSwipe)
+        //        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
+        //        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
+        //        self.view.addGestureRecognizer(rightSwipe)
         
         for transaction in transactionsToDisplay {
             
             print(transaction.id)
             
         }
-        
-    }
-    
-    @objc func swipe() {
-        
-        performSegue(withIdentifier: transactionsToCategoriesSegueKey, sender: self)
         
     }
     
@@ -150,9 +202,32 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+

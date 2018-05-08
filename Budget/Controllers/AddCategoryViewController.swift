@@ -11,29 +11,21 @@ import Foundation
 
 class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
-    
-    
-    // MARK: Update elements because of success
-    
-    func updateUIElementsBecauseOfSuccess() {
-        
-        // Success notification haptic
-        let successHaptic = UINotificationFeedbackGenerator()
-        successHaptic.notificationOccurred(.success)
-      
-        // Set text fields back to being empty
-        categoryNameTextField.text = nil
-        categoryAmountTextField.text = nil
-        
-    }
-    
     
     @IBOutlet weak var nameView: UIView!
     
@@ -47,11 +39,70 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var addCategoryButton: UIButton!
     
+    @IBOutlet weak var currentRecurringStatus: UISwitch!
+    
+    @IBOutlet weak var currentAllocationStatus: UISwitch!
     
     
     
-    // MARK: - Add Category Check
+    // *****
+    // MARK: - IBActions
+    // *****
     
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addCategory(_ sender: UIButton) {
+        
+        submitAddCategoryForReview()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    func updateUIElementsBecauseOfSuccess() {
+        
+        // Success notification haptic
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+        
+        // Set text fields back to being empty
+        categoryNameTextField.text = nil
+        categoryAmountTextField.text = nil
+        
+    }
+    
+    
+    // *** Add Category Check
     
     // Error Check
     
@@ -69,7 +120,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                     isAlreadyCreated = true
                     
                 }
-            
+                
             }
             
             // *** If everything is blank
@@ -126,7 +177,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
         categoryNameTextField.resignFirstResponder()
         categoryAmountTextField.resignFirstResponder()
-            
+        
         let alert = UIAlertController(title: nil, message: "Create category named \"\(newCategoryName)\" with an amount of \(convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
@@ -159,37 +210,17 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
-    
-    }
-    
-    
-    @IBOutlet weak var currentRecurringStatus: UISwitch!
-    
-    @IBOutlet weak var currentAllocationStatus: UISwitch!
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @IBAction func addCategory(_ sender: UIButton) {
-        
-        submitAddCategoryForReview()
         
     }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         
         // MARK: Add tap gesture to textfields and their labels
@@ -199,8 +230,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
-        
-        
         
         
         // MARK: - Toolbar with 'Done' button
@@ -238,11 +267,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -312,4 +336,25 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         categoryWarningLabel.text = ""
     }
     
+    
+    
+
+
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

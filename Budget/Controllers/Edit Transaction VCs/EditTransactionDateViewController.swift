@@ -37,7 +37,7 @@ class EditTransactionDateViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let newID = budget.convertedDateComponentsToTransactionID(year: newYear, month: newMonth, day: newDay)
+            let newID = convertedDateComponentsToTransactionID(year: newYear, month: newMonth, day: newDay)
             
             let updatedTransaction = budget.transactions[editableTransactionIndex]
             
