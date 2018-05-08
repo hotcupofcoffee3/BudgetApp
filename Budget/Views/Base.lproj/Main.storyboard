@@ -1858,6 +1858,9 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WBf-a2-lzA">
                                         <rect key="frame" x="181" y="0.0" width="156" height="31"/>
                                         <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="onHoldToggle:" destination="qcb-an-ift" eventType="valueChanged" id="VZ9-Jy-QC7"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                             </stackView>
@@ -1901,6 +1904,7 @@
                         <outlet property="editTitleButton" destination="JAQ-Wl-MfI" id="b16-6R-CBF"/>
                         <outlet property="leftAmountAtTopRight" destination="71Y-na-85j" id="pXw-48-Zwz"/>
                         <outlet property="leftLabelOnNavBar" destination="YOi-1t-T6f" id="p4y-Od-Tex"/>
+                        <outlet property="onHoldToggleSwitch" destination="WBf-a2-lzA" id="dEM-A1-Jk3"/>
                         <outlet property="titleLabel" destination="aEF-aa-uwj" id="WDL-hc-BdQ"/>
                         <outlet property="typeLabel" destination="lXg-46-zln" id="SNf-xh-G3o"/>
                         <segue destination="2IZ-CE-W0p" kind="showDetail" identifier="EditTransactionTitleSegue" id="5Av-6a-zCm"/>

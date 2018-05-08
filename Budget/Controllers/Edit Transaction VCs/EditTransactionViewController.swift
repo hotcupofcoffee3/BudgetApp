@@ -85,6 +85,21 @@ class EditTransactionViewController: UIViewController {
         performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
     }
     
+    
+    @IBOutlet weak var onHoldToggleSwitch: UISwitch!
+    
+    @IBAction func onHoldToggle(_ sender: UISwitch) {
+        
+        currentTransaction.onHold = !currentTransaction.onHold
+        
+        saveData()
+        
+    }
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +111,7 @@ class EditTransactionViewController: UIViewController {
         self.addCircleAroundButton(named: self.editAmountButton)
         self.addCircleAroundButton(named: self.editDateButton)
         self.addCircleAroundButton(named: self.editCategoryButton)
+        self.onHoldToggleSwitch.isOn = currentTransaction.onHold
         
     }
     
