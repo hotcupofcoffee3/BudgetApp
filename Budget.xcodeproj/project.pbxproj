@@ -37,6 +37,8 @@
 		B5F33CC52093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */; };
 		B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */; };
 		B5F401D4209B958F00103C7F /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */; };
+		B5F86FEF20A22E9100B87BD3 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F86FEE20A22E9100B87BD3 /* DatePickerViewController.swift */; };
+		B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F86FF020A22E9F00B87BD3 /* CategoryPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionCategoryViewController.swift; sourceTree = "<group>"; };
 		B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		B5F86FEE20A22E9100B87BD3 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		B5F86FF020A22E9F00B87BD3 /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +117,7 @@
 			path = Budget;
 			sourceTree = "<group>";
 		};
-		B56A0D91209CA2B20016634B /* Edit Category VCs */ = {
+		B56A0D91209CA2B20016634B /* Category */ = {
 			isa = PBXGroup;
 			children = (
 				B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */,
@@ -121,7 +125,7 @@
 				B56A0D94209CA3290016634B /* EditCategoryBudgetedViewController.swift */,
 				B56A0D96209CA3530016634B /* EditCategoryAvailableViewController.swift */,
 			);
-			path = "Edit Category VCs";
+			path = Category;
 			sourceTree = "<group>";
 		};
 		B5759A282076695F00410FF9 /* Models */ = {
@@ -140,24 +144,23 @@
 		B5759A292076699600410FF9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
-				B56A0D91209CA2B20016634B /* Edit Category VCs */,
-				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
-				B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
 				B52879A8208A42970011D04C /* AddTransactionViewController.swift */,
 				B531F86A208929CF00D0E05D /* MoveFundsViewController.swift */,
-				B533E35D20700B01007A72E0 /* AppDelegate.swift */,
+				B5F86FF420A22F9E00B87BD3 /* Supporting VCs */,
+				B5F86FF220A22ECC00B87BD3 /* Pickers */,
+				B56A0D91209CA2B20016634B /* Category */,
+				B5F33CBD2093AC5C00B4ACE6 /* Transaction */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		B5F33CBD2093AC5C00B4ACE6 /* Edit Transaction VCs */ = {
+		B5F33CBD2093AC5C00B4ACE6 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
 				B56D4458209372DA005000CF /* EditTransactionViewController.swift */,
@@ -166,7 +169,7 @@
 				B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */,
 				B5F33CC42093ACB400B4ACE6 /* EditTransactionCategoryViewController.swift */,
 			);
-			path = "Edit Transaction VCs";
+			path = Transaction;
 			sourceTree = "<group>";
 		};
 		B5F401D5209BB05C00103C7F /* Views */ = {
@@ -177,6 +180,25 @@
 				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B5F86FF220A22ECC00B87BD3 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				B5F86FF020A22E9F00B87BD3 /* CategoryPickerViewController.swift */,
+				B5F86FEE20A22E9100B87BD3 /* DatePickerViewController.swift */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		B5F86FF420A22F9E00B87BD3 /* Supporting VCs */ = {
+			isa = PBXGroup;
+			children = (
+				B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */,
+				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
+				B533E35D20700B01007A72E0 /* AppDelegate.swift */,
+			);
+			path = "Supporting VCs";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +276,7 @@
 			files = (
 				B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */,
 				B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */,
+				B5F86FEF20A22E9100B87BD3 /* DatePickerViewController.swift in Sources */,
 				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
 				B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
@@ -263,6 +286,7 @@
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,
 				B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */,
 				B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */,
+				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */,
 				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
 				B56A0D93209CA2E10016634B /* EditCategoryNameViewController.swift in Sources */,

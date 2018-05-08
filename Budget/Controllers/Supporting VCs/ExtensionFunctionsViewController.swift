@@ -10,6 +10,75 @@ import UIKit
 
 class ExtensionFunctionsViewController: UIViewController {
     
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
 }
 
 extension UIViewController {

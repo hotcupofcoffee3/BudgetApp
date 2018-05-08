@@ -85,6 +85,14 @@ let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
 let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
 
 
+// Date Picker Segues
+let addTransactionToDatePickerSegueKey = "AddTransactionToDatePickerSegue"
+let addTransactionToCategoryPickerSegueKey = "AddTransactionToCategoryPickerSegue"
+
+
+// Category Picker Segues
+
+
 // Budget to others
 let budgetToTransactionsSegueKey = "BudgetToTransactionsSegue"
 

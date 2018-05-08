@@ -8,13 +8,18 @@
 
 import UIKit
 
-class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddTransactionViewController: UIViewController, UITextFieldDelegate, ChangeDate, ChooseCategory {
+    
     
     // *****
     // MARK: - Variables
     // *****
     
     var transactionSelection = TransactionType.withdrawal
+    
+    var date = Date()
+    
+    var dateFormatYYYYMMDD = Int()
     
     
     
@@ -36,17 +41,21 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     @IBOutlet weak var transactionAmountTextField: UITextField!
     
-    @IBOutlet weak var transactionDatePicker: UIDatePicker!
+    @IBOutlet weak var dateLabel: UILabel!
     
-    @IBOutlet weak var categoryPicked: UIPickerView!
+    @IBOutlet weak var dateView: UIView!
     
-    @IBOutlet weak var currentCategoryBalanceLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryView: UIView!
+    
+    @IBOutlet weak var holdToggle: UISwitch!
+    
+    @IBOutlet weak var holdView: UIView!
     
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var addTransactionButtonTitle: UIButton!
-    
-    @IBOutlet weak var holdToggle: UISwitch!
     
     
     
@@ -80,15 +89,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
-    @IBAction func changeDateOnPicker(_ sender: UIDatePicker) {
-        
-        transactionNameTextField.resignFirstResponder()
-        transactionAmountTextField.resignFirstResponder()
-        
-        print(transactionDatePicker.date)
-        
-    }
-    
     @IBAction func addTransaction(_ sender: UIButton) {
         
         submitAddTransactionForReview()
@@ -98,64 +98,9 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     
     // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        transactionNameTextField.resignFirstResponder()
-        transactionAmountTextField.resignFirstResponder()
-        
-        let categorySelected = budget.sortedCategoryKeys[row]
-        
-        updateCurrentCategoryBalanceLabel(forCategory: categorySelected)
-    }
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
     // MARK: - Functions
     // *****
-    
-    
-    // Update labels
-    
-    func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
-        
-        if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            currentCategoryBalanceLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
-        }
-        
-    }
+   
     
     // Update elements because of success
     
@@ -164,9 +109,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         // Success notification haptic
         let successHaptic = UINotificationFeedbackGenerator()
         successHaptic.notificationOccurred(.success)
-        
-        // Update Left label at top right & current balance
-        updateCurrentCategoryBalanceLabel(forCategory: category)
         
         // Clearing text fields
         transactionNameTextField.text = nil
@@ -180,22 +122,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             addTransactionButtonTitle.setTitle("Add Withdrawal", for: .normal)
             
-            categoryPicked.isUserInteractionEnabled = true
-            categoryPicked.alpha = 1.0
-            
         } else if typeOfTransaction == .deposit {
             
             addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
             
-            categoryPicked.isUserInteractionEnabled = false
-            
-            guard let unallocatedIndex = budget.sortedCategoryKeys.index(of: unallocatedKey) else { return }
-            
-            categoryPicked.selectRow(unallocatedIndex, inComponent: 0, animated: true)
-            
-            updateCurrentCategoryBalanceLabel(forCategory: unallocatedKey)
-            
-            categoryPicked.alpha = 0.5
+            categoryLabel.text = unallocatedKey
             
         }
         
@@ -207,65 +138,60 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     func submitAddTransactionForReview() {
         
-        if let title = transactionNameTextField.text, let amount = transactionAmountTextField.text {
-            
-            let date = transactionDatePicker.date
-            
-            let categoryIndexFromSelectedPickerRow = categoryPicked.selectedRow(inComponent: 0)
-            
-            let categoryName = budget.sortedCategoryKeys[categoryIndexFromSelectedPickerRow]
+        guard let title = transactionNameTextField.text else { return }
+        guard let amount = transactionAmountTextField.text else { return }
+           
+            guard let category = categoryLabel.text else { return }
             
             let convertedDates = convertDateToInts(dateToConvert: date)
             
-            if title == "" || amount == "" {
+        if title == "" || amount == "" {
+            
+            failureWithWarning(label: warningLabel, message: "You have to fill in all fields.")
+            
+        } else {
+            
+            if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
                 
-                failureWithWarning(label: warningLabel, message: "You have to fill in all fields.")
+                // MARK: Withdrawal
                 
-            } else {
-                
-                if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
+                if transactionSelection == .withdrawal {
                     
-                    // MARK: Withdrawal
+                    guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
                     
-                    if transactionSelection == .withdrawal {
+                    if (categoryBeingWithdrawnFrom.available - amount) < 0 {
                         
-                        guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: categoryName) else { return }
+                        failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
                         
-                        if (categoryBeingWithdrawnFrom.available - amount) < 0 {
-                            
-                            failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
-                            
-                        } else if amount <= 0 {
-                            
-                            failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
-                            
-                        } else {
-                            
-                            showAlertToConfirmTransaction(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: categoryName, year: year, month: month, day: day)
-                            
-                        }
+                    } else if amount <= 0 {
                         
+                        failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
                         
-                        // MARK: Deposit - Only can deposit into 'Uncategorized' category
-                    } else if transactionSelection == .deposit {
+                    } else {
                         
-                        if amount <= 0 {
-                            
-                            failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
-                            
-                        } else {
-                            
-                            showAlertToConfirmTransaction(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
-                            
-                        }
+                        showAlertToConfirmTransaction(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: category, year: year, month: month, day: day)
                         
                     }
                     
-                } else {
                     
-                    failureWithWarning(label: warningLabel, message: "You have to enter a number for the amount.")
+                    // MARK: Deposit - Only can deposit into 'Uncategorized' category
+                } else if transactionSelection == .deposit {
+                    
+                    if amount <= 0 {
+                        
+                        failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
+                        
+                    } else {
+                        
+                        showAlertToConfirmTransaction(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
+                        
+                    }
                     
                 }
+                
+            } else {
+                
+                failureWithWarning(label: warningLabel, message: "You have to enter a number for the amount.")
                 
             }
             
@@ -345,6 +271,75 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
     }
     
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
+    
+    func setCategory(category: String) {
+        categoryLabel.text = category
+    }
+    
+    @objc func nameTapped() {
+        
+        transactionNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        transactionAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        performSegue(withIdentifier: addTransactionToDatePickerSegueKey, sender: self)
+        
+    }
+    
+    @objc func categoryTapped() {
+        
+        if transactionSelection == .withdrawal {
+            
+            performSegue(withIdentifier: addTransactionToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addTransactionToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+        } else if segue.identifier == addTransactionToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.selectedCategory = currentCategory
+            
+        }
+        
+    }
     
     
     // *****
@@ -355,13 +350,14 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         super.viewDidLoad()
         
-        // MARK: Sets picker based on Category selection.
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+    
+        dateLabel.text = dateFormat.string(from: Date())
         
         if let category = selectedCategory {
             
-            guard let indexOfSelectedCategory = budget.sortedCategoryKeys.index(of: category) else { return }
-            
-            self.categoryPicked.selectRow(indexOfSelectedCategory, inComponent: 0, animated: true)
+            categoryLabel.text = category
             
         }
 
@@ -370,9 +366,13 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
+        dateView.addGestureRecognizer(dateViewTap)
+        categoryView.addGestureRecognizer(categoryViewTap)
         
         
         // MARK: Add done button
@@ -405,7 +405,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         addCircleAroundButton(named: addTransactionButtonTitle)
         
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
         self.transactionNameTextField.delegate = self
@@ -415,10 +414,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     override func viewDidAppear(_ animated: Bool) {
         budget.sortCategoriesByKey(withUnallocated: true)
-        categoryPicked.reloadAllComponents()
         
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updateCurrentCategoryBalanceLabel(forCategory: budget.sortedCategoryKeys[0])
         updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
     }
     
@@ -427,18 +424,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     // *****
     // MARK: - Keyboard functions
     // *****
-    
-    @objc func nameTapped() {
-        
-        transactionNameTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func amountTapped() {
-        
-        transactionAmountTextField.becomeFirstResponder()
-        
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
