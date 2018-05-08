@@ -56,11 +56,11 @@ func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andA
 
 // MARK: - Save a new transaction to saved transactions
 
-func createAndSaveNewTransaction(fullDate: Date, id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
+func createAndSaveNewTransaction(onHold: Bool, id: Int64, type: String, title: String, year: Int64, month: Int64, day: Int64, inTheAmountOf: Double, forCategory: String) {
     
     let transactionToSave = Transaction(context: context)
     
-    transactionToSave.fullDate = fullDate
+    transactionToSave.onHold = onHold
     transactionToSave.id = id
     transactionToSave.type = type
     transactionToSave.title = title
@@ -80,10 +80,27 @@ func createAndSaveNewTransaction(fullDate: Date, id: Int64, type: String, title:
 
 func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     
+    let startDict = convertDateToInts(dateToConvert: start)
+    let endDict = convertDateToInts(dateToConvert: end)
+    
+    let startDateID = convertedDateToBudgetedTimeFrame(timeFrame: start, isEnd: false)
+    let endDateID = convertedDateToBudgetedTimeFrame(timeFrame: end, isEnd: true)
+    
     let budgetedTimeFrameToSave = Period(context: context)
     
-    budgetedTimeFrameToSave.start = start
-    budgetedTimeFrameToSave.end = end
+    if let startYear = startDict[yearKey], let startMonth = startDict[monthKey], let startDay = startDict[dayKey], let endYear = endDict[yearKey], let endMonth = endDict[monthKey], let endDay = endDict[dayKey] {
+        
+        budgetedTimeFrameToSave.startYear = Int64(startYear)
+        budgetedTimeFrameToSave.startMonth = Int64(startMonth)
+        budgetedTimeFrameToSave.startDay = Int64(startDay)
+        budgetedTimeFrameToSave.endYear = Int64(endYear)
+        budgetedTimeFrameToSave.endMonth = Int64(endMonth)
+        budgetedTimeFrameToSave.endDay = Int64(endDay)
+        
+        budgetedTimeFrameToSave.startDateID = Int64(startDateID)
+        budgetedTimeFrameToSave.endDateID = Int64(endDateID)
+        
+    }
     
     saveData()
     

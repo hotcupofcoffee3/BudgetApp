@@ -65,7 +65,7 @@ func convertDateInfoToYYYYMMDD(year: Int, month: Int, day: Int) -> Int {
 }
 
 
-// *** Convert Date into ID
+// *** Convert Date Components into ID
 
 func convertedDateComponentsToTransactionID(year: Int, month: Int, day: Int) -> Int {
     
@@ -92,6 +92,38 @@ func convertedDateComponentsToTransactionID(year: Int, month: Int, day: Int) -> 
     budget.sortTransactionsDescending()
     
     return formattedID
+    
+}
+
+
+// *** Convert Date Components into Budgeted Time Frame
+
+func convertedDateToBudgetedTimeFrame(timeFrame: Date, isEnd: Bool) -> Int {
+    
+    var formattedDate = Int()
+    
+    let dateDict = convertDateToInts(dateToConvert: timeFrame)
+    
+    if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+        
+        var convertedDate = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+        
+        // Multiplied by 100000
+        convertedDate *= 100000
+        
+        // The start will have a value of 0 completely, to make it before all IDs.
+        // The end will have a value of 10000 more than the IDs, to make it the end.
+        if isEnd {
+            
+            convertedDate += 10000
+            
+        }
+        
+        formattedDate = convertedDate
+        
+    }
+    
+    return formattedDate
     
 }
 

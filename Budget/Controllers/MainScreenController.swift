@@ -104,7 +104,8 @@ class MainScreen: UIViewController {
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                     
-                    
+                    // An initial Deposit
+                    budget.addTransaction(onHold: false, type: .deposit, title: "Paycheck", forCategory: unallocatedKey, inTheAmountOf: 500.00, year: 2018, month: 4, day: 25)
                     
                     // Two categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0)
@@ -114,19 +115,12 @@ class MainScreen: UIViewController {
                     budget.shiftFunds(withThisAmount: 200, from: unallocatedKey, to: "Food")
                     budget.shiftFunds(withThisAmount: 50, from: unallocatedKey, to: "Extra")
                     
+                    // Two transactions with some amounts.
+                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 4, day: 26)
+                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 4, day: 27)
+                    
                     loadSavedCategories()
                     loadSavedTransactions(descending: true)
-                    loadSavedBudgetedTimeFrames()
-                    
-                    if budget.budgetedTimeFrames.count == 0 {
-                        
-                        let start = Date.distantPast
-                        let end = Date()
-                        
-                        budget.addTimeFrame(start: start, end: end)
-                        loadSavedBudgetedTimeFrames()
-                        
-                    }
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

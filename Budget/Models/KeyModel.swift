@@ -13,9 +13,9 @@ import UIKit
 let nameMatchesKey = "name MATCHES %@"
 let idMatchesKey = "id MATCHES %@"
 let categoryMatchesKey = "forCategory MATCHES %@"
-let startMatchesKey = "start MATCHES %@"
-let dateEarlierThanKey = "fullDate <= %@"
-let dateLaterThanKey = "fullDate >= %@"
+let startDateIDMatchesKey = "startDateID MATCHES %@"
+let idAsDateEarlierThanKey = "id <= %@"
+let idAsDateLaterThanKey = "id >= %@"
 
 
 // Class keys
@@ -45,8 +45,8 @@ let dayKey = "day"
 
 
 // Period Keys
-let startKey = "start"
-let endKey = "end"
+let startDateIDKey = "startDateID"
+let endDateIDKey = "endDateID"
 
 
 // Color Keys

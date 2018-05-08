@@ -11,8 +11,8 @@ import UIKit
 var editableTransactionIndex = Int()
 
 var selectedCategory: String?
-var selectedStartDate: Date?
-var selectedEndDate: Date?
+var selectedStartDate: Int?
+var selectedEndDate: Int?
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

@@ -8,13 +8,18 @@
         <attribute name="recurring" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Period" representedClassName=".Period" syncable="YES" codeGenerationType="class">
-        <attribute name="end" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="start" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="endDateID" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endDay" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endMonth" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endYear" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDateID" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDay" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startMonth" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startYear" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName=".Transaction" syncable="YES" codeGenerationType="class">
         <attribute name="day" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="forCategory" attributeType="String" syncable="YES"/>
-        <attribute name="fullDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="inTheAmountOf" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -25,7 +30,7 @@
     </entity>
     <elements>
         <element name="Category" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="Period" positionX="36" positionY="36" width="128" height="75"/>
-        <element name="Transaction" positionX="133" positionY="-27" width="128" height="195"/>
+        <element name="Period" positionX="36" positionY="36" width="128" height="165"/>
+        <element name="Transaction" positionX="133" positionY="-27" width="128" height="180"/>
     </elements>
 </model>

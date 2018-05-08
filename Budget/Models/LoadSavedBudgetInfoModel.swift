@@ -183,18 +183,21 @@ func loadTransactionsByCategory(selectedCategory: String) -> [Transaction] {
 
 // Load Transactions By Date
 
-func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [Transaction] {
+func loadTransactionsByDate(selectedStartDate: Int, selectedEndDate: Int) -> [Transaction] {
     
     var transactionsInDateRange = [Transaction]()
     
     let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
-    let startDate = NSPredicate(format: dateLaterThanKey, selectedStartDate as CVarArg)
-    
-    let endDate = NSPredicate(format: dateEarlierThanKey, selectedEndDate as CVarArg)
-    
+    // Start Date format is "YYYYMMDD00000", to include the same day's transactions
+    let startDate = NSPredicate(format: idAsDateLaterThanKey, String(selectedStartDate))
+
+    // End Date format is "YYYYMMDD10000", to include the same day's transactions.
+    // This is the Start date with 10,000 added to it, so that it will still include up to 10,000 transactions, as their id's will be less than this 'date' format, as long as there are less than 10,000 transactions made in a single day.
+    let endDate = NSPredicate(format: idAsDateEarlierThanKey, String(selectedEndDate))
+
     request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startDate, endDate])
-    
+
     request.sortDescriptors = [NSSortDescriptor(key: idKey, ascending: false)]
     
     do {
@@ -220,11 +223,11 @@ func loadTransactionsByDate(selectedStartDate: Date, selectedEndDate: Date) -> [
 
 // Load All Budgeted Time Frames
 
-func loadSavedBudgetedTimeFrames() {
+func loadSavedBudgetedTimeFrames(descending: Bool) {
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
-    request.sortDescriptors = [NSSortDescriptor(key: startKey, ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: startDateIDKey, ascending: !descending)]
     
     do {
         
@@ -241,7 +244,7 @@ func loadSavedBudgetedTimeFrames() {
 
 // Load Specific Budgeted Time Frame
 
-func loadSpecificBudgetedTimeFrame(start: Date) -> Period? {
+func loadSpecificBudgetedTimeFrame(start: Int) -> Period? {
     
     var period: Period?
     
@@ -249,7 +252,7 @@ func loadSpecificBudgetedTimeFrame(start: Date) -> Period? {
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
-    request.predicate = NSPredicate(format: startMatchesKey, start as CVarArg)
+    request.predicate = NSPredicate(format: startDateIDMatchesKey, start)
     
     do {
         

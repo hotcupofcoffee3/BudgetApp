@@ -54,25 +54,16 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             let period = budget.budgetedTimeFrames[indexPath.row]
             
-            if let start = period.start, let end = period.end {
+            if indexPath.row == 0 {
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .short
-                let shortStart = dateFormatter.string(from: start)
-                let shortEnd = dateFormatter.string(from: end)
+                cell.textLabel?.text = "Beginning of time - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
                 
-                if indexPath.row == 0 {
-                    
-                    cell.textLabel?.text = "Beginning of time - \(shortEnd)"
-                    
-                } else {
-                    
-                    cell.textLabel?.text = "\(shortStart) - \(shortEnd)"
-                    
-                }
+            } else {
                 
+                cell.textLabel?.text = "\(period.startMonth)/\(period.startDay)/\(period.startYear) - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
                 
             }
+            
             
         }
         
@@ -81,8 +72,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedStartDate = budget.budgetedTimeFrames[indexPath.row].start
-        selectedEndDate = budget.budgetedTimeFrames[indexPath.row].end
+        selectedStartDate = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
+        selectedEndDate = Int(budget.budgetedTimeFrames[indexPath.row].endDateID)
         
         selectedCategory = nil
         
@@ -124,8 +115,9 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         displayedDataTable.separatorStyle = .none
-        loadSavedBudgetedTimeFrames()
+        loadSavedBudgetedTimeFrames(descending: true)
         displayedDataTable.reloadData()
+        print(budget.budgetedTimeFrames.count)
         // Do any additional setup after loading the view.
     }
     

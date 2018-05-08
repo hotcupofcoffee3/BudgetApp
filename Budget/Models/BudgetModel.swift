@@ -53,12 +53,11 @@ class Budget {
     
     func addTimeFrame (start: Date, end: Date) {
         
-            createAndSaveNewBudgetedTimeFrame(start: start, end: end)
-        
-            saveData()
+        createAndSaveNewBudgetedTimeFrame(start: start, end: end)
+    
+        saveData()
         
     }
-    
     
     
     // *****
@@ -221,7 +220,7 @@ class Budget {
 
     // *** Add Transaction
 
-    func addTransaction (fullDate: Date, type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+    func addTransaction (onHold: Bool, type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
 
         let amount = inTheAmountOf
 
@@ -233,11 +232,11 @@ class Budget {
             unallocated.available += amount
             balance += amount
 
-            createAndSaveNewTransaction(fullDate: fullDate, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
+            createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
         } else if type == .withdrawal {
 
-            createAndSaveNewTransaction(fullDate: fullDate, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
+            createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
             guard let category = loadSpecificCategory(named: thisCategory)  else { return }
             category.available -= amount
@@ -306,14 +305,14 @@ class Budget {
             context.delete(transactions[index])
             transactions.remove(at: index)
 
-            createAndSaveNewTransaction(fullDate: updatedTransaction.fullDate!, id: updatedTransaction.id, type: depositKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
+            createAndSaveNewTransaction(onHold: updatedTransaction.onHold, id: updatedTransaction.id, type: depositKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
 
         } else {
 
             context.delete(transactions[index])
             transactions.remove(at: index)
 
-            createAndSaveNewTransaction(fullDate: updatedTransaction.fullDate!, id: updatedTransaction.id, type: withdrawalKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
+            createAndSaveNewTransaction(onHold: updatedTransaction.onHold, id: updatedTransaction.id, type: withdrawalKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
 
         }
         
@@ -357,7 +356,10 @@ class Budget {
         
         createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
 
+        createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date())
+
         loadSavedCategories()
+        loadSavedBudgetedTimeFrames(descending: true)
         
         UserDefaults.standard.set(nil, forKey: categoryKey)
         UserDefaults.standard.set(nil, forKey: transactionKey)

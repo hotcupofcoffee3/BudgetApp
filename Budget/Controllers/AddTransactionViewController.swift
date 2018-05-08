@@ -46,6 +46,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
     
     @IBOutlet weak var addTransactionButtonTitle: UIButton!
     
+    @IBOutlet weak var holdToggle: UISwitch!
+    
     
     
     // *****
@@ -285,7 +287,15 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
-                budget.addTransaction(fullDate: fullDate, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
+                var onHold = false
+                
+                if self.holdToggle.isOn {
+                    
+                    onHold = true
+                    
+                }
+                
+                budget.addTransaction(onHold: onHold, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
@@ -307,7 +317,15 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
-                budget.addTransaction(fullDate: fullDate, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+                var onHold = false
+                
+                if self.holdToggle.isOn {
+                    
+                    onHold = true
+                    
+                }
+                
+                budget.addTransaction(onHold: onHold, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                 
                 self.warningLabel.textColor = successColor
                 self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
@@ -346,8 +364,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
             self.categoryPicked.selectRow(indexOfSelectedCategory, inComponent: 0, animated: true)
             
         }
-        
-        
+
         
         // MARK: Add tap gesture to textfields and their labels
         
@@ -358,8 +375,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         amountView.addGestureRecognizer(amountViewTap)
         
         
-        
-        // MARK: - Add done button
+        // MARK: Add done button
         
         let toolbar = UIToolbar()
         toolbar.barTintColor = UIColor.black
@@ -377,16 +393,13 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, UIPic
         
         
         
-        // MARK: - Add swipe gesture to close keyboard
+        // MARK: Add swipe gesture to close keyboard
         
         let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
         closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
-        
-        
-        
-        
+
         budget.sortCategoriesByKey(withUnallocated: true)
         
         addCircleAroundButton(named: addTransactionButtonTitle)
