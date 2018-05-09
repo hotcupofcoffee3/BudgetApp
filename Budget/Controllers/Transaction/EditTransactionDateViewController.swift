@@ -103,7 +103,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     
     func changeDateSubmittedForReview () {
         
-        let newDateDictionary = convertDateToInts(dateToConvert: newDatePicker.date)
+        let newDateDictionary = convertDateToInts(dateToConvert: date)
         guard let newMonth = newDateDictionary[monthKey] else { return }
         guard let newDay = newDateDictionary[dayKey] else { return }
         guard let newYear = newDateDictionary[yearKey] else { return }

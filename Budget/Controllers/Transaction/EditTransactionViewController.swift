@@ -84,29 +84,6 @@ class EditTransactionViewController: UIViewController {
     
     
     // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
     // MARK: - Functions
     // *****
     

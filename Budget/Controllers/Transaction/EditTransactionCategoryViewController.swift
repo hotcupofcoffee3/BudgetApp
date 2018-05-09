@@ -101,8 +101,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
     func changeCategorySubmittedForReview () {
         
-        let indexOfNewCategory = newCategoryPicker.selectedRow(inComponent: 0)
-        let newSelectedCategoryName = budget.sortedCategoryKeys[indexOfNewCategory]
+        guard let newSelectedCategoryName = categoryLabel.text else { return }
         guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
         if newSelectedCategoryName == currentTransaction.forCategory {
@@ -140,9 +139,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
         
         self.newCategorySelected = currentTransaction.forCategory!
         
-        guard let indexOfCurrentCategory = budget.sortedCategoryKeys.index(of: self.newCategorySelected) else { return }
-        self.newCategoryPicker.selectRow(indexOfCurrentCategory, inComponent: 0, animated: true)
-        
+        categoryLabel.text = self.newCategorySelected
         
         self.editingItemLabel.text = "\(currentTransaction.forCategory!)"
         self.editingItemAmountLabel.text = "~ Transaction amount: \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) ~"

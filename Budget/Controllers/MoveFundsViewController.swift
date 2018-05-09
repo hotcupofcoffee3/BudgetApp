@@ -8,14 +8,18 @@
 
 import UIKit
 
-class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ChooseCategory {
+class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCategory {
 
     
     // *****
     // MARK: - Variables
     // *****
     
+    var isToCategory = true
     
+    let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+    let toCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(toCategoryTapped))
+    let fromCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(fromCategoryTapped))
     
     
     
@@ -32,10 +36,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @IBOutlet weak var amountView: UIView!
     
     @IBOutlet weak var fundsTextField: UITextField!
-    
-    @IBOutlet weak var fromCategoryPicker: UIPickerView!
-    
-    @IBOutlet weak var toCategoryPicker: UIPickerView!
     
     @IBOutlet weak var fromCategoryCurrentBalanceLabel: UILabel!
     
@@ -91,63 +91,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     
     // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        fundsTextField.resignFirstResponder()
-        
-        if pickerView.tag == 1 {
-            
-            let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
-            let fromCategorySelected = budget.sortedCategoryKeys[fromCategoryIndexSelected]
-            
-            updateCategoryBalanceLabel(for: fromCategorySelected, atLabel: fromCategoryCurrentBalanceLabel)
-            
-        } else {
-            
-            let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
-            let toCategorySelected = budget.sortedCategoryKeys[toCategoryIndexSelected]
-            
-            updateCategoryBalanceLabel(for: toCategorySelected, atLabel: toCategoryCurrentBalanceLabel)
-            
-        }
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
     // MARK: - Functions
     // *****
     
@@ -178,17 +121,16 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         moveFundsButtonTitle.setTitle("Allocate Funds", for: .normal)
         
-        // Disable picker 1 & enable picker 2
+        // Enable 'To' & disable 'From'
+        fromCategoryView.isOpaque = false
+        fromCategoryView.alpha = 0.5
         
-        toCategoryPicker.isUserInteractionEnabled = true
-        toCategoryPicker.alpha = 1.0
-        
-        fromCategoryPicker.isUserInteractionEnabled = false
-        fromCategoryPicker.alpha = 0.5
+        toCategoryView.isOpaque = true
+        toCategoryView.alpha = 1.0
         
         
         // Set disabled 'from' picker to "Uncategorized"
-        fromCategoryPicker.selectRow(0, inComponent: 0, animated: true)
+        fromCategoryLabel.text = unallocatedKey
         
         // Update 'from' balance label to 'Uncategorized'
         updateCategoryBalanceLabel(for: unallocatedKey, atLabel: fromCategoryCurrentBalanceLabel)
@@ -199,17 +141,17 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         moveFundsButtonTitle.setTitle("Remove Funds", for: .normal)
         
-        // Disable picker 2 & enable picker 1
-        fromCategoryPicker.isUserInteractionEnabled = true
-        fromCategoryPicker.alpha = 1.0
+        // Disable 'To' & enable 'From'
+        fromCategoryView.isOpaque = true
+        fromCategoryView.alpha = 1.0
         
-        toCategoryPicker.isUserInteractionEnabled = false
-        toCategoryPicker.alpha = 0.5
+        toCategoryView.isOpaque = false
+        toCategoryView.alpha = 0.5
         
         
         
         // Set disabled 'to' picker to 'Uncategorized'
-        toCategoryPicker.selectRow(0, inComponent: 0, animated: true)
+        toCategoryLabel.text = unallocatedKey
         
         // Update 'to' balance label to 'Uncategorized'
         updateCategoryBalanceLabel(for: unallocatedKey, atLabel: toCategoryCurrentBalanceLabel)
@@ -220,12 +162,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         moveFundsButtonTitle.setTitle("Shift Funds", for: .normal)
         
-        // Enable both pickers
-        fromCategoryPicker.isUserInteractionEnabled = true
-        fromCategoryPicker.alpha = 1.0
+        // Enable both views
         
-        toCategoryPicker.isUserInteractionEnabled = true
-        toCategoryPicker.alpha = 1.0
         
     }
     
@@ -235,8 +173,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func submitAllocateForReview (amountFromTextField: String) {
         
-        let toCategorySelectedIndex = toCategoryPicker.selectedRow(inComponent: 0)
-        let toCategorySelectedName = budget.sortedCategoryKeys[toCategorySelectedIndex]
+        guard let toCategorySelectedName = toCategoryLabel.text else { return }
         
         // Allocation submitted, with the amount being the default set budgeted amount
         if amountFromTextField == "" {
@@ -306,8 +243,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func submitRemoveForReview (amountFromTextField: String) {
         
-        let fromCategorySelectedIndex = fromCategoryPicker.selectedRow(inComponent: 0)
-        let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategorySelectedIndex]
+        guard let fromCategorySelectedName = fromCategoryLabel.text else { return }
         
         guard let selectedCategory = loadSpecificCategory(named: fromCategorySelectedName) else { return }
         
@@ -377,11 +313,9 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func submitShiftForReview (amountFromTextField: String) {
         
-        let fromCategoryIndexSelected = fromCategoryPicker.selectedRow(inComponent: 0)
-        let fromCategorySelectedName = budget.sortedCategoryKeys[fromCategoryIndexSelected]
+        guard let fromCategorySelectedName = fromCategoryLabel.text else { return }
         
-        let toCategoryIndexSelected = toCategoryPicker.selectedRow(inComponent: 0)
-        let toCategorySelectedName = budget.sortedCategoryKeys[toCategoryIndexSelected]
+        guard let toCategorySelectedName = fromCategoryLabel.text else { return }
         
         
         if fundsTextField.text == "" {
@@ -477,7 +411,51 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
     }
     
+    @objc func amountTapped() {
+        
+        fundsTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func toCategoryTapped() {
+        
+        if allocateRemoveOrShift.selectedSegmentIndex != 1 {
+            
+            isToCategory = true
+            
+            performSegue(withIdentifier: moveFundsToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    @objc func fromCategoryTapped() {
+        
+        if allocateRemoveOrShift.selectedSegmentIndex != 0 {
+            
+            isToCategory = false
+            
+            performSegue(withIdentifier: moveFundsToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
     func setCategory(category: String) {
+        
+        if isToCategory == true {
+            
+            toCategoryLabel.text = category
+            
+            updateCategoryBalanceLabel(for: category, atLabel: toCategoryCurrentBalanceLabel)
+            
+        } else if isToCategory == false {
+            
+            fromCategoryLabel.text = category
+            
+            updateCategoryBalanceLabel(for: category, atLabel: fromCategoryCurrentBalanceLabel)
+            
+        }
         
     }
     
@@ -491,14 +469,13 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         super.viewDidLoad()
         
         
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        
+        // Add tap gesture to textfields and their labels
         amountView.addGestureRecognizer(amountViewTap)
+        toCategoryView.addGestureRecognizer(toCategoryViewTap)
+        fromCategoryView.addGestureRecognizer(fromCategoryViewTap)
         
         
-        // MARK: - Toolbar with 'Done' button
+        // Toolbar with 'Done' button
         
         let toolbar = UIToolbar()
         toolbar.barTintColor = UIColor.black
@@ -514,14 +491,11 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         fundsTextField.inputAccessoryView = toolbar
         
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
+        // Add swipe gesture to close keyboard
         
         let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
         closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(closeKeyboardGesture)
-        
         
         
         budget.sortCategoriesByKey(withUnallocated: true)
@@ -555,12 +529,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     // *****
     // MARK: - Keyboard functions
     // *****
-    
-    @objc func amountTapped() {
-        
-        fundsTextField.becomeFirstResponder()
-        
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

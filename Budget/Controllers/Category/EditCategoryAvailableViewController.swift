@@ -64,30 +64,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
     }
     
-    
-    
-    // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
+   
     
     // *****
     // MARK: - Functions
