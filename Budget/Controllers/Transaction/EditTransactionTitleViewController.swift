@@ -67,9 +67,7 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
             
             let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            updatedTransaction.title = newTitle
-            
-            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransactionTitle(title: newTitle, withID: Int(updatedTransaction.id))
             
             self.successHaptic()
             

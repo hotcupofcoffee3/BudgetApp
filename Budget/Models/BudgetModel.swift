@@ -297,29 +297,97 @@ class Budget {
     }
 
 
-    // *** Update Transaction
+    // *** Update Transaction Functions
 
-    func updateTransaction(named updatedTransaction: Transaction, forOldTransactionAtIndex index: Int) {
-        if transactions[index].type == depositKey {
+    // Title
+    func updateTransactionTitle(title newTitle: String, withID id: Int) {
+    
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
 
-            context.delete(transactions[index])
-            transactions.remove(at: index)
-
-            createAndSaveNewTransaction(onHold: updatedTransaction.onHold, id: updatedTransaction.id, type: depositKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
-
-        } else {
-
-            context.delete(transactions[index])
-            transactions.remove(at: index)
-
-            createAndSaveNewTransaction(onHold: updatedTransaction.onHold, id: updatedTransaction.id, type: withdrawalKey, title: updatedTransaction.title!, year: updatedTransaction.year, month: updatedTransaction.month, day: updatedTransaction.day, inTheAmountOf: updatedTransaction.inTheAmountOf, forCategory: updatedTransaction.forCategory!)
-
-        }
-        
-        loadSavedTransactions(descending: true)
+        currentTransaction.title = newTitle
         
         saveData()
 
+    }
+    
+    // Amount
+    func updateTransactionAmount(amount newAmount: Double, withID id: Int) {
+        
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
+        
+        guard let transactionCategory = currentTransaction.forCategory else { return }
+        guard let category = loadSpecificCategory(named: transactionCategory) else { return }
+        
+        if currentTransaction.type == depositKey {
+            
+            category.available -= currentTransaction.inTheAmountOf
+            category.available += newAmount
+            
+        } else {
+            
+            category.available += currentTransaction.inTheAmountOf
+            category.available -= newAmount
+            
+        }
+        
+        currentTransaction.inTheAmountOf = newAmount
+        
+        
+        saveData()
+        
+    }
+    
+    // Date
+    func updateTransactionDate(date newDate: Date, withID id: Int, atIndex index: Int) {
+        
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
+        
+        let dateDict = convertDateToInts(dateToConvert: newDate)
+        
+        var type: TransactionType
+        
+        if currentTransaction.type == depositKey {
+            type = .deposit
+        } else {
+            type = .withdrawal
+        }
+        
+        let onHold = currentTransaction.onHold
+        let title = currentTransaction.title!
+        let year = dateDict[yearKey]!
+        let month = dateDict[monthKey]!
+        let day = dateDict[dayKey]!
+        let amount = currentTransaction.inTheAmountOf
+        let category = currentTransaction.forCategory!
+        
+        deleteTransaction(at: index)
+        
+        addTransaction(onHold: onHold, type: type, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day)
+        
+        saveData()
+        
+    }
+    
+    // Category
+    func updateTransactionCategory(category newCategoryName: String, withID id: Int) {
+        
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
+        guard let oldTransactionCategoryName = currentTransaction.forCategory else { return }
+        
+        guard let oldCategory = loadSpecificCategory(named: oldTransactionCategoryName) else { return }
+        guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
+        
+        if currentTransaction.type == withdrawalKey {
+            
+            oldCategory.available += currentTransaction.inTheAmountOf
+            newCategory.available -= currentTransaction.inTheAmountOf
+            
+        }
+        
+        currentTransaction.forCategory = newCategoryName
+        
+        saveData()
+        
     }
 
 

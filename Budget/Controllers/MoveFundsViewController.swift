@@ -33,14 +33,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     
     @IBOutlet weak var fundsTextField: UITextField!
     
-    @IBOutlet weak var fromCategoryCurrentBalanceLabel: UILabel!
-    
-    @IBOutlet weak var toCategoryCurrentBalanceLabel: UILabel!
-    
-    @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var moveFundsButtonTitle: UIButton!
-    
     @IBOutlet weak var toCategoryLabel: UILabel!
     
     @IBOutlet weak var toCategoryView: UIView!
@@ -48,6 +40,14 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     @IBOutlet weak var fromCategoryLabel: UILabel!
     
     @IBOutlet var fromCategoryView: UIView!
+    
+    @IBOutlet weak var fromCategoryCurrentBalanceLabel: UILabel!
+    
+    @IBOutlet weak var toCategoryCurrentBalanceLabel: UILabel!
+
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var moveFundsButtonTitle: UIButton!
     
     
     
@@ -155,7 +155,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         // Disable 'To' & enable 'From'
         fromCategoryLabel.isEnabled = true
         toCategoryLabel.isEnabled = true
-        
         
     }
     
@@ -522,6 +521,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
+        toCategoryLabel.text = unallocatedKey
+        fromCategoryLabel.text = unallocatedKey
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
         updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
@@ -537,9 +538,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         
         budget.sortCategoriesByKey(withUnallocated: true)
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
-        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
         
         updateUIForAllocate()
         

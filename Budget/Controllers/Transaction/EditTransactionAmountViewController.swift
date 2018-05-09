@@ -69,9 +69,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
             
             let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            updatedTransaction.inTheAmountOf = newAmount
-            
-            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransactionAmount(amount: newAmount, withID: Int(updatedTransaction.id))
             
             self.successHaptic()
             

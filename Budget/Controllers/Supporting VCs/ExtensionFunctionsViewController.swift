@@ -263,7 +263,7 @@ extension UIViewController {
             
         }
         
-        forLabel.text = "~Left in \(categoryName): \(convertedAmountToDollars(amount: category.available)) ~"
+        forLabel.text = "~ Left in \(categoryName): \(convertedAmountToDollars(amount: category.available)) ~"
         
     }
     

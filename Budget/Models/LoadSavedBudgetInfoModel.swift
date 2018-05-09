@@ -119,7 +119,7 @@ func loadSpecificTransaction(idSubmitted: Int) -> Transaction? {
     
     let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
     
-    request.predicate = NSPredicate(format: idMatchesKey, id)
+    request.predicate = NSPredicate(format: idMatchesKey, String(id))
     
     do {
         

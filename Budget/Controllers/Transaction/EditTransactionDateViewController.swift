@@ -61,7 +61,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     // MARK: - Functions
     // *****
     
-    func showAlertToConfirmUpdate(newMonth: Int, newDay: Int, newYear: Int) {
+    func showAlertToConfirmUpdate(date: Date, newMonth: Int, newDay: Int, newYear: Int) {
         
         // *** Alert message to pop up to confirmation
         
@@ -69,13 +69,11 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let newID = convertedDateComponentsToTransactionID(year: newYear, month: newMonth, day: newDay)
-            
             let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            updatedTransaction.id = Int64(newID)
-            
-            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            guard let oldTransactionIndex = budget.transactions.index(of: updatedTransaction) else { return }
+        
+            budget.updateTransactionDate(date: date, withID: Int(updatedTransaction.id), atIndex: oldTransactionIndex)
             
             self.successHaptic()
             
@@ -114,7 +112,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
             
         } else {
             
-            showAlertToConfirmUpdate(newMonth: newMonth, newDay: newDay, newYear: newYear)
+            showAlertToConfirmUpdate(date: date, newMonth: newMonth, newDay: newDay, newYear: newYear)
             
         }
         
@@ -142,6 +140,20 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == changeTransactionDateToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        }
+        
+    }
+    
     
     
     // *****
@@ -151,9 +163,20 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let calender = Calendar(identifier: .gregorian)
+        guard let dateConverted = calender.date(from: DateComponents(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))) else { return }
+        
+        date = dateConverted
+        
+        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        
+        dateView.addGestureRecognizer(dateViewTap)
+        
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.editingItemLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
+        
+        self.dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
         
         self.addCircleAroundButton(named: self.updateItemButton)
         

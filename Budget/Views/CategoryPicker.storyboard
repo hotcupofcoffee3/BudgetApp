@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5G3-E9-b6j">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Category Picker View Controller-->
+        <scene sceneID="grO-jh-clC">
+            <objects>
+                <viewController id="5G3-E9-b6j" customClass="CategoryPickerViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="otA-An-Au5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="AsI-yn-jXu">
+                                <rect key="frame" x="20" y="233.5" width="335" height="200"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="9Ju-es-qFq"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="5G3-E9-b6j" id="A3v-xH-yGd"/>
+                                    <outlet property="delegate" destination="5G3-E9-b6j" id="8e9-3H-HHb"/>
+                                </connections>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="'Food' left: $100.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5SC-p6-0Md">
+                                <rect key="frame" x="20" y="184" width="335" height="29.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mF0-rw-pEf">
+                                <rect key="frame" x="20" y="20" width="46" height="36"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="5G3-E9-b6j" eventType="touchUpInside" id="Yzn-Fk-7HM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="AsI-yn-jXu" firstAttribute="leading" secondItem="yQq-DY-vWS" secondAttribute="leading" constant="20" id="3cW-sR-ED8"/>
+                            <constraint firstItem="yQq-DY-vWS" firstAttribute="trailing" secondItem="AsI-yn-jXu" secondAttribute="trailing" constant="20" id="3mm-3e-dXy"/>
+                            <constraint firstItem="yQq-DY-vWS" firstAttribute="trailing" secondItem="5SC-p6-0Md" secondAttribute="trailing" constant="20" id="4fD-XS-yvW"/>
+                            <constraint firstItem="mF0-rw-pEf" firstAttribute="top" secondItem="yQq-DY-vWS" secondAttribute="top" id="7tK-ac-uhT"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mF0-rw-pEf" secondAttribute="trailing" constant="20" symbolic="YES" id="FrM-xH-8Vo"/>
+                            <constraint firstItem="mF0-rw-pEf" firstAttribute="leading" secondItem="yQq-DY-vWS" secondAttribute="leading" constant="20" id="HKb-3m-tO2"/>
+                            <constraint firstItem="5SC-p6-0Md" firstAttribute="leading" secondItem="yQq-DY-vWS" secondAttribute="leading" constant="20" id="QAy-sD-KkK"/>
+                            <constraint firstItem="AsI-yn-jXu" firstAttribute="centerY" secondItem="otA-An-Au5" secondAttribute="centerY" id="Z7v-6R-DNl"/>
+                            <constraint firstItem="AsI-yn-jXu" firstAttribute="top" secondItem="5SC-p6-0Md" secondAttribute="bottom" constant="20" id="bxp-KH-3wu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yQq-DY-vWS"/>
+                    </view>
+                    <connections>
+                        <outlet property="categoryPickerView" destination="AsI-yn-jXu" id="uqC-id-eL5"/>
+                        <outlet property="currentCategoryBalanceLabel" destination="5SC-p6-0Md" id="Eoj-lV-hVI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pdp-qe-ALF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-794" y="-922"/>
+        </scene>
+    </scenes>
+</document>

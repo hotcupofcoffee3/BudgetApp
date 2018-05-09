@@ -72,9 +72,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
             
             let updatedTransaction = budget.transactions[editableTransactionIndex]
             
-            updatedTransaction.forCategory = newCategoryName
-            
-            budget.updateTransaction(named: updatedTransaction, forOldTransactionAtIndex: editableTransactionIndex)
+            budget.updateTransactionCategory(category: newCategoryName, withID: Int(updatedTransaction.id))
             
             self.successHaptic()
             
@@ -156,6 +154,10 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        
+        categoryView.addGestureRecognizer(categoryViewTap)
         
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         

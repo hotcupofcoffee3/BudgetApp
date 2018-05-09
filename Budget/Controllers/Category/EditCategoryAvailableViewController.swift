@@ -175,6 +175,12 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
     }
     
+    @objc func amountTapped() {
+        
+        newCategoryAvailable.becomeFirstResponder()
+        
+    }
+    
     @objc func categoryTapped() {
         
         performSegue(withIdentifier: editCategoryAvailableToCategoryPickerSegueKey, sender: self)
@@ -222,9 +228,11 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
         // MARK: Add tap gesture to textfields and their labels
         
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         
-        editAmountView.addGestureRecognizer(nameViewTap)
+        categoryView.addGestureRecognizer(categoryViewTap)
+        editAmountView.addGestureRecognizer(amountViewTap)
         
         // MARK: - Add done button
         
@@ -249,6 +257,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         self.updateLeftInCategoryAmount(categoryName: unallocatedKey, forLabel: leftInCategoryLabel)
         
         self.selectedCategoryName = unallocatedKey
+        self.categoryLabel.text = unallocatedKey
         
         self.addCircleAroundButton(named: self.updateItemButton)
         
@@ -274,12 +283,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     // *****
     // MARK: - Keyboard functions
     // *****
-    
-    @objc func nameTapped() {
-        
-        newCategoryAvailable.becomeFirstResponder()
-        
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
