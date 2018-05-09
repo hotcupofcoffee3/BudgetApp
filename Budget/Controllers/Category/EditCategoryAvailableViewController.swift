@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate, ChooseCategory {
     
     // *****
     // MARK: - Variables
@@ -42,9 +42,11 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var newCategoryAvailable: UITextField!
     
-    @IBOutlet weak var newAvailablePicker: UIPickerView!
-    
     @IBOutlet weak var updateItemButton: UIButton!
+    
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryView: UIView!
     
     
     
@@ -76,30 +78,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     // MARK: - PickerView
     // *****
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        selectedCategoryName = budget.sortedCategoryKeys[row]
-        
-        guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
-        
-        leftInCategoryLabel.text = "~ Left in \(selectedCategoryName): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
-        
-        warningLabel.text = ""
-        
-    }
     
     
     
@@ -222,6 +200,10 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
     }
     
+    func setCategory(category: String) {
+        
+    }
+    
     
     
     // *****
@@ -264,8 +246,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
         
         newCategoryAvailable.inputAccessoryView = toolbar
-        
-        
         
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         

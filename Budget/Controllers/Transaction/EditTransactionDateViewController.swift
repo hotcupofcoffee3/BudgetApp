@@ -8,26 +8,58 @@
 
 import UIKit
 
-class EditTransactionDateViewController: UIViewController {
+class EditTransactionDateViewController: UIViewController, ChooseDate {
 
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentTransaction = budget.transactions[editableTransactionIndex]
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
+    var date = Date()
+    
+    var dateFormatYYYYMMDD = Int()
     
     
-    // MARK: - Update Amounts At Top
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    
     @IBOutlet weak var editingItemLabel: UILabel!
     
-    @IBOutlet weak var newDatePicker: UIDatePicker!
+    @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var dateView: UIView!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        changeDateSubmittedForReview()
+    }
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func showAlertToConfirmUpdate(newMonth: Int, newDay: Int, newYear: Int) {
         
@@ -88,17 +120,27 @@ class EditTransactionDateViewController: UIViewController {
         
     }
     
-    @IBOutlet weak var warningLabel: UILabel!
-    
-    
-    @IBOutlet weak var updateItemButton: UIButton!
-    
-    @IBAction func updateItem(_ sender: UIButton) {
+    func setDate(date: Date) {
         
-        changeDateSubmittedForReview()
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
         
     }
-
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,21 +149,42 @@ class EditTransactionDateViewController: UIViewController {
         
         self.editingItemLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
         
-        
         self.addCircleAroundButton(named: self.updateItemButton)
         
-        
-        
-        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-  
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+   
     
     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

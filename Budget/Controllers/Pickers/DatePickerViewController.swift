@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ChangeDate {
+protocol ChooseDate {
     
     func setDate(date: Date)
     
@@ -20,7 +20,7 @@ class DatePickerViewController: UIViewController {
     // MARK: - Variables
     // *****
     
-    var delegate: ChangeDate?
+    var delegate: ChooseDate?
     
     
     

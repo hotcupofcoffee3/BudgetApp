@@ -10,14 +10,18 @@ import UIKit
 
 class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate {
     
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentTransaction = budget.transactions[editableTransactionIndex]
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
@@ -25,15 +29,33 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    
-    
-    
     @IBOutlet weak var editingItemLabel: UILabel!
     
     @IBOutlet weak var nameView: UIView!
     
     @IBOutlet weak var newTitleTextField: UITextField!
     
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        changeTitleSubmittedForReview()
+    }
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func showAlertToConfirmUpdate(newTitle: String) {
         
@@ -55,7 +77,7 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
             
             // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
             if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
-            
+                
                 editableTransactionIndex = newTransactionIndex
                 
             }
@@ -93,14 +115,11 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     }
     
     
-    @IBOutlet weak var updateItemButton: UIButton!
     
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        changeTitleSubmittedForReview()
-
-    }
-
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,11 +127,11 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         // MARK: Add tap gesture to textfields and their labels
         
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-
+        
         nameView.addGestureRecognizer(nameViewTap)
         
         
-
+        
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.editingItemLabel.text = currentTransaction.title
@@ -129,12 +148,6 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         
     }
     
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     
     // *****
@@ -163,25 +176,32 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
         self.view.endEditing(true)
         
     }
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+  
+    
+   
 
 }
 
 
-//extension UIViewController {
-//
-//    // MARK: Failure message
-//
-//    func failureWithWarning(label: UILabel, message: String) {
-//
-//        // Warning notification haptic
-//        let warning = UINotificationFeedbackGenerator()
-//        warning.notificationOccurred(.error)
-//
-//        label.textColor = UIColor.red
-//        label.text = message
-//
-//    }
-//}
+
+
+
+
+
+
+
+
+
 
 
 

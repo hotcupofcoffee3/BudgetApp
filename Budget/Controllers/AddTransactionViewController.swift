@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddTransactionViewController: UIViewController, UITextFieldDelegate, ChangeDate, ChooseCategory {
+class AddTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
     
     
     // *****

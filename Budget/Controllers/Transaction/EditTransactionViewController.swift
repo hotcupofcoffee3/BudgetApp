@@ -10,14 +10,18 @@ import UIKit
 
 class EditTransactionViewController: UIViewController {
     
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentTransaction = budget.transactions[editableTransactionIndex]
-
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
@@ -25,7 +29,86 @@ class EditTransactionViewController: UIViewController {
     
     @IBOutlet weak var typeLabel: UILabel!
     
-    // MARK: - Update Labels for Current Transaction
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var editTitleButton: UIButton!
+    
+    @IBOutlet weak var amountLabel: UILabel!
+    
+    @IBOutlet weak var editAmountButton: UIButton!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var editDateButton: UIButton!
+    
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBOutlet weak var editCategoryButton: UIButton!
+    
+    @IBOutlet weak var onHoldToggleSwitch: UISwitch!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func editTitle(_ sender: UIButton) {
+        performSegue(withIdentifier: editTransactionTitleSegueKey, sender: self)
+    }
+    
+    @IBAction func editAmount(_ sender: UIButton) {
+        performSegue(withIdentifier: editTransactionAmountSegueKey, sender: self)
+    }
+    
+    @IBAction func editDate(_ sender: UIButton) {
+        performSegue(withIdentifier: editTransactionDateSegueKey, sender: self)
+    }
+    
+    @IBAction func editCategory(_ sender: UIButton) {
+        performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
+    }
+    
+    @IBAction func onHoldToggle(_ sender: UISwitch) {
+        
+        currentTransaction.onHold = !currentTransaction.onHold
+        
+        saveData()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - TableView
+    // *****
+    
+    
+    
+    
+    // *****
+    // MARK: - PickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - DatePickerView
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func updateLabelsForCurrentTransaction(at index: Int) {
         
@@ -46,66 +129,16 @@ class EditTransactionViewController: UIViewController {
     
     
     
-    // MARK: - Title
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var editTitleButton: UIButton!
-    
-    @IBAction func editTitle(_ sender: UIButton) {
-        performSegue(withIdentifier: editTransactionTitleSegueKey, sender: self)
-    }
-    
-    
-    // MARK: - Amount
-    @IBOutlet weak var amountLabel: UILabel!
-    
-    @IBOutlet weak var editAmountButton: UIButton!
-    
-    @IBAction func editAmount(_ sender: UIButton) {
-        performSegue(withIdentifier: editTransactionAmountSegueKey, sender: self)
-    }
-    
-    // MARK: - Date
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    @IBOutlet weak var editDateButton: UIButton!
-    
-    @IBAction func editDate(_ sender: UIButton) {
-        performSegue(withIdentifier: editTransactionDateSegueKey, sender: self)
-    }
-    
-    
-    
-    // MARK: - Category
-    @IBOutlet weak var categoryLabel: UILabel!
-    
-    @IBOutlet weak var editCategoryButton: UIButton!
-    
-    @IBAction func editCategory(_ sender: UIButton) {
-        performSegue(withIdentifier: editTransactionCategorySegueKey, sender: self)
-    }
-    
-    
-    @IBOutlet weak var onHoldToggleSwitch: UISwitch!
-    
-    @IBAction func onHoldToggle(_ sender: UISwitch) {
-        
-        currentTransaction.onHold = !currentTransaction.onHold
-        
-        saveData()
-        
-    }
-    
-    
-    
-    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
-
+        
         self.titleLabel.text = currentTransaction.title
         self.addCircleAroundButton(named: self.editTitleButton)
         self.addCircleAroundButton(named: self.editAmountButton)
@@ -121,15 +154,36 @@ class EditTransactionViewController: UIViewController {
         self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
         
     }
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     
+    
+  
+
+  
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

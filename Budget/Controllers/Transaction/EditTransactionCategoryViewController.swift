@@ -8,69 +8,59 @@
 
 import UIKit
 
-class EditTransactionCategoryViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
-
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentTransaction = budget.transactions[editableTransactionIndex]
+    
     var newCategorySelected = String()
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-
     @IBOutlet weak var editingItemLabel: UILabel!
     
     @IBOutlet weak var editingItemAmountLabel: UILabel!
-    
-    
-    
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
     
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryView: UIView!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
     
     
     
-    // MARK: - Picker
+    // *****
+    // MARK: - IBActions
+    // *****
     
-    @IBOutlet weak var newCategoryPicker: UIPickerView!
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        newCategorySelected = budget.sortedCategoryKeys[row]
-        
-        guard let currentCategory = loadSpecificCategory(named: budget.sortedCategoryKeys[row]) else { return }
-        
-        leftInCategoryLabel.text = "~ Left in \(newCategorySelected): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
-        
-        warningLabel.text = ""
+    @IBAction func updateItem(_ sender: UIButton) {
+        changeCategorySubmittedForReview()
     }
     
     
     
-    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func showAlertToConfirmUpdate(newCategoryName: String) {
         
@@ -131,15 +121,15 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
     }
     
-    
-    @IBOutlet weak var updateItemButton: UIButton!
-    
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        changeCategorySubmittedForReview()
+    func setCategory(category: String) {
         
     }
- 
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,9 +157,37 @@ class EditTransactionCategoryViewController: UIViewController, UIPickerViewDeleg
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+
+    
+    
+    
+ 
+    
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

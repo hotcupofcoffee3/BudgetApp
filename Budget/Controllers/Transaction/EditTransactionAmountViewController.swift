@@ -10,24 +10,24 @@ import UIKit
 
 class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate {
 
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
     var currentTransaction = budget.transactions[editableTransactionIndex]
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     
-    // MARK: - Update Amounts At Top
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var leftAmountAtTopRight: UILabel!
     
-    
     @IBOutlet weak var warningLabel: UILabel!
-    
-    
-    
     
     @IBOutlet weak var editingItemLabel: UILabel!
     
@@ -37,6 +37,27 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var newAmountTextField: UITextField!
     
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        changeAmountSubmittedForReview()
+    }
+
+
+    
+    // *****
+    // MARK: - Functions
+    // *****
     
     func showAlertToConfirmUpdate(newAmount: Double) {
         
@@ -111,14 +132,11 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     }
     
     
-    @IBOutlet weak var updateItemButton: UIButton!
     
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        changeAmountSubmittedForReview()
-        
-    }
-
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -154,7 +172,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
-
+        
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
         
         self.editingItemLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
@@ -170,11 +188,6 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         self.newAmountTextField.delegate = self
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     
     // *****
@@ -186,9 +199,6 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         newAmountTextField.becomeFirstResponder()
         
     }
-    
-    
-    // MARK: - Keyboard dismissals
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -214,8 +224,23 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
         warningLabel.text = ""
     }
-
+    
+    
+    
+    
+    
+    
+    
+ 
+    
+    
+    
+ 
 }
+
+
+
+
 
 
 

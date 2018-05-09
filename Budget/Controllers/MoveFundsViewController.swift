@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ChooseCategory {
 
     
     // *****
@@ -44,6 +44,14 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var moveFundsButtonTitle: UIButton!
+    
+    @IBOutlet weak var toCategoryLabel: UILabel!
+    
+    @IBOutlet weak var toCategoryView: UIView!
+    
+    @IBOutlet weak var fromCategoryLabel: UILabel!
+    
+    @IBOutlet var fromCategoryView: UIView!
     
     
     
@@ -466,6 +474,10 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             
         }
+        
+    }
+    
+    func setCategory(category: String) {
         
     }
     
