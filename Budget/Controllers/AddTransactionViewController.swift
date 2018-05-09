@@ -77,13 +77,13 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
             
             transactionSelection = .withdrawal
             
-            updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+            updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
             
         } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
             
             transactionSelection = .deposit
             
-            updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+            updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
             
         }
         
@@ -116,17 +116,19 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         
     }
     
-    func updatePickerBasedOnTransactionChoice(typeOfTransaction: TransactionType) {
+    func updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: TransactionType) {
         
         if typeOfTransaction == .withdrawal {
             
             addTransactionButtonTitle.setTitle("Add Withdrawal", for: .normal)
+            categoryLabel.isEnabled = true
             
         } else if typeOfTransaction == .deposit {
             
             addTransactionButtonTitle.setTitle("Add Deposit", for: .normal)
             
             categoryLabel.text = unallocatedKey
+            categoryLabel.isEnabled = false
             
         }
         
@@ -327,6 +329,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
             
             datePickerVC.delegate = self
             
+            datePickerVC.date = date
+            
         } else if segue.identifier == addTransactionToCategoryPickerSegueKey {
             
             let categoryPickerVC = segue.destination as! CategoryPickerViewController
@@ -405,7 +409,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         addCircleAroundButton(named: addTransactionButtonTitle)
         
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
         self.transactionNameTextField.delegate = self
         self.transactionAmountTextField.delegate = self
@@ -416,7 +420,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         budget.sortCategoriesByKey(withUnallocated: true)
         
         updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updatePickerBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
     }
     
     

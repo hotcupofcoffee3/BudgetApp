@@ -17,10 +17,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     
     var isToCategory = true
     
-    let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-    let toCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(toCategoryTapped))
-    let fromCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(fromCategoryTapped))
-    
     
     
     // *****
@@ -122,11 +118,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         moveFundsButtonTitle.setTitle("Allocate Funds", for: .normal)
         
         // Enable 'To' & disable 'From'
-        fromCategoryView.isOpaque = false
-        fromCategoryView.alpha = 0.5
-        
-        toCategoryView.isOpaque = true
-        toCategoryView.alpha = 1.0
+        fromCategoryLabel.isEnabled = false
+        toCategoryLabel.isEnabled = true
         
         
         // Set disabled 'from' picker to "Uncategorized"
@@ -142,11 +135,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         moveFundsButtonTitle.setTitle("Remove Funds", for: .normal)
         
         // Disable 'To' & enable 'From'
-        fromCategoryView.isOpaque = true
-        fromCategoryView.alpha = 1.0
-        
-        toCategoryView.isOpaque = false
-        toCategoryView.alpha = 0.5
+        fromCategoryLabel.isEnabled = true
+        toCategoryLabel.isEnabled = false
         
         
         
@@ -162,7 +152,9 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         
         moveFundsButtonTitle.setTitle("Shift Funds", for: .normal)
         
-        // Enable both views
+        // Disable 'To' & enable 'From'
+        fromCategoryLabel.isEnabled = true
+        toCategoryLabel.isEnabled = true
         
         
     }
@@ -459,6 +451,32 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == moveFundsToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            if isToCategory == true {
+                
+                guard let currentCategory = toCategoryLabel.text else { return }
+                
+                categoryPickerVC.selectedCategory = currentCategory
+                
+            } else if isToCategory == false {
+                
+                guard let currentCategory = fromCategoryLabel.text else { return }
+                
+                categoryPickerVC.selectedCategory = currentCategory
+                
+            }
+            
+        }
+        
+    }
+    
     
     
     // *****
@@ -468,6 +486,9 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let toCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(toCategoryTapped))
+        let fromCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(fromCategoryTapped))
         
         // Add tap gesture to textfields and their labels
         amountView.addGestureRecognizer(amountViewTap)

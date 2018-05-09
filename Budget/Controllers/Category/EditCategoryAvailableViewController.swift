@@ -59,9 +59,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     }
     
     @IBAction func updateItem(_ sender: UIButton) {
-        
         submitEditCategoryAvailableForReview()
-        
     }
     
    
@@ -177,7 +175,31 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
     }
     
+    @objc func categoryTapped() {
+        
+        performSegue(withIdentifier: editCategoryAvailableToCategoryPickerSegueKey, sender: self)
+
+    }
+    
     func setCategory(category: String) {
+        categoryLabel.text = category
+        updateLeftInCategoryAmount(categoryName: category, forLabel: leftInCategoryLabel)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == editCategoryAvailableToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+                
+            guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.selectedCategory = currentCategory
+            
+        }
         
     }
     
@@ -191,7 +213,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
         
         currentCategoryNameString = editableCategoryName
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         
         if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
             
@@ -199,14 +220,11 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
             
         }
         
-        
         // MARK: Add tap gesture to textfields and their labels
         
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         
         editAmountView.addGestureRecognizer(nameViewTap)
-        
-        
         
         // MARK: - Add done button
         
@@ -228,7 +246,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
         
         self.currentCategoryName.text = "~ \(currentCategoryNameString) ~"
         self.currentCategoryAvailable.text = "\(convertedAmountToDollars(amount: currentCategoryAvailableDouble))"
-        self.leftInCategoryLabel.text = "\(convertedAmountToDollars(amount: unallocated.available))"
+        self.updateLeftInCategoryAmount(categoryName: unallocatedKey, forLabel: leftInCategoryLabel)
         
         self.selectedCategoryName = unallocatedKey
         

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50A2B2A20A35B5D00390975 /* EditCategory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A2B2920A35B5D00390975 /* EditCategory.storyboard */; };
+		B50A2B2C20A35C7300390975 /* EditTransaction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */; };
+		B50A2B2E20A35C8B00390975 /* Pickers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A2B2D20A35C8B00390975 /* Pickers.storyboard */; };
 		B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */; };
 		B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E62076BB570068E059 /* TransactionViewController.swift */; };
 		B51AC2E92076BB730068E059 /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B50A2B2920A35B5D00390975 /* EditCategory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditCategory.storyboard; sourceTree = "<group>"; };
+		B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditTransaction.storyboard; sourceTree = "<group>"; };
+		B50A2B2D20A35C8B00390975 /* Pickers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Pickers.storyboard; sourceTree = "<group>"; };
 		B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B51AC2E62076BB570068E059 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +183,9 @@
 			children = (
 				B533E36120700B01007A72E0 /* Main.storyboard */,
 				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
+				B50A2B2920A35B5D00390975 /* EditCategory.storyboard */,
+				B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */,
+				B50A2B2D20A35C8B00390975 /* Pickers.storyboard */,
 				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
@@ -263,7 +272,10 @@
 				B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */,
 				B533E36520700B01007A72E0 /* Assets.xcassets in Resources */,
 				B533E36320700B01007A72E0 /* Main.storyboard in Resources */,
+				B50A2B2E20A35C8B00390975 /* Pickers.storyboard in Resources */,
 				B5F401D4209B958F00103C7F /* CategoryTableViewCell.xib in Resources */,
+				B50A2B2A20A35B5D00390975 /* EditCategory.storyboard in Resources */,
+				B50A2B2C20A35C7300390975 /* EditTransaction.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

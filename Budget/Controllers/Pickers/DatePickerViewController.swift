@@ -22,6 +22,8 @@ class DatePickerViewController: UIViewController {
     
     var delegate: ChooseDate?
     
+    var date = Date()
+    
     
     
     // *****
@@ -45,23 +47,6 @@ class DatePickerViewController: UIViewController {
     
     
     
-    
-    // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
     // *****
     // MARK: - DatePickerView
     // *****
@@ -74,12 +59,7 @@ class DatePickerViewController: UIViewController {
     // MARK: - Functions
     // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
-    }
+    
     
     
     
@@ -87,7 +67,12 @@ class DatePickerViewController: UIViewController {
     // MARK: - Loadables
     // *****
     
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        chosenDate.setDate(date, animated: true)
+        
+    }
     
     
     

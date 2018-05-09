@@ -106,7 +106,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
         
         if newSelectedCategoryName == currentTransaction.forCategory {
             
-            failureWithWarning(label: warningLabel, message: "The category is already set to \(currentTransaction.forCategory!)")
+            failureWithWarning(label: warningLabel, message: "The category is already set to \(newSelectedCategoryName)")
             
         } else if currentTransaction.inTheAmountOf > newCategoryItself.available {
             
@@ -120,7 +120,31 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
         
     }
     
+    @objc func categoryTapped() {
+        
+        performSegue(withIdentifier: changeTransactionCategoryToCategoryPickerSegueKey, sender: self)
+        
+    }
+    
     func setCategory(category: String) {
+        newCategorySelected = category
+        categoryLabel.text = newCategorySelected
+        updateLeftInCategoryAmount(categoryName: category, forLabel: leftInCategoryLabel)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == changeTransactionCategoryToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.selectedCategory = currentCategory
+            
+        }
         
     }
     
@@ -137,19 +161,17 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
         
         budget.sortCategoriesByKey(withUnallocated: true)
         
-        self.newCategorySelected = currentTransaction.forCategory!
+        guard let currentCategory = currentTransaction.forCategory else { return }
         
-        categoryLabel.text = self.newCategorySelected
+        self.newCategorySelected = currentCategory
         
-        self.editingItemLabel.text = "\(currentTransaction.forCategory!)"
+        self.categoryLabel.text = currentCategory
+        
+        self.editingItemLabel.text = "\(currentCategory)"
         self.editingItemAmountLabel.text = "~ Transaction amount: \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) ~"
         
-        if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
-            
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
-            
-        }
-        
+        updateLeftInCategoryAmount(categoryName: currentCategory, forLabel: leftInCategoryLabel)
+
         self.addCircleAroundButton(named: self.updateItemButton)
         
     }

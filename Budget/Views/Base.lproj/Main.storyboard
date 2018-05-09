@@ -608,7 +608,7 @@
                         <outlet property="amountView" destination="uNF-eB-ReN" id="7w4-ji-dpF"/>
                         <outlet property="fromCategoryCurrentBalanceLabel" destination="ubg-Uo-pCO" id="FkL-4e-SF2"/>
                         <outlet property="fromCategoryLabel" destination="pqE-n1-4DD" id="8xT-wd-Sqz"/>
-                        <outlet property="fromCategoryView" destination="i7U-YQ-tJM" id="t91-Ex-9ZC"/>
+                        <outlet property="fromCategoryView" destination="kFY-Tz-cBe" id="SIy-Me-oZ8"/>
                         <outlet property="fundsTextField" destination="gye-NM-XkX" id="6pU-24-oAb"/>
                         <outlet property="leftAmountAtTopRight" destination="9oB-DU-pLN" id="N6a-e3-Zf4"/>
                         <outlet property="leftLabelOnNavBar" destination="AB6-oh-B2y" id="MY2-Pi-Ztx"/>
@@ -2387,6 +2387,14 @@
             </objects>
             <point key="canvasLocation" x="-3463" y="-1627"/>
         </scene>
+        <!--Storyboard Reference-->
+        <scene sceneID="vkV-E9-mUs">
+            <objects>
+                <viewControllerPlaceholder id="Bvo-FS-qhC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CNp-pI-XNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3531" y="-985"/>
+        </scene>
         <!--Edit Category Budgeted View Controller-->
         <scene sceneID="xOd-20-rRc">
             <objects>
@@ -2908,7 +2916,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAj-oB-hq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1943.2" y="-922.48875562218893"/>
+            <point key="canvasLocation" x="-2578" y="-845"/>
         </scene>
     </scenes>
     <resources>
@@ -2917,13 +2925,13 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lar-hd-J4W"/>
+        <segue reference="gOi-Bu-AOw"/>
         <segue reference="sum-Cr-7Ay"/>
-        <segue reference="YB9-jT-bGL"/>
+        <segue reference="Pj5-zh-mq9"/>
         <segue reference="F23-go-H31"/>
         <segue reference="eXP-Fb-uY0"/>
         <segue reference="ZXq-hv-ffC"/>
         <segue reference="mU4-cf-aIR"/>
-        <segue reference="C8p-9T-DZF"/>
+        <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>
 </document>

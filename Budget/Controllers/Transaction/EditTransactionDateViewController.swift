@@ -120,6 +120,12 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
         
     }
     
+    @objc func dateTapped() {
+        
+        performSegue(withIdentifier: changeTransactionDateToDatePickerSegueKey, sender: self)
+        
+    }
+    
     func setDate(date: Date) {
         
         self.date = date

@@ -252,6 +252,22 @@ extension UIViewController {
     }
     
     
+    // MARK: - Update Left In Category Amount For Editting VCs
+    
+    func updateLeftInCategoryAmount(categoryName: String, forLabel: UILabel) {
+        
+        guard let category = loadSpecificCategory(named: categoryName) else {
+            
+            forLabel.text = "Nothing"
+            return
+            
+        }
+        
+        forLabel.text = "~Left in \(categoryName): \(convertedAmountToDollars(amount: category.available)) ~"
+        
+    }
+    
+    
     
 }
 
