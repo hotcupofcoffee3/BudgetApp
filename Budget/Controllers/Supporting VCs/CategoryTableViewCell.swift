@@ -12,6 +12,8 @@ class CategoryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryNameLabel: UILabel!
     
+    @IBOutlet weak var dueDateLabel: UILabel!
+    
     @IBOutlet weak var categoryBudgetedTitleLabel: UILabel!
     
     @IBOutlet weak var categoryBudgetedLabel: UILabel!

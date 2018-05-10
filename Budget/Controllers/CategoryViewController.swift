@@ -96,6 +96,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         cell.categoryBudgetedLabel?.textColor = UIColor.white
         cell.categoryAvailableTitleLabel?.textColor = UIColor.white
         cell.categoryAvailableLabel?.textColor = UIColor.white
+        cell.dueDateLabel?.textColor = UIColor.white
         
         
         if let category = loadSpecificCategory(named: budget.sortedCategoryKeys[indexPath.row]) {
@@ -121,6 +122,16 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             cell.categoryNameLabel?.text = "\(category.name!)"
+            
+            if Int(category.dueDay) >= 1 && Int(category.dueDay) <= 31 {
+                
+                cell.dueDateLabel.text = "Due: \(convertDayToOrdinal(day: Int(category.dueDay)))"
+                
+            } else {
+                
+                cell.dueDateLabel.text = ""
+                
+            }
             
             if category.name == unallocatedKey {
                 
@@ -211,23 +222,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
+
     
     // *****
     // MARK: - Functions

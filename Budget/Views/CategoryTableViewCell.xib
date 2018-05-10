@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5f-VT-80C">
-                        <rect key="frame" x="10" y="5" width="300" height="20"/>
+                        <rect key="frame" x="10" y="5" width="190" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="fkj-tt-syb"/>
                         </constraints>
@@ -59,20 +59,33 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due: 28th" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QU3-gy-Olg">
+                        <rect key="frame" x="210" y="5" width="100" height="79.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="b8q-vM-EpR"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="nvr-IU-qd5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="DiW-WD-1Zt" secondAttribute="trailing" id="2Ri-Sc-dPg"/>
-                    <constraint firstAttribute="trailing" secondItem="y5f-VT-80C" secondAttribute="trailing" constant="10" id="6dY-np-Zxa"/>
                     <constraint firstItem="shZ-3f-5e9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="BLn-tm-Sl4"/>
                     <constraint firstItem="FNe-ER-bwz" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Fec-GL-dLZ"/>
                     <constraint firstItem="y5f-VT-80C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="IiP-gd-7Aj"/>
+                    <constraint firstItem="QU3-gy-Olg" firstAttribute="leading" secondItem="y5f-VT-80C" secondAttribute="trailing" constant="10" id="MM0-ed-02O"/>
                     <constraint firstItem="DiW-WD-1Zt" firstAttribute="top" secondItem="FNe-ER-bwz" secondAttribute="bottom" constant="5" id="POC-Ie-Mqt"/>
                     <constraint firstItem="eky-bC-HeF" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="Pcl-ZF-T28"/>
+                    <constraint firstItem="QU3-gy-Olg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="QgO-vn-1Ho"/>
                     <constraint firstItem="shZ-3f-5e9" firstAttribute="top" secondItem="eky-bC-HeF" secondAttribute="bottom" constant="5" id="Y6M-Kh-3j6"/>
                     <constraint firstItem="FNe-ER-bwz" firstAttribute="leading" secondItem="eky-bC-HeF" secondAttribute="trailing" id="YLi-vP-ahA"/>
                     <constraint firstItem="eky-bC-HeF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="cDi-1M-os2"/>
+                    <constraint firstAttribute="trailing" secondItem="QU3-gy-Olg" secondAttribute="trailing" constant="10" id="dbM-Lu-zAb"/>
                     <constraint firstItem="y5f-VT-80C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hF7-hd-23h"/>
                     <constraint firstItem="FNe-ER-bwz" firstAttribute="top" secondItem="y5f-VT-80C" secondAttribute="bottom" constant="5" id="qvb-8o-Spf"/>
+                    <constraint firstItem="QU3-gy-Olg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="rto-fr-da7"/>
                     <constraint firstItem="DiW-WD-1Zt" firstAttribute="leading" secondItem="shZ-3f-5e9" secondAttribute="trailing" id="vVQ-dw-oAR"/>
                 </constraints>
             </tableViewCellContentView>
@@ -84,8 +97,9 @@
                 <outlet property="categoryBudgetedLabel" destination="DiW-WD-1Zt" id="PHK-yj-zIx"/>
                 <outlet property="categoryBudgetedTitleLabel" destination="shZ-3f-5e9" id="m4k-4e-rva"/>
                 <outlet property="categoryNameLabel" destination="y5f-VT-80C" id="8Uu-w7-TXI"/>
+                <outlet property="dueDateLabel" destination="QU3-gy-Olg" id="6zL-Kg-qIH"/>
             </connections>
-            <point key="canvasLocation" x="34" y="52.5"/>
+            <point key="canvasLocation" x="34" y="52"/>
         </tableViewCell>
     </objects>
 </document>

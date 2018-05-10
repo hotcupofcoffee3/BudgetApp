@@ -86,6 +86,7 @@ let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
 
 
 // Date & Category Picker Segues
+let addCategoryToDatePickerSegueKey = "AddCategoryToDatePickerSegue"
 let addTransactionToDatePickerSegueKey = "AddTransactionToDatePickerSegue"
 let addTransactionToCategoryPickerSegueKey = "AddTransactionToCategoryPickerSegue"
 let moveFundsToCategoryPickerSegueKey = "MoveFundsToCategoryPickerSegue"

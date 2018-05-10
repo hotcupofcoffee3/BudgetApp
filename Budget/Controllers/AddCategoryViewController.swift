@@ -9,13 +9,17 @@
 import UIKit
 import Foundation
 
-class AddCategoryViewController: UIViewController, UITextFieldDelegate {
+class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDate {
+    
+    
     
     // *****
     // MARK: - Variables
     // *****
     
+    var date = Date()
     
+    var dateFormatYYYYMMDD = Int()
     
     
     
@@ -43,6 +47,14 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var currentAllocationStatus: UISwitch!
     
+    @IBOutlet weak var recurringView: UIView!
+    
+    @IBOutlet weak var allocateView: UIView!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var dueDateSwitch: UISwitch!
+    
     
     
     // *****
@@ -53,10 +65,22 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func dueDateToggleSwitch(_ sender: UISwitch) {
+        
+        if dueDateSwitch.isOn == true {
+            
+            performSegue(withIdentifier: addCategoryToDatePickerSegueKey, sender: self)
+            
+        } else {
+            
+            dateLabel.text = ""
+            
+        }
+        
+    }
+    
     @IBAction func addCategory(_ sender: UIButton) {
-        
         submitAddCategoryForReview()
-        
     }
     
     
@@ -151,9 +175,17 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
                 
                 if let categoryAmountAsDouble = Double(categoryAmount) {
                     
+                    guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+                    
                     if categoryAmountAsDouble < 0.0 {
                         
                         failureWithWarning(label: categoryWarningLabel, message: "You have to enter a positive number")
+                        
+                        
+                        // *** If 'Allocate' is switched on, is there enough in 'Unallocated'
+                    } else if currentAllocationStatus.isOn && categoryAmountAsDouble > unallocated.available {
+                    
+                        failureWithWarning(label: categoryWarningLabel, message: "You don't have enough funds to allocate at this time.")
                         
                     } else {
                         
@@ -187,16 +219,23 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
             guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
             
             if self.currentRecurringStatus.isOn {
-                
                 newCategory.recurring = true
-                
             }
             
             if self.currentAllocationStatus.isOn {
-                
                 budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
+            }
+            
+            if self.dueDateSwitch.isOn {
+                
+                let dateDict = convertDateToInts(dateToConvert: self.date)
+                guard let day = dateDict[dayKey] else { return }
+                
+                newCategory.dueDay = Int64(day)
                 
             }
+            
+            saveData()
             
             self.categoryWarningLabel.textColor = successColor
             self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
@@ -210,6 +249,70 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func nameTapped() {
+        
+        categoryNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        categoryAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func recurringTapped() {
+        
+        currentRecurringStatus.isOn = !currentRecurringStatus.isOn
+        
+    }
+    
+    @objc func allocateTapped() {
+        
+        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        if dueDateSwitch.isOn == true {
+            
+            performSegue(withIdentifier: addCategoryToDatePickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addCategoryToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        }
         
     }
     
@@ -227,9 +330,16 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
         
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let recurringViewTap = UITapGestureRecognizer(target: self, action: #selector(recurringTapped))
+        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
+        let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
+        recurringView.addGestureRecognizer(recurringViewTap)
+        allocateView.addGestureRecognizer(allocateViewTap)
+        dateLabel.addGestureRecognizer(datetap)
+        
         
         
         // MARK: - Toolbar with 'Done' button
@@ -275,17 +385,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Keyboard functions
     // *****
     
-    @objc func nameTapped() {
-        
-        categoryNameTextField.becomeFirstResponder()
-        
-    }
     
-    @objc func amountTapped() {
-        
-        categoryAmountTextField.becomeFirstResponder()
-        
-    }
     
     
     // MARK: - Keyboard dismissals

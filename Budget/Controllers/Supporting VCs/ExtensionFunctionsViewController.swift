@@ -106,6 +106,26 @@ extension UIViewController {
     
     
     
+    // MARK: - Convert Int to Ordinal
+    
+    func convertDayToOrdinal(day: Int) -> String {
+        
+        let formatter = NumberFormatter()
+        
+        formatter.numberStyle = .ordinal
+        
+        guard let ordinalNumber = formatter.string(from: NSNumber(value: day)) else {
+            
+            return "No number"
+            
+        }
+        
+        return ordinalNumber
+        
+    }
+    
+    
+    
     // MARK: - Main Views Updating Budget Balance Label
     
     func refreshAvailableBalanceLabel(label: UILabel) {
