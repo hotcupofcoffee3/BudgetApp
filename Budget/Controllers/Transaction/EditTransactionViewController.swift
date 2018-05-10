@@ -15,7 +15,7 @@ class EditTransactionViewController: UIViewController {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = budget.transactions[editableTransactionIndex]
+    var currentTransaction = Transaction()
     
     
     
@@ -87,9 +87,9 @@ class EditTransactionViewController: UIViewController {
     // MARK: - Functions
     // *****
     
-    func updateLabelsForCurrentTransaction(at index: Int) {
+    func updateLabelsForCurrentTransaction(withID id: Int) {
         
-        let currentTransaction = budget.transactions[index]
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
         
         titleLabel.text = currentTransaction.title
         amountLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
@@ -113,8 +113,12 @@ class EditTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
+        
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
+        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
         
         self.titleLabel.text = currentTransaction.title
         self.addCircleAroundButton(named: self.editTitleButton)
@@ -128,7 +132,7 @@ class EditTransactionViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        self.updateLabelsForCurrentTransaction(at: editableTransactionIndex)
+        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
         
     }
     

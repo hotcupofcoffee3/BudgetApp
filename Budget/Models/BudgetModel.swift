@@ -25,6 +25,7 @@ class Budget {
     var budgetedTimeFrames = [Period]()
     var sortedCategoryKeys = [String]()
     var balance = Double()
+    var mostRecentidFromAddedTransaction = Int()
 
     // *** Update Balance
 
@@ -246,6 +247,8 @@ class Budget {
         
         sortTransactionsDescending()
         
+        mostRecentidFromAddedTransaction = formattedTransactionID
+        
         saveData()
 
     }
@@ -338,7 +341,7 @@ class Budget {
     }
     
     // Date
-    func updateTransactionDate(date newDate: Date, withID id: Int, atIndex index: Int) {
+    func updateTransactionDate(newDate: Date, withID id: Int, atIndex index: Int) {
         
         guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
         

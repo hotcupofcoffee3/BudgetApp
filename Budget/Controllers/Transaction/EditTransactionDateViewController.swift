@@ -15,7 +15,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = budget.transactions[editableTransactionIndex]
+    var currentTransaction = Transaction()
     
     var date = Date()
     
@@ -69,22 +69,17 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let updatedTransaction = budget.transactions[editableTransactionIndex]
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
             
             guard let oldTransactionIndex = budget.transactions.index(of: updatedTransaction) else { return }
         
-            budget.updateTransactionDate(date: date, withID: Int(updatedTransaction.id), atIndex: oldTransactionIndex)
+            budget.updateTransactionDate(newDate: date, withID: Int(updatedTransaction.id), atIndex: oldTransactionIndex)
             
             self.successHaptic()
             
             budget.sortTransactionsDescending()
             
-            // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
-                
-                editableTransactionIndex = newTransactionIndex
-                
-            }
+            editableTransactionID = budget.mostRecentidFromAddedTransaction
             
             self.editingItemLabel.text = "\(newMonth)/\(newDay)/\(newYear)"
             
@@ -162,6 +157,10 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
         
         let calender = Calendar(identifier: .gregorian)
         guard let dateConverted = calender.date(from: DateComponents(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))) else { return }

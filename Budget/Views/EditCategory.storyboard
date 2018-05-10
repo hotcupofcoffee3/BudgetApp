@@ -668,6 +668,7 @@
                         <segue destination="1xk-Ih-snr" kind="show" identifier="EditCategoryNameSegue" id="Rhq-at-lys"/>
                         <segue destination="yfh-bo-ApM" kind="show" identifier="EditCategoryBudgetedSegue" id="Uz8-yG-jkv"/>
                         <segue destination="WzN-Oi-XcR" kind="show" identifier="EditCategoryAvailableSegue" id="xPM-rC-Acd"/>
+                        <segue destination="BtF-ZN-hus" kind="presentation" identifier="EditCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="Bhg-U0-TUQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEy-Uh-MEe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -681,6 +682,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vf2-62-pG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1709" y="-1069"/>
+        </scene>
+        <!--DatePicker-->
+        <scene sceneID="zAo-12-NUq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DatePicker" id="BtF-ZN-hus" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jEx-9l-NPs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1605" y="-809"/>
         </scene>
     </scenes>
     <resources>

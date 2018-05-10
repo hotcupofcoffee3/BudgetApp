@@ -8,7 +8,7 @@
 
 import UIKit
 
-var editableTransactionIndex = Int()
+var editableTransactionID = Int()
 
 var selectedCategory: String?
 var selectedStartDate: Int?
@@ -89,9 +89,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         let selectedTransaction = transactionsToDisplay[indexPath.row]
         
-        guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
-        
-        editableTransactionIndex = selectedTransactionIndexPath
+        editableTransactionID = Int(selectedTransaction.id)
         
         performSegue(withIdentifier: editTransactionSegueKey, sender: self)
         

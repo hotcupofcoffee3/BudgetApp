@@ -14,7 +14,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = budget.transactions[editableTransactionIndex]
+    var currentTransaction = Transaction()
     
     var newCategorySelected = String()
     
@@ -70,20 +70,13 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let updatedTransaction = budget.transactions[editableTransactionIndex]
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
             
             budget.updateTransactionCategory(category: newCategoryName, withID: Int(updatedTransaction.id))
             
             self.successHaptic()
             
             budget.sortTransactionsDescending()
-            
-            // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
-                
-                editableTransactionIndex = newTransactionIndex
-                
-            }
             
             self.editingItemLabel.text = updatedTransaction.forCategory
             
@@ -154,6 +147,10 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
         
         let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
         

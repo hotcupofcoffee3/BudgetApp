@@ -15,7 +15,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     // MARK: - Variables
     // *****
     
-    var currentTransaction = budget.transactions[editableTransactionIndex]
+    var currentTransaction = Transaction()
     
     
     
@@ -67,20 +67,13 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            let updatedTransaction = budget.transactions[editableTransactionIndex]
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
             
             budget.updateTransactionAmount(amount: newAmount, withID: Int(updatedTransaction.id))
             
             self.successHaptic()
             
             budget.sortTransactionsDescending()
-            
-            // Finds the index where this new transactionID is located, in order to set it to the current 'editableTransactionIndex' for the main 'EditTransactions' VC.
-            if let newTransactionIndex = budget.transactions.index(where: { $0.id == updatedTransaction.id }) {
-                
-                editableTransactionIndex = newTransactionIndex
-                
-            }
             
             self.editingItemLabel.text = updatedTransaction.title
             
@@ -137,6 +130,10 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
         
         
         // MARK: Add tap gesture to textfields and their labels
