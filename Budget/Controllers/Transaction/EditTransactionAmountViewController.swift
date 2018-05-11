@@ -15,7 +15,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     // MARK: - Variables
     // *****
     
-    var currentTransaction = Transaction()
+    var currentTransaction: Transaction!
     
     
     

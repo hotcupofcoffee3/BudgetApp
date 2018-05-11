@@ -15,7 +15,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = Transaction()
+    var currentTransaction: Transaction!
     
     var date = Date()
     

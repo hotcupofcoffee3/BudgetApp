@@ -15,7 +15,7 @@ class EditTransactionViewController: UIViewController {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = Transaction()
+    var currentTransaction: Transaction!
     
     
     
@@ -115,6 +115,8 @@ class EditTransactionViewController: UIViewController {
         
         guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
         
+        print(editableTransaction.id)
+        
         currentTransaction = editableTransaction
         
         self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
@@ -126,6 +128,14 @@ class EditTransactionViewController: UIViewController {
         self.addCircleAroundButton(named: self.editDateButton)
         self.addCircleAroundButton(named: self.editCategoryButton)
         self.onHoldToggleSwitch.isOn = currentTransaction.onHold
+        
+        if currentTransaction.type == depositKey {
+            
+            editCategoryButton.isEnabled = false
+            editCategoryButton.alpha = 0.5
+            categoryLabel.isEnabled = false
+            
+        }
         
     }
     

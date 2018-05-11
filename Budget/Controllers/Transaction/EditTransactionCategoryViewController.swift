@@ -14,7 +14,7 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     // MARK: - Variables
     // *****
     
-    var currentTransaction = Transaction()
+    var currentTransaction: Transaction!
     
     var newCategorySelected = String()
     

@@ -83,31 +83,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
         submitAddCategoryForReview()
     }
     
-    
-    
-    // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
+
     
     // *****
     // MARK: - Functions

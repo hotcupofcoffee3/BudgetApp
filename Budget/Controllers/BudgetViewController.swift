@@ -111,14 +111,26 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Loadables
     // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func loadNecessaryInfo() {
         
         displayedDataTable.separatorStyle = .none
         loadSavedBudgetedTimeFrames(descending: true)
         displayedDataTable.reloadData()
         print(budget.budgetedTimeFrames.count)
-        // Do any additional setup after loading the view.
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.loadNecessaryInfo()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.loadNecessaryInfo()
+        
     }
     
     
