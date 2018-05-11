@@ -85,14 +85,12 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
     @IBAction func editDueDateSwitch(_ sender: UISwitch) {
         
         dueDateToggle()
-        print("Due date toggle switched")
         
     }
     
     @IBAction func editRecurringSwitch(_ sender: UISwitch) {
         
         recurringToggle()
-        print("Recurring toggle switched")
         
     }
     
@@ -121,7 +119,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
             dateLabel.alpha = 1.0
             performSegue(withIdentifier: editCategoryToDatePickerSegueKey, sender: self)
             
-            print("Now performing segue")
             
         } else {
             
@@ -130,11 +127,9 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
             
             guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
             
-            category.dueDay = 0
+            category.dueDay = Int64()
             
             saveData()
-            
-            print(category.dueDay)
             
         }
         
@@ -147,8 +142,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
         saveData()
         
-        print("Recurring status: \(category.recurring)")
-        
     }
     
     @objc func dateTapped() {
@@ -157,8 +150,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
         dueDateToggle()
         
-        print("Date View tapped.")
-        
     }
     
     @objc func recurringTapped() {
@@ -166,9 +157,7 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         currentRecurringStatus.isOn = !currentRecurringStatus.isOn
         
         recurringToggle()
-        
-        print("Recurring View tapped.")
-        
+       
     }
     
     func setDate(date: Date) {
@@ -186,8 +175,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
             dateLabel.text = "Due: \(convertDayToOrdinal(day: day))"
             
             saveData()
-            
-            print(category.dueDay)
             
         }
         
@@ -246,12 +233,15 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
         if category.dueDay >= 1 && category.dueDay <= 31 {
             
+            dateLabel.alpha = 1.0
             dateLabel.text = "Due: \(convertDayToOrdinal(day: Int(category.dueDay)))"
+            dueDateSwitch.isOn = true
             
         } else {
             
             dateLabel.alpha = 0.5
             dateLabel.text = "Due: N/A"
+            dueDateSwitch.isOn = false
             
         }
         

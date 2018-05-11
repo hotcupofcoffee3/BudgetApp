@@ -3,7 +3,7 @@
     <entity name="Category" representedClassName=".Category" syncable="YES" codeGenerationType="class">
         <attribute name="available" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="budgeted" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="dueDay" optional="YES" attributeType="Integer 64" minValueString="1" maxValueString="31" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dueDay" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="recurring" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
     </entity>
