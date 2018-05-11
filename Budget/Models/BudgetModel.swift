@@ -230,8 +230,12 @@ class Budget {
         if type == .deposit {
 
             guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            unallocated.available += amount
-            balance += amount
+            
+            if onHold == false {
+                
+                unallocated.available += amount
+                
+            }
 
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
@@ -240,14 +244,20 @@ class Budget {
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
 
             guard let category = loadSpecificCategory(named: thisCategory)  else { return }
-            category.available -= amount
-            balance -= amount
+            
+            if onHold == false {
+                
+                category.available -= amount
+                
+            }
             
         }
         
         sortTransactionsDescending()
         
         mostRecentidFromAddedTransaction = formattedTransactionID
+        
+        updateBalance()
         
         saveData()
 
@@ -279,15 +289,23 @@ class Budget {
         if transactions[index].type == depositKey {
 
             guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            unallocated.available -= amount
-            balance -= amount
+            
+            if transactions[index].onHold == false {
+                
+                unallocated.available -= amount
+                
+            }
 
         } else if transactions[index].type == withdrawalKey {
 
             // Add amount back to category
             guard let categoryToPutBackTo = loadSpecificCategory(named: categoryName!) else { return }
-            categoryToPutBackTo.available += amount
-            balance += amount
+            
+            if transactions[index].onHold == false {
+                
+                categoryToPutBackTo.available += amount
+                
+            }
 
         }
 
@@ -295,6 +313,8 @@ class Budget {
         context.delete(transactions[index])
         transactions.remove(at: index)
 
+        updateBalance()
+        
         saveData()
         
     }
@@ -392,6 +412,24 @@ class Budget {
         saveData()
         
     }
+    
+    func updateBalanceAndAvailableForOnHold(forTransaction transaction: Transaction) {
+        
+        guard let category = loadSpecificCategory(named: transaction.forCategory!) else { return }
+        
+        if transaction.onHold == true {
+            
+            category.available += transaction.inTheAmountOf
+            updateBalance()
+            
+        } else if transaction.onHold == false {
+            
+            category.available -= transaction.inTheAmountOf
+            updateBalance()
+            
+        }
+        
+    }
 
 
 
@@ -425,7 +463,7 @@ class Budget {
             
         }
         
-        createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
+        createUnallocatedCategory()
 
         createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date())
 

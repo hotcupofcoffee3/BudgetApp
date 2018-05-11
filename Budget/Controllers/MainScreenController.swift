@@ -145,6 +145,13 @@ class MainScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
+        
+        
+        
+        
         // ********************
         // Core Data Testing (& Other Testing)
         // ********************
@@ -155,8 +162,17 @@ class MainScreen: UIViewController {
         // ********************
         // ********************
         
+        
+        // ***** Starting From Scratch on New Device
+        loadSavedCategories()
+        if budget.categories.count == 0 {
+            budget.deleteEVERYTHING()
+        }
+        
         loadSavedCategories()
         loadSavedTransactions(descending: true)
+        loadSavedBudgetedTimeFrames(descending: true)
+        
         selectedCategory = nil
         selectedStartDate = nil
         selectedEndDate = nil

@@ -125,6 +125,10 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.loadNecessaryInfo()
         
+        self.displayedDataTable.rowHeight = 90
+        
+        self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetTableViewCell")
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

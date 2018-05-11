@@ -77,6 +77,8 @@ class EditTransactionViewController: UIViewController {
         
         currentTransaction.onHold = !currentTransaction.onHold
         
+        budget.updateBalanceAndAvailableForOnHold(forTransaction: currentTransaction)
+        
         saveData()
         
     }
