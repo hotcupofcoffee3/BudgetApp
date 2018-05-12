@@ -43,10 +43,12 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "BudgetCell", for: indexPath)
+        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "BudgetCell", for: indexPath) as! BudgetTableViewCell
+        
+        addBorderAroundBudgetTableCellViews(cellView: cell.budgetedTimeFrameView)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-        cell.textLabel?.textColor = UIColor.white
+        cell.budgetedTimeFrameLabel?.textColor = UIColor.white
         
         cell.accessoryType = .disclosureIndicator
         
@@ -56,11 +58,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if indexPath.row == 0 {
                 
-                cell.textLabel?.text = "Beginning of time - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
+                cell.budgetedTimeFrameLabel?.text = "Very early - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
                 
             } else {
                 
-                cell.textLabel?.text = "\(period.startMonth)/\(period.startDay)/\(period.startYear) - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
+                cell.budgetedTimeFrameLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) - \(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
                 
             }
             
@@ -76,6 +78,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         selectedEndDate = Int(budget.budgetedTimeFrames[indexPath.row].endDateID)
         
         selectedCategory = nil
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         performSegue(withIdentifier: budgetToTransactionsSegueKey, sender: self)
     }
@@ -127,7 +131,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.displayedDataTable.rowHeight = 90
         
-        self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetTableViewCell")
+        self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
         
     }
     

@@ -61,23 +61,35 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
+        let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath) as! TransactionTableViewCell
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-        cell.textLabel?.textColor = UIColor.white
-        cell.detailTextLabel?.textColor = UIColor.white
+        cell.transactionDateLabel?.textColor = UIColor.white
+        cell.transactionNameLabel?.textColor = UIColor.white
+        cell.transactionAmountLabel?.textColor = UIColor.white
+        cell.transactionCategoryLabel?.textColor = UIColor.white
         
         cell.accessoryType = .disclosureIndicator
         
         if !transactionsToDisplay.isEmpty {
             //            let transaction = budget.transactions[indexPath.row]
             let transaction = transactionsToDisplay[indexPath.row]
-            cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
+            
+            cell.transactionNameLabel.text = "\(transaction.title!)"
+            cell.transactionAmountLabel.text = "\(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
+            
+//            cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
             if transaction.type == depositKey {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): Deposit"
+                cell.transactionDateLabel.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100))"
+                cell.transactionCategoryLabel.text = "Deposit"
+                
+//                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100)): Deposit"
             } else {
-                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\(transaction.year): \(transaction.forCategory!)"
+                cell.transactionDateLabel.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100))"
+                cell.transactionCategoryLabel.text = "\(transaction.forCategory!)"
+                
+//                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100)): \(transaction.forCategory!)"
             }
             
         }
@@ -170,6 +182,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.displayedDataTable.register(UINib(nibName: "TransactionTableViewCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         
         transactionsToDisplay = loadChosenTransactions()
         

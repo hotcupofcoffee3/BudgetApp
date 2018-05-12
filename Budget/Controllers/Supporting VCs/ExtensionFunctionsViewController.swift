@@ -162,6 +162,18 @@ extension UIViewController {
     
     
     
+    // MARK: - Cell for Budget
+    func addBorderAroundBudgetTableCellViews(cellView: UIView) {
+        
+        cellView.layer.cornerRadius = 15
+        cellView.layer.masksToBounds = true
+        cellView.layer.borderWidth = 2
+        cellView.layer.borderColor = tealColor.cgColor
+        
+    }
+    
+    
+    
     // MARK: - Add Something Alert Popup Function
     
     func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String, moveFundsSegue: String) {

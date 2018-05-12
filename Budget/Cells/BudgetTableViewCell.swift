@@ -9,7 +9,11 @@
 import UIKit
 
 class BudgetTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var budgetedTimeFrameLabel: UILabel!
 
+    @IBOutlet weak var budgetedTimeFrameView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

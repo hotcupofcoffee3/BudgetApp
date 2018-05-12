@@ -9,7 +9,15 @@
 import UIKit
 
 class TransactionTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var transactionDateLabel: UILabel!
+    
+    @IBOutlet weak var transactionCategoryLabel: UILabel!
+    
+    @IBOutlet weak var transactionNameLabel: UILabel!
+    
+    @IBOutlet weak var transactionAmountLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
