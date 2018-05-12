@@ -64,6 +64,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath) as! TransactionTableViewCell
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
+        
         cell.transactionDateLabel?.textColor = UIColor.white
         cell.transactionNameLabel?.textColor = UIColor.white
         cell.transactionAmountLabel?.textColor = UIColor.white
@@ -72,24 +73,35 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.accessoryType = .disclosureIndicator
         
         if !transactionsToDisplay.isEmpty {
-            //            let transaction = budget.transactions[indexPath.row]
+            
             let transaction = transactionsToDisplay[indexPath.row]
             
             cell.transactionNameLabel.text = "\(transaction.title!)"
-            cell.transactionAmountLabel.text = "\(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
             
-//            cell.textLabel?.text = "\(transaction.title!): \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
+            if transaction.onHold == true {
+                
+                cell.transactionAmountLabel.text = "✋🏽 \(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
+                
+            } else {
+                
+                cell.transactionAmountLabel.text = "\(convertedAmountToDollars(amount: transaction.inTheAmountOf))"
+                
+            }
+            
+            
             
             if transaction.type == depositKey {
+                
                 cell.transactionDateLabel.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100))"
+                
                 cell.transactionCategoryLabel.text = "Deposit"
                 
-//                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100)): Deposit"
             } else {
+                
                 cell.transactionDateLabel.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100))"
+                
                 cell.transactionCategoryLabel.text = "\(transaction.forCategory!)"
                 
-//                cell.detailTextLabel?.text = "\(transaction.month)/\(transaction.day)/\((transaction.year % 100)): \(transaction.forCategory!)"
             }
             
         }
