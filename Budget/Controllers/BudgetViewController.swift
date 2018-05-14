@@ -14,7 +14,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Variables
     // *****
     
+    var editTimeFrame = false
     
+    var startDateFormatYYYYMMDD = Int()
+    
+    var endDateFormatYYYYMMDD = Int()
     
     
     
@@ -24,12 +28,36 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
+    @IBOutlet weak var editTimeFrameBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
     
     // *****
     // MARK: - IBActions
     // *****
     
+    @IBAction func editTimeFrame(_ sender: UIBarButtonItem) {
+        
+        editTimeFrame = !editTimeFrame
+        
+        if editTimeFrame == true {
+            
+            editTimeFrameBarButton.title = "Done"
+            displayedDataTable.reloadData()
+            
+        } else {
+            
+            editTimeFrameBarButton.title = "Edit"
+            displayedDataTable.reloadData()
+            
+        }
+        
+    }
     
+    @IBAction func addPeriod(_ sender: UIButton) {
+        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
+    }
     
     
     
@@ -74,33 +102,60 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedStartDate = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
-        selectedEndDate = Int(budget.budgetedTimeFrames[indexPath.row].endDateID)
-        
         selectedCategory = nil
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        performSegue(withIdentifier: budgetToTransactionsSegueKey, sender: self)
+        performSegue(withIdentifier: budgetToCategoriesSegueKey, sender: self)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row != 0 {
+            
+            if editingStyle == .delete {
+                
+                let timeFrameToDelete = budget.budgetedTimeFrames[indexPath.row]
+                
+                let message = "Delete the whole budgeted time frame:\n\(timeFrameToDelete.startMonth)/\(timeFrameToDelete.startDay)/\(timeFrameToDelete.startYear) - \(timeFrameToDelete.endMonth)/\(timeFrameToDelete.endDay)/\(timeFrameToDelete.endYear)?"
+                
+                let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                    
+                    // *** Additional check before deleting a Category, as this is a big deal.
+                    let additionalAlert = UIAlertController(title: nil, message: "Deleting this budgeted time frame will remove all of the work you've done to budget for this time period. Do it anyway?", preferredStyle: .alert)
+                    
+                    additionalAlert.addAction(UIAlertAction(title: "Yes, do it anyway", style: .destructive, handler: { (action) in
+                        
+                        budget.deleteTimeFrame(period: timeFrameToDelete)
+                        
+                        self.successHaptic()
+                        
+                        loadSavedBudgetedTimeFrames()
+                        self.displayedDataTable.reloadData()
+                        
+                    }))
+                    
+                    additionalAlert.addAction(UIAlertAction(title: "No, don't do it.", style: .cancel, handler: nil))
+                    
+                    self.present(additionalAlert, animated: true, completion: nil)
+                    
+                    
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
+            
+        }
+        
+    }
     
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
+
     
     // *****
     // MARK: - Functions
@@ -118,8 +173,9 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func loadNecessaryInfo() {
         
         displayedDataTable.separatorStyle = .none
-        loadSavedBudgetedTimeFrames(descending: true)
+        loadSavedBudgetedTimeFrames()
         displayedDataTable.reloadData()
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
         print(budget.budgetedTimeFrames.count)
         
     }

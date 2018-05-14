@@ -162,10 +162,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
         
         currentTransaction = editableTransaction
         
-        let calender = Calendar(identifier: .gregorian)
-        guard let dateConverted = calender.date(from: DateComponents(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))) else { return }
-        
-        date = dateConverted
+        date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
         
         let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
         

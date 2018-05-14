@@ -223,11 +223,11 @@ func loadTransactionsByDate(selectedStartDate: Int, selectedEndDate: Int) -> [Tr
 
 // Load All Budgeted Time Frames
 
-func loadSavedBudgetedTimeFrames(descending: Bool) {
+func loadSavedBudgetedTimeFrames() {
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
-    request.sortDescriptors = [NSSortDescriptor(key: startDateIDKey, ascending: !descending)]
+    request.sortDescriptors = [NSSortDescriptor(key: startDateIDKey, ascending: true)]
     
     do {
         
@@ -244,7 +244,7 @@ func loadSavedBudgetedTimeFrames(descending: Bool) {
 
 // Load Specific Budgeted Time Frame
 
-func loadSpecificBudgetedTimeFrame(start: Int) -> Period? {
+func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
     
     var period: Period?
     
@@ -252,7 +252,7 @@ func loadSpecificBudgetedTimeFrame(start: Int) -> Period? {
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
-    request.predicate = NSPredicate(format: startDateIDMatchesKey, start)
+    request.predicate = NSPredicate(format: startDateIDMatchesKey, startID)
     
     do {
         

@@ -445,7 +445,7 @@
                         <outlet property="leftLabelOnNavBar" destination="PPH-mo-bq5" id="OoU-lm-56r"/>
                         <outlet property="updateItemButton" destination="FWx-0D-R1b" id="1uT-Jy-qsb"/>
                         <outlet property="warningLabel" destination="xQM-z8-ZSv" id="sMa-Xi-Orc"/>
-                        <segue destination="wFm-XL-uxt" kind="presentation" identifier="ChangeTransactionDateToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="WJf-BW-qOG"/>
+                        <segue destination="wFm-XL-uxt" kind="presentation" identifier="changeTransactionDateToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="WJf-BW-qOG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mtW-ob-nR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -610,7 +610,7 @@
                         <outlet property="leftLabelOnNavBar" destination="d25-Ir-Fyo" id="dyU-I6-nea"/>
                         <outlet property="updateItemButton" destination="RZV-VS-X9y" id="Mep-4e-ynb"/>
                         <outlet property="warningLabel" destination="3cn-1k-j8T" id="O17-ik-xBe"/>
-                        <segue destination="hZl-gb-yeD" kind="presentation" identifier="ChangeTransactionCategoryToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="DjV-b6-sMR"/>
+                        <segue destination="hZl-gb-yeD" kind="presentation" identifier="changeTransactionCategoryToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="DjV-b6-sMR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cyu-gP-A2u" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -820,10 +820,10 @@
                         <outlet property="onHoldToggleSwitch" destination="fIm-7V-dVt" id="OXj-Iq-Elq"/>
                         <outlet property="titleLabel" destination="jn5-Pa-knm" id="Htj-NO-9Ld"/>
                         <outlet property="typeLabel" destination="C4U-RY-xyy" id="iPh-Qt-5Hv"/>
-                        <segue destination="M7R-Zh-6yz" kind="showDetail" identifier="EditTransactionTitleSegue" id="Jsv-K0-lft"/>
-                        <segue destination="NQg-FD-bz4" kind="showDetail" identifier="EditTransactionAmountSegue" id="nEB-vh-IrF"/>
-                        <segue destination="7qg-h4-lUg" kind="showDetail" identifier="EditTransactionDateSegue" id="Pra-cl-fA7"/>
-                        <segue destination="CQu-qN-xDj" kind="showDetail" identifier="EditTransactionCategorySegue" id="ELb-kK-BKe"/>
+                        <segue destination="M7R-Zh-6yz" kind="showDetail" identifier="editTransactionTitleSegue" id="Jsv-K0-lft"/>
+                        <segue destination="NQg-FD-bz4" kind="showDetail" identifier="editTransactionAmountSegue" id="nEB-vh-IrF"/>
+                        <segue destination="7qg-h4-lUg" kind="showDetail" identifier="editTransactionDateSegue" id="Pra-cl-fA7"/>
+                        <segue destination="CQu-qN-xDj" kind="showDetail" identifier="editTransactionCategorySegue" id="ELb-kK-BKe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TGP-zM-wxv" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -171,11 +171,9 @@ class MainScreen: UIViewController {
         
         loadSavedCategories()
         loadSavedTransactions(descending: true)
-        loadSavedBudgetedTimeFrames(descending: true)
+        loadSavedBudgetedTimeFrames()
         
         selectedCategory = nil
-        selectedStartDate = nil
-        selectedEndDate = nil
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         
@@ -200,8 +198,6 @@ class MainScreen: UIViewController {
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         selectedCategory = nil
-        selectedStartDate = nil
-        selectedEndDate = nil
         
     }
     

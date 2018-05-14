@@ -60,6 +60,14 @@ class Budget {
         
     }
     
+    func deleteTimeFrame (period: Period) {
+        
+        context.delete(period)
+        
+        saveData()
+        
+    }
+    
     
     // *****
     // MARK: - Category functions
@@ -468,7 +476,7 @@ class Budget {
         createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date())
 
         loadSavedCategories()
-        loadSavedBudgetedTimeFrames(descending: true)
+        loadSavedBudgetedTimeFrames()
         
         UserDefaults.standard.set(nil, forKey: categoryKey)
         UserDefaults.standard.set(nil, forKey: transactionKey)

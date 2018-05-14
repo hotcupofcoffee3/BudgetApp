@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B50A2B2A20A35B5D00390975 /* EditCategory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A2B2920A35B5D00390975 /* EditCategory.storyboard */; };
 		B50A2B2C20A35C7300390975 /* EditTransaction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */; };
+		B50D5D9720A9F0E800EBD67D /* BudgetItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */; };
+		B50D5D9920A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50D5D9820A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift */; };
 		B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */; };
 		B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E62076BB570068E059 /* TransactionViewController.swift */; };
 		B51AC2E92076BB730068E059 /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */; };
@@ -30,6 +32,7 @@
 		B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B576FD2B208F86BD00565082 /* DetailsViewController.swift */; };
 		B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */; };
 		B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58816C82084F85D00CA0C4D /* DateFormatModel.swift */; };
+		B5892DD820A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5892DD720A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift */; };
 		B58B8A9F2098AC54009C55A3 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */; };
 		B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */; };
 		B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */; };
@@ -52,6 +55,8 @@
 /* Begin PBXFileReference section */
 		B50A2B2920A35B5D00390975 /* EditCategory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditCategory.storyboard; sourceTree = "<group>"; };
 		B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditTransaction.storyboard; sourceTree = "<group>"; };
+		B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetItemsViewController.swift; sourceTree = "<group>"; };
+		B50D5D9820A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBudgetItemsViewController.swift; sourceTree = "<group>"; };
 		B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B51AC2E62076BB570068E059 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +80,7 @@
 		B576FD2B208F86BD00565082 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		B587DF21208D0FA00042F0AB /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		B58816C82084F85D00CA0C4D /* DateFormatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatModel.swift; sourceTree = "<group>"; };
+		B5892DD720A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetedTimeFrameViewController.swift; sourceTree = "<group>"; };
 		B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
 		B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSavedBudgetInfoModel.swift; sourceTree = "<group>"; };
 		B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBudgetInfoModel.swift; sourceTree = "<group>"; };
@@ -164,8 +170,11 @@
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
+				B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */,
+				B50D5D9820A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
+				B5892DD720A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
 				B52879A8208A42970011D04C /* AddTransactionViewController.swift */,
 				B531F86A208929CF00D0E05D /* MoveFundsViewController.swift */,
@@ -322,6 +331,7 @@
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,
 				B52879A9208A42970011D04C /* AddTransactionViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,
+				B5892DD820A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift in Sources */,
 				B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */,
 				B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */,
 				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
@@ -333,10 +343,12 @@
 				B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */,
 				B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */,
 				B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */,
+				B50D5D9720A9F0E800EBD67D /* BudgetItemsViewController.swift in Sources */,
 				B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */,
 				B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */,
 				B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */,
 				B5E8316920A4DA660068DD05 /* TransactionTableViewCell.swift in Sources */,
+				B50D5D9920A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift in Sources */,
 				B531F86B208929CF00D0E05D /* MoveFundsViewController.swift in Sources */,
 				B5E8316D20A4DA720068DD05 /* BudgetTableViewCell.swift in Sources */,
 				B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */,

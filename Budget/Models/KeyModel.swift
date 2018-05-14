@@ -59,62 +59,66 @@ let lightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, 
 // MARK: - Segue Keys
 
 // Main to others
-let mainToBudgetSegueKey = "MainToBudgetSegue"
-let mainToCategoriesSegueKey = "MainToCategoriesSegue"
-let mainToTransactionsSegueKey = "MainToTransactionsSegue"
+let mainToBudgetSegueKey = "mainToBudgetSegue"
+let mainToCategoriesSegueKey = "mainToCategoriesSegue"
+let mainToTransactionsSegueKey = "mainToTransactionsSegue"
 
-let mainToAddCategorySegueKey = "MainToAddCategorySegue"
-let mainToAddTransactionSegueKey = "MainToAddTransactionSegue"
-let mainToAddDepositSegueKey = "MainToAddDepositSegue"
-let mainToMoveFundsSegueKey = "MainToMoveFundsSegue"
+let mainToAddCategorySegueKey = "mainToAddCategorySegue"
+let mainToAddTransactionSegueKey = "mainToAddTransactionSegue"
+let mainToAddDepositSegueKey = "mainToAddDepositSegue"
+let mainToMoveFundsSegueKey = "mainToMoveFundsSegue"
 
 
 // Categories to others
-let categoriesToAddCategorySegueKey = "CategoriesToAddCategorySegue"
-let categoriesToAddTransactionSegueKey = "CategoriesToAddTransactionSegue"
-let categoriesToAddDepositSegueKey = "CategoriesToAddDepositSegue"
-let categoriesToMoveFundsSegueKey = "CategoriesToMoveFundsSegue"
-let categoriesToTransactionsSegueKey = "CategoriesToTransactionsSegue"
+let categoriesToAddCategorySegueKey = "categoriesToAddCategorySegue"
+let categoriesToAddTransactionSegueKey = "categoriesToAddTransactionSegue"
+let categoriesToAddDepositSegueKey = "categoriesToAddDepositSegue"
+let categoriesToMoveFundsSegueKey = "categoriesToMoveFundsSegue"
+let categoriesToTransactionsSegueKey = "categoriesToTransactionsSegue"
 
 
 // Transactions to others
-let transactionsToAddCategorySegueKey = "TransactionsToAddCategorySegue"
-let transactionsToAddTransactionSegueKey = "TransactionsToAddTransactionSegue"
-let transactionsToAddDepositSegueKey = "TransactionsToAddDepositSegue"
-let transactionsToMoveFundsSegueKey = "TransactionsToMoveFundsSegue"
-let transactionsToCategoriesSegueKey = "TransactionsToCategoriesSegue"
-
-
-// Date & Category Picker Segues
-let addCategoryToDatePickerSegueKey = "AddCategoryToDatePickerSegue"
-let addTransactionToDatePickerSegueKey = "AddTransactionToDatePickerSegue"
-let addTransactionToCategoryPickerSegueKey = "AddTransactionToCategoryPickerSegue"
-let moveFundsToCategoryPickerSegueKey = "MoveFundsToCategoryPickerSegue"
-let editCategoryAvailableToCategoryPickerSegueKey = "EditCategoryAvailableToCategoryPickerSegue"
-let editCategoryToDatePickerSegueKey = "EditCategoryToDatePickerSegue"
-let changeTransactionDateToDatePickerSegueKey = "ChangeTransactionDateToDatePickerSegue"
-let changeTransactionCategoryToCategoryPickerSegueKey = "ChangeTransactionCategoryToCategoryPickerSegue"
-
-
-// Category Picker Segues
+let transactionsToAddCategorySegueKey = "transactionsToAddCategorySegue"
+let transactionsToAddTransactionSegueKey = "transactionsToAddTransactionSegue"
+let transactionsToAddDepositSegueKey = "transactionsToAddDepositSegue"
+let transactionsToMoveFundsSegueKey = "transactionsToMoveFundsSegue"
+let transactionsToCategoriesSegueKey = "transactionsToCategoriesSegue"
 
 
 // Budget to others
-let budgetToTransactionsSegueKey = "BudgetToTransactionsSegue"
+let budgetToAddBudgetSegueKey = "budgetToAddBudgetSegue"
+let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
+let budgetToTimeFrameItemsSegueKey = "budgetToTimeFrameItemsSegue"
+let budgetItemsToSelectItemsSegueKey = "budgetItemsToSelectItemsSegue"
+
+
+// Date Picker Segues
+let addCategoryToDatePickerSegueKey = "addCategoryToDatePickerSegue"
+let addTransactionToDatePickerSegueKey = "addTransactionToDatePickerSegue"
+let editCategoryToDatePickerSegueKey = "editCategoryToDatePickerSegue"
+let changeTransactionDateToDatePickerSegueKey = "changeTransactionDateToDatePickerSegue"
+let addBudgetToDatePickerSegueKey = "addBudgetToDatePickerSegue"
+
+
+// Category Picker Segues
+let addTransactionToCategoryPickerSegueKey = "addTransactionToCategoryPickerSegue"
+let moveFundsToCategoryPickerSegueKey = "aoveFundsToCategoryPickerSegue"
+let editCategoryAvailableToCategoryPickerSegueKey = "editCategoryAvailableToCategoryPickerSegue"
+let changeTransactionCategoryToCategoryPickerSegueKey = "changeTransactionCategoryToCategoryPickerSegue"
 
 
 // Edit Segues
 
-let editTransactionSegueKey = "EditTransactionSegue"
-let editTransactionTitleSegueKey = "EditTransactionTitleSegue"
-let editTransactionAmountSegueKey = "EditTransactionAmountSegue"
-let editTransactionDateSegueKey = "EditTransactionDateSegue"
-let editTransactionCategorySegueKey = "EditTransactionCategorySegue"
+let editTransactionSegueKey = "editTransactionSegue"
+let editTransactionTitleSegueKey = "editTransactionTitleSegue"
+let editTransactionAmountSegueKey = "editTransactionAmountSegue"
+let editTransactionDateSegueKey = "editTransactionDateSegue"
+let editTransactionCategorySegueKey = "editTransactionCategorySegue"
 
-let editCategorySegueKey = "EditCategorySegue"
-let editCategoryNameSegueKey = "EditCategoryNameSegue"
-let editCategoryBudgetedSegueKey = "EditCategoryBudgetedSegue"
-let editCategoryAvailableSegueKey = "EditCategoryAvailableSegue"
+let editCategorySegueKey = "editCategorySegue"
+let editCategoryNameSegueKey = "editCategoryNameSegue"
+let editCategoryBudgetedSegueKey = "editCategoryBudgetedSegue"
+let editCategoryAvailableSegueKey = "editCategoryAvailableSegue"
 
 
 

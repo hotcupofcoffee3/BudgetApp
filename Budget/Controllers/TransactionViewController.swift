@@ -11,8 +11,6 @@ import UIKit
 var editableTransactionID = Int()
 
 var selectedCategory: String?
-var selectedStartDate: Int?
-var selectedEndDate: Int?
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -202,10 +200,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
-        
-        //        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
-        //        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
-        //        self.view.addGestureRecognizer(rightSwipe)
         
         for transaction in transactionsToDisplay {
             

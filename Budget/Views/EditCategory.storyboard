@@ -496,7 +496,7 @@
                         <outlet property="newCategoryAvailable" destination="wX4-sj-hz6" id="M2d-BO-TU5"/>
                         <outlet property="updateItemButton" destination="OC1-A9-B3t" id="JWs-Mj-PRd"/>
                         <outlet property="warningLabel" destination="KQr-lW-xVb" id="5cr-y5-loF"/>
-                        <segue destination="fwo-iB-uaT" kind="presentation" identifier="EditCategoryAvailableToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="5VR-3V-phc"/>
+                        <segue destination="fwo-iB-uaT" kind="presentation" identifier="editCategoryAvailableToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="5VR-3V-phc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9j-8K-MQO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -718,10 +718,10 @@
                         <outlet property="editNameButton" destination="jq6-h7-PEf" id="w5m-eA-4ze"/>
                         <outlet property="leftAmountAtTopRight" destination="fSp-48-zMS" id="zCV-JJ-4ZF"/>
                         <outlet property="leftLabelOnNavBar" destination="Sfy-Uv-Scu" id="2ED-pU-Rtg"/>
-                        <segue destination="1xk-Ih-snr" kind="show" identifier="EditCategoryNameSegue" id="Rhq-at-lys"/>
-                        <segue destination="yfh-bo-ApM" kind="show" identifier="EditCategoryBudgetedSegue" id="Uz8-yG-jkv"/>
-                        <segue destination="WzN-Oi-XcR" kind="show" identifier="EditCategoryAvailableSegue" id="xPM-rC-Acd"/>
-                        <segue destination="BtF-ZN-hus" kind="presentation" identifier="EditCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="Bhg-U0-TUQ"/>
+                        <segue destination="1xk-Ih-snr" kind="show" identifier="editCategoryNameSegue" id="Rhq-at-lys"/>
+                        <segue destination="yfh-bo-ApM" kind="show" identifier="editCategoryBudgetedSegue" id="Uz8-yG-jkv"/>
+                        <segue destination="WzN-Oi-XcR" kind="show" identifier="editCategoryAvailableSegue" id="xPM-rC-Acd"/>
+                        <segue destination="BtF-ZN-hus" kind="presentation" identifier="editCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="Bhg-U0-TUQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEy-Uh-MEe" userLabel="First Responder" sceneMemberID="firstResponder"/>

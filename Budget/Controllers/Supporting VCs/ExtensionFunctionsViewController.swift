@@ -25,6 +25,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     
+    
     // *****
     // MARK: - IBActions
     // *****
@@ -60,7 +61,6 @@ class ExtensionFunctionsViewController: UIViewController {
     // *****
     // MARK: - Functions
     // *****
-    
     
     
     
@@ -255,25 +255,17 @@ extension UIViewController {
         
         var transactionsToDisplay = [Transaction]()
         
-        if selectedCategory == nil && selectedStartDate == nil {
+        if selectedCategory == nil {
             
             loadSavedTransactions(descending: true)
             
             transactionsToDisplay = budget.transactions
             
-        } else if selectedCategory != nil && selectedStartDate == nil {
+        } else {
             
             if let category = selectedCategory {
                 
                 transactionsToDisplay = loadTransactionsByCategory(selectedCategory: category)
-                
-            }
-            
-        } else if selectedCategory == nil && selectedStartDate != nil && selectedEndDate != nil {
-            
-            if let start = selectedStartDate, let end = selectedEndDate {
-                
-                transactionsToDisplay = loadTransactionsByDate(selectedStartDate: start, selectedEndDate: end)
                 
             }
             
@@ -300,8 +292,43 @@ extension UIViewController {
     }
     
     
+    // MARK: - Convert Calendar Components to Date
+    
+    func convertComponentsToDate(year: Int, month: Int, day: Int) -> Date {
+        
+        var dateConverted: Date
+        
+        let calender = Calendar(identifier: .gregorian)
+        
+        let components = DateComponents(year: Int(year), month: Int(month), day: Int(day))
+        
+        guard let conversion = calender.date(from: components) else {
+            fatalError("Date components could not be converted.")
+        }
+        
+        dateConverted = conversion
+        
+        return dateConverted
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -66,8 +66,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func viewAllTransactions(_ sender: UIButton) {
         
         selectedCategory = nil
-        selectedStartDate = nil
-        selectedEndDate = nil
         
         performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
         
@@ -273,8 +271,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.separatorStyle = .none
         editCategory = false
         selectedCategory = nil
-        selectedStartDate = nil
-        selectedEndDate = nil
+
     }
     
     

@@ -149,12 +149,12 @@
                         <outlet property="hiddenDeleteButton" destination="T8f-P5-Fkt" id="e3O-P6-BPC"/>
                         <outlet property="hiddenResetWithCategoriesAndTransactions" destination="lKj-aK-g5l" id="nvQ-Ax-ouC"/>
                         <outlet property="transactionsButtonTitle" destination="XGE-FZ-5ps" id="SgV-EF-lTF"/>
-                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="MainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
-                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="MainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
-                        <segue destination="hY6-l5-vLB" kind="show" identifier="MainToAddCategorySegue" id="mU4-cf-aIR"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="MainToAddTransactionSegue" id="eXP-Fb-uY0"/>
-                        <segue destination="ZN3-qu-gHe" kind="show" identifier="MainToMoveFundsSegue" id="ZXq-hv-ffC"/>
-                        <segue destination="lvi-BA-VNj" kind="show" identifier="MainToBudgetSegue" animates="NO" id="ViF-Zn-d3a"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="mainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
+                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="mainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
+                        <segue destination="hY6-l5-vLB" kind="show" identifier="mainToAddCategorySegue" id="mU4-cf-aIR"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="mainToAddTransactionSegue" id="eXP-Fb-uY0"/>
+                        <segue destination="ZN3-qu-gHe" kind="show" identifier="mainToMoveFundsSegue" id="ZXq-hv-ffC"/>
+                        <segue destination="lvi-BA-VNj" kind="show" identifier="mainToBudgetSegue" animates="NO" id="ViF-Zn-d3a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UQz-5D-Zav" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -461,12 +461,12 @@
                         <outlet property="leftLabelOnNavBar" destination="6YZ-eR-ZXu" id="4nb-qi-eCg"/>
                         <outlet property="nameView" destination="6hU-hF-N6u" id="kng-g5-Siv"/>
                         <outlet property="recurringView" destination="yco-7z-rhT" id="lzS-rz-5G3"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="AddCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="S9i-T2-HlC"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="S9i-T2-HlC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2186.4000000000001" y="662.51874062968523"/>
+            <point key="canvasLocation" x="-1447" y="663"/>
         </scene>
         <!--Move Funds View Controller-->
         <scene sceneID="Bcg-ZU-BHL">
@@ -700,17 +700,17 @@
                         <outlet property="toCategoryLabel" destination="pqE-n1-4DD" id="3Wv-jC-bfJ"/>
                         <outlet property="toCategoryView" destination="kFY-Tz-cBe" id="SmC-UD-n3W"/>
                         <outlet property="warningLabel" destination="aUn-Bd-eFH" id="oCB-Xl-nf0"/>
-                        <segue destination="SSf-za-taf" kind="presentation" identifier="MoveFundsToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="T1h-dy-WYd"/>
+                        <segue destination="SSf-za-taf" kind="presentation" identifier="moveFundsToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="T1h-dy-WYd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cY-Ra-OK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1391" y="663"/>
+            <point key="canvasLocation" x="-705" y="663"/>
         </scene>
         <!--Add Transaction View Controller-->
         <scene sceneID="qUh-bf-mVd">
             <objects>
-                <viewController storyboardIdentifier="AddWithdrawalViewController" id="HME-n8-SWE" customClass="AddTransactionViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddTransactionViewController" id="HME-n8-SWE" customClass="AddTransactionViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zPg-4m-eTn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1009,13 +1009,13 @@
                         <outlet property="transactionNameTextField" destination="h8m-Na-mTR" id="LQl-Mt-oGh"/>
                         <outlet property="transactionSegmentedControl" destination="OhW-bb-25P" id="YkL-bC-l6I"/>
                         <outlet property="warningLabel" destination="TEt-e4-A1x" id="scg-3D-zgP"/>
-                        <segue destination="SSf-za-taf" kind="presentation" identifier="AddTransactionToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="6ek-xa-S2V"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="AddTransactionToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="s2V-Nq-kYo"/>
+                        <segue destination="SSf-za-taf" kind="presentation" identifier="addTransactionToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="6ek-xa-S2V"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addTransactionToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="s2V-Nq-kYo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-567" y="663"/>
+            <point key="canvasLocation" x="50" y="663"/>
         </scene>
         <!--Budget View Controller-->
         <scene sceneID="Ias-aB-CIT">
@@ -1038,6 +1038,9 @@
                                 <state key="normal" image="addButton">
                                     <color key="titleColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addPeriod:" destination="lvi-BA-VNj" eventType="touchUpInside" id="8ph-OC-AnK"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$100,000.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4C-vm-44T">
                                 <rect key="frame" x="20" y="84" width="335" height="48"/>
@@ -1059,7 +1062,11 @@
                                                 <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="crossDissolve" id="C8p-9T-DZF"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="P7r-Fg-xHf"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="P7r-Fg-xHf">
+                                            <connections>
+                                                <action selector="editTimeFrame:" destination="lvi-BA-VNj" id="hwU-Q2-ktT"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1107,8 +1114,12 @@
                         <viewLayoutGuide key="safeArea" id="bdg-uh-aQZ"/>
                     </view>
                     <connections>
+                        <outlet property="availableBalanceLabel" destination="e4C-vm-44T" id="Got-Do-cAi"/>
                         <outlet property="displayedDataTable" destination="yyx-uc-6Jt" id="oKT-wP-ypk"/>
-                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="BudgetToTransactionsSegue" modalTransitionStyle="crossDissolve" id="lar-hd-J4W"/>
+                        <outlet property="editTimeFrameBarButton" destination="P7r-Fg-xHf" id="zgg-5N-Eo3"/>
+                        <segue destination="eR5-Yl-iaE" kind="show" identifier="budgetToAddBudgetSegue" id="Dgm-sH-8hF"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="budgetToCategoriesSegue" animates="NO" modalTransitionStyle="crossDissolve" id="C7a-lO-baq"/>
+                        <segue destination="6d5-A9-YER" kind="presentation" identifier="budgetToTimeFrameItemsSegue" id="F8N-6k-N83"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQb-I9-GCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1231,16 +1242,16 @@
                         <outlet property="displayedDataTable" destination="cG6-sI-Nir" id="TKm-62-9Im"/>
                         <outlet property="editCategoryBarButton" destination="DOY-LF-cIS" id="aY0-Mc-srB"/>
                         <outlet property="viewAllTransactionsButton" destination="wZN-jj-y7m" id="9hd-qb-lhF"/>
-                        <segue destination="hY6-l5-vLB" kind="show" identifier="CategoriesToAddCategorySegue" id="8ar-qL-cfd"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="CategoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
-                        <segue destination="ZN3-qu-gHe" kind="show" identifier="CategoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
-                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="CategoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
-                        <segue destination="Bvo-FS-qhC" kind="show" identifier="EditCategorySegue" id="qpC-yO-yNf"/>
+                        <segue destination="hY6-l5-vLB" kind="show" identifier="categoriesToAddCategorySegue" id="8ar-qL-cfd"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="categoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
+                        <segue destination="ZN3-qu-gHe" kind="show" identifier="categoriesToMoveFundsSegue" id="hxM-AH-nJz"/>
+                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="categoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
+                        <segue destination="Bvo-FS-qhC" kind="show" identifier="editCategorySegue" id="qpC-yO-yNf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1390" y="-126"/>
+            <point key="canvasLocation" x="-1074" y="-126"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="v3I-JP-pOm">
@@ -1377,14 +1388,91 @@
                     <connections>
                         <outlet property="availableBalanceLabel" destination="t4n-ff-mkf" id="P2j-br-Ofq"/>
                         <outlet property="displayedDataTable" destination="ZqH-WV-HTb" id="N7J-xZ-5Ko"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="TransactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
-                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="TransactionsToCategoriesSegue" modalTransitionStyle="crossDissolve" id="LyT-nl-dpa"/>
-                        <segue destination="hZg-Sk-Hcm" kind="show" identifier="EditTransactionSegue" id="xII-Ic-EwU"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="transactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="transactionsToCategoriesSegue" modalTransitionStyle="crossDissolve" id="LyT-nl-dpa"/>
+                        <segue destination="hZg-Sk-Hcm" kind="show" identifier="editTransactionSegue" id="xII-Ic-EwU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-567" y="-126"/>
+            <point key="canvasLocation" x="50" y="-126"/>
+        </scene>
+        <!--Select Budget Items View Controller-->
+        <scene sceneID="e7p-Ej-TWH">
+            <objects>
+                <viewController id="qrx-Er-AbZ" customClass="SelectBudgetItemsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uHS-Nt-qu4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fZ-hc-rbP">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Select Items" id="9Hg-oe-lJi">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" id="e2p-zi-dgR">
+                                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="xab-m6-3Ql"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="leading" secondItem="EN6-m0-2AW" secondAttribute="leading" id="FIh-6t-vub"/>
+                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="top" secondItem="EN6-m0-2AW" secondAttribute="top" id="f8f-ZA-PK6"/>
+                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="trailing" secondItem="EN6-m0-2AW" secondAttribute="trailing" id="g6n-d4-Njv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EN6-m0-2AW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSh-RZ-5M7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1670" y="-1185"/>
+        </scene>
+        <!--Budget Items View Controller-->
+        <scene sceneID="PeL-sX-taZ">
+            <objects>
+                <viewController id="6d5-A9-YER" customClass="BudgetItemsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1ZF-YQ-JZ8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg1-75-croppedSameAsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-Pm-pbx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <navigationBar opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7f-la-oEp">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Budget Items" id="Jo2-OV-Bbb">
+                                        <barButtonItem key="leftBarButtonItem" title="Home" id="cqS-t9-cRl"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="kpC-q1-N1H"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="jbz-8i-R5g"/>
+                    </view>
+                    <connections>
+                        <segue destination="qrx-Er-AbZ" kind="presentation" identifier="budgetItemsToSelectItemsSegue" modalPresentationStyle="overCurrentContext" id="afC-v9-peL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vvt-iR-2Kz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2620" y="-900"/>
         </scene>
         <!--EditCategory-->
         <scene sceneID="vkV-E9-mUs">
@@ -1418,19 +1506,188 @@
             </objects>
             <point key="canvasLocation" x="-870" y="1097"/>
         </scene>
+        <!--Add Budgeted Time Frame View Controller-->
+        <scene sceneID="dMM-Lm-enR">
+            <objects>
+                <viewController storyboardIdentifier="AddBudgetedTimeFrameViewController" id="eR5-Yl-iaE" customClass="AddBudgetedTimeFrameViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vKz-vQ-3S0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLq-Ap-ncL">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Add Budget Time Frame" id="HmV-pJ-N2X">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="p83-cC-xKj">
+                                            <connections>
+                                                <action selector="backButton:" destination="eR5-Yl-iaE" id="aQR-LY-AQS"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="oQd-Es-lmh"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERI-PT-1hl">
+                                <rect key="frame" x="20.5" y="74" width="334.5" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kiD-Eq-qMD" userLabel="Start View">
+                                <rect key="frame" x="20" y="132" width="335" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KPK-gz-66e" userLabel="Start Stack">
+                                        <rect key="frame" x="10" y="10" width="315" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8Y-U6-ncv">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="1JO-l6-X72"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="k6q-jo-vTm"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/8/18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQT-5M-53F">
+                                                <rect key="frame" x="110" y="0.0" width="205" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="KPK-gz-66e" secondAttribute="trailing" constant="10" id="3kI-3J-9pN"/>
+                                    <constraint firstItem="KPK-gz-66e" firstAttribute="top" secondItem="kiD-Eq-qMD" secondAttribute="top" constant="10" id="4EQ-dV-mpw"/>
+                                    <constraint firstItem="KPK-gz-66e" firstAttribute="leading" secondItem="kiD-Eq-qMD" secondAttribute="leading" constant="10" id="5Po-B5-CWz"/>
+                                    <constraint firstItem="KPK-gz-66e" firstAttribute="top" secondItem="kiD-Eq-qMD" secondAttribute="top" constant="10" id="NYV-4S-Gan"/>
+                                    <constraint firstAttribute="bottom" secondItem="KPK-gz-66e" secondAttribute="bottom" constant="10" id="VOu-6T-z3M"/>
+                                    <constraint firstItem="KPK-gz-66e" firstAttribute="leading" secondItem="kiD-Eq-qMD" secondAttribute="leading" constant="10" id="WcI-6Z-oHu"/>
+                                    <constraint firstAttribute="height" constant="50" id="iY6-uB-t63"/>
+                                    <constraint firstAttribute="trailing" secondItem="KPK-gz-66e" secondAttribute="trailing" constant="10" id="upY-Uu-753"/>
+                                    <constraint firstAttribute="bottom" secondItem="KPK-gz-66e" secondAttribute="bottom" constant="10" id="vXH-WP-pit"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FTu-RZ-2vX" userLabel="End View">
+                                <rect key="frame" x="20" y="222" width="335" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WYY-yq-c8e" userLabel="End Stack">
+                                        <rect key="frame" x="10" y="10" width="315" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkG-zk-1ps">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="hkJ-gj-CVC"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="lFi-eV-AF8"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/8/18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pQ-m2-cy7">
+                                                <rect key="frame" x="110" y="0.0" width="205" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="WYY-yq-c8e" secondAttribute="trailing" constant="10" id="3lE-10-BJL"/>
+                                    <constraint firstItem="WYY-yq-c8e" firstAttribute="leading" secondItem="FTu-RZ-2vX" secondAttribute="leading" constant="10" id="J2o-rw-lag"/>
+                                    <constraint firstItem="WYY-yq-c8e" firstAttribute="leading" secondItem="FTu-RZ-2vX" secondAttribute="leading" constant="10" id="JuG-wZ-IPX"/>
+                                    <constraint firstAttribute="bottom" secondItem="WYY-yq-c8e" secondAttribute="bottom" constant="10" id="Sou-xh-fBv"/>
+                                    <constraint firstAttribute="bottom" secondItem="WYY-yq-c8e" secondAttribute="bottom" constant="10" id="V1I-h1-wHN"/>
+                                    <constraint firstItem="WYY-yq-c8e" firstAttribute="top" secondItem="FTu-RZ-2vX" secondAttribute="top" constant="10" id="WSn-sI-ii6"/>
+                                    <constraint firstItem="WYY-yq-c8e" firstAttribute="top" secondItem="FTu-RZ-2vX" secondAttribute="top" constant="10" id="Yib-gz-Nsr"/>
+                                    <constraint firstAttribute="height" constant="50" id="bXr-Uf-9ph"/>
+                                    <constraint firstAttribute="trailing" secondItem="WYY-yq-c8e" secondAttribute="trailing" constant="10" id="dbB-x7-TKa"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cs1-z7-9mx" userLabel="Warning Label">
+                                <rect key="frame" x="20" y="282" width="335" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0S-Kb-Z4l" userLabel="Add Transaction">
+                                <rect key="frame" x="57.5" y="292" width="260" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="260" id="R3K-Qd-Rs2"/>
+                                    <constraint firstAttribute="height" constant="54" id="jyi-Cl-eXB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Add Budget Time Frame">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="addTimeFrame:" destination="eR5-Yl-iaE" eventType="touchUpInside" id="nL8-yH-5wt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FTu-RZ-2vX" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" constant="20" id="0Fm-Le-018"/>
+                            <constraint firstItem="hG4-k2-og0" firstAttribute="trailing" secondItem="FTu-RZ-2vX" secondAttribute="trailing" constant="20" id="2na-2t-Gyt"/>
+                            <constraint firstItem="ERI-PT-1hl" firstAttribute="top" secondItem="VLq-Ap-ncL" secondAttribute="bottom" constant="10" id="3ZG-w1-0Gk"/>
+                            <constraint firstItem="hG4-k2-og0" firstAttribute="trailing" secondItem="cs1-z7-9mx" secondAttribute="trailing" constant="20" id="BpW-HW-Hhi"/>
+                            <constraint firstItem="FTu-RZ-2vX" firstAttribute="top" secondItem="kiD-Eq-qMD" secondAttribute="bottom" constant="40" id="JGS-et-0Dl"/>
+                            <constraint firstItem="ERI-PT-1hl" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" constant="20" id="KTd-bz-uAc"/>
+                            <constraint firstItem="cs1-z7-9mx" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" constant="20" id="NF4-F3-Y3Y"/>
+                            <constraint firstItem="hG4-k2-og0" firstAttribute="trailing" secondItem="kiD-Eq-qMD" secondAttribute="trailing" constant="20" id="U4D-gD-mgn"/>
+                            <constraint firstItem="cs1-z7-9mx" firstAttribute="top" secondItem="FTu-RZ-2vX" secondAttribute="bottom" constant="10" id="Uz6-Tc-2On"/>
+                            <constraint firstItem="VLq-Ap-ncL" firstAttribute="top" secondItem="hG4-k2-og0" secondAttribute="top" id="VBz-y8-np9"/>
+                            <constraint firstItem="VLq-Ap-ncL" firstAttribute="trailing" secondItem="hG4-k2-og0" secondAttribute="trailing" id="ZhN-sg-ip7"/>
+                            <constraint firstItem="x0S-Kb-Z4l" firstAttribute="top" secondItem="cs1-z7-9mx" secondAttribute="bottom" constant="10" id="j0k-ew-E5V"/>
+                            <constraint firstItem="VLq-Ap-ncL" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" id="m7E-bT-Q8L"/>
+                            <constraint firstItem="x0S-Kb-Z4l" firstAttribute="centerX" secondItem="vKz-vQ-3S0" secondAttribute="centerX" id="nRu-lV-iHV"/>
+                            <constraint firstItem="kiD-Eq-qMD" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" constant="20" id="qqv-rn-sLg"/>
+                            <constraint firstItem="FTu-RZ-2vX" firstAttribute="leading" secondItem="hG4-k2-og0" secondAttribute="leading" constant="20" id="r7n-ks-H1W"/>
+                            <constraint firstItem="hG4-k2-og0" firstAttribute="trailing" secondItem="ERI-PT-1hl" secondAttribute="trailing" constant="20" id="u50-mh-iws"/>
+                            <constraint firstItem="hG4-k2-og0" firstAttribute="trailing" secondItem="FTu-RZ-2vX" secondAttribute="trailing" constant="20" id="ul2-KG-i6Q"/>
+                            <constraint firstItem="kiD-Eq-qMD" firstAttribute="top" secondItem="ERI-PT-1hl" secondAttribute="bottom" constant="40" id="wiV-bX-rRR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hG4-k2-og0"/>
+                    </view>
+                    <connections>
+                        <outlet property="addTimeFrameButton" destination="x0S-Kb-Z4l" id="fCZ-Pt-SGB"/>
+                        <outlet property="endDateLabel" destination="0pQ-m2-cy7" id="kKh-WT-zAI"/>
+                        <outlet property="endDateView" destination="FTu-RZ-2vX" id="TUR-m3-5pE"/>
+                        <outlet property="leftAmountAtTopRight" destination="ERI-PT-1hl" id="LX9-qU-v8P"/>
+                        <outlet property="leftLabelOnNavBar" destination="oQd-Es-lmh" id="wtS-RA-Ssb"/>
+                        <outlet property="startDateLabel" destination="sQT-5M-53F" id="mgU-2K-e2y"/>
+                        <outlet property="startDateView" destination="kiD-Eq-qMD" id="aZi-TV-S9i"/>
+                        <outlet property="warningLabel" destination="cs1-z7-9mx" id="zc9-0m-DV7"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addBudgetToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="BFk-Fg-fMz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jsx-sh-U2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2186" y="663"/>
+        </scene>
     </scenes>
     <resources>
         <image name="addButton" width="300" height="300"/>
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="S9i-T2-HlC"/>
-        <segue reference="6ek-xa-S2V"/>
-        <segue reference="1AE-Ye-tTi"/>
-        <segue reference="LyT-nl-dpa"/>
-        <segue reference="8K3-ts-dmR"/>
-        <segue reference="hxM-AH-nJz"/>
-        <segue reference="8ar-qL-cfd"/>
-        <segue reference="OXX-Ft-DJ2"/>
+        <segue reference="BFk-Fg-fMz"/>
+        <segue reference="T1h-dy-WYd"/>
+        <segue reference="gOi-Bu-AOw"/>
+        <segue reference="C7a-lO-baq"/>
+        <segue reference="eXP-Fb-uY0"/>
+        <segue reference="ZXq-hv-ffC"/>
+        <segue reference="mU4-cf-aIR"/>
+        <segue reference="C8p-9T-DZF"/>
     </inferredMetricsTieBreakers>
 </document>
