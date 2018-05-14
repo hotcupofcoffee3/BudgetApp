@@ -98,7 +98,7 @@ func convertedDateComponentsToTransactionID(year: Int, month: Int, day: Int) -> 
 
 // *** Convert Date Components into Budgeted Time Frame
 
-func convertedDateToBudgetedTimeFrame(timeFrame: Date, isEnd: Bool) -> Int {
+func convertedDateToBudgetedTimeFrameID(timeFrame: Date, isEnd: Bool) -> Int {
     
     var formattedDate = Int()
     

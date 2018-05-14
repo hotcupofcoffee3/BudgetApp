@@ -1,26 +1,25 @@
 //
-//  BudgetTableViewCell.swift
+//  BudgetItemTableViewCell.swift
 //  Budget
 //
-//  Created by Adam Moore on 5/10/18.
+//  Created by Adam Moore on 5/14/18.
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
 import UIKit
 
-class BudgetTableViewCell: UITableViewCell {
+class BudgetItemTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var startLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     
-    @IBOutlet weak var endLabel: UILabel!
-
-    @IBOutlet weak var budgetedTimeFrameView: UIView!
+    @IBOutlet weak var dueDayLabel: UILabel!
     
     @IBOutlet weak var amountLabel: UILabel!
     
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

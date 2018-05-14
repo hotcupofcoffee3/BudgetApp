@@ -42,6 +42,9 @@
 		B5E8316A20A4DA660068DD05 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */; };
 		B5E8316D20A4DA720068DD05 /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8316B20A4DA720068DD05 /* BudgetTableViewCell.swift */; };
 		B5E8316E20A4DA720068DD05 /* BudgetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E8316C20A4DA720068DD05 /* BudgetTableViewCell.xib */; };
+		B5EE2BA020AA17B60059CFA4 /* BudgetItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5EE2B9F20AA17B60059CFA4 /* BudgetItems.storyboard */; };
+		B5EE2BA320AA33FE0059CFA4 /* BudgetItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */; };
+		B5EE2BA420AA33FE0059CFA4 /* BudgetItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */; };
 		B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */; };
 		B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */; };
 		B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */; };
@@ -90,6 +93,9 @@
 		B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
 		B5E8316B20A4DA720068DD05 /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		B5E8316C20A4DA720068DD05 /* BudgetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetTableViewCell.xib; sourceTree = "<group>"; };
+		B5EE2B9F20AA17B60059CFA4 /* BudgetItems.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BudgetItems.storyboard; sourceTree = "<group>"; };
+		B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetItemTableViewCell.swift; sourceTree = "<group>"; };
+		B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetItemTableViewCell.xib; sourceTree = "<group>"; };
 		B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionTitleViewController.swift; sourceTree = "<group>"; };
 		B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionAmountViewController.swift; sourceTree = "<group>"; };
 		B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionDateViewController.swift; sourceTree = "<group>"; };
@@ -170,9 +176,9 @@
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
+				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */,
 				B50D5D9820A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift */,
-				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
 				B5892DD720A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
@@ -190,11 +196,13 @@
 			isa = PBXGroup;
 			children = (
 				B5E8316C20A4DA720068DD05 /* BudgetTableViewCell.xib */,
-				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
-				B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */,
 				B5E8316B20A4DA720068DD05 /* BudgetTableViewCell.swift */,
+				B5F401D2209B958F00103C7F /* CategoryTableViewCell.xib */,
 				B5F401D1209B958F00103C7F /* CategoryTableViewCell.swift */,
+				B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */,
 				B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */,
+				B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */,
+				B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -217,6 +225,7 @@
 				B533E36120700B01007A72E0 /* Main.storyboard */,
 				B50A2B2920A35B5D00390975 /* EditCategory.storyboard */,
 				B50A2B2B20A35C7300390975 /* EditTransaction.storyboard */,
+				B5EE2B9F20AA17B60059CFA4 /* BudgetItems.storyboard */,
 				B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */,
 				B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */,
 				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
@@ -301,10 +310,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5EE2BA020AA17B60059CFA4 /* BudgetItems.storyboard in Resources */,
 				B533E36820700B01007A72E0 /* LaunchScreen.storyboard in Resources */,
 				B533E36520700B01007A72E0 /* Assets.xcassets in Resources */,
 				B533E36320700B01007A72E0 /* Main.storyboard in Resources */,
 				B5E81E1C20A385F800E8C3D3 /* DatePicker.storyboard in Resources */,
+				B5EE2BA420AA33FE0059CFA4 /* BudgetItemTableViewCell.xib in Resources */,
 				B5E8316A20A4DA660068DD05 /* TransactionTableViewCell.xib in Resources */,
 				B5E81E1E20A3860400E8C3D3 /* CategoryPicker.storyboard in Resources */,
 				B5E8316E20A4DA720068DD05 /* BudgetTableViewCell.xib in Resources */,
@@ -326,6 +337,7 @@
 				B5F86FEF20A22E9100B87BD3 /* DatePickerViewController.swift in Sources */,
 				B56D4459209372DA005000CF /* EditTransactionViewController.swift in Sources */,
 				B56A0D95209CA3290016634B /* EditCategoryBudgetedViewController.swift in Sources */,
+				B5EE2BA320AA33FE0059CFA4 /* BudgetItemTableViewCell.swift in Sources */,
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
 				B54EFF3A20A0A19600EF3FB8 /* BudgetViewController.swift in Sources */,
 				B5E052442074676300C69153 /* LoadSavedBudgetInfoModel.swift in Sources */,

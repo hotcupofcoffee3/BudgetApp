@@ -63,11 +63,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-        cell.transactionDateLabel?.textColor = UIColor.white
-        cell.transactionNameLabel?.textColor = UIColor.white
-        cell.transactionAmountLabel?.textColor = UIColor.white
-        cell.transactionCategoryLabel?.textColor = UIColor.white
-        
         cell.accessoryType = .disclosureIndicator
         
         if !transactionsToDisplay.isEmpty {
@@ -153,35 +148,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
+
     
     // *****
     // MARK: - Functions
     // *****
-    
-    // *** Swipe
-    //    @objc func swipe() {
-    //
-    //        performSegue(withIdentifier: transactionsToCategoriesSegueKey, sender: self)
-    //
-    //    }
-
+  
     
     
     

@@ -89,14 +89,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-        cell.categoryNameLabel?.textColor = UIColor.white
-        cell.categoryBudgetedTitleLabel?.textColor = UIColor.white
-        cell.categoryBudgetedLabel?.textColor = UIColor.white
-        cell.categoryAvailableTitleLabel?.textColor = UIColor.white
-        cell.categoryAvailableLabel?.textColor = UIColor.white
-        cell.dueDateLabel?.textColor = UIColor.white
-        
-        
         if let category = loadSpecificCategory(named: budget.sortedCategoryKeys[indexPath.row]) {
             
             // Unallocated has no disclosure indicator because you cannot edit it.

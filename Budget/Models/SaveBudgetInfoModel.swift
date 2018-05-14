@@ -83,8 +83,8 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     let startDict = convertDateToInts(dateToConvert: start)
     let endDict = convertDateToInts(dateToConvert: end)
     
-    let startDateID = convertedDateToBudgetedTimeFrame(timeFrame: start, isEnd: false)
-    let endDateID = convertedDateToBudgetedTimeFrame(timeFrame: end, isEnd: true)
+    let startDateID = convertedDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
+    let endDateID = convertedDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
     
     let budgetedTimeFrameToSave = Period(context: context)
     
@@ -105,6 +105,54 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     saveData()
     
 }
+
+
+
+// MARK: - Save a new budget item
+
+func createAndSaveNewBudgetItem(timeSpanID: Int, type: String, named: String, amount: Double, category: String, year: Int, month: Int, day: Int) {
+    
+    let itemToSave = BudgetItem(context: context)
+    
+    itemToSave.timeSpanID = Int64(timeSpanID)
+    itemToSave.type = type
+    itemToSave.name = named
+    itemToSave.amount = amount
+    itemToSave.category = category
+    itemToSave.year = Int64(year)
+    itemToSave.month = Int64(month)
+    itemToSave.day = Int64(day)
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Save all Categories into newly created Budgeted Time Frame
+
+func createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: Int) {
+    
+    loadSavedCategories()
+    
+    for category in budget.categories {
+        
+        // The 'type' is currently set to "category" until a property for having a 'paycheck' as a category (a depositable category) is added. Nothing is done with it right now, other than simply serving as a placeholder.
+        // The 'category' property is set to its own category name.
+        // The 'year' and month' properties are set to 0, as they are not used.
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: categoryKey, named: category.name!, amount: category.budgeted, category: category.name!, year: 0, month: 0, day: Int(category.dueDay))
+        
+    }
+    
+    
+    
+    saveData()
+    
+}
+
+
+
+
 
 
 

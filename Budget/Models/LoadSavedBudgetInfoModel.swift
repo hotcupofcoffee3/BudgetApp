@@ -286,7 +286,52 @@ func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
 
 
 
+// *****
+// MARK: - Budget Items
+// *****
 
+// Load Specific Budget Items Based on StartID
+
+func loadSpecificBudgetItems(startID: Int) {
+    
+    let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
+    
+    request.predicate = NSPredicate(format: timeSpanIDMatchesKey, String(startID))
+    
+    request.sortDescriptors = [NSSortDescriptor(key: dayKey, ascending: true), NSSortDescriptor(key: nameKey, ascending: true)]
+    
+    do {
+        
+        budget.budgetItems = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading selected budget items: \(error)")
+        
+    }
+    
+}
+
+
+// Load All Budget Items Based on StartID (Just to make sure it's all working properly.
+
+func loadAllBudgetItems() {
+    
+    let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
+    
+    do {
+        
+        budget.budgetItems = try context.fetch(request)
+        
+    } catch {
+        
+        print("Fuck you; you suck: \(error)")
+        
+    }
+    
+    print(budget.budgetItems.count)
+    
+}
 
 
 

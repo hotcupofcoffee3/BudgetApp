@@ -1118,8 +1118,8 @@
                         <outlet property="displayedDataTable" destination="yyx-uc-6Jt" id="oKT-wP-ypk"/>
                         <outlet property="editTimeFrameBarButton" destination="P7r-Fg-xHf" id="zgg-5N-Eo3"/>
                         <segue destination="eR5-Yl-iaE" kind="show" identifier="budgetToAddBudgetSegue" id="Dgm-sH-8hF"/>
-                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="budgetToCategoriesSegue" animates="NO" modalTransitionStyle="crossDissolve" id="C7a-lO-baq"/>
-                        <segue destination="6d5-A9-YER" kind="presentation" identifier="budgetToTimeFrameItemsSegue" id="F8N-6k-N83"/>
+                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="budgetToCategoriesSegue" modalTransitionStyle="crossDissolve" id="C7a-lO-baq"/>
+                        <segue destination="IrC-ad-S4n" kind="presentation" identifier="budgetToTimeFrameItemsSegue" modalTransitionStyle="crossDissolve" id="FLV-Hk-Ja2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQb-I9-GCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1397,83 +1397,6 @@
             </objects>
             <point key="canvasLocation" x="50" y="-126"/>
         </scene>
-        <!--Select Budget Items View Controller-->
-        <scene sceneID="e7p-Ej-TWH">
-            <objects>
-                <viewController id="qrx-Er-AbZ" customClass="SelectBudgetItemsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uHS-Nt-qu4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fZ-hc-rbP">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="Select Items" id="9Hg-oe-lJi">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" id="e2p-zi-dgR">
-                                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="xab-m6-3Ql"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="leading" secondItem="EN6-m0-2AW" secondAttribute="leading" id="FIh-6t-vub"/>
-                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="top" secondItem="EN6-m0-2AW" secondAttribute="top" id="f8f-ZA-PK6"/>
-                            <constraint firstItem="1fZ-hc-rbP" firstAttribute="trailing" secondItem="EN6-m0-2AW" secondAttribute="trailing" id="g6n-d4-Njv"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="EN6-m0-2AW"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nSh-RZ-5M7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1670" y="-1185"/>
-        </scene>
-        <!--Budget Items View Controller-->
-        <scene sceneID="PeL-sX-taZ">
-            <objects>
-                <viewController id="6d5-A9-YER" customClass="BudgetItemsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1ZF-YQ-JZ8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg1-75-croppedSameAsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-Pm-pbx">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <navigationBar opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7f-la-oEp">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="Budget Items" id="Jo2-OV-Bbb">
-                                        <barButtonItem key="leftBarButtonItem" title="Home" id="cqS-t9-cRl"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="kpC-q1-N1H"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="jbz-8i-R5g"/>
-                    </view>
-                    <connections>
-                        <segue destination="qrx-Er-AbZ" kind="presentation" identifier="budgetItemsToSelectItemsSegue" modalPresentationStyle="overCurrentContext" id="afC-v9-peL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vvt-iR-2Kz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2620" y="-900"/>
-        </scene>
         <!--EditCategory-->
         <scene sceneID="vkV-E9-mUs">
             <objects>
@@ -1481,6 +1404,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CNp-pI-XNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1392" y="-728"/>
+        </scene>
+        <!--BudgetItems-->
+        <scene sceneID="qqk-9Y-iyp">
+            <objects>
+                <viewControllerPlaceholder storyboardName="BudgetItems" id="IrC-ad-S4n" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cdV-jS-PcX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2142" y="-837"/>
         </scene>
         <!--EditTransaction-->
         <scene sceneID="zXb-vN-xge">
@@ -1683,7 +1614,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="BFk-Fg-fMz"/>
         <segue reference="T1h-dy-WYd"/>
-        <segue reference="gOi-Bu-AOw"/>
+        <segue reference="1AE-Ye-tTi"/>
         <segue reference="C7a-lO-baq"/>
         <segue reference="eXP-Fb-uY0"/>
         <segue reference="ZXq-hv-ffC"/>

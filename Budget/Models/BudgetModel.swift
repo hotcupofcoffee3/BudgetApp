@@ -23,6 +23,8 @@ class Budget {
     var categories = [Category]()
     var transactions = [Transaction]()
     var budgetedTimeFrames = [Period]()
+    var budgetItems = [BudgetItem]()
+    
     var sortedCategoryKeys = [String]()
     var balance = Double()
     var mostRecentidFromAddedTransaction = Int()
@@ -61,6 +63,14 @@ class Budget {
     }
     
     func deleteTimeFrame (period: Period) {
+        
+        loadSpecificBudgetItems(startID: Int(period.startDateID))
+        
+        for item in budgetItems {
+            
+            context.delete(item)
+            
+        }
         
         context.delete(period)
         
@@ -452,6 +462,11 @@ class Budget {
 
 
     func deleteEVERYTHING(){
+        
+        loadSavedCategories()
+        loadSavedTransactions(descending: true)
+        loadSavedBudgetedTimeFrames()
+        loadAllBudgetItems()
 
         balance = 0.0
         
@@ -468,6 +483,11 @@ class Budget {
         for timeFrame in budgetedTimeFrames {
             
             context.delete(timeFrame)
+            
+        }
+        for budgetItem in budgetItems {
+            
+            context.delete(budgetItem)
             
         }
         

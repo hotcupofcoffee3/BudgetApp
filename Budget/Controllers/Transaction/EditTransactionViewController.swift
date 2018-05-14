@@ -47,6 +47,8 @@ class EditTransactionViewController: UIViewController {
     
     @IBOutlet weak var onHoldToggleSwitch: UISwitch!
     
+    @IBOutlet weak var onHoldView: UIView!
+    
     
     
     // *****
@@ -106,6 +108,18 @@ class EditTransactionViewController: UIViewController {
         
     }
     
+    @objc func toggleOnHold() {
+        
+        onHoldToggleSwitch.isOn = !onHoldToggleSwitch.isOn
+        
+        currentTransaction.onHold = !currentTransaction.onHold
+        
+        budget.updateBalanceAndAvailableForOnHold(forTransaction: currentTransaction)
+        
+        saveData()
+        
+    }
+    
     
     
     // *****
@@ -130,6 +144,9 @@ class EditTransactionViewController: UIViewController {
         self.addCircleAroundButton(named: self.editDateButton)
         self.addCircleAroundButton(named: self.editCategoryButton)
         self.onHoldToggleSwitch.isOn = currentTransaction.onHold
+        
+        let onHoldTap = UITapGestureRecognizer(target: self, action: #selector(toggleOnHold))
+        onHoldView.addGestureRecognizer(onHoldTap)
         
         if currentTransaction.type == depositKey {
             

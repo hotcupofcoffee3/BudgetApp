@@ -76,7 +76,6 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         addBorderAroundBudgetTableCellViews(cellView: cell.budgetedTimeFrameView)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-        cell.budgetedTimeFrameLabel?.textColor = UIColor.white
         
         cell.accessoryType = .disclosureIndicator
         
@@ -86,11 +85,15 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if indexPath.row == 0 {
                 
-                cell.budgetedTimeFrameLabel?.text = "Very early - \(period.endMonth)/\(period.endDay)/\(period.endYear)"
+                cell.startLabel?.text = "Very early -"
+                cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+                cell.amountLabel?.text = "\(convertedAmountToDollars(amount: budget.balance))"
                 
             } else {
                 
-                cell.budgetedTimeFrameLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) - \(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+                cell.startLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) -"
+                cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+                cell.amountLabel?.text = "\(convertedAmountToDollars(amount: budget.balance))"
                 
             }
             
@@ -101,12 +104,23 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
+        if indexPath.row == 0 {
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            performSegue(withIdentifier: budgetToCategoriesSegueKey, sender: self)
+            
+        } else {
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            timeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
+            
+            performSegue(withIdentifier: budgetToTimeFrameItemsSegueKey, sender: self)
+            
+        }
         
-        selectedCategory = nil
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        performSegue(withIdentifier: budgetToCategoriesSegueKey, sender: self)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -176,7 +190,6 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         loadSavedBudgetedTimeFrames()
         displayedDataTable.reloadData()
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        print(budget.budgetedTimeFrames.count)
         
     }
     
@@ -189,20 +202,20 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
         
+        loadAllBudgetItems()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         self.loadNecessaryInfo()
         
+        loadAllBudgetItems()
+        
     }
     
     
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
+  
     
     
     
@@ -211,6 +224,13 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 
 }
+
+
+
+
+
+
+
 
 
 

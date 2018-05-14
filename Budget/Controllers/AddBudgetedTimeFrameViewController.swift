@@ -135,8 +135,8 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         let startDateYYYYMMDD = convertDateInfoToYYYYMMDD(year: startYear, month: startMonth, day: startDay)
         let endDateYYYYMMDD = convertDateInfoToYYYYMMDD(year: endYear, month: endMonth, day: endDay)
         
-        let startID = convertedDateToBudgetedTimeFrame(timeFrame: startDate, isEnd: false)
-        let endID = convertedDateToBudgetedTimeFrame(timeFrame: endDate, isEnd: true)
+        let startID = convertedDateToBudgetedTimeFrameID(timeFrame: startDate, isEnd: false)
+        let endID = convertedDateToBudgetedTimeFrameID(timeFrame: endDate, isEnd: true)
         
         
         if startDateYYYYMMDD > endDateYYYYMMDD {
@@ -164,13 +164,13 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
                 
             }
             
-            showAlertToConfirm(startYear: startYear, startMonth: startMonth, startDay: startDay, endYear: endYear, endMonth: endMonth, endDay: endDay)
+            showAlertToConfirm(startID: startID, startYear: startYear, startMonth: startMonth, startDay: startDay, endYear: endYear, endMonth: endMonth, endDay: endDay)
             
         }
         
     }
     
-    func showAlertToConfirm(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
+    func showAlertToConfirm(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
         
         // *** Alert message to pop up to confirmation
         
@@ -179,6 +179,8 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
             budget.addTimeFrame(start: self.startDate, end: self.endDate)
+            
+            createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: startID)
             
             self.successHaptic()
             

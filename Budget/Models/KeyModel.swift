@@ -16,6 +16,7 @@ let categoryMatchesKey = "forCategory MATCHES %@"
 let startDateIDMatchesKey = "startDateID MATCHES %@"
 let idAsDateEarlierThanKey = "id <= %@"
 let idAsDateLaterThanKey = "id >= %@"
+let timeSpanIDMatchesKey = "timeSpanID MATCHES %@"
 
 
 // Class keys
@@ -47,6 +48,10 @@ let dayKey = "day"
 // Period Keys
 let startDateIDKey = "startDateID"
 let endDateIDKey = "endDateID"
+
+
+// Budget Item Keys
+let categoryTypeKey = "category"
 
 
 // Color Keys
