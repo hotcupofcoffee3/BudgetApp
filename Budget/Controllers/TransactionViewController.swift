@@ -8,11 +8,21 @@
 
 import UIKit
 
-var editableTransactionID = Int()
-
 var selectedCategory: String?
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    var isNewTransaction = true
+    
+    var selectedTransaction: Transaction?
+    
+    var transactionsToDisplay = [Transaction]()
     
     
     
@@ -35,7 +45,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
+        isNewTransaction = true
+        performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
     }
     
     
@@ -77,11 +88,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    // *****
-    // MARK: - Variables
-    // *****
     
-    var transactionsToDisplay = [Transaction]()
     
     
     
@@ -158,11 +165,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedTransaction = transactionsToDisplay[indexPath.row]
+        selectedTransaction = transactionsToDisplay[indexPath.row]
         
-        editableTransactionID = Int(selectedTransaction.id)
-        
-        performSegue(withIdentifier: transactionsToEditTransactionSegueKey, sender: self)
+        performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
         
         displayedDataTable.deselectRow(at: indexPath, animated: true)
         
@@ -209,17 +214,49 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
   
     
-    
-    
-    
-    
-    
   
     
     
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
     
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! AddOrEditTransactionViewController
+        
+        destinationVC.isNewTransaction = isNewTransaction
+        
+        if isNewTransaction {
+            
+            destinationVC.navBar.topItem?.title = "Add Transaction"
+            
+            destinationVC.submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
+            
+        } else {
+            
+            destinationVC.navBar.topItem?.title = "Edit Transaction"
+            
+            guard let editableTransaction = selectedTransaction else { return }
+            
+            destinationVC.editableTransaction = editableTransaction
+            
+            guard let type = editableTransaction.type else { return }
+            guard let name = editableTransaction.title else { return }
+            guard let category = editableTransaction.forCategory else { return }
+            
+            destinationVC.transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey ? 0 : 1)
+            destinationVC.transactionNameTextField.text = name
+            destinationVC.transactionAmountTextField.text = "\(convertedAmountToDouble(amount: editableTransaction.inTheAmountOf)))"
+            destinationVC.dateLabel.text = "\(editableTransaction.month)/\(editableTransaction.day)/\(editableTransaction.year)"
+            destinationVC.categoryLabel.text = category
+            destinationVC.holdToggle.isOn = editableTransaction.onHold
+
+            destinationVC.submitTransactionButton.setTitle("Save Changes", for: .normal)
+            
+        }
+        
+    }
     
     
     

@@ -98,6 +98,18 @@ extension UIViewController {
     
     
     
+    // MARK: - Convert Amount to Double
+    
+    func convertedAmountToDouble(amount: Double) -> String {
+        
+        let convertedAmount = "\(String(format: "%0.2f", amount))"
+        
+        return convertedAmount
+        
+    }
+    
+    
+    
     // MARK: - Convert Amount to Dollars
     
     func convertedAmountToDollars(amount: Double) -> String {
@@ -119,7 +131,7 @@ extension UIViewController {
     
     
     
-    // MARK: - Convert Int to Ordinal
+    // MARK: - Convert Day/Int to Ordinal
     
     func convertDayToOrdinal(day: Int) -> String {
         
@@ -136,6 +148,7 @@ extension UIViewController {
         return ordinalNumber
         
     }
+    
     
     
     
