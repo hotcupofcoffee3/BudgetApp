@@ -338,6 +338,75 @@ func loadAllBudgetItems() {
 
 
 
+// *****
+// MARK: - Paychecks
+// *****
+
+func loadSavedPaychecks() {
+    
+    let request: NSFetchRequest<Paycheck> = Paycheck.fetchRequest()
+    
+    request.sortDescriptors = [NSSortDescriptor(key: amountKey, ascending: false)]
+    
+    do {
+        
+        budget.paychecks = try context.fetch(request)
+        
+    } catch {
+        
+        print("Could not load paychecks.")
+        
+    }
+    
+}
+
+// Load Specific Paycheck
+
+func loadSpecificPaycheck(named: String) -> Paycheck? {
+    
+    var paycheck: Paycheck?
+    
+    var matchingPaycheck = [Paycheck]()
+    
+    let request: NSFetchRequest<Paycheck> = Paycheck.fetchRequest()
+    
+    let predicate = NSPredicate(format: nameMatchesKey, named)
+    
+    request.predicate = predicate
+    
+    do {
+        
+        matchingPaycheck = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading transactions: \(error)")
+        
+    }
+    
+    if matchingPaycheck.count > 1 {
+        
+        print("Error. There were \(matchingPaycheck.count) entries that matched that category name.")
+        paycheck = nil
+        
+    } else if matchingPaycheck.count == 0 {
+        
+        print("There was nothing in the array")
+        paycheck = nil
+        
+    } else if matchingPaycheck.count == 1 {
+        
+        paycheck = matchingPaycheck[0]
+        
+    }
+    
+    return paycheck
+    
+}
+
+
+
+
 
 
 

@@ -10,6 +10,8 @@ import UIKit
 
 class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -19,14 +21,77 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        submitEditCategoryNameForReview()
+    }
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        currentCategoryNameString = editableCategoryName
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        
+        editNameView.addGestureRecognizer(nameViewTap)
+        
+        
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.currentCategoryName.text = currentCategoryNameString
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+        self.newCategoryName.delegate = self
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var currentCategoryName: UILabel!
     
@@ -34,23 +99,11 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var newCategoryName: UITextField!
     
-    @IBOutlet weak var updateItemButton: UIButton!
-    
     
     
     // *****
     // MARK: - IBActions
     // *****
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func updateItem(_ sender: UIButton) {
-        
-        submitEditCategoryNameForReview()
-        
-    }
     
     
     
@@ -156,7 +209,7 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
             // Update the UI elements with the new info
             self.currentCategoryNameString = newCategoryName
             
-            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
+            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
             
             self.currentCategoryName.text = newCategoryName
             
@@ -176,45 +229,7 @@ class EditCategoryNameViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        currentCategoryNameString = editableCategoryName
-        
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        
-        editNameView.addGestureRecognizer(nameViewTap)
-        
-        
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.currentCategoryName.text = currentCategoryNameString
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-        self.newCategoryName.delegate = self
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-    }
     
     
     

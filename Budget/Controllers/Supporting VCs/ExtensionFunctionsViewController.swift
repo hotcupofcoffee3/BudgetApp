@@ -10,6 +10,24 @@ import UIKit
 
 class ExtensionFunctionsViewController: UIViewController {
     
+    
+    
+    // *****
+    // MARK: - Header for Main
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    
+    
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -64,19 +82,14 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    
-    
-    
+
     
     // *****
     // MARK: - Keyboard functions
     // *****
+    
+    
+    
     
     
 }
@@ -86,7 +99,7 @@ extension UIViewController {
     
     
     // MARK: - Convert Amount to Dollars
-        
+    
     func convertedAmountToDollars(amount: Double) -> String {
         
         var convertedAmount = ""
@@ -139,6 +152,7 @@ extension UIViewController {
     
     
     // MARK: - Button for Editing Screens Formatter
+    
     func addCircleAroundButton(named button: UIButton) {
         
         button.layer.cornerRadius = 27
@@ -151,6 +165,7 @@ extension UIViewController {
     
     
     // MARK: - Button for Main Views Formatter
+    
     func addCircleAroundMainButtons(named button: UIButton) {
         
         button.layer.cornerRadius = 35
@@ -163,6 +178,7 @@ extension UIViewController {
     
     
     // MARK: - Cell for Budget
+    
     func addBorderAroundBudgetTableCellViews(cellView: UIView) {
         
         cellView.layer.cornerRadius = 15
@@ -215,12 +231,14 @@ extension UIViewController {
     
     // MARK: - Update Budget Balance & Unallocated Balance on Top Right of Nav Bars
     
-    func updateLeftLabelAtTopRight(barButton: UIBarButtonItem, unallocatedButton: UILabel) {
+    func updateBalanceAndUnallocatedLabelsAtTop(barButton: UIBarButtonItem, unallocatedButton: UILabel) {
         
         budget.updateBalance()
+        
         barButton.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+        
         unallocatedButton.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
     }
     
@@ -311,6 +329,41 @@ extension UIViewController {
         return dateConverted
         
     }
+    
+    
+    
+    
+    
+    
+    // MARK: - Toolbar with 'Done' button
+    
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc func dismissNumberKeyboard() {
+        
+        
+        
+    }
+    
+    func addToolBarToNumberPad(textField: UITextField) {
+        
+        let toolbar = UIToolbar()
+        toolbar.barTintColor = UIColor.black
+        
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
+        doneButton.tintColor = UIColor.white
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        textField.inputAccessoryView = toolbar
+        
+    }
+    
+    
+    
     
     
     

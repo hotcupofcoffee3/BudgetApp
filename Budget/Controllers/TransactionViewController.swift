@@ -15,6 +15,68 @@ var selectedCategory: String?
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
+    
+    // *****
+    // MARK: - Header for Main Views
+    // *****
+    
+    
+    
+    // *** IBOutlets
+    
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
+    }
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.displayedDataTable.register(UINib(nibName: "TransactionTableViewCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
+        
+        transactionsToDisplay = loadChosenTransactions()
+        
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
+        
+        for transaction in transactionsToDisplay {
+            
+            print(transaction.id)
+            
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        transactionsToDisplay = loadChosenTransactions()
+        
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
+        
+        
+    }
+    
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -27,8 +89,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - IBOutlets
     // *****
     
-    @IBOutlet weak var availableBalanceLabel: UILabel!
-    
     @IBOutlet weak var displayedDataTable: UITableView!
     
     
@@ -37,13 +97,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
-    @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: transactionsToAddTransactionSegueKey, sender: self)
-    }
     
     
     
@@ -134,7 +188,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 self.successHaptic()
                 
-                self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
+                self.refreshAvailableBalanceLabel(label: self.mainBalanceLabel)
                 self.displayedDataTable.reloadData()
                 
             }))
@@ -158,47 +212,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.displayedDataTable.register(UINib(nibName: "TransactionTableViewCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
-        
-        transactionsToDisplay = loadChosenTransactions()
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        displayedDataTable.reloadData()
-        displayedDataTable.separatorStyle = .none
-        
-        for transaction in transactionsToDisplay {
-            
-            print(transaction.id)
-            
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        transactionsToDisplay = loadChosenTransactions()
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        displayedDataTable.reloadData()
-        displayedDataTable.separatorStyle = .none
-        
-        
-    }
     
     
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    
+  
     
     
     

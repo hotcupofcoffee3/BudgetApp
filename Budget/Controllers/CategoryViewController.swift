@@ -13,6 +13,7 @@ var editableCategoryName = String()
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -22,14 +23,74 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Main Views
     // *****
     
-    @IBOutlet weak var categoryNavBar: UINavigationBar!
+    // *** IBOutlets
     
-    @IBOutlet weak var availableBalanceLabel: UILabel!
+    @IBOutlet weak var navBar: UINavigationBar!
     
-    @IBOutlet weak var editCategoryBarButton: UIBarButtonItem!
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editCategory = !editCategory
+        
+        editBarButton.title = editCategory ? "Done" : "Edit"
+        
+        displayedDataTable.reloadData()
+        
+    }
+    
+    @IBAction func addSomething(_ sender: UIButton) {
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
+        displayedDataTable.rowHeight = 90
+        
+        addCircleAroundButton(named: viewAllTransactionsButton)
+        
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        budget.sortCategoriesByKey(withUnallocated: true)
+        displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
+        editCategory = false
+        selectedCategory = nil
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        budget.sortCategoriesByKey(withUnallocated: true)
+        displayedDataTable.reloadData()
+        displayedDataTable.separatorStyle = .none
+        editCategory = false
+        selectedCategory = nil
+        
+    }
+
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var viewAllTransactionsButton: UIButton!
     
@@ -40,28 +101,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     // *****
     // MARK: - IBActions
     // *****
-    
-    @IBAction func editCategory(_ sender: UIBarButtonItem) {
-        
-        editCategory = !editCategory
-        
-        if editCategory == true {
-            
-            editCategoryBarButton.title = "Done"
-            displayedDataTable.reloadData()
-            
-        } else {
-            
-            editCategoryBarButton.title = "Edit"
-            displayedDataTable.reloadData()
-            
-        }
-        
-    }
-    
-    @IBAction func addSomethingButton(_ sender: UIButton) {
-        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
-    }
     
     @IBAction func viewAllTransactions(_ sender: UIButton) {
         
@@ -145,7 +184,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         if editCategory == true {
             
             // Sets back to edit after editing is done.
-            editCategoryBarButton.title = "Edit"
+            editBarButton.title = "Edit"
             
             if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
                 
@@ -188,7 +227,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         self.successHaptic()
                         
-                        self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
+                        self.refreshAvailableBalanceLabel(label: self.mainBalanceLabel)
                         budget.sortCategoriesByKey(withUnallocated: true)
                         self.displayedDataTable.reloadData()
                         
@@ -222,37 +261,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-        
-        displayedDataTable.rowHeight = 90
-        
-        addCircleAroundButton(named: viewAllTransactionsButton)
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        budget.sortCategoriesByKey(withUnallocated: true)
-        displayedDataTable.reloadData()
-        displayedDataTable.separatorStyle = .none
-        editCategory = false
-        selectedCategory = nil
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        budget.sortCategoriesByKey(withUnallocated: true)
-        displayedDataTable.reloadData()
-        displayedDataTable.separatorStyle = .none
-        editCategory = false
-        selectedCategory = nil
-
-    }
     
  
     

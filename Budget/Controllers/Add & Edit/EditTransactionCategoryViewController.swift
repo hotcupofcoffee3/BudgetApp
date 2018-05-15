@@ -10,6 +10,8 @@ import UIKit
 
 class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -21,32 +23,22 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
-    @IBOutlet weak var editingItemLabel: UILabel!
-    
-    @IBOutlet weak var editingItemAmountLabel: UILabel!
-    
-    @IBOutlet weak var leftInCategoryLabel: UILabel!
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var categoryLabel: UILabel!
-    
-    @IBOutlet weak var categoryView: UIView!
     
     @IBOutlet weak var updateItemButton: UIButton!
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // *** IBActions
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -55,6 +47,68 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     @IBAction func updateItem(_ sender: UIButton) {
         changeCategorySubmittedForReview()
     }
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
+        
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        
+        categoryView.addGestureRecognizer(categoryViewTap)
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        guard let currentCategory = currentTransaction.forCategory else { return }
+        
+        self.newCategorySelected = currentCategory
+        
+        self.categoryLabel.text = currentCategory
+        
+        self.editingItemLabel.text = "\(currentCategory)"
+        self.editingItemAmountLabel.text = "~ Transaction amount: \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) ~"
+        
+        updateLeftInCategoryAmount(categoryName: currentCategory, forLabel: leftInCategoryLabel)
+        
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var editingItemLabel: UILabel!
+    
+    @IBOutlet weak var editingItemAmountLabel: UILabel!
+    
+    @IBOutlet weak var leftInCategoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryView: UIView!
+   
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    
     
     
     
@@ -141,46 +195,10 @@ class EditTransactionCategoryViewController: UIViewController, ChooseCategory {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
-        
-        currentTransaction = editableTransaction
-        
-        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
-        
-        categoryView.addGestureRecognizer(categoryViewTap)
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        guard let currentCategory = currentTransaction.forCategory else { return }
-        
-        self.newCategorySelected = currentCategory
-        
-        self.categoryLabel.text = currentCategory
-        
-        self.editingItemLabel.text = "\(currentCategory)"
-        self.editingItemAmountLabel.text = "~ Transaction amount: \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) ~"
-        
-        updateLeftInCategoryAmount(categoryName: currentCategory, forLabel: leftInCategoryLabel)
-
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-    }
     
     
     
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
+   
     
     
     

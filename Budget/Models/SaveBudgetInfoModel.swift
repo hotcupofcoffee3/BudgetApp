@@ -153,6 +153,22 @@ func createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: Int) {
 
 
 
+// MARK: - Save a new paycheck
+
+func createAndSaveNewPaycheck(named: String, withAmount amount: Double) {
+    
+    let paycheckToSave = Paycheck(context: context)
+    
+    paycheckToSave.name = named
+    paycheckToSave.amount = amount
+    
+    saveData()
+    
+}
+
+
+
+
 
 
 

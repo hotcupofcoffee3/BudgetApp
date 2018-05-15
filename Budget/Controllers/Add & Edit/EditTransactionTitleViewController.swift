@@ -11,6 +11,7 @@ import UIKit
 class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate {
     
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -20,28 +21,22 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var editingItemLabel: UILabel!
-    
-    @IBOutlet weak var nameView: UIView!
-    
-    @IBOutlet weak var newTitleTextField: UITextField!
     
     @IBOutlet weak var updateItemButton: UIButton!
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // *** IBActions
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -50,6 +45,64 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     @IBAction func updateItem(_ sender: UIButton) {
         changeTitleSubmittedForReview()
     }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        
+        
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.editingItemLabel.text = currentTransaction.title
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+        self.newTitleTextField.delegate = self
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+    }
+
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var editingItemLabel: UILabel!
+    
+    @IBOutlet weak var nameView: UIView!
+    
+    @IBOutlet weak var newTitleTextField: UITextField!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    
     
     
     
@@ -107,41 +160,7 @@ class EditTransactionTitleViewController: UIViewController, UITextFieldDelegate 
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
-        
-        currentTransaction = editableTransaction
-        
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        
-        nameView.addGestureRecognizer(nameViewTap)
-        
-        
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.editingItemLabel.text = currentTransaction.title
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-        self.newTitleTextField.delegate = self
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-    }
     
     
     

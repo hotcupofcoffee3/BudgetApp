@@ -11,6 +11,7 @@ import UIKit
 class EditTransactionDateViewController: UIViewController, ChooseDate {
 
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -24,18 +25,14 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
-    @IBOutlet weak var editingItemLabel: UILabel!
-    
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
     
@@ -43,9 +40,7 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // *** IBActions
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -54,6 +49,61 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     @IBAction func updateItem(_ sender: UIButton) {
         changeDateSubmittedForReview()
     }
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
+        
+        date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+        
+        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        
+        dateView.addGestureRecognizer(dateViewTap)
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.editingItemLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
+        
+        self.dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
+        
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var editingItemLabel: UILabel!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var dateView: UIView!
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    
     
     
     
@@ -151,42 +201,10 @@ class EditTransactionDateViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
-        
-        currentTransaction = editableTransaction
-        
-        date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
-        
-        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        
-        dateView.addGestureRecognizer(dateViewTap)
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.editingItemLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
-        
-        self.dateLabel.text = "\(currentTransaction.month)/\(currentTransaction.day)/\(currentTransaction.year)"
-        
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-    }
     
     
     
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    
-    
-
+ 
     
     
 

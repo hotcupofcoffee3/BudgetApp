@@ -11,6 +11,7 @@ import UIKit
 class EditTransactionViewController: UIViewController {
     
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -20,12 +21,72 @@ class EditTransactionViewController: UIViewController {
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Add & Main Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        print(editableTransaction.id)
+        
+        currentTransaction = editableTransaction
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
+        
+        self.titleLabel.text = currentTransaction.title
+        self.addCircleAroundButton(named: self.editTitleButton)
+        self.addCircleAroundButton(named: self.editAmountButton)
+        self.addCircleAroundButton(named: self.editDateButton)
+        self.addCircleAroundButton(named: self.editCategoryButton)
+        self.onHoldToggleSwitch.isOn = currentTransaction.onHold
+        
+        let onHoldTap = UITapGestureRecognizer(target: self, action: #selector(toggleOnHold))
+        onHoldView.addGestureRecognizer(onHoldTap)
+        
+        if currentTransaction.type == depositKey {
+            
+            editCategoryButton.isEnabled = false
+            editCategoryButton.alpha = 0.5
+            categoryLabel.isEnabled = false
+            
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var typeLabel: UILabel!
     
@@ -54,10 +115,6 @@ class EditTransactionViewController: UIViewController {
     // *****
     // MARK: - IBActions
     // *****
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func editTitle(_ sender: UIButton) {
         performSegue(withIdentifier: editTransactionTitleSegueKey, sender: self)
@@ -122,56 +179,11 @@ class EditTransactionViewController: UIViewController {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
-        
-        print(editableTransaction.id)
-        
-        currentTransaction = editableTransaction
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
-        
-        self.titleLabel.text = currentTransaction.title
-        self.addCircleAroundButton(named: self.editTitleButton)
-        self.addCircleAroundButton(named: self.editAmountButton)
-        self.addCircleAroundButton(named: self.editDateButton)
-        self.addCircleAroundButton(named: self.editCategoryButton)
-        self.onHoldToggleSwitch.isOn = currentTransaction.onHold
-        
-        let onHoldTap = UITapGestureRecognizer(target: self, action: #selector(toggleOnHold))
-        onHoldView.addGestureRecognizer(onHoldTap)
-        
-        if currentTransaction.type == depositKey {
-            
-            editCategoryButton.isEnabled = false
-            editCategoryButton.alpha = 0.5
-            categoryLabel.isEnabled = false
-            
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        self.updateLabelsForCurrentTransaction(withID: editableTransactionID)
-        
-    }
     
     
     
-    // *****
-    // MARK: - Keyboard functions
-    // *****
     
-    
+   
     
     
 

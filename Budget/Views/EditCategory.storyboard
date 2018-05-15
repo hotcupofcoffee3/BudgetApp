@@ -29,7 +29,7 @@
                                     <navigationItem title="Change Name" id="iD7-i5-xGH">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="g4c-0F-X3X">
                                             <connections>
-                                                <action selector="backButton:" destination="1xk-Ih-snr" id="0d6-ZE-Tmv"/>
+                                                <action selector="backButton:" destination="1xk-Ih-snr" id="edV-TK-AuT"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="qkI-T2-gxU"/>
@@ -138,11 +138,11 @@
                         <viewLayoutGuide key="safeArea" id="t3M-cI-ChD"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="qkI-T2-gxU" id="VzV-kA-PfM"/>
                         <outlet property="currentCategoryName" destination="BmJ-AC-iYJ" id="A1h-j6-9eF"/>
                         <outlet property="editNameView" destination="wpU-qd-4hU" id="0RD-p6-OWX"/>
-                        <outlet property="leftAmountAtTopRight" destination="s6E-kd-xuN" id="89M-Vp-wuB"/>
-                        <outlet property="leftLabelOnNavBar" destination="qkI-T2-gxU" id="T2d-xb-CPS"/>
                         <outlet property="newCategoryName" destination="jAx-h1-90o" id="rHt-lL-c9Y"/>
+                        <outlet property="unallocatedLabelAtTop" destination="s6E-kd-xuN" id="9U5-UI-3dR"/>
                         <outlet property="updateItemButton" destination="mJd-tX-8gF" id="tY5-Gm-6uw"/>
                         <outlet property="warningLabel" destination="qIB-bg-G55" id="nNL-52-Sqr"/>
                     </connections>
@@ -289,12 +289,12 @@
                         <viewLayoutGuide key="safeArea" id="856-9g-1sR"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="anH-uz-3df" id="Ad7-Rq-XnA"/>
                         <outlet property="currentCategoryBudgeted" destination="zgo-wq-fag" id="Us2-b6-ESA"/>
                         <outlet property="currentCategoryName" destination="ttu-B6-yjJ" id="HeA-Qv-OD0"/>
                         <outlet property="editAmountView" destination="rGI-pm-fWh" id="vSe-NM-P8m"/>
-                        <outlet property="leftAmountAtTopRight" destination="23E-kR-x4k" id="Z9R-HC-0bh"/>
-                        <outlet property="leftLabelOnNavBar" destination="anH-uz-3df" id="i4Q-DX-Sgm"/>
                         <outlet property="newCategoryBudgeted" destination="UMn-bU-b94" id="sJk-2R-Pei"/>
+                        <outlet property="unallocatedLabelAtTop" destination="23E-kR-x4k" id="t1S-EE-zpX"/>
                         <outlet property="updateItemButton" destination="VxO-tA-nhe" id="xj1-xP-edM"/>
                         <outlet property="warningLabel" destination="Dt6-n0-2AZ" id="Pqe-ph-atn"/>
                     </connections>
@@ -485,15 +485,15 @@
                         <viewLayoutGuide key="safeArea" id="zcu-Tw-6S7"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="UYr-fe-uSU" id="KPc-nT-9Ci"/>
                         <outlet property="categoryLabel" destination="yc2-zS-KOT" id="eeq-WC-Yu5"/>
                         <outlet property="categoryView" destination="2BO-xk-gf8" id="sES-xS-2MQ"/>
                         <outlet property="currentCategoryAvailable" destination="yd7-ad-w2X" id="Vb7-p7-xZs"/>
                         <outlet property="currentCategoryName" destination="ycP-Gg-OYJ" id="AJY-jR-O3o"/>
                         <outlet property="editAmountView" destination="lia-Hb-BLT" id="01g-4t-1vc"/>
-                        <outlet property="leftAmountAtTopRight" destination="e5L-eb-Dqr" id="jOP-cE-reL"/>
                         <outlet property="leftInCategoryLabel" destination="scq-SI-bzh" id="26j-fk-FS2"/>
-                        <outlet property="leftLabelOnNavBar" destination="UYr-fe-uSU" id="H7t-W8-Fvl"/>
                         <outlet property="newCategoryAvailable" destination="wX4-sj-hz6" id="M2d-BO-TU5"/>
+                        <outlet property="unallocatedLabelAtTop" destination="e5L-eb-Dqr" id="Guv-Em-PIO"/>
                         <outlet property="updateItemButton" destination="OC1-A9-B3t" id="JWs-Mj-PRd"/>
                         <outlet property="warningLabel" destination="KQr-lW-xVb" id="5cr-y5-loF"/>
                         <segue destination="fwo-iB-uaT" kind="presentation" identifier="editCategoryAvailableToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="5VR-3V-phc"/>
@@ -522,7 +522,7 @@
                                     <navigationItem title="Edit Category" id="w3O-26-RBi">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="boy-Ec-li1">
                                             <connections>
-                                                <action selector="backButton:" destination="JVf-3z-OGb" id="zhl-hi-lZa"/>
+                                                <action selector="backButton:" destination="JVf-3z-OGb" id="bit-Le-Ss4"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="Sfy-Uv-Scu"/>
@@ -670,6 +670,7 @@
                         <viewLayoutGuide key="safeArea" id="0yR-v6-OPP"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="Sfy-Uv-Scu" id="SSH-YM-Al8"/>
                         <outlet property="currentCategoryAvailable" destination="b7h-hL-Ogz" id="whs-M8-ncx"/>
                         <outlet property="currentCategoryBudgeted" destination="7rj-S3-n3j" id="lD9-hm-vFm"/>
                         <outlet property="currentCategoryName" destination="69e-3u-Q9Q" id="Gnw-Ad-HBD"/>
@@ -679,8 +680,7 @@
                         <outlet property="editAvailableButton" destination="rpV-ns-RdX" id="Sjc-nA-woa"/>
                         <outlet property="editBudgetedButton" destination="YId-DR-zdS" id="9ry-bj-rtu"/>
                         <outlet property="editNameButton" destination="jq6-h7-PEf" id="w5m-eA-4ze"/>
-                        <outlet property="leftAmountAtTopRight" destination="fSp-48-zMS" id="zCV-JJ-4ZF"/>
-                        <outlet property="leftLabelOnNavBar" destination="Sfy-Uv-Scu" id="2ED-pU-Rtg"/>
+                        <outlet property="unallocatedLabelAtTop" destination="fSp-48-zMS" id="M26-iU-etJ"/>
                         <segue destination="1xk-Ih-snr" kind="show" identifier="editCategoryNameSegue" id="Rhq-at-lys"/>
                         <segue destination="yfh-bo-ApM" kind="show" identifier="editCategoryBudgetedSegue" id="Uz8-yG-jkv"/>
                         <segue destination="WzN-Oi-XcR" kind="show" identifier="editCategoryAvailableSegue" id="xPM-rC-Acd"/>
@@ -689,7 +689,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEy-Uh-MEe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2578.4000000000001" y="-845.1274362818591"/>
+            <point key="canvasLocation" x="-2706" y="-919"/>
         </scene>
         <!--CategoryPicker-->
         <scene sceneID="PLE-1r-if8">

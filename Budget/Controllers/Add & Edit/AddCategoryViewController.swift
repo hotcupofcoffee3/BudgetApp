@@ -24,12 +24,82 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Add & Main Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var addCategoryButton: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addCategory(_ sender: UIButton) {
+        submitAddCategoryForReview()
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
+        let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        allocateView.addGestureRecognizer(allocateViewTap)
+        dateLabel.addGestureRecognizer(datetap)
+        
+        
+        addToolBarToNumberPad(textField: categoryAmountTextField)
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        addCircleAroundButton(named: addCategoryButton)
+        
+        self.categoryNameTextField.delegate = self
+        self.categoryAmountTextField.delegate = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var nameView: UIView!
     
@@ -38,10 +108,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     @IBOutlet weak var amountView: UIView!
     
     @IBOutlet weak var categoryAmountTextField: UITextField!
-    
-    @IBOutlet weak var categoryWarningLabel: UILabel!
-    
-    @IBOutlet weak var addCategoryButton: UIButton!
     
     @IBOutlet weak var currentAllocationStatus: UISwitch!
 
@@ -57,10 +123,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func dueDateToggleSwitch(_ sender: UISwitch) {
         
         if dueDateSwitch.isOn == true {
@@ -75,11 +137,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
         
     }
     
-    @IBAction func addCategory(_ sender: UIButton) {
-        submitAddCategoryForReview()
-    }
     
-
     
     // *****
     // MARK: - Functions
@@ -122,25 +180,25 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
             // *** If everything is blank
             if categoryName == "" || categoryAmount == "" {
                 
-                failureWithWarning(label: categoryWarningLabel, message: "You have to complete both fields.")
+                failureWithWarning(label: warningLabel, message: "You have to complete both fields.")
                 
                 
                 // *** If "Unallocated" is the attempted name
             } else if categoryName == unallocatedKey {
                 
-                failureWithWarning(label: categoryWarningLabel, message: "You cannot create a category called \"Unallocated\"")
+                failureWithWarning(label: warningLabel, message: "You cannot create a category called \"Unallocated\"")
                 
                 
                 // *** If the category name already exists.
             } else if isAlreadyCreated == true {
                 
-                failureWithWarning(label: categoryWarningLabel, message: "A category with this name has already been created.")
+                failureWithWarning(label: warningLabel, message: "A category with this name has already been created.")
                 
                 
                 // *** If both are filled out, but the amount is not a double
             } else if categoryName != "" && categoryAmount != "" && Double(categoryAmount) == nil {
                 
-                failureWithWarning(label: categoryWarningLabel, message: "You have to enter a number for the amount.")
+                failureWithWarning(label: warningLabel, message: "You have to enter a number for the amount.")
                 
                 
             } else {
@@ -151,13 +209,13 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
                     
                     if categoryAmountAsDouble < 0.0 {
                         
-                        failureWithWarning(label: categoryWarningLabel, message: "You have to enter a positive number")
+                        failureWithWarning(label: warningLabel, message: "You have to enter a positive number")
                         
                         
                         // *** If 'Allocate' is switched on, is there enough in 'Unallocated'
                     } else if currentAllocationStatus.isOn && categoryAmountAsDouble > unallocated.available {
                     
-                        failureWithWarning(label: categoryWarningLabel, message: "You don't have enough funds to allocate at this time.")
+                        failureWithWarning(label: warningLabel, message: "You don't have enough funds to allocate at this time.")
                         
                     } else {
                         
@@ -205,12 +263,12 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
             
             saveData()
             
-            self.categoryWarningLabel.textColor = successColor
-            self.categoryWarningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
+            self.warningLabel.textColor = successColor
+            self.warningLabel.text = "\"\(newCategoryName)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
             
             self.updateUIElementsBecauseOfSuccess()
             self.successHaptic()
-            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
+            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
             
         }))
         
@@ -280,76 +338,13 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
-        let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        
-        nameView.addGestureRecognizer(nameViewTap)
-        amountView.addGestureRecognizer(amountViewTap)
-        allocateView.addGestureRecognizer(allocateViewTap)
-        dateLabel.addGestureRecognizer(datetap)
-        
-        
-        
-        // MARK: - Toolbar with 'Done' button
-        
-        let toolbar = UIToolbar()
-        toolbar.barTintColor = UIColor.black
-        
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
-        doneButton.tintColor = UIColor.white
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        toolbar.setItems([flexibleSpace, doneButton], animated: true)
-        
-        categoryAmountTextField.inputAccessoryView = toolbar
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        addCircleAroundButton(named: addCategoryButton)
-        
-        self.categoryNameTextField.delegate = self
-        self.categoryAmountTextField.delegate = self
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-    }
     
     
     
     // *****
     // MARK: - Keyboard functions
     // *****
-    
-    
-    
-    
-    // MARK: - Keyboard dismissals
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -378,8 +373,9 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     }
     
     // 'Done' button on number pad to submit for review of final submitability
-    @objc func dismissNumberKeyboard() {
+    @objc override func dismissNumberKeyboard() {
         
+        categoryAmountTextField.resignFirstResponder()
         submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
         
     }
@@ -393,7 +389,7 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     
     // Remove warning label text
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        categoryWarningLabel.text = ""
+        warningLabel.text = ""
     }
     
     

@@ -10,6 +10,8 @@ import UIKit
 
 class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -23,12 +25,73 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Add & Main Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var addTimeFrameButton: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addTimeFrame(_ sender: UIButton) {
+        submitAddTimeFrameForReview()
+    }
+    
+
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        loadSavedBudgetedTimeFrames()
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        startDateLabel.text = dateFormat.string(from: startDate)
+        endDateLabel.text = dateFormat.string(from: endDate)
+        
+        let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
+        let endDateViewTap = UITapGestureRecognizer(target: self, action: #selector(endDateTapped))
+        
+        startDateView.addGestureRecognizer(startDateViewTap)
+        endDateView.addGestureRecognizer(endDateViewTap)
+        
+        addCircleAroundButton(named: addTimeFrameButton)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        startDateLabel.text = dateFormat.string(from: startDate)
+        endDateLabel.text = dateFormat.string(from: endDate)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var startDateLabel: UILabel!
     
@@ -38,31 +101,21 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     @IBOutlet weak var endDateView: UIView!
     
-    @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var addTimeFrameButton: UIButton!
-    
     
     
     // *****
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
-    @IBAction func addTimeFrame(_ sender: UIButton) {
-        
-        submitAddTimeFrameForReview()
-        
-    }
     
     
     
     // *****
     // MARK: - Functions
     // *****
+    
+    // *** Taps
     
     @objc func startDateTapped() {
         
@@ -80,6 +133,10 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
     }
     
+    
+    
+    // *** Segue
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == addBudgetToDatePickerSegueKey {
@@ -94,6 +151,9 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
     }
     
+    
+    
+    // *** Delegate Method
     
     func setDate(date: Date) {
         
@@ -119,6 +179,9 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
     }
     
+    
+    
+    // *** Submit
     
     func submitAddTimeFrameForReview () {
         
@@ -196,40 +259,7 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        loadSavedBudgetedTimeFrames()
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
-        
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
-        
-        let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
-        let endDateViewTap = UITapGestureRecognizer(target: self, action: #selector(endDateTapped))
-        
-        startDateView.addGestureRecognizer(startDateViewTap)
-        endDateView.addGestureRecognizer(endDateViewTap)
-        
-        addCircleAroundButton(named: addTimeFrameButton)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
-        
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
-        
-    }
     
     
     

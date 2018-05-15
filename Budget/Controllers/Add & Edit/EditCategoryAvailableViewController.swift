@@ -10,6 +10,8 @@ import UIKit
 
 class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate, ChooseCategory {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -23,14 +25,93 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        submitEditCategoryAvailableForReview()
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        currentCategoryNameString = editableCategoryName
+        
+        if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
+            
+            currentCategoryAvailableDouble = currentCategory.budgeted
+            
+        }
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        categoryView.addGestureRecognizer(categoryViewTap)
+        editAmountView.addGestureRecognizer(amountViewTap)
+        
+        
+        addToolBarToNumberPad(textField: newCategoryAvailable)
+        
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.currentCategoryName.text = "~ \(currentCategoryNameString) ~"
+        self.currentCategoryAvailable.text = "\(convertedAmountToDollars(amount: currentCategoryAvailableDouble))"
+        self.updateLeftInCategoryAmount(categoryName: unallocatedKey, forLabel: leftInCategoryLabel)
+        
+        self.selectedCategoryName = unallocatedKey
+        self.categoryLabel.text = unallocatedKey
+        
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+        self.newCategoryAvailable.delegate = self
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var leftInCategoryLabel: UILabel!
     
@@ -42,8 +123,6 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var newCategoryAvailable: UITextField!
     
-    @IBOutlet weak var updateItemButton: UIButton!
-    
     @IBOutlet weak var categoryLabel: UILabel!
     
     @IBOutlet weak var categoryView: UIView!
@@ -54,13 +133,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func updateItem(_ sender: UIButton) {
-        submitEditCategoryAvailableForReview()
-    }
+   
     
    
     
@@ -161,7 +234,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
             // Update the UI element with the new info
             self.currentCategoryAvailableDouble = newCategoryAvailable
             
-            self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
+            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
             
             self.currentCategoryAvailable.text = "\(self.convertedAmountToDollars(amount: newCategoryAvailable))"
             
@@ -211,72 +284,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        currentCategoryNameString = editableCategoryName
-        
-        if let currentCategory = loadSpecificCategory(named: currentCategoryNameString) {
-            
-            currentCategoryAvailableDouble = currentCategory.budgeted
-            
-        }
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        
-        categoryView.addGestureRecognizer(categoryViewTap)
-        editAmountView.addGestureRecognizer(amountViewTap)
-        
-        // MARK: - Add done button
-        
-        let toolbar = UIToolbar()
-        toolbar.barTintColor = UIColor.black
-        
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
-        doneButton.tintColor = UIColor.white
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        toolbar.setItems([flexibleSpace, doneButton], animated: true)
-        
-        newCategoryAvailable.inputAccessoryView = toolbar
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.currentCategoryName.text = "~ \(currentCategoryNameString) ~"
-        self.currentCategoryAvailable.text = "\(convertedAmountToDollars(amount: currentCategoryAvailableDouble))"
-        self.updateLeftInCategoryAmount(categoryName: unallocatedKey, forLabel: leftInCategoryLabel)
-        
-        self.selectedCategoryName = unallocatedKey
-        self.categoryLabel.text = unallocatedKey
-        
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-        self.newCategoryAvailable.delegate = self
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-    }
     
     
     
@@ -302,7 +310,7 @@ class EditCategoryAvailableViewController: UIViewController, UITextFieldDelegate
     }
     
     // 'Done' button on number pad to submit for review of final submitability
-    @objc func dismissNumberKeyboard() {
+    @objc override func dismissNumberKeyboard() {
         
         submitEditCategoryAvailableForReview()
         newCategoryAvailable.resignFirstResponder()

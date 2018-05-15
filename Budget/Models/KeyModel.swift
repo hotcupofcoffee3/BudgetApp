@@ -65,6 +65,7 @@ let lightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, 
 
 // Main to others
 let mainToBudgetSegueKey = "mainToBudgetSegue"
+let mainToPaycheckSegueKey = "mainToPaycheckSegue"
 let mainToCategoriesSegueKey = "mainToCategoriesSegue"
 let mainToTransactionsSegueKey = "mainToTransactionsSegue"
 
@@ -94,7 +95,12 @@ let transactionsToCategoriesSegueKey = "transactionsToCategoriesSegue"
 let budgetToAddBudgetSegueKey = "budgetToAddBudgetSegue"
 let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
 let budgetToTimeFrameItemsSegueKey = "budgetToTimeFrameItemsSegue"
-let budgetItemsToSelectItemsSegueKey = "budgetItemsToSelectItemsSegue"
+let budgetItemsToAddItemSegueKey = "budgetItemsToAddItemSegue"
+
+
+// Paycheck to others
+let paychecksToAddPaycheckSegueKey = "paychecksToAddPaycheckSegue"
+let paychecksToEditPaycheckSegueKey = "paychecksToEditPaycheckSegue"
 
 
 // Date Picker Segues
@@ -113,7 +119,6 @@ let changeTransactionCategoryToCategoryPickerSegueKey = "changeTransactionCatego
 
 
 // Edit Segues
-
 let editTransactionSegueKey = "editTransactionSegue"
 let editTransactionTitleSegueKey = "editTransactionTitleSegue"
 let editTransactionAmountSegueKey = "editTransactionAmountSegue"

@@ -141,11 +141,11 @@
                         <viewLayoutGuide key="safeArea" id="ix8-VL-dco"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="9gd-O8-4dh" id="j7f-y2-Am7"/>
                         <outlet property="editingItemLabel" destination="0W5-HN-Y9q" id="PM5-WG-soU"/>
-                        <outlet property="leftAmountAtTopRight" destination="y6l-xe-6nj" id="8Rl-OU-KlI"/>
-                        <outlet property="leftLabelOnNavBar" destination="9gd-O8-4dh" id="TPS-YH-dSA"/>
                         <outlet property="nameView" destination="UXm-3x-rc1" id="ui8-ZO-xdV"/>
                         <outlet property="newTitleTextField" destination="aF2-PK-e6q" id="OvV-5p-BVl"/>
+                        <outlet property="unallocatedLabelAtTop" destination="y6l-xe-6nj" id="L6o-A5-t7f"/>
                         <outlet property="updateItemButton" destination="nO4-45-i3h" id="8ds-g8-p6Y"/>
                         <outlet property="warningLabel" destination="sl5-JJ-naZ" id="UiG-qw-EK7"/>
                     </connections>
@@ -295,11 +295,11 @@
                     </view>
                     <connections>
                         <outlet property="amountView" destination="mnG-O4-ehK" id="SH2-h8-xsD"/>
+                        <outlet property="balanceOnNavBar" destination="hI2-E6-rYh" id="vfS-90-1X9"/>
                         <outlet property="editingItemLabel" destination="DIW-lC-ZgH" id="POa-IR-myc"/>
-                        <outlet property="leftAmountAtTopRight" destination="hHn-hM-xOb" id="3Ss-Wd-nE7"/>
                         <outlet property="leftInCategoryLabel" destination="vNm-hD-Ohc" id="09G-i1-Gq9"/>
-                        <outlet property="leftLabelOnNavBar" destination="hI2-E6-rYh" id="7sA-8j-AUm"/>
                         <outlet property="newAmountTextField" destination="qaD-a6-wud" id="OFx-3b-d8A"/>
+                        <outlet property="unallocatedLabelAtTop" destination="hHn-hM-xOb" id="hCq-W3-GIJ"/>
                         <outlet property="updateItemButton" destination="OoE-Ci-zqb" id="ild-5l-03N"/>
                         <outlet property="warningLabel" destination="Tou-jP-p4q" id="hb7-UH-vxp"/>
                     </connections>
@@ -438,11 +438,11 @@
                         <viewLayoutGuide key="safeArea" id="twp-8v-NUX"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="PPH-mo-bq5" id="PY3-5f-dHr"/>
                         <outlet property="dateLabel" destination="YCp-j9-SY2" id="0vF-4V-qtN"/>
                         <outlet property="dateView" destination="140-qB-WZw" id="AGb-JB-qXA"/>
                         <outlet property="editingItemLabel" destination="ztK-pB-S7r" id="rxH-0d-eNW"/>
-                        <outlet property="leftAmountAtTopRight" destination="7hg-bs-Rgr" id="BXZ-nz-xaG"/>
-                        <outlet property="leftLabelOnNavBar" destination="PPH-mo-bq5" id="OoU-lm-56r"/>
+                        <outlet property="unallocatedLabelAtTop" destination="7hg-bs-Rgr" id="8Zk-dL-LGO"/>
                         <outlet property="updateItemButton" destination="FWx-0D-R1b" id="1uT-Jy-qsb"/>
                         <outlet property="warningLabel" destination="xQM-z8-ZSv" id="sMa-Xi-Orc"/>
                         <segue destination="wFm-XL-uxt" kind="presentation" identifier="changeTransactionDateToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="WJf-BW-qOG"/>
@@ -601,13 +601,13 @@
                         <viewLayoutGuide key="safeArea" id="ZXy-Xf-ha2"/>
                     </view>
                     <connections>
+                        <outlet property="balanceOnNavBar" destination="d25-Ir-Fyo" id="fkf-ZX-zR1"/>
                         <outlet property="categoryLabel" destination="Min-93-zZz" id="g2t-0u-KW1"/>
                         <outlet property="categoryView" destination="SP0-zP-peZ" id="mVQ-4x-AnQ"/>
                         <outlet property="editingItemAmountLabel" destination="22z-5r-u3u" id="kcr-gS-vJX"/>
                         <outlet property="editingItemLabel" destination="UMK-7y-9YG" id="WTa-g9-Rnl"/>
-                        <outlet property="leftAmountAtTopRight" destination="cAk-B9-602" id="dkS-qG-CxF"/>
                         <outlet property="leftInCategoryLabel" destination="mj5-VD-gXL" id="UXc-95-fRW"/>
-                        <outlet property="leftLabelOnNavBar" destination="d25-Ir-Fyo" id="dyU-I6-nea"/>
+                        <outlet property="unallocatedLabelAtTop" destination="cAk-B9-602" id="KWM-3i-9yE"/>
                         <outlet property="updateItemButton" destination="RZV-VS-X9y" id="Mep-4e-ynb"/>
                         <outlet property="warningLabel" destination="3cn-1k-j8T" id="O17-ik-xBe"/>
                         <segue destination="hZl-gb-yeD" kind="presentation" identifier="changeTransactionCategoryToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="DjV-b6-sMR"/>
@@ -636,7 +636,7 @@
                                     <navigationItem title="Edit Transaction" id="vnV-KO-LWl">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="lhj-bB-lF0">
                                             <connections>
-                                                <action selector="backButton:" destination="qaR-gZ-lNK" id="4ZP-vA-pYJ"/>
+                                                <action selector="backButton:" destination="qaR-gZ-lNK" id="o0n-sf-mMJ"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="cXJ-yW-Zs7"/>
@@ -775,7 +775,7 @@
                                                 <rect key="frame" x="175" y="0.0" width="160" height="54"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fIm-7V-dVt">
-                                                        <rect key="frame" x="56.5" y="11.5" width="51" height="31"/>
+                                                        <rect key="frame" x="55.5" y="11.5" width="51" height="31"/>
                                                         <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
                                                             <action selector="onHoldToggle:" destination="qaR-gZ-lNK" eventType="valueChanged" id="VyT-yi-xF5"/>
@@ -831,18 +831,18 @@
                     </view>
                     <connections>
                         <outlet property="amountLabel" destination="4HF-qX-bLD" id="DJl-6g-gsf"/>
+                        <outlet property="balanceOnNavBar" destination="cXJ-yW-Zs7" id="3EI-Ht-EoP"/>
                         <outlet property="categoryLabel" destination="3ga-vC-hH4" id="9T6-6V-ob5"/>
                         <outlet property="dateLabel" destination="3Pc-MP-64U" id="POe-hk-qy3"/>
                         <outlet property="editAmountButton" destination="YxN-YY-Zsk" id="KhH-En-a7h"/>
                         <outlet property="editCategoryButton" destination="gxh-Ri-OOD" id="sxh-Tv-SIm"/>
                         <outlet property="editDateButton" destination="8DF-GT-dWF" id="AMI-0I-sSF"/>
                         <outlet property="editTitleButton" destination="0F2-XE-Blk" id="JOZ-dG-T77"/>
-                        <outlet property="leftAmountAtTopRight" destination="H66-te-QwJ" id="zHe-rc-85Z"/>
-                        <outlet property="leftLabelOnNavBar" destination="cXJ-yW-Zs7" id="oz3-05-aqS"/>
                         <outlet property="onHoldToggleSwitch" destination="fIm-7V-dVt" id="OXj-Iq-Elq"/>
                         <outlet property="onHoldView" destination="UQj-dh-qre" id="B21-8r-c24"/>
                         <outlet property="titleLabel" destination="jn5-Pa-knm" id="Htj-NO-9Ld"/>
                         <outlet property="typeLabel" destination="C4U-RY-xyy" id="iPh-Qt-5Hv"/>
+                        <outlet property="unallocatedLabelAtTop" destination="H66-te-QwJ" id="OMe-cb-SJz"/>
                         <segue destination="M7R-Zh-6yz" kind="showDetail" identifier="editTransactionTitleSegue" id="Jsv-K0-lft"/>
                         <segue destination="NQg-FD-bz4" kind="showDetail" identifier="editTransactionAmountSegue" id="nEB-vh-IrF"/>
                         <segue destination="7qg-h4-lUg" kind="showDetail" identifier="editTransactionDateSegue" id="Pra-cl-fA7"/>

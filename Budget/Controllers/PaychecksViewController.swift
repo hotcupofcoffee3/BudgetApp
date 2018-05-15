@@ -10,18 +10,65 @@ import UIKit
 
 class PaychecksViewController: UIViewController {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
     
+    var editPaycheck = false
     
     
+    
+    // *****
+    // MARK: - Header for Main Views
+    // *****
+    
+    // *** IBOutlets
+    
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editPaycheck = !editPaycheck
+        
+        editBarButton.title = editPaycheck ? "Done" : "Edit"
+        
+        displayedDataTable.reloadData()
+        
+    }
+    
+    @IBAction func addSomething(_ sender: UIButton) {
+        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
+    }
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+    }
+
     
     
     // *****
     // MARK: - IBOutlets
     // *****
     
+    @IBOutlet weak var displayedDataTable: UITableView!
     
     
     
@@ -66,23 +113,7 @@ class PaychecksViewController: UIViewController {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
 
 
 }

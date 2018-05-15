@@ -11,6 +11,7 @@ import UIKit
 class AddTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
     
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -24,12 +25,105 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Add & Main Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    
+    @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var addTransactionButtonTitle: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addTransaction(_ sender: UIButton) {
+        submitAddTransactionForReview()
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        dateLabel.text = dateFormat.string(from: Date())
+        
+        if let category = selectedCategory {
+            
+            categoryLabel.text = category
+            
+        }
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        dateView.addGestureRecognizer(dateViewTap)
+        categoryView.addGestureRecognizer(categoryViewTap)
+        
+        
+        addToolBarToNumberPad(textField: transactionAmountTextField)
+        
+        
+        
+        // MARK: Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        addCircleAroundButton(named: addTransactionButtonTitle)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        
+        self.transactionNameTextField.delegate = self
+        self.transactionAmountTextField.delegate = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+    }
+    
+    
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var transactionSegmentedControl: UISegmentedControl!
     
@@ -53,23 +147,11 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
     
     @IBOutlet weak var holdView: UIView!
     
-    @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var addTransactionButtonTitle: UIButton!
-    
     
     
     // *****
     // MARK: - IBActions
     // *****
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        
-        transactionNameTextField.resignFirstResponder()
-        transactionAmountTextField.resignFirstResponder()
-        
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func transactionSelected(_ sender: UISegmentedControl) {
         
@@ -86,12 +168,6 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
             updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
             
         }
-        
-    }
-    
-    @IBAction func addTransaction(_ sender: UIButton) {
-        
-        submitAddTransactionForReview()
         
     }
     
@@ -231,7 +307,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
                 self.successHaptic()
                 
                 self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
-                self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
+                self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
                 
             }))
             
@@ -261,7 +337,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
                 self.successHaptic()
                 
                 self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
-                self.updateLeftLabelAtTopRight(barButton: self.leftLabelOnNavBar, unallocatedButton: self.leftAmountAtTopRight)
+                self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
                 
             }))
             
@@ -346,82 +422,7 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
     }
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
-    
-        dateLabel.text = dateFormat.string(from: Date())
-        
-        if let category = selectedCategory {
-            
-            categoryLabel.text = category
-            
-        }
-
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
-        
-        nameView.addGestureRecognizer(nameViewTap)
-        amountView.addGestureRecognizer(amountViewTap)
-        dateView.addGestureRecognizer(dateViewTap)
-        categoryView.addGestureRecognizer(categoryViewTap)
-        
-        
-        // MARK: Add done button
-        
-        let toolbar = UIToolbar()
-        toolbar.barTintColor = UIColor.black
-        
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
-        doneButton.tintColor = UIColor.white
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        toolbar.setItems([flexibleSpace, doneButton], animated: true)
-        
-        transactionAmountTextField.inputAccessoryView = toolbar
-        
-        
-        
-        // MARK: Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        addCircleAroundButton(named: addTransactionButtonTitle)
-        
-        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-        
-        self.transactionNameTextField.delegate = self
-        self.transactionAmountTextField.delegate = self
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        updateAddTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-    }
     
     
     
@@ -452,8 +453,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         return true
     }
     
-    @objc func dismissNumberKeyboard() {
-        
+    @objc override func dismissNumberKeyboard() {
+        transactionAmountTextField.resignFirstResponder()
         submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
         
     }

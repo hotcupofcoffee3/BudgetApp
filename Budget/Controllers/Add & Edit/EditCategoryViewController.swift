@@ -10,6 +10,8 @@ import UIKit
 
 class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDate {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -25,22 +27,82 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Add & Main Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        currentCategoryNameString = editableCategoryName
+        
+        updateLabels()
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.addCircleAroundButton(named: self.editNameButton)
+        self.addCircleAroundButton(named: self.editBudgetedButton)
+        self.addCircleAroundButton(named: self.editAvailableButton)
+        
+        let dateTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        
+        dueDateView.addGestureRecognizer(dateTap)
+        
+        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
+        
+        if category.dueDay >= 1 && category.dueDay <= 31 {
+            
+            dateLabel.alpha = 1.0
+            dateLabel.text = "Due: \(convertDayToOrdinal(day: Int(category.dueDay)))"
+            dueDateSwitch.isOn = true
+            
+        } else {
+            
+            dateLabel.alpha = 0.5
+            dateLabel.text = "Due: N/A"
+            dueDateSwitch.isOn = false
+            
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        currentCategoryNameString = editableCategoryName
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        self.updateLabels()
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var currentCategoryName: UILabel!
     
     @IBOutlet weak var currentCategoryBudgeted: UILabel!
     
     @IBOutlet weak var currentCategoryAvailable: UILabel!
-    
-    @IBOutlet weak var currentRecurringStatus: UISwitch!
-    
-    @IBOutlet weak var currentRecurringStatusView: UIView!
     
     @IBOutlet weak var editNameButton: UIButton!
     
@@ -59,10 +121,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
     // *****
     // MARK: - IBActions
     // *****
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func editName(_ sender: UIButton) {
         
@@ -170,60 +228,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
     }
     
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        currentCategoryNameString = editableCategoryName
-        
-        updateLabels()
-        updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.addCircleAroundButton(named: self.editNameButton)
-        self.addCircleAroundButton(named: self.editBudgetedButton)
-        self.addCircleAroundButton(named: self.editAvailableButton)
-        
-        let dateTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        
-        dueDateView.addGestureRecognizer(dateTap)
-        
-        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
-        
-        if category.dueDay >= 1 && category.dueDay <= 31 {
-            
-            dateLabel.alpha = 1.0
-            dateLabel.text = "Due: \(convertDayToOrdinal(day: Int(category.dueDay)))"
-            dueDateSwitch.isOn = true
-            
-        } else {
-            
-            dateLabel.alpha = 0.5
-            dateLabel.text = "Due: N/A"
-            dueDateSwitch.isOn = false
-            
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        currentCategoryNameString = editableCategoryName
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        self.updateLabels()
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
     
     
     

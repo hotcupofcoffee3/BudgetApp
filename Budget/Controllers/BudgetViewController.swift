@@ -10,6 +10,8 @@ import UIKit
 
 class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -23,41 +25,80 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     // *****
+    // MARK: - Header for Main Views
+    // *****
+    
+    // *** IBOutlets
+    
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editTimeFrame = !editTimeFrame
+        
+        editBarButton.title = editTimeFrame ? "Done" : "Edit"
+        
+        displayedDataTable.reloadData()
+        
+    }
+    
+    @IBAction func addSomething(_ sender: UIButton) {
+        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    func loadNecessaryInfo(itemsToLoad: () -> Void) {
+        
+        itemsToLoad()
+        
+        displayedDataTable.separatorStyle = .none
+        displayedDataTable.reloadData()
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
+        
+        self.displayedDataTable.rowHeight = 90
+        
+        self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
+        
+    }
+    
+    
+    
+    // *****
     // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var displayedDataTable: UITableView!
-    
-    @IBOutlet weak var editTimeFrameBarButton: UIBarButtonItem!
-    
-    @IBOutlet weak var availableBalanceLabel: UILabel!
     
     
     // *****
     // MARK: - IBActions
     // *****
     
-    @IBAction func editTimeFrame(_ sender: UIBarButtonItem) {
-        
-        editTimeFrame = !editTimeFrame
-        
-        if editTimeFrame == true {
-            
-            editTimeFrameBarButton.title = "Done"
-            displayedDataTable.reloadData()
-            
-        } else {
-            
-            editTimeFrameBarButton.title = "Edit"
-            displayedDataTable.reloadData()
-            
-        }
-        
-    }
     
-    @IBAction func addPeriod(_ sender: UIButton) {
-        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
-    }
     
     
     
@@ -180,39 +221,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    func loadNecessaryInfo() {
-        
-        displayedDataTable.separatorStyle = .none
-        loadSavedBudgetedTimeFrames()
-        displayedDataTable.reloadData()
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.loadNecessaryInfo()
-        
-        self.displayedDataTable.rowHeight = 90
-        
-        self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
-        
-        loadAllBudgetItems()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.loadNecessaryInfo()
-        
-        loadAllBudgetItems()
-        
-    }
     
     
   

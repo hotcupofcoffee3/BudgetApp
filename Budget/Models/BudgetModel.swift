@@ -24,6 +24,7 @@ class Budget {
     var transactions = [Transaction]()
     var budgetedTimeFrames = [Period]()
     var budgetItems = [BudgetItem]()
+    var paychecks = [Paycheck]()
     
     var sortedCategoryKeys = [String]()
     var balance = Double()

@@ -11,6 +11,7 @@ import UIKit
 class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate {
 
     
+    
     // *****
     // MARK: - Variables
     // *****
@@ -20,14 +21,84 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     
     // *****
-    // MARK: - IBOutlets
+    // MARK: - Header for Edit Views
     // *****
     
-    @IBOutlet weak var leftLabelOnNavBar: UIBarButtonItem!
+    // *** IBOutlets
     
-    @IBOutlet weak var leftAmountAtTopRight: UILabel!
+    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
+    
+    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var updateItemButton: UIButton!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updateItem(_ sender: UIButton) {
+        changeAmountSubmittedForReview()
+    }
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+        
+        currentTransaction = editableTransaction
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        
+        amountView.addGestureRecognizer(amountViewTap)
+        
+        
+        addToolBarToNumberPad(textField: newAmountTextField)
+        
+        
+        // MARK: - Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        self.editingItemLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
+        
+        if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
+            
+            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
+            
+        }
+        
+        self.addCircleAroundButton(named: self.updateItemButton)
+        
+        self.newAmountTextField.delegate = self
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
     
     @IBOutlet weak var editingItemLabel: UILabel!
     
@@ -37,21 +108,13 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var newAmountTextField: UITextField!
     
-    @IBOutlet weak var updateItemButton: UIButton!
-    
     
     
     // *****
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func updateItem(_ sender: UIButton) {
-        changeAmountSubmittedForReview()
-    }
+   
 
 
     
@@ -124,64 +187,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let editableTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
-        
-        currentTransaction = editableTransaction
-        
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        
-        amountView.addGestureRecognizer(amountViewTap)
-        
-        
-        
-        // MARK: - Add done button
-        
-        let toolbar = UIToolbar()
-        toolbar.barTintColor = UIColor.black
-        
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.dismissNumberKeyboard))
-        doneButton.tintColor = UIColor.white
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        toolbar.setItems([flexibleSpace, doneButton], animated: true)
-        
-        newAmountTextField.inputAccessoryView = toolbar
-        
-        
-        // MARK: - Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        self.updateLeftLabelAtTopRight(barButton: leftLabelOnNavBar, unallocatedButton: leftAmountAtTopRight)
-        
-        self.editingItemLabel.text = "\(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf))"
-        
-        if let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) {
-            
-            self.leftInCategoryLabel.text = "~ Left in \(currentTransaction.forCategory!): \(convertedAmountToDollars(amount: currentCategory.available)) ~"
-            
-        }
-        
-        self.addCircleAroundButton(named: self.updateItemButton)
-        
-        self.newAmountTextField.delegate = self
-    }
     
     
     
@@ -201,7 +207,7 @@ class EditTransactionAmountViewController: UIViewController, UITextFieldDelegate
     
     
     // 'Done' button on number pad to submit for review of final submitability
-    @objc func dismissNumberKeyboard() {
+    @objc override func dismissNumberKeyboard() {
         
         changeAmountSubmittedForReview()
         newAmountTextField.resignFirstResponder()

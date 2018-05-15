@@ -10,7 +10,76 @@ import UIKit
 import CoreData
 
 class MainScreen: UIViewController {
-  
+    
+    
+    // *****
+    // MARK: - Header for Main Views
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        // ********************
+        // Core Data Testing (& Other Testing)
+        // ********************
+        
+        
+        
+        // ********************
+        // ********************
+        // ********************
+        
+        
+        // ***** Starting From Scratch on New Device
+        loadSavedCategories()
+        if budget.categories.count == 0 {
+            budget.deleteEVERYTHING()
+        }
+        
+        loadSavedCategories()
+        loadSavedTransactions(descending: true)
+        loadSavedBudgetedTimeFrames()
+        
+        selectedCategory = nil
+        
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        
+        addCircleAroundMainButtons(named: categoriesButtonTitle)
+        addCircleAroundMainButtons(named: paycheckButtonTitle)
+        addCircleAroundMainButtons(named: transactionsButtonTitle)
+        addCircleAroundMainButtons(named: budgetButtonTitle)
+        
+        // Long press gesture recognizers
+        let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
+        
+        let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddCategoriesAndTransactions(gestureRecognizer:)))
+        
+        uilprDELETE.minimumPressDuration = 2
+        uilprADD.minimumPressDuration = 2
+        
+        hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
+        hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        selectedCategory = nil
+        
+    }
+    
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -48,6 +117,7 @@ class MainScreen: UIViewController {
     }
     
     @IBAction func paycheckButton(_ sender: UIButton) {
+        performSegue(withIdentifier: mainToPaycheckSegueKey, sender: self)
     }
     
     @IBAction func categoriesButton(_ sender: UIButton) {
@@ -69,7 +139,6 @@ class MainScreen: UIViewController {
     // *****
     // MARK: - Functions
     // *****
-    
     
     // *** Long press recognizer function to - DELETE EVERYTHING
     
@@ -143,75 +212,10 @@ class MainScreen: UIViewController {
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
-        
-        
-        
-        
-        
-        // ********************
-        // Core Data Testing (& Other Testing)
-        // ********************
-        
-        
-        
-        // ********************
-        // ********************
-        // ********************
-        
-        
-        // ***** Starting From Scratch on New Device
-        loadSavedCategories()
-        if budget.categories.count == 0 {
-            budget.deleteEVERYTHING()
-        }
-        
-        loadSavedCategories()
-        loadSavedTransactions(descending: true)
-        loadSavedBudgetedTimeFrames()
-        
-        selectedCategory = nil
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        
-        addCircleAroundMainButtons(named: categoriesButtonTitle)
-        addCircleAroundMainButtons(named: paycheckButtonTitle)
-        addCircleAroundMainButtons(named: transactionsButtonTitle)
-        addCircleAroundMainButtons(named: budgetButtonTitle)
-        
-        // Long press gesture recognizers
-        let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
-        
-        let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddCategoriesAndTransactions(gestureRecognizer:)))
-        
-        uilprDELETE.minimumPressDuration = 2
-        uilprADD.minimumPressDuration = 2
-        
-        hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
-        hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        selectedCategory = nil
-        
-    }
     
     
     
-    // *****
-    // MARK: - Keyboard functions
-    // *****
+    
     
     
 

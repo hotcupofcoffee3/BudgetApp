@@ -12,6 +12,8 @@ var timeFrameStartID = Int()
 
 class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
+    
     // *****
     // MARK: - Variables
     // *****
@@ -21,16 +23,69 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
+    // MARK: - Header for Main Views
+    // *****
+    
+    // *** IBOutlets
+    
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    
+    
+    // *** IBActions
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editItem = !editItem
+        
+        editBarButton.title = editItem ? "Done" : "Edit"
+        
+        displayedDataTable.reloadData()
+        
+    }
+    
+    @IBAction func addSomething(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: budgetItemsToAddItemSegueKey, sender: self)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
+        
+        self.loadNecessaryInfo()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.loadNecessaryInfo()
+        
+    }
+    
+    
+    
+    // *****
     // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var displayedDataTable: UITableView!
-    
-    @IBOutlet weak var editItemBarButton: UIBarButtonItem!
-    
-    @IBOutlet weak var availableBalanceLabel: UILabel!
-    
-    @IBOutlet weak var budgetItemsNavBar: UINavigationBar!
     
     
     
@@ -39,33 +94,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - IBActions
     // *****
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     
-    @IBAction func editItem(_ sender: UIBarButtonItem) {
-        
-        editItem = !editItem
-        
-        if editItem == true {
-            
-            editItemBarButton.title = "Done"
-            displayedDataTable.reloadData()
-            
-        } else {
-            
-            editItemBarButton.title = "Edit"
-            displayedDataTable.reloadData()
-            
-        }
-        
-    }
-    
-    @IBAction func addBudgetItem(_ sender: UIButton) {
-        
-        print("Anus")
-        
-    }
     
     
     
@@ -136,14 +165,14 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     func loadNecessaryInfo() {
         
         loadSpecificBudgetItems(startID: timeFrameStartID)
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
         displayedDataTable.rowHeight = 60
         displayedDataTable.separatorStyle = .none
         
         guard let period = loadSpecificBudgetedTimeFrame(startID: timeFrameStartID) else { return }
         
-        budgetItemsNavBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
+        navBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
         
         displayedDataTable.reloadData()
         
@@ -151,24 +180,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    // *****
-    // MARK: - Loadables
-    // *****
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
-
-        self.loadNecessaryInfo()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.loadNecessaryInfo()
-        
-    }
     
     
     
