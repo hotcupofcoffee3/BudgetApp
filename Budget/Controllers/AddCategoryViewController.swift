@@ -43,12 +43,8 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
     
     @IBOutlet weak var addCategoryButton: UIButton!
     
-    @IBOutlet weak var currentRecurringStatus: UISwitch!
-    
     @IBOutlet weak var currentAllocationStatus: UISwitch!
-    
-    @IBOutlet weak var recurringView: UIView!
-    
+
     @IBOutlet weak var allocateView: UIView!
     
     @IBOutlet weak var dateLabel: UILabel!
@@ -236,12 +232,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
         
     }
     
-    @objc func recurringTapped() {
-        
-        currentRecurringStatus.isOn = !currentRecurringStatus.isOn
-        
-    }
-    
     @objc func allocateTapped() {
         
         currentAllocationStatus.isOn = !currentAllocationStatus.isOn
@@ -302,13 +292,11 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
         
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let recurringViewTap = UITapGestureRecognizer(target: self, action: #selector(recurringTapped))
         let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
         let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
-        recurringView.addGestureRecognizer(recurringViewTap)
         allocateView.addGestureRecognizer(allocateViewTap)
         dateLabel.addGestureRecognizer(datetap)
         
