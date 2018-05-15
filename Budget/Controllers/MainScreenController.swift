@@ -31,6 +31,8 @@ class MainScreen: UIViewController {
     
     @IBOutlet weak var budgetButtonTitle: UIButton!
     
+    @IBOutlet weak var paycheckButtonTitle: UIButton!
+    
     @IBOutlet weak var categoriesButtonTitle: UIButton!
     
     @IBOutlet weak var transactionsButtonTitle: UIButton!
@@ -43,6 +45,9 @@ class MainScreen: UIViewController {
     
     @IBAction func budgetButton(_ sender: UIButton) {
         performSegue(withIdentifier: mainToBudgetSegueKey, sender: self)
+    }
+    
+    @IBAction func paycheckButton(_ sender: UIButton) {
     }
     
     @IBAction func categoriesButton(_ sender: UIButton) {
@@ -178,6 +183,7 @@ class MainScreen: UIViewController {
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
         
         addCircleAroundMainButtons(named: categoriesButtonTitle)
+        addCircleAroundMainButtons(named: paycheckButtonTitle)
         addCircleAroundMainButtons(named: transactionsButtonTitle)
         addCircleAroundMainButtons(named: budgetButtonTitle)
         

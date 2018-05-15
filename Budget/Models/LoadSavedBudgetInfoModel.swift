@@ -252,7 +252,7 @@ func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
-    request.predicate = NSPredicate(format: startDateIDMatchesKey, startID)
+    request.predicate = NSPredicate(format: startDateIDMatchesKey, String(startID))
     
     do {
         

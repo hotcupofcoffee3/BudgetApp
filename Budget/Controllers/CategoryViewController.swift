@@ -218,12 +218,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Functions
     // *****
     
-    // ***** Swipe
-//    @objc func swipe() {
-//
-//        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
-//
-//    }
+    
     
     
     
@@ -247,13 +242,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         editCategory = false
         selectedCategory = nil
         
-        // ******** Swipe
-//
-//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe))
-//        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
-//        self.view.addGestureRecognizer(leftSwipe)
-//        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -266,14 +254,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
 
     }
     
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    
-    
+ 
     
     
     

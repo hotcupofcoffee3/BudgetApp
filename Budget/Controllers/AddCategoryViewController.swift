@@ -194,10 +194,6 @@ class AddCategoryViewController: UIViewController, UITextFieldDelegate, ChooseDa
             
             guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
             
-            if self.currentRecurringStatus.isOn {
-                newCategory.recurring = true
-            }
-            
             if self.currentAllocationStatus.isOn {
                 budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
             }

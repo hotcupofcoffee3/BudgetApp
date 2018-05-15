@@ -74,7 +74,11 @@
                                                 <action selector="backButton:" destination="dfO-D2-SEN" id="Qk2-01-k4Q"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="2Ia-xn-MnT"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="2Ia-xn-MnT">
+                                            <connections>
+                                                <action selector="editItem:" destination="dfO-D2-SEN" id="eyl-aA-wbB"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -88,6 +92,9 @@
                                 <state key="normal" image="addButton">
                                     <color key="titleColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addBudgetItem:" destination="dfO-D2-SEN" eventType="touchUpInside" id="58V-gS-DYN"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$100,000.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvY-4W-Vgw">
                                 <rect key="frame" x="20" y="84" width="335" height="48"/>
@@ -135,7 +142,10 @@
                         <viewLayoutGuide key="safeArea" id="UYA-Tv-NDv"/>
                     </view>
                     <connections>
+                        <outlet property="availableBalanceLabel" destination="LvY-4W-Vgw" id="LtP-3Y-E1i"/>
+                        <outlet property="budgetItemsNavBar" destination="oTh-Pn-Q2r" id="9Xk-F4-lJ9"/>
                         <outlet property="displayedDataTable" destination="aVC-uQ-kwe" id="7LY-PP-Fiz"/>
+                        <outlet property="editItemBarButton" destination="2Ia-xn-MnT" id="pR2-vm-uEW"/>
                         <segue destination="QOs-TB-lQn" kind="presentation" identifier="budgetItemsToSelectItemsSegue" modalPresentationStyle="overCurrentContext" id="N2u-gN-6uv"/>
                     </connections>
                 </viewController>

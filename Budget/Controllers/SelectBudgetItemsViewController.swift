@@ -9,14 +9,71 @@
 import UIKit
 
 class SelectBudgetItemsViewController: UIViewController {
-
+    
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBOutlets
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
+    
+    @IBAction func doneButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    // *****
+    // MARK: - Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         
     }
-
     
-
+    
+    
+    
+    
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -645,48 +645,14 @@
                                     <constraint firstAttribute="height" constant="54" id="73z-aT-0qG"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="R55-Qg-TTG" userLabel="Recurring Stack">
-                                <rect key="frame" x="20" y="488" width="335" height="54"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recurring:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xr-4O-EDV">
-                                        <rect key="frame" x="0.0" y="0.0" width="165" height="54"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gY4-nB-EZ8" userLabel="Recurring View">
-                                        <rect key="frame" x="175" y="0.0" width="160" height="54"/>
-                                        <subviews>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3iD-YU-6Hr">
-                                                <rect key="frame" x="56" y="11.5" width="51" height="31"/>
-                                                <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <connections>
-                                                    <action selector="editRecurringSwitch:" destination="JVf-3z-OGb" eventType="valueChanged" id="IOk-6g-jfu"/>
-                                                </connections>
-                                            </switch>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="FXi-3T-3jg"/>
-                                            <constraint firstItem="3iD-YU-6Hr" firstAttribute="centerX" secondItem="gY4-nB-EZ8" secondAttribute="centerX" id="Qwt-85-QhC"/>
-                                            <constraint firstItem="3iD-YU-6Hr" firstAttribute="centerY" secondItem="gY4-nB-EZ8" secondAttribute="centerY" id="ZMv-MV-Lb6"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="ywb-UU-nm0"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="JZx-xq-fXg"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.2156862745" green="0.2156862745" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Om3-R2-yMh" firstAttribute="top" secondItem="fSp-48-zMS" secondAttribute="bottom" constant="100" id="6ze-Cp-Yos"/>
                             <constraint firstItem="XUI-FZ-68B" firstAttribute="top" secondItem="fhR-GE-wGh" secondAttribute="bottom" constant="20" id="72O-G6-jR3"/>
-                            <constraint firstItem="R55-Qg-TTG" firstAttribute="leading" secondItem="0yR-v6-OPP" secondAttribute="leading" constant="20" id="95g-8X-PsN"/>
                             <constraint firstItem="0yR-v6-OPP" firstAttribute="trailing" secondItem="fhR-GE-wGh" secondAttribute="trailing" constant="20" id="ATf-FO-tWg"/>
                             <constraint firstItem="0yR-v6-OPP" firstAttribute="trailing" secondItem="7Er-zM-NHf" secondAttribute="trailing" constant="20" id="EIK-LP-9dB"/>
                             <constraint firstItem="0yR-v6-OPP" firstAttribute="trailing" secondItem="Om3-R2-yMh" secondAttribute="trailing" constant="20" id="GOV-F9-36k"/>
-                            <constraint firstItem="R55-Qg-TTG" firstAttribute="top" secondItem="XUI-FZ-68B" secondAttribute="bottom" constant="20" id="Jzj-66-2Kk"/>
                             <constraint firstItem="XUI-FZ-68B" firstAttribute="leading" secondItem="0yR-v6-OPP" secondAttribute="leading" constant="20" id="N81-BN-EYs"/>
                             <constraint firstItem="7Er-zM-NHf" firstAttribute="leading" secondItem="0yR-v6-OPP" secondAttribute="leading" constant="20" id="O40-ff-PCJ"/>
                             <constraint firstItem="qT5-Iv-U9o" firstAttribute="top" secondItem="0yR-v6-OPP" secondAttribute="top" id="Pua-DY-yxo"/>
@@ -700,7 +666,6 @@
                             <constraint firstItem="fSp-48-zMS" firstAttribute="leading" secondItem="0yR-v6-OPP" secondAttribute="leading" constant="20" id="e0H-Si-L1a"/>
                             <constraint firstItem="0yR-v6-OPP" firstAttribute="trailing" secondItem="XUI-FZ-68B" secondAttribute="trailing" constant="20" id="mSS-U7-gI9"/>
                             <constraint firstItem="fhR-GE-wGh" firstAttribute="leading" secondItem="0yR-v6-OPP" secondAttribute="leading" constant="20" id="ocS-Op-Aq3"/>
-                            <constraint firstItem="0yR-v6-OPP" firstAttribute="trailing" secondItem="R55-Qg-TTG" secondAttribute="trailing" constant="20" id="zv0-fQ-Cd2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0yR-v6-OPP"/>
                     </view>
@@ -708,8 +673,6 @@
                         <outlet property="currentCategoryAvailable" destination="b7h-hL-Ogz" id="whs-M8-ncx"/>
                         <outlet property="currentCategoryBudgeted" destination="7rj-S3-n3j" id="lD9-hm-vFm"/>
                         <outlet property="currentCategoryName" destination="69e-3u-Q9Q" id="Gnw-Ad-HBD"/>
-                        <outlet property="currentRecurringStatus" destination="3iD-YU-6Hr" id="Ozn-kl-eVF"/>
-                        <outlet property="currentRecurringStatusView" destination="gY4-nB-EZ8" id="bb3-Hx-jz7"/>
                         <outlet property="dateLabel" destination="3eb-aa-kF5" id="LEv-eI-TP4"/>
                         <outlet property="dueDateSwitch" destination="9Jr-d0-x2O" id="DdR-Fz-j2H"/>
                         <outlet property="dueDateView" destination="c58-f1-VhY" id="lnT-gl-GCq"/>

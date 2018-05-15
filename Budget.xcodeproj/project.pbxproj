@@ -45,6 +45,8 @@
 		B5EE2BA020AA17B60059CFA4 /* BudgetItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5EE2B9F20AA17B60059CFA4 /* BudgetItems.storyboard */; };
 		B5EE2BA320AA33FE0059CFA4 /* BudgetItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */; };
 		B5EE2BA420AA33FE0059CFA4 /* BudgetItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */; };
+		B5EE2BC620AA5CA90059CFA4 /* AddPaycheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BC520AA5CA90059CFA4 /* AddPaycheckViewController.swift */; };
+		B5EE2BC820AA5CB30059CFA4 /* PaychecksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BC720AA5CB30059CFA4 /* PaychecksViewController.swift */; };
 		B5F33CBF2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */; };
 		B5F33CC12093AC9100B4ACE6 /* EditTransactionAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */; };
 		B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */; };
@@ -96,6 +98,8 @@
 		B5EE2B9F20AA17B60059CFA4 /* BudgetItems.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BudgetItems.storyboard; sourceTree = "<group>"; };
 		B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetItemTableViewCell.swift; sourceTree = "<group>"; };
 		B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetItemTableViewCell.xib; sourceTree = "<group>"; };
+		B5EE2BC520AA5CA90059CFA4 /* AddPaycheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaycheckViewController.swift; sourceTree = "<group>"; };
+		B5EE2BC720AA5CB30059CFA4 /* PaychecksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaychecksViewController.swift; sourceTree = "<group>"; };
 		B5F33CBE2093AC7400B4ACE6 /* EditTransactionTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionTitleViewController.swift; sourceTree = "<group>"; };
 		B5F33CC02093AC9100B4ACE6 /* EditTransactionAmountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionAmountViewController.swift; sourceTree = "<group>"; };
 		B5F33CC22093ACA200B4ACE6 /* EditTransactionDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionDateViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 				B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */,
 				B50D5D9820A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift */,
 				B576FD2B208F86BD00565082 /* DetailsViewController.swift */,
+				B5EE2BC520AA5CA90059CFA4 /* AddPaycheckViewController.swift */,
+				B5EE2BC720AA5CB30059CFA4 /* PaychecksViewController.swift */,
 				B5892DD720A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift */,
 				B51AC2E82076BB730068E059 /* AddCategoryViewController.swift */,
 				B52879A8208A42970011D04C /* AddTransactionViewController.swift */,
@@ -346,6 +352,7 @@
 				B5892DD820A9D297003687C6 /* AddBudgetedTimeFrameViewController.swift in Sources */,
 				B56A0D97209CA3530016634B /* EditCategoryAvailableViewController.swift in Sources */,
 				B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */,
+				B5EE2BC820AA5CB30059CFA4 /* PaychecksViewController.swift in Sources */,
 				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */,
 				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
@@ -358,6 +365,7 @@
 				B50D5D9720A9F0E800EBD67D /* BudgetItemsViewController.swift in Sources */,
 				B5F33CC32093ACA200B4ACE6 /* EditTransactionDateViewController.swift in Sources */,
 				B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */,
+				B5EE2BC620AA5CA90059CFA4 /* AddPaycheckViewController.swift in Sources */,
 				B587DF22208D0FA00042F0AB /* EditCategoryViewController.swift in Sources */,
 				B5E8316920A4DA660068DD05 /* TransactionTableViewCell.swift in Sources */,
 				B50D5D9920A9F0FA00EBD67D /* SelectBudgetItemsViewController.swift in Sources */,

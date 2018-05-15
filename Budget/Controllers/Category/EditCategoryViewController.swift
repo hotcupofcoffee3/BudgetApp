@@ -88,13 +88,6 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
     }
     
-    @IBAction func editRecurringSwitch(_ sender: UISwitch) {
-        
-        recurringToggle()
-        
-    }
-    
-    
     
     // *****
     // MARK: - Functions
@@ -135,29 +128,12 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         
     }
     
-    func recurringToggle() {
-        
-        guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
-        category.recurring = !category.recurring
-        
-        saveData()
-        
-    }
-    
     @objc func dateTapped() {
         
         dueDateSwitch.isOn = !dueDateSwitch.isOn
         
         dueDateToggle()
         
-    }
-    
-    @objc func recurringTapped() {
-        
-        currentRecurringStatus.isOn = !currentRecurringStatus.isOn
-        
-        recurringToggle()
-       
     }
     
     func setDate(date: Date) {
@@ -213,23 +189,10 @@ class EditCategoryViewController: UIViewController, UITextFieldDelegate, ChooseD
         self.addCircleAroundButton(named: self.editAvailableButton)
         
         let dateTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        let recurringTap = UITapGestureRecognizer(target: self, action: #selector(recurringTapped))
         
         dueDateView.addGestureRecognizer(dateTap)
-        currentRecurringStatusView.addGestureRecognizer(recurringTap)
-        
         
         guard let category = loadSpecificCategory(named: currentCategoryNameString) else { return }
-        
-        if category.recurring {
-            
-            currentRecurringStatus.isOn = true
-            
-        } else {
-            
-            currentRecurringStatus.isOn = false
-            
-        }
         
         if category.dueDay >= 1 && category.dueDay <= 31 {
             

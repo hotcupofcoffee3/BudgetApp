@@ -16,7 +16,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Variables
     // *****
     
-    
+    var editItem = false
     
     
     
@@ -25,6 +25,12 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
     
     @IBOutlet weak var displayedDataTable: UITableView!
+    
+    @IBOutlet weak var editItemBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var availableBalanceLabel: UILabel!
+    
+    @IBOutlet weak var budgetItemsNavBar: UINavigationBar!
     
     
     
@@ -35,6 +41,30 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func editItem(_ sender: UIBarButtonItem) {
+        
+        editItem = !editItem
+        
+        if editItem == true {
+            
+            editItemBarButton.title = "Done"
+            displayedDataTable.reloadData()
+            
+        } else {
+            
+            editItemBarButton.title = "Edit"
+            displayedDataTable.reloadData()
+            
+        }
+        
+    }
+    
+    @IBAction func addBudgetItem(_ sender: UIButton) {
+        
+        print("Anus")
+        
     }
     
     
@@ -57,21 +87,19 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-        if cell.accessoryType == .detailButton {
+        if editItem == true {
             
-            cell.accessoryView?.tintColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
+            cell.accessoryType = .detailButton
             
         } else {
             
-            cell.accessoryView?.tintColor = lightGreenColor
+            cell.accessoryType = item.checked ? .checkmark : .none
             
         }
         
         cell.nameLabel?.text = "\(item.name!)"
         cell.dueDayLabel?.text = item.day > 0 ? "Due: \(item.day)" : ""
         cell.amountLabel?.text = "\(convertedAmountToDollars(amount: item.amount))"
-        
-        cell.accessoryType = item.checked ? .checkmark : .none
         
         return cell
         
@@ -81,13 +109,21 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         let item = budget.budgetItems[indexPath.row]
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
-        
-        item.checked = !item.checked
-        
-        tableView.deselectRow(at: indexPath, animated: false)
-        
-        saveData()
+        if editItem == true {
+            
+            
+            
+        } else {
+            
+            tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
+            
+            item.checked = !item.checked
+            
+            tableView.deselectRow(at: indexPath, animated: false)
+            
+            saveData()
+            
+        }
         
     }
     
@@ -97,7 +133,21 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Functions
     // *****
     
-    
+    func loadNecessaryInfo() {
+        
+        loadSpecificBudgetItems(startID: timeFrameStartID)
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        
+        displayedDataTable.rowHeight = 60
+        displayedDataTable.separatorStyle = .none
+        
+        guard let period = loadSpecificBudgetedTimeFrame(startID: timeFrameStartID) else { return }
+        
+        budgetItemsNavBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
+        
+        displayedDataTable.reloadData()
+        
+    }
     
     
     
@@ -108,11 +158,15 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadSpecificBudgetItems(startID: timeFrameStartID)
+        self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
+
+        self.loadNecessaryInfo()
         
-        displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
-        displayedDataTable.rowHeight = 60
+        self.loadNecessaryInfo()
         
     }
     
