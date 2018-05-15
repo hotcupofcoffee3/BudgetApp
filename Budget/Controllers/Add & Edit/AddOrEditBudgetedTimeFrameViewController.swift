@@ -1,5 +1,5 @@
 //
-//  AddBudgetedTimeFrameViewController.swift
+//  AddOrEditBudgetedTimeFrameViewController.swift
 //  Budget
 //
 //  Created by Adam Moore on 5/14/18.
@@ -8,13 +8,15 @@
 
 import UIKit
 
-class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
+class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
     // *****
     // MARK: - Variables
     // *****
+    
+    var isAddingNewItem = true
     
     var isStart = true
     
@@ -121,7 +123,7 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         isStart = true
         
-        performSegue(withIdentifier: addBudgetToDatePickerSegueKey, sender: self)
+        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
         
     }
     
@@ -129,7 +131,7 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         isStart = false
         
-        performSegue(withIdentifier: addBudgetToDatePickerSegueKey, sender: self)
+        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
         
     }
     
@@ -139,7 +141,7 @@ class AddBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == addBudgetToDatePickerSegueKey {
+        if segue.identifier == addOrEditBudgetToDatePickerSegueKey {
             
             let datePickerVC = segue.destination as! DatePickerViewController
             

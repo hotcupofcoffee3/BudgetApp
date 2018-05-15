@@ -189,7 +189,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
                 
                 editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
-                performSegue(withIdentifier: editCategorySegueKey, sender: self)
+                performSegue(withIdentifier: categoriesToEditCategorySegueKey, sender: self)
                 
             }
             

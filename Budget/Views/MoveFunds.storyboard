@@ -13,6 +13,7 @@
         <!--Move Funds View Controller-->
         <scene sceneID="ChJ-zw-1lz">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bDd-Sb-3mG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="tri-DP-ugM" customClass="MoveFundsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Oy2-Q8-u3n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -242,11 +243,19 @@
                         <outlet property="toCategoryView" destination="Zz8-pw-mnC" id="wqo-wN-B6B"/>
                         <outlet property="unallocatedLabelAtTop" destination="aiq-3B-ZIK" id="tcT-qF-UVq"/>
                         <outlet property="warningLabel" destination="3zU-5N-O6X" id="IHn-0x-RG1"/>
+                        <segue destination="Ahf-nS-FZ0" kind="presentation" identifier="moveFundsToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="QTx-Bi-QvH"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bDd-Sb-3mG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-705" y="663"/>
+        </scene>
+        <!--CategoryPicker-->
+        <scene sceneID="5pD-i3-bfn">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CategoryPicker" id="Ahf-nS-FZ0" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CGJ-3u-Gih" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="575"/>
         </scene>
     </scenes>
 </document>

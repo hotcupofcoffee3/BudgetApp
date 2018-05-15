@@ -162,7 +162,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         editableTransactionID = Int(selectedTransaction.id)
         
-        performSegue(withIdentifier: editTransactionSegueKey, sender: self)
+        performSegue(withIdentifier: transactionsToEditTransactionSegueKey, sender: self)
         
         displayedDataTable.deselectRow(at: indexPath, animated: true)
         

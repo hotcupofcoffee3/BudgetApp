@@ -49,7 +49,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
-        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
+        performSegue(withIdentifier: budgetToAddOrEditBudgetSegueKey, sender: self)
     }
     
     
@@ -158,7 +158,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             timeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
             
-            performSegue(withIdentifier: budgetToTimeFrameItemsSegueKey, sender: self)
+            performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
             
         }
         

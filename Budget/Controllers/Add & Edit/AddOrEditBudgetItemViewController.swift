@@ -1,5 +1,5 @@
 //
-//  AddBudgetItemViewController.swift
+//  AddOrEditBudgetItemViewController.swift
 //  Budget
 //
 //  Created by Adam Moore on 5/15/18.
@@ -8,8 +8,16 @@
 
 import UIKit
 
-class AddBudgetItemViewController: UIViewController {
+class AddOrEditBudgetItemViewController: UIViewController {
 
+    // *****
+    // MARK: - Variables
+    // *****
+    
+    var isAddingNewItem = true
+    
+    
+    
     // *****
     // MARK: - Header for Add & Main Edit Views
     // *****
@@ -23,6 +31,7 @@ class AddBudgetItemViewController: UIViewController {
     @IBOutlet weak var addOrEditButton: UIButton!
     
     @IBOutlet weak var navBar: UINavigationBar!
+    
     
     
     // *** IBActions

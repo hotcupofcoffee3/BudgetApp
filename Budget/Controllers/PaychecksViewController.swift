@@ -45,7 +45,7 @@ class PaychecksViewController: UIViewController {
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
-        performSegue(withIdentifier: budgetToAddBudgetSegueKey, sender: self)
+        performSegue(withIdentifier: budgetToAddOrEditBudgetSegueKey, sender: self)
     }
     
     

@@ -69,66 +69,46 @@ let mainToPaycheckSegueKey = "mainToPaycheckSegue"
 let mainToCategoriesSegueKey = "mainToCategoriesSegue"
 let mainToTransactionsSegueKey = "mainToTransactionsSegue"
 
-let mainToAddCategorySegueKey = "mainToAddCategorySegue"
-let mainToAddTransactionSegueKey = "mainToAddTransactionSegue"
-let mainToAddDepositSegueKey = "mainToAddDepositSegue"
+let mainToAddOrEditCategorySegueKey = "mainToAddOrEditCategorySegue"
+let mainToAddOrEditTransactionSegueKey = "mainToAddOrEditTransactionSegue"
 let mainToMoveFundsSegueKey = "mainToMoveFundsSegue"
 
 
+// Budget to others
+let budgetToAddOrEditBudgetSegueKey = "budgetToAddOrEditBudgetSegue"
+let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
+let budgetToBudgetItemsSegueKey = "budgetToBudgetItemsSegue"
+let budgetItemsToAddOrEditItemSegueKey = "budgetItemsToAddOrEditItemSegue"
+
+
+// Paycheck to others
+let paychecksToAddOrEditPaycheckSegueKey = "paychecksToAddOrEditPaycheckSegue"
+
+
 // Categories to others
-let categoriesToAddCategorySegueKey = "categoriesToAddCategorySegue"
-let categoriesToAddTransactionSegueKey = "categoriesToAddTransactionSegue"
-let categoriesToAddDepositSegueKey = "categoriesToAddDepositSegue"
+let categoriesToAddOrEditCategorySegueKey = "categoriesToAddOrEditCategorySegue"
+let categoriesToAddOrEditTransactionSegueKey = "categoriesToAddOrEditTransactionSegue"
 let categoriesToMoveFundsSegueKey = "categoriesToMoveFundsSegue"
 let categoriesToTransactionsSegueKey = "categoriesToTransactionsSegue"
 
 
 // Transactions to others
-let transactionsToAddCategorySegueKey = "transactionsToAddCategorySegue"
-let transactionsToAddTransactionSegueKey = "transactionsToAddTransactionSegue"
-let transactionsToAddDepositSegueKey = "transactionsToAddDepositSegue"
+let transactionsToAddOrEditCategorySegueKey = "transactionsToAddOrEditCategorySegue"
+let transactionsToAddOrEditTransactionSegueKey = "transactionsToAddOrEditTransactionSegue"
 let transactionsToMoveFundsSegueKey = "transactionsToMoveFundsSegue"
 let transactionsToCategoriesSegueKey = "transactionsToCategoriesSegue"
 
 
-// Budget to others
-let budgetToAddBudgetSegueKey = "budgetToAddBudgetSegue"
-let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
-let budgetToTimeFrameItemsSegueKey = "budgetToTimeFrameItemsSegue"
-let budgetItemsToAddItemSegueKey = "budgetItemsToAddItemSegue"
-
-
-// Paycheck to others
-let paychecksToAddPaycheckSegueKey = "paychecksToAddPaycheckSegue"
-let paychecksToEditPaycheckSegueKey = "paychecksToEditPaycheckSegue"
-
-
 // Date Picker Segues
-let addCategoryToDatePickerSegueKey = "addCategoryToDatePickerSegue"
-let addTransactionToDatePickerSegueKey = "addTransactionToDatePickerSegue"
-let editCategoryToDatePickerSegueKey = "editCategoryToDatePickerSegue"
-let changeTransactionDateToDatePickerSegueKey = "changeTransactionDateToDatePickerSegue"
-let addBudgetToDatePickerSegueKey = "addBudgetToDatePickerSegue"
+let addOrEditCategoryToDatePickerSegueKey = "addOrEditCategoryToDatePickerSegue"
+let addOrEditTransactionToDatePickerSegueKey = "addOrEditTransactionToDatePickerSegue"
+let addOrEditBudgetToDatePickerSegueKey = "addOrEditBudgetToDatePickerSegue"
 
 
 // Category Picker Segues
-let addTransactionToCategoryPickerSegueKey = "addTransactionToCategoryPickerSegue"
-let moveFundsToCategoryPickerSegueKey = "aoveFundsToCategoryPickerSegue"
-let editCategoryAvailableToCategoryPickerSegueKey = "editCategoryAvailableToCategoryPickerSegue"
-let changeTransactionCategoryToCategoryPickerSegueKey = "changeTransactionCategoryToCategoryPickerSegue"
-
-
-// Edit Segues
-let editTransactionSegueKey = "editTransactionSegue"
-let editTransactionTitleSegueKey = "editTransactionTitleSegue"
-let editTransactionAmountSegueKey = "editTransactionAmountSegue"
-let editTransactionDateSegueKey = "editTransactionDateSegue"
-let editTransactionCategorySegueKey = "editTransactionCategorySegue"
-
-let editCategorySegueKey = "editCategorySegue"
-let editCategoryNameSegueKey = "editCategoryNameSegue"
-let editCategoryBudgetedSegueKey = "editCategoryBudgetedSegue"
-let editCategoryAvailableSegueKey = "editCategoryAvailableSegue"
+let moveFundsToCategoryPickerSegueKey = "moveFundsToCategoryPickerSegue"
+let addOrEditTransactionToCategoryPickerSegueKey = "addOrEditTransactionToCategoryPickerSegue"
+let addOrEditCategoryToCategoryPickerSegueKey = "addOrEditCategoryToCategoryPickerSegue"
 
 
 

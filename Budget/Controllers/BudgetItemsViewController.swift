@@ -54,7 +54,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func addSomething(_ sender: UIButton) {
         
-        performSegue(withIdentifier: budgetItemsToAddItemSegueKey, sender: self)
+        performSegue(withIdentifier: budgetItemsToAddOrEditItemSegueKey, sender: self)
         
     }
     

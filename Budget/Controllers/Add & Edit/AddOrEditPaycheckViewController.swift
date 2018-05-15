@@ -1,5 +1,5 @@
 //
-//  AddPaycheckViewController.swift
+//  AddOrEditPaycheckViewController.swift
 //  Budget
 //
 //  Created by Adam Moore on 5/14/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPaycheckViewController: UIViewController, UITextFieldDelegate {
+class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     
@@ -16,7 +16,7 @@ class AddPaycheckViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Variables
     // *****
     
-    
+    var isAddingNewItem = true
     
     
     

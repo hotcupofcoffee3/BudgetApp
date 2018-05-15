@@ -1,5 +1,5 @@
 //
-//  AddTransactionViewController.swift
+//  AddOrEditTransactionViewController.swift
 //  Budget
 //
 //  Created by Adam Moore on 4/20/18.
@@ -8,13 +8,15 @@
 
 import UIKit
 
-class AddTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
+class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
     
     
     
     // *****
     // MARK: - Variables
     // *****
+    
+    var isAddingNewItem = true
     
     var transactionSelection = TransactionType.withdrawal
     
@@ -105,6 +107,8 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         
         self.transactionNameTextField.delegate = self
         self.transactionAmountTextField.delegate = self
+        
+        
         
     }
     
@@ -348,6 +352,309 @@ class AddTransactionViewController: UIViewController, UITextFieldDelegate, Choos
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func showAlertToConfirmUpdate(newTitle: String) {
+        
+        // *** Alert message to pop up to confirmation
+        
+        let alert = UIAlertController(title: nil, message: "Change transaction title from \"\(currentTransaction.title!)\" to \"\(newTitle)\"?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+            
+            budget.updateTransactionTitle(title: newTitle, withID: Int(updatedTransaction.id))
+            
+            self.successHaptic()
+            
+            budget.sortTransactionsDescending()
+            
+            self.editingItemLabel.text = updatedTransaction.title
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func changeTitleSubmittedForReview () {
+        
+        guard let newTitleText = newTitleTextField.text else { return }
+        
+        if newTitleText == "" {
+            
+            failureWithWarning(label: warningLabel, message: "You haven't entered anything yet.")
+            
+        } else if newTitleText.count > 20 {
+            
+            failureWithWarning(label: warningLabel, message: "Really, that's too many characters.")
+            
+        } else {
+            
+            showAlertToConfirmUpdate(newTitle: newTitleText)
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
+    func showAlertToConfirmUpdate(newAmount: Double) {
+        
+        // *** Alert message to pop up to confirmation
+        
+        let alert = UIAlertController(title: nil, message: "Change transaction amount from \(convertedAmountToDollars(amount: currentTransaction.inTheAmountOf)) to \(convertedAmountToDollars(amount: newAmount))?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+            
+            budget.updateTransactionAmount(amount: newAmount, withID: Int(updatedTransaction.id))
+            
+            self.successHaptic()
+            
+            budget.sortTransactionsDescending()
+            
+            self.editingItemLabel.text = updatedTransaction.title
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func changeAmountSubmittedForReview () {
+        
+        guard let newAmountText = newAmountTextField.text else { return }
+        
+        if newAmountText == "" {
+            
+            failureWithWarning(label: warningLabel, message: "You haven't entered anything yet.")
+            
+        } else if Double(newAmountText) == nil {
+            
+            failureWithWarning(label: warningLabel, message: "You have to enter a number")
+            
+        } else {
+            
+            guard let newAmount = Double(newAmountText) else { return }
+            guard let currentCategory = loadSpecificCategory(named: currentTransaction.forCategory!) else { return }
+            
+            if newAmount < 0.0 {
+                
+                failureWithWarning(label: warningLabel, message: "You have to enter an amount greater than 0")
+                
+            } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.available) && currentTransaction.type == withdrawalKey {
+                
+                failureWithWarning(label: warningLabel, message: "You don't have enough funds for this.")
+                
+            } else {
+                
+                showAlertToConfirmUpdate(newAmount: newAmount)
+                
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func showAlertToConfirmUpdate(date: Date, newMonth: Int, newDay: Int, newYear: Int) {
+        
+        // *** Alert message to pop up to confirmation
+        
+        let alert = UIAlertController(title: nil, message: "Change transaction date to \(newMonth)/\(newDay)/\(newYear)?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+            
+            guard let oldTransactionIndex = budget.transactions.index(of: updatedTransaction) else { return }
+            
+            budget.updateTransactionDate(newDate: date, withID: Int(updatedTransaction.id), atIndex: oldTransactionIndex)
+            
+            self.successHaptic()
+            
+            budget.sortTransactionsDescending()
+            
+            editableTransactionID = budget.mostRecentidFromAddedTransaction
+            
+            self.editingItemLabel.text = "\(newMonth)/\(newDay)/\(newYear)"
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    func changeDateSubmittedForReview () {
+        
+        let newDateDictionary = convertDateToInts(dateToConvert: date)
+        guard let newMonth = newDateDictionary[monthKey] else { return }
+        guard let newDay = newDateDictionary[dayKey] else { return }
+        guard let newYear = newDateDictionary[yearKey] else { return }
+        
+        if currentTransaction.month == newMonth && currentTransaction.day == newDay && currentTransaction.year == newYear {
+            
+            failureWithWarning(label: warningLabel, message: "This is already the date.")
+            
+        } else {
+            
+            showAlertToConfirmUpdate(date: date, newMonth: newMonth, newDay: newDay, newYear: newYear)
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    
+    
+    
+    
+    
+    
+    func showAlertToConfirmUpdate(newCategoryName: String) {
+        
+        // *** Alert message to pop up to confirmation
+        
+        let alert = UIAlertController(title: nil, message: "Change transaction category from \"\(currentTransaction.forCategory!)\" to \"\(newCategoryName)\"?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            
+            guard let updatedTransaction = loadSpecificTransaction(idSubmitted: editableTransactionID) else { return }
+            
+            budget.updateTransactionCategory(category: newCategoryName, withID: Int(updatedTransaction.id))
+            
+            self.successHaptic()
+            
+            budget.sortTransactionsDescending()
+            
+            self.editingItemLabel.text = updatedTransaction.forCategory
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func changeCategorySubmittedForReview () {
+        
+        guard let newSelectedCategoryName = categoryLabel.text else { return }
+        guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
+        
+        if newSelectedCategoryName == currentTransaction.forCategory {
+            
+            failureWithWarning(label: warningLabel, message: "The category is already set to \(newSelectedCategoryName)")
+            
+        } else if currentTransaction.inTheAmountOf > newCategoryItself.available {
+            
+            failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
+            
+        } else {
+            
+            showAlertToConfirmUpdate(newCategoryName: newSelectedCategoryName)
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func setDate(date: Date) {
         
