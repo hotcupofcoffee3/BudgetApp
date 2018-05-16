@@ -1717,7 +1717,7 @@
                                     <navigationItem title="Add/Edit Budget Item" id="aL8-DA-QOL">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="mmN-11-yfi">
                                             <connections>
-                                                <action selector="backButton:" destination="dl1-W9-TrT" id="7yG-uH-QI5"/>
+                                                <action selector="back:" destination="dl1-W9-TrT" id="AeO-Sn-Sg6"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="Ykr-om-ovI"/>
@@ -1752,6 +1752,9 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad" keyboardAppearance="alert" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="dl1-W9-TrT" id="Ude-us-5GZ"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -1815,17 +1818,17 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dn9-kh-psl" userLabel="Add Or Edit">
-                                <rect key="frame" x="100" y="392" width="175" height="54"/>
+                                <rect key="frame" x="87.5" y="392" width="200" height="54"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="2tC-VC-IPb"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="2tC-VC-IPb"/>
                                     <constraint firstAttribute="height" constant="54" id="P0w-dh-Mhm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="Edit Item">
+                                <state key="normal" title="Add Budget Item">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="addOrEdit:" destination="dl1-W9-TrT" eventType="touchUpInside" id="J8V-Hn-zjH"/>
+                                    <action selector="submitBudgetItem:" destination="dl1-W9-TrT" eventType="touchUpInside" id="ju2-pe-Yi2"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SYC-bM-PZ1" userLabel="Category View">
@@ -1888,6 +1891,9 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="dl1-W9-TrT" id="UFV-Pc-bbw"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -1931,11 +1937,21 @@
                         <viewLayoutGuide key="safeArea" id="974-nQ-RZz"/>
                     </view>
                     <connections>
-                        <outlet property="addOrEditButton" destination="Dn9-kh-psl" id="hUq-GB-lMr"/>
+                        <outlet property="amountTextField" destination="RgU-0c-ALT" id="gPB-D8-2lV"/>
+                        <outlet property="amountView" destination="qBZ-7K-ncy" id="GXS-lY-od1"/>
+                        <outlet property="backButton" destination="mmN-11-yfi" id="hZJ-uI-dYd"/>
                         <outlet property="balanceOnNavBar" destination="Ykr-om-ovI" id="e3c-50-N8J"/>
+                        <outlet property="categoryLabel" destination="nEA-za-PRI" id="rfT-L4-aNt"/>
+                        <outlet property="categoryView" destination="SYC-bM-PZ1" id="Gwp-M2-gTN"/>
+                        <outlet property="dateView" destination="rp2-Bx-ynJ" id="0yD-jU-3nk"/>
+                        <outlet property="dueDateLabel" destination="0tR-HV-uaJ" id="Q16-S9-ZUr"/>
+                        <outlet property="dueDateSwitch" destination="rEr-YP-eLj" id="5G5-ni-dp5"/>
+                        <outlet property="nameTextField" destination="BOQ-dn-tJt" id="tOO-3o-n1d"/>
+                        <outlet property="nameView" destination="wbt-WK-w1R" id="C9l-3R-Q97"/>
                         <outlet property="navBar" destination="l4b-7c-rca" id="eUh-Wu-uyp"/>
+                        <outlet property="submitBudgetItemButton" destination="Dn9-kh-psl" id="Q8k-ir-Ft2"/>
                         <outlet property="unallocatedLabelAtTop" destination="mxF-2L-R8F" id="VVe-O2-ore"/>
-                        <outlet property="warningLabel" destination="977-ij-NAL" id="gC2-v9-OWi"/>
+                        <outlet property="warningLabel" destination="977-ij-NAL" id="qTF-Pz-vBa"/>
                         <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditBudgetItemToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="xOp-Mq-eWc"/>
                         <segue destination="SSf-za-taf" kind="presentation" identifier="addOrEditBudgetItemToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="Tqy-bs-W0K"/>
                     </connections>
@@ -1950,8 +1966,8 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BFk-Fg-fMz"/>
-        <segue reference="6ek-xa-S2V"/>
+        <segue reference="xOp-Mq-eWc"/>
+        <segue reference="Tqy-bs-W0K"/>
         <segue reference="1AE-Ye-tTi"/>
         <segue reference="C7a-lO-baq"/>
         <segue reference="8K3-ts-dmR"/>

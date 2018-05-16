@@ -86,6 +86,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         } else {
             
             backButton.title = "Cancel"
+            
             navBar.topItem?.title = "Edit Time Frame"
             
             guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }

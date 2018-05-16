@@ -26,6 +26,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var endDateFormatYYYYMMDD = Int()
     
+    var selectedBudgetTimeFrameStartID = Int()
+    
     
     
     // *****
@@ -165,7 +167,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             editableBudgetTimeFrame = selectedTimeFrame
             
-            timeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
+            selectedBudgetTimeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
             
             performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
             
@@ -237,7 +239,13 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == budgetToAddOrEditBudgetSegueKey {
+        if segue.identifier == budgetToBudgetItemsSegueKey {
+            
+            let destinationVC = segue.destination as! BudgetItemsViewController
+            
+            destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
+            
+        } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
             
             let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
             

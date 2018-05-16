@@ -8,8 +8,6 @@
 
 import UIKit
 
-var timeFrameStartID = Int()
-
 class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -23,6 +21,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     var isNewBudgetItem = true
     
     var editableBudgetItem: BudgetItem?
+    
+    var selectedBudgetTimeFrameStartID = Int()
     
     
     
@@ -58,7 +58,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func addSomething(_ sender: UIButton) {
         
-        performSegue(withIdentifier: budgetItemsToAddOrEditItemSegueKey, sender: self)
+        performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
         
     }
     
@@ -144,7 +144,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         if editBudgetItem == true {
             
-            editableBudgetItem = budget.budgetItems
+            editableBudgetItem = item
+            
+            performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
             
         } else {
             
@@ -168,13 +170,13 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func loadNecessaryInfo() {
         
-        loadSpecificBudgetItems(startID: timeFrameStartID)
+        loadSpecificBudgetItems(startID: selectedBudgetTimeFrameStartID)
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
         displayedDataTable.rowHeight = 60
         displayedDataTable.separatorStyle = .none
         
-        guard let period = loadSpecificBudgetedTimeFrame(startID: timeFrameStartID) else { return }
+        guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
         
         navBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
         
@@ -195,12 +197,15 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             
             destinationVC.isNewBudgetItem = isNewBudgetItem
             
+            destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
+            
             if !isNewBudgetItem {
                 
                 guard let editableItem = editableBudgetItem else { return }
                 
-                destinationVC.editableCategory = editableCategory
+                destinationVC.editableBudgetItem = editableItem
                 
+                destinationVC.selectedBudgetTimeFrameStartID = Int(editableItem.timeSpanID)
                 
             }
             
