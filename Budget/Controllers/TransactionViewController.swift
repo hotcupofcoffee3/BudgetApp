@@ -213,8 +213,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
   
     
-  
-    
+
     
     // *****
     // MARK: - Prepare For Segue

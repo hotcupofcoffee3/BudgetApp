@@ -16,7 +16,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Variables
     // *****
     
-    var editTimeFrame = false
+    var editBudgetTimeFrame = false
+    
+    var isNewBudgetTimeFrame = true
+    
+    var editableBudgetTimeFrame: Period?
     
     var startDateFormatYYYYMMDD = Int()
     
@@ -40,15 +44,16 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         
-        editTimeFrame = !editTimeFrame
+        editBudgetTimeFrame = !editBudgetTimeFrame
         
-        editBarButton.title = editTimeFrame ? "Done" : "Edit"
+        editBarButton.title = editBudgetTimeFrame ? "Done" : "Edit"
         
         displayedDataTable.reloadData()
         
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
+        isNewBudgetTimeFrame = true
         performSegue(withIdentifier: budgetToAddOrEditBudgetSegueKey, sender: self)
     }
     
@@ -118,7 +123,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
             
-        cell.accessoryType = editTimeFrame ? .detailButton : .disclosureIndicator
+        cell.accessoryType = editBudgetTimeFrame ? .detailButton : .disclosureIndicator
         
         if budget.budgetedTimeFrames.count > 0 {
             
@@ -155,6 +160,10 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             
             tableView.deselectRow(at: indexPath, animated: true)
+            
+            let selectedTimeFrame = budget.budgetedTimeFrames[indexPath.row]
+            
+            editableBudgetTimeFrame = selectedTimeFrame
             
             timeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
             
@@ -222,7 +231,29 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == budgetToAddOrEditBudgetSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
+            
+            destinationVC.isNewBudgetTimeFrame = isNewBudgetTimeFrame
+            
+            if !isNewBudgetTimeFrame {
+                
+                guard let editableTimeFrame = editableBudgetTimeFrame else { return }
+                
+                destinationVC.editableBudgetTimeFrame = editableTimeFrame
+                
+            }
+            
+        }
+        
+    }
     
   
     

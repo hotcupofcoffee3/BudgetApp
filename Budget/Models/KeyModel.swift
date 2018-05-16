@@ -78,11 +78,17 @@ let mainToMoveFundsSegueKey = "mainToMoveFundsSegue"
 let budgetToAddOrEditBudgetSegueKey = "budgetToAddOrEditBudgetSegue"
 let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
 let budgetToBudgetItemsSegueKey = "budgetToBudgetItemsSegue"
-let budgetItemsToAddOrEditItemSegueKey = "budgetItemsToAddOrEditItemSegue"
+let budgetItemsToAddOrEditBudgetItemSegueKey = "budgetItemsToAddOrEditBudgetItemSegue"
+
+
+// Budget Items to others
+let addOrEditBudgetItemToDatePickerSegueKey = "addOrEditBudgetItemToDatePickerSegue"
+let addOrEditBudgetItemToCategoryPickerSegueKey = "addOrEditBudgetItemToCategoryPickerSegue"
 
 
 // Paycheck to others
 let paychecksToAddOrEditPaycheckSegueKey = "paychecksToAddOrEditPaycheckSegue"
+let addOrEditPaycheckToDatePickerSegueKey = "addOrEditPaycheckToDatePickerSegue"
 
 
 // Categories to others

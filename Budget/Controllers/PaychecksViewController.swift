@@ -18,6 +18,10 @@ class PaychecksViewController: UIViewController {
     
     var editPaycheck = false
     
+    var isNewPaycheck = true
+    
+    var editablePaycheck: Paycheck?
+    
     
     
     // *****
@@ -110,6 +114,39 @@ class PaychecksViewController: UIViewController {
     // *****
     
     
+    
+    
+    
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == categoriesToAddOrEditTransactionSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditTransactionViewController
+            
+            destinationVC.isNewTransaction = true
+            
+        } else if segue.identifier == categoriesToAddOrEditCategorySegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditCategoryViewController
+            
+            destinationVC.isNewCategory = isNewCategory
+            
+            if !isNewCategory {
+                
+                guard let editableCategory = loadSpecificCategory(named: editableCategoryName) else { return }
+                
+                destinationVC.editableCategory = editableCategory
+                
+                
+            }
+            
+        }
+        
+    }
     
     
     

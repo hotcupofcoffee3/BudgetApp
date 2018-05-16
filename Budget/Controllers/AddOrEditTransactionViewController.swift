@@ -279,34 +279,161 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
     }
     
+   
+    
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
+    
+    func setCategory(category: String) {
+        categoryLabel.text = category
+    }
+    
+    @objc func nameTapped() {
+        
+        transactionNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        transactionAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        performSegue(withIdentifier: addOrEditTransactionToDatePickerSegueKey, sender: self)
+        
+    }
+    
+    @objc func categoryTapped() {
+        
+        if transactionSelection == .withdrawal {
+            
+            performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
+            
+            submitAddTransactionForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
+        return true
+    }
+    
+    @objc override func dismissNumberKeyboard() {
+        transactionAmountTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addOrEditTransactionToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        } else if segue.identifier == addOrEditTransactionToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.selectedCategory = currentCategory
+            
+        }
+        
+    }
     
     
     
     
+    // ************************************************************************************************
+    // ************************************************************************************************
+    /*
+     
+     Add Or Edit Section
+     
+     */
+    // ************************************************************************************************
+    // ************************************************************************************************
     
     
     
+    // *****
+    // MARK: - Add Transaction
+    // *****
     
     
-    
-    
-    // ********************************************************************************
-    
-    // ***** If this is a new transaction, the old check is all that is needed.
     
     // *** Add Transaction Check
-    
-    // Error Check
     
     func submitAddTransactionForReview() {
         
         guard let title = transactionNameTextField.text else { return }
         guard let amount = transactionAmountTextField.text else { return }
-           
-            guard let category = categoryLabel.text else { return }
-            
-            let convertedDates = convertDateToInts(dateToConvert: date)
-            
+        
+        guard let category = categoryLabel.text else { return }
+        
+        let convertedDates = convertDateToInts(dateToConvert: date)
+        
         if title == "" || amount == "" {
             
             failureWithWarning(label: warningLabel, message: "You have to fill in all fields.")
@@ -434,17 +561,15 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     }
     
     
-
-    
-   
-    
-    
-    // ****************************************************************************************
     
     
     
+    // *****
+    // MARK: - Edit Transaction
+    // *****
     
-
+    
+    
     func submitEditItemsForReview() {
         
         // The 'else' on this leads to the next 'submit' check, and so on, until the end, in which case the 'else' calls the 'showAlertToConfirmEdits' function.
@@ -551,16 +676,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             present(alert, animated: true, completion: nil)
             
         }
-
+        
     }
     
     
-    // ****************************************************************************************
-    
+
     // ***** Edit Name
-    
-    
-    
+
     func submitEditNameForReview() {
         
         guard let newNameText = transactionNameTextField.text else { return }
@@ -568,12 +690,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         if newNameText == "" {
             
             failureWithWarning(label: warningLabel, message: "You haven't entered anything yet.")
-
+            
             
         } else if newNameText.count > 20 {
             
             failureWithWarning(label: warningLabel, message: "Really, that's too many characters.")
-
+            
             
         } else {
             
@@ -582,14 +704,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         }
         
     }
-
     
     
-    // ****************************************************************************************
-    
+   
     // ***** Edit Amount
-    
-    
     
     func submitEditAmountForReview() {
         
@@ -599,12 +717,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         if newAmountText == "" {
             
             failureWithWarning(label: warningLabel, message: "You haven't entered anything yet.")
-
+            
             
         } else if Double(newAmountText) == nil {
             
             failureWithWarning(label: warningLabel, message: "You have to enter a number")
-
+            
             
         } else {
             
@@ -614,12 +732,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             if newAmount < 0.0 {
                 
                 failureWithWarning(label: warningLabel, message: "You have to enter an amount greater than 0")
-
+                
                 
             } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.available) && currentTransaction.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "You don't have enough funds for this.")
-
+                
                 
             } else {
                 
@@ -630,13 +748,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         }
         
     }
+ 
     
-    
-    // ****************************************************************************************
     
     // ***** Edit Category
-    
-    
     
     func submitEditCategoryForReview() {
         
@@ -648,7 +763,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         if currentTransaction.inTheAmountOf > newCategoryItself.available {
             
             failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
-
+            
             
         } else {
             
@@ -657,143 +772,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         }
         
     }
-
-    
-    
-    // ****************************************************************************************
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func setDate(date: Date) {
-        
-        self.date = date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
-            
-            dateLabel.text = "\(month)/\(day)/\(year)"
-            
-        }
-        
-    }
-    
-    func setCategory(category: String) {
-        categoryLabel.text = category
-    }
-    
-    @objc func nameTapped() {
-        
-        transactionNameTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func amountTapped() {
-        
-        transactionAmountTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func dateTapped() {
-        
-        performSegue(withIdentifier: addOrEditTransactionToDatePickerSegueKey, sender: self)
-        
-    }
-    
-    @objc func categoryTapped() {
-        
-        if transactionSelection == .withdrawal {
-            
-            performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
-            
-        }
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == addOrEditTransactionToDatePickerSegueKey {
-            
-            let datePickerVC = segue.destination as! DatePickerViewController
-            
-            datePickerVC.delegate = self
-            
-            datePickerVC.date = date
-            
-        } else if segue.identifier == addOrEditTransactionToCategoryPickerSegueKey {
-            
-            let categoryPickerVC = segue.destination as! CategoryPickerViewController
-            
-            categoryPickerVC.delegate = self
-            
-            guard let currentCategory = categoryLabel.text else { return }
-            
-            categoryPickerVC.selectedCategory = currentCategory
-            
-        }
-        
-    }
-    
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
-        
-        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
-            
-            submitAddTransactionForReview()
-            
-        } else {
-            specificTextField.resignFirstResponder()
-        }
-        
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        submissionFromKeyboardReturnKey(specificTextField: textField)
-        
-        return true
-    }
-    
-    @objc override func dismissNumberKeyboard() {
-        transactionAmountTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
-        
-    }
-    
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
-        
-        self.view.endEditing(true)
-        
-    }
-    
-    
   
     
    

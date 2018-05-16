@@ -222,6 +222,51 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
+
+    
+    @objc func nameTapped() {
+        
+        categoryNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        categoryAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func allocateTapped() {
+        
+        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        if dueDateSwitch.isOn == true {
+            
+            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
     
     
     
@@ -231,14 +276,108 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
+    // *****
+    // MARK: - Keyboard functions
+    // *****
     
-    // ****************************************************************************************
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
-    // ***** Main error check for adding categories
     
-    // *** Add Category Check
+    // Test for submitability
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if categoryNameTextField.text != "" {
+            
+            if isNewCategory {
+           
+                submitAddCategoryForReview()
+           
+            } else {
+           
+                submitEditItemsForReview()
+           
+            }
+            
+        } else {
+            
+            specificTextField.resignFirstResponder()
+            
+        }
+        
+    }
     
-    // Error Check
+    // Submit for review of final submitability
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
+        return true
+    }
+    
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc override func dismissNumberKeyboard() {
+        
+        categoryAmountTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    // Remove warning label text
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        warningLabel.text = ""
+    }
+    
+    
+    
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addOrEditCategoryToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        }
+        
+    }
+    
+    
+    
+    // ************************************************************************************************
+    // ************************************************************************************************
+    /*
+     
+     Add Or Edit Section
+     
+     */
+    // ************************************************************************************************
+    // ************************************************************************************************
+    
+    
+    
+    // *****
+    // MARK: - Add Category
+    // *****
+    
+    
+    
+    // *** Submit Add Category For Review
     
     func submitAddCategoryForReview() {
         
@@ -313,7 +452,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    // Add Category Alert Confirmation
+    // *** Add Category Alert Confirmation
     
     func showAlertToConfirmAddCategory(newCategoryName: String, with amount: Double) {
         
@@ -362,20 +501,13 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    
-    // ****************************************************************************************
-    // ****************************************************************************************
-    
-    /*
- 
-     The main editing section to be submitted.
-     
-     */
-    
-    // ****************************************************************************************
-    // ****************************************************************************************
+    // *****
+    // MARK: - Edit Category
+    // *****
     
     
+    
+    // *** Submit Edit Items For Review
     
     func submitEditItemsForReview() {
         
@@ -384,6 +516,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
+    
+    
+    // *** Show Alert To Confirm Edits
     
     func showAlertToConfirmEdits() {
         
@@ -472,17 +607,10 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             present(alert, animated: true, completion: nil)
             
         }
-
+        
     }
-
-    
-
-    
-    // ****************************************************************************************
     
     
-    
-
     
     // *** Edit Name Check
     
@@ -515,13 +643,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    
-    // ****************************************************************************************
-    
-    
 
     
-    // *** Edit Budgeted Error Check
+    // *** Edit Budgeted Check
     
     func submitEditBudgetedForReview() {
         
@@ -572,18 +696,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-
     
-    // ****************************************************************************************
-    
-    
-    
-    
-   
     
     // *** Allocate Check
-    
-    // Amount Error Check
     
     func submitAllocateForReview() {
         
@@ -612,148 +727,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             showAlertToConfirmEdits()
             
         }
-       
-    }
-    
-
-    
-    
-    
-    
-    
-    
-    
-    // ****************************************************************************************
-    
-    
-    
-    
-
-    
-    
-    @objc func nameTapped() {
-        
-        categoryNameTextField.becomeFirstResponder()
         
     }
     
-    @objc func amountTapped() {
-        
-        categoryAmountTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func allocateTapped() {
-        
-        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
-        
-    }
-    
-    @objc func dateTapped() {
-        
-        if dueDateSwitch.isOn == true {
-            
-            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
-            
-        }
-        
-    }
-    
-    func setDate(date: Date) {
-        
-        self.date = date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
-            
-            dateLabel.text = "\(month)/\(day)/\(year)"
-            
-        }
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == addOrEditCategoryToDatePickerSegueKey {
-            
-            let datePickerVC = segue.destination as! DatePickerViewController
-            
-            datePickerVC.delegate = self
-            
-            datePickerVC.date = date
-            
-        }
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    
-    // Test for submitability
-    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
-        
-        if categoryNameTextField.text != "" {
-            
-            if isNewCategory {
-           
-                submitAddCategoryForReview()
-           
-            } else {
-           
-                submitEditItemsForReview()
-           
-            }
-            
-        } else {
-            
-            specificTextField.resignFirstResponder()
-            
-        }
-        
-    }
-    
-    // Submit for review of final submitability
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        submissionFromKeyboardReturnKey(specificTextField: textField)
-        
-        return true
-    }
-    
-    // 'Done' button on number pad to submit for review of final submitability
-    @objc override func dismissNumberKeyboard() {
-        
-        categoryAmountTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
-        
-    }
-    
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
-        
-        self.view.endEditing(true)
-        
-    }
-    
-    // Remove warning label text
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        warningLabel.text = ""
-    }
     
     
     

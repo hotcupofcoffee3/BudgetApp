@@ -16,7 +16,13 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Variables
     // *****
     
-    var isAddingNewItem = true
+    var isNewPaycheck = true
+    
+    var editablePaycheck: Paycheck?
+    
+    var editablePaycheckName = String()
+    
+    var editablePaycheckAmount = Double()
     
     
     
@@ -80,6 +86,58 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         self.nameTextField.delegate = self
         self.amountTextField.delegate = self
         
+        
+        
+        if isNewTransaction == true {
+            
+            let dateFormat = DateFormatter()
+            dateFormat.dateStyle = .short
+            
+            dateLabel.text = dateFormat.string(from: Date())
+            
+            if let category = selectedCategory {
+                
+                categoryLabel.text = category
+                
+            }
+            
+            backButton.title = "Back"
+            
+            navBar.topItem?.title = "Add Transaction"
+            
+            submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            navBar.topItem?.title = "Edit Transaction"
+            
+            guard let currentTransaction = editableTransaction else { return }
+            
+            guard let name = currentTransaction.title else { return }
+            guard let category = currentTransaction.forCategory else { return }
+            
+            
+            guard let type = currentTransaction.type else { return }
+            transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey) ? 0 : 1
+            transactionSelection = (type == withdrawalKey) ? .withdrawal : .deposit
+            transactionSegmentedControl.isEnabled = false
+            categoryLabel.isEnabled = (transactionSelection == .withdrawal)
+            
+            transactionNameTextField.text = name
+            transactionAmountTextField.text = "\(convertedAmountToDouble(amount: currentTransaction.inTheAmountOf))"
+            date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+            categoryLabel.text = category
+            setDate(date: date)
+            holdToggle.isOn = currentTransaction.onHold
+            
+            submitTransactionButton.setTitle("Save Changes", for: .normal)
+            
+        }
+        
+        
+        
+        
     }
 
     
@@ -122,9 +180,86 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    // *** Add Category Check
     
-    // Error Check
+    
+    @objc func nameTapped() {
+        
+        nameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        amountTextField.becomeFirstResponder()
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    // Test for submitability
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if nameTextField.text != "" && amountTextField.text != "" {
+            
+            submitAddPaycheckForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
+    // Submit for review of final submitability
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
+        return true
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    // Remove warning label text
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        warningLabel.text = ""
+    }
+
+    
+    // ************************************************************************************************
+    // ************************************************************************************************
+    /*
+     
+     Add Or Edit Section
+     
+     */
+    // ************************************************************************************************
+    // ************************************************************************************************
+    
+    
+    
+    // *****
+    // MARK: - Add Paycheck
+    // *****
+    
+    // *** Add Category Check
     
     func submitAddPaycheckForReview() {
         
@@ -216,68 +351,241 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    @objc func nameTapped() {
-        
-        nameTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func amountTapped() {
-        
-        amountTextField.becomeFirstResponder()
-        
-    }
-    
-    
-    
-    
     
     
     
     // *****
-    // MARK: - Keyboard functions
+    // MARK: - Edit Paycheck
     // *****
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    
+    
+    // *** Submit Edit Items For Review
+    
+    func submitEditItemsForReview() {
+        
+        // The 'else' on this leads to the next 'submit' check, and so on, until the end, in which case the 'else' calls the 'showAlertToConfirmEdits' function.
+        submitEditNameForReview()
+        
     }
     
     
-    // Test for submitability
-    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+    
+    // *** Show Alert To Confirm Edits
+    
+    func showAlertToConfirmEdits() {
         
-        if nameTextField.text != "" && amountTextField.text != "" {
+        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
+        // *** Alert only shows actual changes being made.
+        
+        guard let currentCategory = editableCategory else { return }
+        guard let currentCategoryName = currentCategory.name else { return }
+        
+        var updatedItemsConfirmationMessage = ""
+        
+        
+        // Name
+        guard let newName = categoryNameTextField.text else { return }
+        var changeName = false
+        if newName != currentCategory.name {
+            changeName = true
+            updatedItemsConfirmationMessage += "Change name to: \(newName)\n"
+        }
+        
+        
+        // Amount
+        guard let newAmount = Double(categoryAmountTextField.text!) else { return }
+        var changeAmount = false
+        if newAmount != currentCategory.budgeted {
+            changeAmount = true
+            updatedItemsConfirmationMessage += "Change budgeted amount to: \(convertedAmountToDollars(amount: newAmount))\n"
+        }
+        
+        
+        // Date
+        let newDate = date
+        var changeDate = false
+        let currentDate = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
+        
+        if dateLabel.text != "" && newDate != currentDate {
             
-            submitAddPaycheckForReview()
+            let newDateDict = convertDateToInts(dateToConvert: newDate)
+            guard let newDueDay = newDateDict[dayKey] else { return }
+            
+            changeDate = true
+            updatedItemsConfirmationMessage += "Change Date to the \(convertDayToOrdinal(day: newDueDay))\n"
+        }
+        
+        
+        // Allocate
+        let willAllocate = currentAllocationStatus.isOn
+        if willAllocate == true {
+            updatedItemsConfirmationMessage += "Allocate: \(convertedAmountToDollars(amount: currentCategory.budgeted))"
+        }
+        
+        // Final confirmation, checking to see if there is even anything to change.
+        if !changeName && !changeAmount && !changeDate && !willAllocate {
+            
+            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
             
         } else {
-            specificTextField.resignFirstResponder()
+            
+            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                if changeName {
+                    budget.updateCategory(named: currentCategoryName, updatedNewName: newName, andNewAmountBudgeted: currentCategory.budgeted)
+                }
+                if changeAmount {
+                    budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
+                }
+                if willAllocate {
+                    budget.shiftFunds(withThisAmount: currentCategory.budgeted, from: unallocatedKey, to: currentCategoryName)
+                }
+                if changeDate {
+                    let newDateDict = convertDateToInts(dateToConvert: newDate)
+                    guard let newDueDay = newDateDict[dayKey] else { return }
+                    currentCategory.dueDay = Int64(newDueDay)
+                }
+                
+                self.successHaptic()
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
         }
         
     }
     
-    // Submit for review of final submitability
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    
+    
+    // *** Edit Name Check
+    
+    func submitEditNameForReview() {
         
-        submissionFromKeyboardReturnKey(specificTextField: textField)
+        if let newCategoryName = categoryNameTextField.text {
+            
+            // *** Is the field empty?
+            if newCategoryName == "" {
+                
+                failureWithWarning(label: warningLabel, message: "You can't leave the name blank.")
+                
+                
+                // *** Is the new category name equal to "Unallocated"?
+            } else if newCategoryName == unallocatedKey {
+                
+                failureWithWarning(label: warningLabel, message: "You cannot rename a category to \"Unallocated\"")
+                
+                
+                // *** All impossible entries are taken care of.
+            } else {
+                
+                // *** Go to Budgeted Amount Check
+                
+                submitEditBudgetedForReview()
+                
+            }
+            
+        }
         
-        return true
     }
     
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
+    
+    
+    // *** Edit Budgeted Check
+    
+    func submitEditBudgetedForReview() {
         
-        self.view.endEditing(true)
+        if let newBudgetedAmount = categoryAmountTextField.text {
+            
+            var newCategoryBudgeted = Double()
+            
+            // *** Is the field empty?
+            if newBudgetedAmount == ""  {
+                
+                failureWithWarning(label: warningLabel, message: "You can't leave the budgeted amount empty.")
+                
+                
+                // *** Was the amount not convertible to a Double?
+            } else if Double(newBudgetedAmount) == nil {
+                
+                failureWithWarning(label: warningLabel, message: "You have to enter a number.")
+                
+                
+                // *** All impossible entries are taken care of.
+            } else {
+                
+                // Sets 'newCategoryBudgeted' to the number entered.
+                if let newCategoryBudgetedDouble = Double(newBudgetedAmount) {
+                    
+                    newCategoryBudgeted = newCategoryBudgetedDouble
+                    
+                }
+                
+                // *** Was the amount entered less than 0?
+                if newCategoryBudgeted < 0.0 {
+                    
+                    failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
+                    
+                    
+                    // ***** SUCCESS!
+                } else {
+                    
+                    // ***** Go to Allocation Check
+                    
+                    submitAllocateForReview()
+                    
+                }
+                
+            }
+            
+        }
         
     }
     
-    // Remove warning label text
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        warningLabel.text = ""
-    }
-
     
-
+    
+    // *** Allocate Check
+    
+    func submitAllocateForReview() {
+        
+        if currentAllocationStatus.isOn {
+            
+            guard let currentCategory = editableCategory else { return }
+            guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
+            
+            // *** Were there enough funds available in the 'From' Category?
+            if currentCategory.budgeted > unallocatedCategory.available {
+                
+                failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
+                
+                
+                // ***** SUCCESS!
+            } else {
+                
+                // ***** Present confirm popup
+                
+                showAlertToConfirmEdits()
+                
+            }
+            
+        } else {
+            
+            showAlertToConfirmEdits()
+            
+        }
+        
+    }
+    
+    
+    
+    
     
 
 }

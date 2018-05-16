@@ -18,7 +18,11 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Variables
     // *****
     
-    var editItem = false
+    var editBudgetItem = false
+    
+    var isNewBudgetItem = true
+    
+    var editableBudgetItem: BudgetItem?
     
     
     
@@ -44,9 +48,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         
-        editItem = !editItem
+        editBudgetItem = !editBudgetItem
         
-        editBarButton.title = editItem ? "Done" : "Edit"
+        editBarButton.title = editBudgetItem ? "Done" : "Edit"
         
         displayedDataTable.reloadData()
         
@@ -116,7 +120,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-        if editItem == true {
+        if editBudgetItem == true {
             
             cell.accessoryType = .detailButton
             
@@ -138,9 +142,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         let item = budget.budgetItems[indexPath.row]
         
-        if editItem == true {
+        if editBudgetItem == true {
             
-            
+            editableBudgetItem = budget.budgetItems
             
         } else {
             
@@ -175,6 +179,32 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         navBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
         
         displayedDataTable.reloadData()
+        
+    }
+    
+    
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == budgetItemsToAddOrEditBudgetItemSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditBudgetItemViewController
+            
+            destinationVC.isNewBudgetItem = isNewBudgetItem
+            
+            if !isNewBudgetItem {
+                
+                guard let editableItem = editableBudgetItem else { return }
+                
+                destinationVC.editableCategory = editableCategory
+                
+                
+            }
+            
+        }
         
     }
     

@@ -55,7 +55,7 @@ class Budget {
     
     // *** Add Time Frame
     
-    func addTimeFrame (start: Date, end: Date) {
+    func addTimeFrame(start: Date, end: Date) {
         
         createAndSaveNewBudgetedTimeFrame(start: start, end: end)
     
@@ -63,7 +63,7 @@ class Budget {
         
     }
     
-    func deleteTimeFrame (period: Period) {
+    func deleteTimeFrame(period: Period) {
         
         loadSpecificBudgetItems(startID: Int(period.startDateID))
         
@@ -79,6 +79,54 @@ class Budget {
         
     }
     
+    func updateStartDate(currentStartID: Int, newStartDate: Date) {
+        
+        let newStartID = convertedDateToBudgetedTimeFrameID(timeFrame: newStartDate, isEnd: false)
+        
+        loadSpecificBudgetItems(startID: currentStartID)
+        for item in budgetItems {
+            item.timeSpanID = Int64(newStartID)
+        }
+        
+        
+        let newStartDict = convertDateToInts(dateToConvert: newStartDate)
+        
+        guard let newYear = newStartDict[yearKey] else { return }
+        guard let newMonth = newStartDict[monthKey] else { return }
+        guard let newDay = newStartDict[dayKey] else { return }
+        
+        guard let currentTimeFrame = loadSpecificBudgetedTimeFrame(startID: currentStartID) else { return }
+        
+        currentTimeFrame.startDateID = Int64(newStartID)
+        currentTimeFrame.startYear = Int64(newYear)
+        currentTimeFrame.startMonth = Int64(newMonth)
+        currentTimeFrame.startDay = Int64(newDay)
+        
+        saveData()
+        
+    }
+    
+    func updateEndDate(currentStartID: Int, newEndDate: Date) {
+        
+        let newEndID = convertedDateToBudgetedTimeFrameID(timeFrame: newEndDate, isEnd: true)
+        
+        let newEndDict = convertDateToInts(dateToConvert: newEndDate)
+        
+        guard let newYear = newEndDict[yearKey] else { return }
+        guard let newMonth = newEndDict[monthKey] else { return }
+        guard let newDay = newEndDict[dayKey] else { return }
+        
+        guard let currentTimeFrame = loadSpecificBudgetedTimeFrame(startID: currentStartID) else { return }
+        
+        currentTimeFrame.endDateID = Int64(newEndID)
+        currentTimeFrame.endYear = Int64(newYear)
+        currentTimeFrame.endMonth = Int64(newMonth)
+        currentTimeFrame.endDay = Int64(newDay)
+        
+        saveData()
+        
+    }
+    
     
     // *****
     // MARK: - Category functions
@@ -87,7 +135,7 @@ class Budget {
     
     // *** Add Category
 
-    func addCategory (named: String, withBudgeted amount: Double) {
+    func addCategory(named: String, withBudgeted amount: Double) {
 
         if named != unallocatedKey {
             
