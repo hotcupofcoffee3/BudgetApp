@@ -153,8 +153,8 @@
                         <outlet property="transactionsButtonTitle" destination="XGE-FZ-5ps" id="SgV-EF-lTF"/>
                         <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="mainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="mainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
-                        <segue destination="hY6-l5-vLB" kind="show" identifier="mainToAddCategorySegue" id="mU4-cf-aIR"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="mainToAddTransactionSegue" id="eXP-Fb-uY0"/>
+                        <segue destination="hY6-l5-vLB" kind="show" identifier="mainToAddOrEditCategorySegue" id="mU4-cf-aIR"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="mainToAddOrEditTransactionSegue" id="eXP-Fb-uY0"/>
                         <segue destination="lvi-BA-VNj" kind="show" identifier="mainToBudgetSegue" animates="NO" id="ViF-Zn-d3a"/>
                         <segue destination="YtX-Km-TRk" kind="presentation" identifier="mainToPaycheckSegue" modalTransitionStyle="crossDissolve" id="uPc-ek-aMW"/>
                     </connections>
@@ -391,7 +391,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="addCategory:" destination="hY6-l5-vLB" eventType="touchUpInside" id="PHw-ac-KDO"/>
+                                    <action selector="submitCategory:" destination="hY6-l5-vLB" eventType="touchUpInside" id="baF-Fj-77P"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -418,7 +418,6 @@
                         <viewLayoutGuide key="safeArea" id="aeT-Hq-GGT"/>
                     </view>
                     <connections>
-                        <outlet property="addCategoryButton" destination="c8V-Gw-KiM" id="Slh-Td-eHH"/>
                         <outlet property="allocateView" destination="uOg-Hi-sDC" id="aIZ-eB-FLg"/>
                         <outlet property="amountView" destination="cng-ed-s01" id="WLe-Az-SRO"/>
                         <outlet property="backButton" destination="2oE-23-8FR" id="aBG-wX-Vra"/>
@@ -430,9 +429,10 @@
                         <outlet property="dueDateSwitch" destination="Mef-yf-rXm" id="KjZ-Vh-GQ6"/>
                         <outlet property="nameView" destination="6hU-hF-N6u" id="kng-g5-Siv"/>
                         <outlet property="navBar" destination="Zat-ZR-iQc" id="shA-FL-BwX"/>
+                        <outlet property="submitCategoryButton" destination="c8V-Gw-KiM" id="Lhk-eb-LUm"/>
                         <outlet property="unallocatedLabelAtTop" destination="49r-Dq-A83" id="1m2-8A-HeY"/>
                         <outlet property="warningLabel" destination="brs-4a-HOv" id="7Jm-h1-RgO"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="S9i-T2-HlC"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditCategoryToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="S9i-T2-HlC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -458,7 +458,7 @@
                                     <navigationItem title="Add/Edit Transaction" id="UMx-CF-frs">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="frW-IL-2tT">
                                             <connections>
-                                                <action selector="backButton:" destination="HME-n8-SWE" id="tsQ-Ve-oIG"/>
+                                                <action selector="back:" destination="HME-n8-SWE" id="bUl-gv-AAt"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="uqV-O1-oyU"/>
@@ -727,6 +727,7 @@
                     </view>
                     <connections>
                         <outlet property="amountView" destination="egd-tT-UCT" id="QYT-7b-M4S"/>
+                        <outlet property="backButton" destination="frW-IL-2tT" id="xm0-hW-jhG"/>
                         <outlet property="balanceOnNavBar" destination="uqV-O1-oyU" id="HmP-tk-klF"/>
                         <outlet property="categoryLabel" destination="oIE-zV-x0a" id="n34-8u-GRV"/>
                         <outlet property="categoryView" destination="ebu-Ko-8j6" id="kDM-8U-BA4"/>
@@ -742,8 +743,8 @@
                         <outlet property="transactionSegmentedControl" destination="OhW-bb-25P" id="YkL-bC-l6I"/>
                         <outlet property="unallocatedLabelAtTop" destination="uZ5-vd-Ehm" id="3KM-IU-JYy"/>
                         <outlet property="warningLabel" destination="TEt-e4-A1x" id="scg-3D-zgP"/>
-                        <segue destination="SSf-za-taf" kind="presentation" identifier="addTransactionToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="6ek-xa-S2V"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addTransactionToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="s2V-Nq-kYo"/>
+                        <segue destination="SSf-za-taf" kind="presentation" identifier="addOrEditTransactionToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="6ek-xa-S2V"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditTransactionToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="s2V-Nq-kYo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -975,8 +976,8 @@
                         <outlet property="mainBalanceLabel" destination="VuF-MX-zAy" id="w7q-w3-nJe"/>
                         <outlet property="navBar" destination="LMO-qm-Yz2" id="VyM-3w-ATU"/>
                         <outlet property="viewAllTransactionsButton" destination="wZN-jj-y7m" id="9hd-qb-lhF"/>
-                        <segue destination="hY6-l5-vLB" kind="show" identifier="categoriesToAddCategorySegue" id="8ar-qL-cfd"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="categoriesToAddTransactionSegue" id="8K3-ts-dmR"/>
+                        <segue destination="hY6-l5-vLB" kind="show" identifier="categoriesToAddOrEditCategorySegue" id="8ar-qL-cfd"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="categoriesToAddOrEditTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="categoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
                         <segue destination="XbA-eI-m3E" kind="show" identifier="categoriesToMoveFundsSegue" id="rJZ-ef-c3q"/>
                     </connections>
@@ -1120,7 +1121,7 @@
                     <connections>
                         <outlet property="displayedDataTable" destination="ZqH-WV-HTb" id="N7J-xZ-5Ko"/>
                         <outlet property="mainBalanceLabel" destination="t4n-ff-mkf" id="dcd-d1-HKM"/>
-                        <segue destination="HME-n8-SWE" kind="show" identifier="transactionsToAddTransactionSegue" id="LCW-GF-oV6"/>
+                        <segue destination="HME-n8-SWE" kind="show" identifier="transactionsToAddOrEditTransactionSegue" id="LCW-GF-oV6"/>
                         <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="transactionsToCategoriesSegue" modalTransitionStyle="crossDissolve" id="LyT-nl-dpa"/>
                     </connections>
                 </viewController>
@@ -1306,7 +1307,7 @@
                         <outlet property="startDateView" destination="kiD-Eq-qMD" id="aZi-TV-S9i"/>
                         <outlet property="unallocatedLabelAtTop" destination="ERI-PT-1hl" id="quu-lo-9bQ"/>
                         <outlet property="warningLabel" destination="cs1-z7-9mx" id="zc9-0m-DV7"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addBudgetToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="BFk-Fg-fMz"/>
+                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditBudgetToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="BFk-Fg-fMz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jsx-sh-U2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2024,11 +2025,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="s2V-Nq-kYo"/>
-        <segue reference="gOi-Bu-AOw"/>
+        <segue reference="BFk-Fg-fMz"/>
+        <segue reference="1AE-Ye-tTi"/>
         <segue reference="LyT-nl-dpa"/>
-        <segue reference="LCW-GF-oV6"/>
-        <segue reference="mU4-cf-aIR"/>
+        <segue reference="8K3-ts-dmR"/>
+        <segue reference="8ar-qL-cfd"/>
         <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,8 +8,6 @@
 
 import UIKit
 
-var editableCategoryName = String()
-
 class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -19,6 +17,10 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     // *****
     
     var editCategory = false
+    
+    var isNewCategory = true
+    
+    var editableCategoryName = String()
     
     
     
@@ -49,7 +51,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
-        addSomethingAlertPopup(addCategorySegue: categoriesToAddCategorySegueKey, addTransactionSegue: categoriesToAddTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
     }
     
     
@@ -72,6 +74,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         editCategory = false
+        isNewCategory = true
         selectedCategory = nil
         
     }
@@ -82,6 +85,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         editCategory = false
+        isNewCategory = true
         selectedCategory = nil
         
     }
@@ -183,13 +187,15 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
         if editCategory == true {
             
+            isNewCategory = false
+            
             // Sets back to edit after editing is done.
             editBarButton.title = "Edit"
             
             if budget.sortedCategoryKeys[indexPath.row] != unallocatedKey {
                 
                 editableCategoryName = budget.sortedCategoryKeys[indexPath.row]
-                performSegue(withIdentifier: categoriesToEditCategorySegueKey, sender: self)
+                performSegue(withIdentifier: categoriesToAddOrEditCategorySegueKey, sender: self)
                 
             }
             
@@ -261,7 +267,36 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
+    // *****
+    // MARK: - Prepare For Segue
+    // *****
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == categoriesToAddOrEditTransactionSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditTransactionViewController
+            
+            destinationVC.isNewTransaction = true
+            
+        } else if segue.identifier == categoriesToAddOrEditCategorySegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditCategoryViewController
+            
+            destinationVC.isNewCategory = isNewCategory
+            
+            if !isNewCategory {
+
+                guard let editableCategory = loadSpecificCategory(named: editableCategoryName) else { return }
+                
+                destinationVC.editableCategory = editableCategory
+                
+                
+            }
+            
+        }
+        
+    }
  
     
     

@@ -130,7 +130,7 @@ class MainScreen: UIViewController {
     
     @IBAction func addSomething(_ sender: UIButton) {
         
-        addSomethingAlertPopup(addCategorySegue: mainToAddCategorySegueKey, addTransactionSegue: mainToAddTransactionSegueKey, moveFundsSegue: mainToMoveFundsSegueKey)
+        addSomethingAlertPopup(addCategorySegue: mainToAddOrEditCategorySegueKey, addTransactionSegue: mainToAddOrEditTransactionSegueKey, moveFundsSegue: mainToMoveFundsSegueKey)
         
     }
     

@@ -44,11 +44,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var navBar: UINavigationBar!
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    
     
     
     // *** IBActions
     
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
+    @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -89,6 +91,38 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 categoryLabel.text = category
                 
             }
+            
+            backButton.title = "Back"
+            
+            navBar.topItem?.title = "Add Transaction"
+            
+            submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            navBar.topItem?.title = "Edit Transaction"
+            
+            guard let currentTransaction = editableTransaction else { return }
+            
+            guard let name = currentTransaction.title else { return }
+            guard let category = currentTransaction.forCategory else { return }
+            
+            
+            guard let type = currentTransaction.type else { return }
+            transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey) ? 0 : 1
+            transactionSelection = (type == withdrawalKey) ? .withdrawal : .deposit
+            transactionSegmentedControl.isEnabled = false
+            categoryLabel.isEnabled = (transactionSelection == .withdrawal)
+            
+            transactionNameTextField.text = name
+            transactionAmountTextField.text = "\(convertedAmountToDouble(amount: currentTransaction.inTheAmountOf))"
+            date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+            categoryLabel.text = category
+            setDate(date: date)
+            holdToggle.isOn = currentTransaction.onHold
+            
+            submitTransactionButton.setTitle("Save Changes", for: .normal)
             
         }
         
@@ -402,28 +436,18 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
 
     
-    
-    // ****************************************************************************************
-    // ****************************************************************************************
-    
-    
-    /*
-     
-     The checks are going to see if anything doesn't match, and then if there is a problem that specific one is going to be dealt with from the top down.
-     
-     Then, once all safety checks have been passed, the alert confirmation is going to present all of the information for the transaction, whether changed or not.
-     
-     Then, upon clicking "Yes" to confirm the changes, each item is going to be checked to see if it is different, and if it is, then it'll update; otherwise, it will skip and not worry about updating, as it will already be set to that value.
- 
-    */
+   
     
     
     // ****************************************************************************************
-    // ****************************************************************************************
+    
+    
+    
     
 
     func submitEditItemsForReview() {
         
+        // The 'else' on this leads to the next 'submit' check, and so on, until the end, in which case the 'else' calls the 'showAlertToConfirmEdits' function.
         submitEditNameForReview()
         
     }
@@ -433,6 +457,101 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
         // *** Alert only shows actual changes being made.
         
+        guard let currentTransaction = editableTransaction else { return }
+        
+        var updatedItemsConfirmationMessage = ""
+        
+        
+        // Title
+        guard let newTitle = transactionNameTextField.text else { return }
+        var changeTitle = false
+        if newTitle != currentTransaction.title {
+            changeTitle = true
+            updatedItemsConfirmationMessage += "Change title to: \(newTitle)\n"
+        }
+        
+        
+        // Amount
+        guard let newAmount = Double(transactionAmountTextField.text!) else { return }
+        var changeAmount = false
+        if newAmount != currentTransaction.inTheAmountOf {
+            changeAmount = true
+            updatedItemsConfirmationMessage += "Change amount to: \(convertedAmountToDollars(amount: newAmount))\n"
+        }
+        
+        
+        // Date
+        let newDate = date
+        var changeDate = false
+        let newDateDict = convertDateToInts(dateToConvert: newDate)
+        let currentDate = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+        guard let month = newDateDict[monthKey] else { return }
+        guard let day = newDateDict[dayKey] else { return }
+        guard let year = newDateDict[yearKey] else { return }
+        
+        if newDate != currentDate {
+            changeDate = true
+            updatedItemsConfirmationMessage += "Change Date to: \(month)/\(day)/\(year)\n"
+        }
+        
+        
+        // Category
+        guard let newCategory = categoryLabel.text else { return }
+        var changeCategory = false
+        if newCategory != currentTransaction.forCategory {
+            changeCategory = true
+            updatedItemsConfirmationMessage += "Change category to: \(newCategory)\n"
+        }
+        
+        
+        // On Hold
+        let newHoldStatus = holdToggle.isOn
+        var changeHoldStatus = false
+        if newHoldStatus != currentTransaction.onHold {
+            changeHoldStatus = true
+            updatedItemsConfirmationMessage += "Change 'On Hold' to: \(newHoldStatus)"
+        }
+        
+        if !changeTitle && !changeAmount && !changeDate && !changeCategory && !changeHoldStatus {
+            
+            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+            
+        } else {
+            
+            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                let id = Int(currentTransaction.id)
+                
+                if changeTitle {
+                    budget.updateTransactionTitle(title: newTitle, withID: id)
+                }
+                if changeAmount {
+                    budget.updateTransactionAmount(amount: newAmount, withID: id)
+                }
+                if changeDate {
+                    budget.updateTransactionDate(newDate: newDate, withID: id)
+                }
+                if changeCategory {
+                    budget.updateTransactionCategory(category: newCategory, withID: id)
+                }
+                if changeHoldStatus {
+                    budget.updateBalanceAndAvailableForOnHold(withID: id)
+                }
+                
+                self.successHaptic()
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
+
     }
     
     
@@ -475,6 +594,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     func submitEditAmountForReview() {
         
         guard let newAmountText = transactionAmountTextField.text else { return }
+        guard let currentTransaction = editableTransaction else { return }
         
         if newAmountText == "" {
             
@@ -503,42 +623,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
             } else {
                 
-                submitEditDateForReview()
+                submitEditCategoryForReview()
                 
             }
             
         }
         
     }
-    
-
-    
-    // ****************************************************************************************
-    
-    // ***** Edit Date
-    
-    
-    
-    func submitEditDateForReview() {
-        
-        let newDateDictionary = convertDateToInts(dateToConvert: date)
-        guard let newMonth = newDateDictionary[monthKey] else { return }
-        guard let newDay = newDateDictionary[dayKey] else { return }
-        guard let newYear = newDateDictionary[yearKey] else { return }
-        
-        if currentTransaction.month == newMonth && currentTransaction.day == newDay && currentTransaction.year == newYear {
-            
-            failureWithWarning(label: warningLabel, message: "This is already the date.")
-            
-            
-        } else {
-            
-            submitEditCategoryForReview()
-            
-        }
-        
-    }
-
     
     
     // ****************************************************************************************
@@ -549,15 +640,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     func submitEditCategoryForReview() {
         
+        guard let currentTransaction = editableTransaction else { return }
+        
         guard let newSelectedCategoryName = categoryLabel.text else { return }
         guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
-        if newSelectedCategoryName == currentTransaction.forCategory {
-            
-            failureWithWarning(label: warningLabel, message: "The category is already set to \(newSelectedCategoryName)")
-
-            
-        } else if currentTransaction.inTheAmountOf > newCategoryItself.available {
+        if currentTransaction.inTheAmountOf > newCategoryItself.available {
             
             failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
 

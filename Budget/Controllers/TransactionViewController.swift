@@ -165,6 +165,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        isNewTransaction = false
+        
         selectedTransaction = transactionsToDisplay[indexPath.row]
         
         performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
@@ -184,11 +186,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                 
-                let selectedTransaction = self.transactionsToDisplay[indexPath.row]
+                budget.deleteTransaction(withID: Int(transactionToDelete.id))
                 
-                guard let selectedTransactionIndexPath = budget.transactions.index(of: selectedTransaction) else { return }
-                
-                budget.deleteTransaction(at: selectedTransactionIndexPath)
                 self.transactionsToDisplay.remove(at: indexPath.row)
                 
                 self.successHaptic()
@@ -227,32 +226,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         destinationVC.isNewTransaction = isNewTransaction
         
-        if isNewTransaction {
-            
-            destinationVC.navBar.topItem?.title = "Add Transaction"
-            
-            destinationVC.submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
-            
-        } else {
-            
-            destinationVC.navBar.topItem?.title = "Edit Transaction"
-            
+        if !isNewTransaction {
+          
             guard let editableTransaction = selectedTransaction else { return }
             
             destinationVC.editableTransaction = editableTransaction
-            
-            guard let type = editableTransaction.type else { return }
-            guard let name = editableTransaction.title else { return }
-            guard let category = editableTransaction.forCategory else { return }
-            
-            destinationVC.transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey ? 0 : 1)
-            destinationVC.transactionNameTextField.text = name
-            destinationVC.transactionAmountTextField.text = "\(convertedAmountToDouble(amount: editableTransaction.inTheAmountOf)))"
-            destinationVC.dateLabel.text = "\(editableTransaction.month)/\(editableTransaction.day)/\(editableTransaction.year)"
-            destinationVC.categoryLabel.text = category
-            destinationVC.holdToggle.isOn = editableTransaction.onHold
-
-            destinationVC.submitTransactionButton.setTitle("Save Changes", for: .normal)
             
         }
         

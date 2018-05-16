@@ -152,6 +152,25 @@ extension UIViewController {
     
     
     
+    // MARK: - Convert Day/Int to Date with Current Month and Year
+    
+    func convertDayToCurrentDate(day: Int) -> Date {
+        
+        let calendar = Calendar.current
+
+        let month = calendar.component(.month, from: Date())
+        let year = calendar.component(.year, from: Date())
+        let day = day
+        
+        let convertedDate = convertComponentsToDate(year: year, month: month, day: day)
+
+        return convertedDate
+        
+    }
+    
+    
+    
+    
     // MARK: - Main Views Updating Budget Balance Label
     
     func refreshAvailableBalanceLabel(label: UILabel) {

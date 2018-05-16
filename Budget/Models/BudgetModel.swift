@@ -185,12 +185,12 @@ class Budget {
     
     // *** Update Category
 
-    func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountAdded newCategoryAmount: Double) {
+    func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountBudgeted newCategoryBudgetedAmount: Double) {
 
         guard let categoryToUpdate = loadSpecificCategory(named: oldCategoryName) else { return }
         
         categoryToUpdate.name = newCategoryName
-        categoryToUpdate.budgeted = newCategoryAmount
+        categoryToUpdate.budgeted = newCategoryBudgetedAmount
         
         if oldCategoryName != newCategoryName {
             
@@ -301,26 +301,31 @@ class Budget {
 
     // *** Delete transaction
 
-    func deleteTransaction (at index: Int) {
-        let categoryName = transactions[index].forCategory
-        let amount = transactions[index].inTheAmountOf
+    func deleteTransaction (withID id: Int) {
+        
+        guard let transactionToDelete = loadSpecificTransaction(idSubmitted: id) else { return }
+        
+        guard let index = transactions.index(of: transactionToDelete) else { return }
+        
+        guard let categoryName = transactionToDelete.forCategory else { return }
+        let amount = transactionToDelete.inTheAmountOf
 
-        if transactions[index].type == depositKey {
+        if transactionToDelete.type == depositKey {
 
             guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             
-            if transactions[index].onHold == false {
+            if transactionToDelete.onHold == false {
                 
                 unallocated.available -= amount
                 
             }
 
-        } else if transactions[index].type == withdrawalKey {
+        } else if transactionToDelete.type == withdrawalKey {
 
             // Add amount back to category
-            guard let categoryToPutBackTo = loadSpecificCategory(named: categoryName!) else { return }
+            guard let categoryToPutBackTo = loadSpecificCategory(named: categoryName) else { return }
             
-            if transactions[index].onHold == false {
+            if transactionToDelete.onHold == false {
                 
                 categoryToPutBackTo.available += amount
                 
@@ -329,7 +334,7 @@ class Budget {
         }
 
         // Delete transaction from the index in transaction array
-        context.delete(transactions[index])
+        context.delete(transactionToDelete)
         transactions.remove(at: index)
 
         updateBalance()
@@ -340,7 +345,7 @@ class Budget {
 
 
     // *** Update Transaction Functions
-
+    
     // Title
     func updateTransactionTitle(title newTitle: String, withID id: Int) {
     
@@ -380,7 +385,7 @@ class Budget {
     }
     
     // Date
-    func updateTransactionDate(newDate: Date, withID id: Int, atIndex index: Int) {
+    func updateTransactionDate(newDate: Date, withID id: Int) {
         
         guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
         
@@ -402,7 +407,7 @@ class Budget {
         let amount = currentTransaction.inTheAmountOf
         let category = currentTransaction.forCategory!
         
-        deleteTransaction(at: index)
+        deleteTransaction(withID: id)
         
         addTransaction(onHold: onHold, type: type, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day)
         
@@ -432,21 +437,27 @@ class Budget {
         
     }
     
-    func updateBalanceAndAvailableForOnHold(forTransaction transaction: Transaction) {
+    func updateBalanceAndAvailableForOnHold(withID id: Int) {
         
-        guard let category = loadSpecificCategory(named: transaction.forCategory!) else { return }
+        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
         
-        if transaction.onHold == true {
+        guard let currentCategoryName = currentTransaction.forCategory else { return }
+        
+        guard let category = loadSpecificCategory(named: currentCategoryName) else { return }
+        
+        if currentTransaction.onHold == true {
             
-            category.available += transaction.inTheAmountOf
+            category.available += currentTransaction.inTheAmountOf
             updateBalance()
             
-        } else if transaction.onHold == false {
+        } else if currentTransaction.onHold == false {
             
-            category.available -= transaction.inTheAmountOf
+            category.available -= currentTransaction.inTheAmountOf
             updateBalance()
             
         }
+        
+        saveData()
         
     }
 

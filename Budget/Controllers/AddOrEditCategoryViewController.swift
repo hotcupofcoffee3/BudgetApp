@@ -17,7 +17,15 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     // MARK: - Variables
     // *****
     
-    var isAddingNewItem = true
+    var isNewCategory = true
+    
+    var editableCategory: Category?
+    
+    var editableCategoryName = String()
+    
+    var editableCategoryBudgeted = Double()
+    
+    var editableCategoryDueDay = Int()
     
     var date = Date()
     
@@ -37,7 +45,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     @IBOutlet weak var warningLabel: UILabel!
     
-    @IBOutlet weak var addCategoryButton: UIButton!
+    @IBOutlet weak var submitCategoryButton: UIButton!
     
     @IBOutlet weak var navBar: UINavigationBar!
     
@@ -50,8 +58,18 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addCategory(_ sender: UIButton) {
-        submitAddCategoryForReview()
+    @IBAction func submitCategory(_ sender: UIButton) {
+        
+        if isNewCategory {
+            
+            submitAddCategoryForReview()
+            
+        } else {
+            
+            submitEditItemsForReview()
+            
+        }
+        
     }
     
     
@@ -62,6 +80,44 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if isNewCategory {
+            
+            backButton.title = "Back"
+            navBar.topItem?.title = "Add Category"
+            submitCategoryButton.setTitle("Add Category", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            navBar.topItem?.title = "Edit Category"
+            
+            guard let currentCategory = editableCategory else { return }
+            
+            guard let name = currentCategory.name else { return }
+            let budgeted = currentCategory.budgeted
+            let dueDay = Int(currentCategory.dueDay)
+            
+            categoryNameTextField.text = name
+            categoryAmountTextField.text = "\(convertedAmountToDouble(amount: budgeted))"
+            
+            if currentCategory.dueDay > 0 {
+                
+                date = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
+                dateLabel.text = "\(convertDayToOrdinal(day: dueDay))"
+                
+            } else {
+                
+                date = Date()
+                dateLabel.text = ""
+                
+            }
+            
+            currentAllocationStatus.isOn = false
+            
+            submitCategoryButton.setTitle("Save Changes", for: .normal)
+            
+        }
         
         
         // *** Tap gesture to textfields and their labels
@@ -91,7 +147,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         
         // *** Circle around button
-        addCircleAroundButton(named: addCategoryButton)
+        addCircleAroundButton(named: submitCategoryButton)
         
         
         // *** Textfield Delegates
@@ -99,22 +155,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         self.categoryAmountTextField.delegate = self
         
         
-        
-        // *** Checks the status of Adding or Editing
-        
-        if isAddingNewItem {
-            
-            self.backButton.title = "Back"
-            self.navBar.topItem?.title = "Add Category"
-            self.addCategoryButton.setTitle("Add Category", for: .normal)
-            
-        } else {
-            
-            self.backButton.title = "Done"
-            self.navBar.topItem?.title = "Edit Category"
-            self.addCategoryButton.setTitle("Save Changes", for: .normal)
-            
-        }
         
     }
     
@@ -154,7 +194,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         if dueDateSwitch.isOn == true {
             
-            performSegue(withIdentifier: addCategoryToDatePickerSegueKey, sender: self)
+            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
             
         } else {
             
@@ -182,6 +222,19 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ****************************************************************************************
+    
+    // ***** Main error check for adding categories
     
     // *** Add Category Check
     
@@ -241,7 +294,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                         
                         // *** If 'Allocate' is switched on, is there enough in 'Unallocated'
                     } else if currentAllocationStatus.isOn && categoryAmountAsDouble > unallocated.available {
-                    
+                        
                         failureWithWarning(label: warningLabel, message: "You don't have enough funds to allocate at this time.")
                         
                     } else {
@@ -260,7 +313,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    // Alert Confirmation
+    // Add Category Alert Confirmation
     
     func showAlertToConfirmAddCategory(newCategoryName: String, with amount: Double) {
         
@@ -310,64 +363,151 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
+    // ****************************************************************************************
+    // ****************************************************************************************
     
+    /*
+ 
+     The main editing section to be submitted.
+     
+     */
+    
+    // ****************************************************************************************
+    // ****************************************************************************************
+    
+    
+    
+    func submitEditItemsForReview() {
+        
+        // The 'else' on this leads to the next 'submit' check, and so on, until the end, in which case the 'else' calls the 'showAlertToConfirmEdits' function.
+        submitEditNameForReview()
+        
+    }
+    
+    
+    func showAlertToConfirmEdits() {
+        
+        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
+        // *** Alert only shows actual changes being made.
+        
+        guard let currentCategory = editableCategory else { return }
+        guard let currentCategoryName = currentCategory.name else { return }
+        
+        var updatedItemsConfirmationMessage = ""
+        
+        
+        // Name
+        guard let newName = categoryNameTextField.text else { return }
+        var changeName = false
+        if newName != currentCategory.name {
+            changeName = true
+            updatedItemsConfirmationMessage += "Change name to: \(newName)\n"
+        }
+        
+        
+        // Amount
+        guard let newAmount = Double(categoryAmountTextField.text!) else { return }
+        var changeAmount = false
+        if newAmount != currentCategory.budgeted {
+            changeAmount = true
+            updatedItemsConfirmationMessage += "Change budgeted amount to: \(convertedAmountToDollars(amount: newAmount))\n"
+        }
+        
+        
+        // Date
+        let newDate = date
+        var changeDate = false
+        let currentDate = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
+        
+        if dateLabel.text != "" && newDate != currentDate {
+            
+            let newDateDict = convertDateToInts(dateToConvert: newDate)
+            guard let newDueDay = newDateDict[dayKey] else { return }
+            
+            changeDate = true
+            updatedItemsConfirmationMessage += "Change Date to the \(convertDayToOrdinal(day: newDueDay))\n"
+        }
+        
+        
+        // Allocate
+        let willAllocate = currentAllocationStatus.isOn
+        if willAllocate == true {
+            updatedItemsConfirmationMessage += "Allocate: \(convertedAmountToDollars(amount: currentCategory.budgeted))"
+        }
+        
+        // Final confirmation, checking to see if there is even anything to change.
+        if !changeName && !changeAmount && !changeDate && !willAllocate {
+            
+            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+            
+        } else {
+            
+            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                if changeName {
+                    budget.updateCategory(named: currentCategoryName, updatedNewName: newName, andNewAmountBudgeted: currentCategory.budgeted)
+                }
+                if changeAmount {
+                    budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
+                }
+                if willAllocate {
+                    budget.shiftFunds(withThisAmount: currentCategory.budgeted, from: unallocatedKey, to: currentCategoryName)
+                }
+                if changeDate {
+                    let newDateDict = convertDateToInts(dateToConvert: newDate)
+                    guard let newDueDay = newDateDict[dayKey] else { return }
+                    currentCategory.dueDay = Int64(newDueDay)
+                }
+                
+                self.successHaptic()
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
+
+    }
+
+    
+
     
     // ****************************************************************************************
     
     
     
+
     
+    // *** Edit Name Check
     
-    
-    
-    
-    
-    
-    
-    // *** Edit Category Name Check
-    
-    // Name Error Check
-    
-    func submitEditCategoryNameForReview() {
+    func submitEditNameForReview() {
         
-        if let oldCategoryName = currentCategoryName.text, let newCategoryNameFromTextField = newCategoryName.text {
+        if let newCategoryName = categoryNameTextField.text {
             
             // *** Is the field empty?
-            if newCategoryNameFromTextField == "" {
+            if newCategoryName == "" {
                 
-                failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+                failureWithWarning(label: warningLabel, message: "You can't leave the name blank.")
                 
                 
                 // *** Is the new category name equal to "Unallocated"?
-            } else if newCategoryNameFromTextField == unallocatedKey {
+            } else if newCategoryName == unallocatedKey {
                 
                 failureWithWarning(label: warningLabel, message: "You cannot rename a category to \"Unallocated\"")
-                
-                
-                // *** Was the new category entered the same as the one already set?
-            } else if oldCategoryName == newCategoryNameFromTextField {
-                
-                failureWithWarning(label: warningLabel, message: "The category is already named '\(currentCategoryNameString)'")
                 
                 
                 // *** All impossible entries are taken care of.
             } else {
                 
-                for categoryName in budget.sortedCategoryKeys {
-                    
-                    if categoryName == newCategoryNameFromTextField {
-                        
-                        failureWithWarning(label: warningLabel, message: "There is already a category named '\(categoryName)'")
-                        
-                        return
-                        
-                    }
-                    
-                }
+                // *** Go to Budgeted Amount Check
                 
-                // *** Alert message to pop up to confirmation
-                
-                showAlertToConfirmEditCategoryName(oldCategoryName: oldCategoryName, newCategoryName: newCategoryNameFromTextField)
+                submitEditBudgetedForReview()
                 
             }
             
@@ -375,83 +515,28 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    // Name Alert Confirmation
-    
-    func showAlertToConfirmEditCategoryName(oldCategoryName: String, newCategoryName: String) {
-        
-        let alert = UIAlertController(title: nil, message: "Change '\(oldCategoryName)' to '\(newCategoryName)'?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            var oldAmount = Double()
-            
-            if let oldCategory = loadSpecificCategory(named: oldCategoryName) {
-                
-                oldAmount = oldCategory.budgeted
-                
-            }
-            
-            budget.updateCategory(named: oldCategoryName, updatedNewName: newCategoryName, andNewAmountAdded: oldAmount)
-            
-            
-            // Update the UI elements with the new info
-            self.currentCategoryNameString = newCategoryName
-            
-            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-            
-            self.currentCategoryName.text = newCategoryName
-            
-            self.successHaptic()
-            
-            editableCategoryName = newCategoryName
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
-    
-    
-    
-    
     
     // ****************************************************************************************
     
     
-    
-    
-    
-    
-    
-    
+
     
     // *** Edit Budgeted Error Check
     
-    // Amount Error Check
-    
-    func submitEditCategoryBudgetedForReview() {
+    func submitEditBudgetedForReview() {
         
-        newCategoryBudgeted.resignFirstResponder()
-        
-        if let newCategoryBudgetedStringFromTextField = newCategoryBudgeted.text {
+        if let newBudgetedAmount = categoryAmountTextField.text {
             
             var newCategoryBudgeted = Double()
             
-            guard let oldCategory = loadSpecificCategory(named: currentCategoryNameString) else { return }
-            
-            
             // *** Is the field empty?
-            if newCategoryBudgetedStringFromTextField == ""  {
+            if newBudgetedAmount == ""  {
                 
-                failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+                failureWithWarning(label: warningLabel, message: "You can't leave the budgeted amount empty.")
                 
                 
                 // *** Was the amount not convertible to a Double?
-            } else if Double(newCategoryBudgetedStringFromTextField) == nil {
+            } else if Double(newBudgetedAmount) == nil {
                 
                 failureWithWarning(label: warningLabel, message: "You have to enter a number.")
                 
@@ -460,7 +545,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             } else {
                 
                 // Sets 'newCategoryBudgeted' to the number entered.
-                if let newCategoryBudgetedDouble = Double(newCategoryBudgetedStringFromTextField) {
+                if let newCategoryBudgetedDouble = Double(newBudgetedAmount) {
                     
                     newCategoryBudgeted = newCategoryBudgetedDouble
                     
@@ -475,9 +560,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                     // ***** SUCCESS!
                 } else {
                     
-                    // ***** Alert message to pop up to confirmation
+                    // ***** Go to Allocation Check
                     
-                    showAlertToConfirmEditCategoryBudgeted(newCategoryBudgeted: newCategoryBudgeted, oldCategoryName: currentCategoryNameString, oldCategory: oldCategory)
+                    submitAllocateForReview()
                     
                 }
                 
@@ -487,161 +572,50 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    // Amount Alert Confirmation
-    
-    func showAlertToConfirmEditCategoryBudgeted(newCategoryBudgeted: Double, oldCategoryName: String, oldCategory: Category) {
-        
-        let alert = UIAlertController(title: nil, message: "Change budgeted amount to \(convertedAmountToDollars(amount: newCategoryBudgeted)) for '\(oldCategoryName)'?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            // Update Category function called & local variables for labels set
-            
-            print(newCategoryBudgeted)
-            
-            budget.updateCategory(named: oldCategoryName, updatedNewName: oldCategoryName, andNewAmountAdded: newCategoryBudgeted)
-            
-            self.successHaptic()
-            
-            // Update the UI element with the new info
-            self.currentCategoryBudgetedDouble = newCategoryBudgeted
-            
-            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-            
-            self.currentCategoryBudgeted.text = "\(self.convertedAmountToDollars(amount: newCategoryBudgeted))"
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
-    
-    
-    
-    
-    
-    
+
     
     // ****************************************************************************************
     
     
     
     
+   
     
-    
-    
-    
-    
-    // *** Edit Category Available Check
+    // *** Allocate Check
     
     // Amount Error Check
     
-    func submitEditCategoryAvailableForReview() {
+    func submitAllocateForReview() {
         
-        newCategoryAvailable.resignFirstResponder()
-        
-        if let newCategoryAvailableStringFromTextField = newCategoryAvailable.text {
+        if currentAllocationStatus.isOn {
             
-            var newCategoryAvailable = Double()
+            guard let currentCategory = editableCategory else { return }
+            guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
             
-            guard let currentCategory = loadSpecificCategory(named: currentCategoryNameString) else { return }
-            guard let selectedCategory = loadSpecificCategory(named: selectedCategoryName) else { return }
-            
-            
-            // *** Is the field empty?
-            if newCategoryAvailableStringFromTextField == ""  {
+            // *** Were there enough funds available in the 'From' Category?
+            if currentCategory.budgeted > unallocatedCategory.available {
                 
-                failureWithWarning(label: warningLabel, message: "There is no amount to add.")
+                failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
                 
                 
-                // *** Was the amount not convertible to a Double?
-            } else if Double(newCategoryAvailableStringFromTextField) == nil {
-                
-                failureWithWarning(label: warningLabel, message: "You have to enter a number.")
-                
-                
+                // ***** SUCCESS!
             } else {
                 
-                // Sets 'newCategoryAvailable' to the number entered.
-                if let newCategoryAvailableDouble = Double(newCategoryAvailableStringFromTextField) {
-                    
-                    newCategoryAvailable = newCategoryAvailableDouble
-                    
-                }
+                // ***** Present confirm popup
                 
-                // *** Was the amount entered less than 0?
-                if newCategoryAvailable < 0.0 {
-                    
-                    failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
-                    
-                    
-                    // *** Is the selected Category the same as the current one?
-                } else if selectedCategoryName == currentCategory.name! {
-                    
-                    failureWithWarning(label: warningLabel, message: "This is the same category. There is no point in putting money from your left hand to your right hand.")
-                    
-                    
-                    // *** Were there enough funds available in the 'From' Category?
-                } else if newCategoryAvailable > selectedCategory.available {
-                    
-                    failureWithWarning(label: warningLabel, message: "There are not enough funds in the \"From\" Category.")
-                    
-                    
-                    // ***** SUCCESS!
-                } else {
-                    
-                    // ***** Alert message to pop up to confirmation
-                    
-                    guard let currentCategoryName = currentCategory.name else { return }
-                    guard let selectedCategoryName = selectedCategory.name else { return }
-                    
-                    showAlertToConfirmEditCategoryAvailable(amount: newCategoryAvailable, from: selectedCategoryName, to: currentCategoryName)
-                    
-                }
+                showAlertToConfirmEdits()
                 
             }
             
+        } else {
+            
+            showAlertToConfirmEdits()
+            
         }
-        
+       
     }
     
-    // Amount Alert Confirmation
-    
-    func showAlertToConfirmEditCategoryAvailable(amount newCategoryAvailable: Double, from selectedCategoryName: String, to currentCategoryName: String) {
-        
-        let alert = UIAlertController(title: nil, message: "Add \(convertedAmountToDollars(amount: newCategoryAvailable)) to '\(currentCategoryNameString)' from '\(selectedCategoryName)'?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            // Update Category function called & local variables for labels set
-            
-            print(newCategoryAvailable)
-            
-            budget.shiftFunds(withThisAmount: newCategoryAvailable, from: selectedCategoryName, to: currentCategoryName)
-            
-            self.successHaptic()
-            
-            // Update the UI element with the new info
-            self.currentCategoryAvailableDouble = newCategoryAvailable
-            
-            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-            
-            self.currentCategoryAvailable.text = "\(self.convertedAmountToDollars(amount: newCategoryAvailable))"
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
-    
+
     
     
     
@@ -654,18 +628,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     @objc func nameTapped() {
@@ -690,7 +653,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         if dueDateSwitch.isOn == true {
             
-            performSegue(withIdentifier: addCategoryToDatePickerSegueKey, sender: self)
+            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
             
         }
         
@@ -714,7 +677,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == addCategoryToDatePickerSegueKey {
+        if segue.identifier == addOrEditCategoryToDatePickerSegueKey {
             
             let datePickerVC = segue.destination as! DatePickerViewController
             
@@ -746,10 +709,20 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         if categoryNameTextField.text != "" {
             
-            submitAddCategoryForReview()
+            if isNewCategory {
+           
+                submitAddCategoryForReview()
+           
+            } else {
+           
+                submitEditItemsForReview()
+           
+            }
             
         } else {
+            
             specificTextField.resignFirstResponder()
+            
         }
         
     }
