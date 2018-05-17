@@ -16,8 +16,18 @@ protocol ChooseCategory {
 
 class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    // *****
+    
+    
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var delegate: ChooseCategory?
@@ -27,7 +37,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // MARK: - IBOutlets
+    // Mark: - IBOutlets
     // *****
     
     @IBOutlet weak var currentCategoryBalanceLabel: UILabel!
@@ -36,8 +46,31 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
     // *****
-    // MARK: - IBActions
+    // Mark: - General Functions
+    // *****
+    
+    func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
+        
+        if let selectedCategory = loadSpecificCategory(named: categoryName) {
+            currentCategoryBalanceLabel.text = "\"\(categoryName)\" has \(convertedAmountToDollars(amount: selectedCategory.available)) left."
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - IBActions
     // *****
     
     @IBAction func done(_ sender: UIButton) {
@@ -49,9 +82,16 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     
+    // *****
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
     
     // *****
-    // MARK: - TableView
+    // Mark: - Delegates
     // *****
     
     
@@ -59,8 +99,70 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // MARK: - PickerView
+    // Mark: - Segues
     // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        updateCurrentCategoryBalanceLabel(forCategory: selectedCategory)
+        
+        guard let sortedCategoryKeyIndex = budget.sortedCategoryKeys.index(of: selectedCategory) else { return }
+        
+        categoryPickerView.selectRow(sortedCategoryKeyIndex, inComponent: 0, animated: true)
+        
+    }
+    
+    
+    
+   
+    
+    
+   
+
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension CategoryPickerViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -84,53 +186,19 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Functions
-    // *****
-    
-    func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
-        
-        if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            currentCategoryBalanceLabel.text = "\"\(categoryName)\" has \(convertedAmountToDollars(amount: selectedCategory.available)) left."
-        }
-        
-    }
-    
-    
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        updateCurrentCategoryBalanceLabel(forCategory: selectedCategory)
-        
-        guard let sortedCategoryKeyIndex = budget.sortedCategoryKeys.index(of: selectedCategory) else { return }
-        
-        categoryPickerView.selectRow(sortedCategoryKeyIndex, inComponent: 0, animated: true)
-        
-    }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

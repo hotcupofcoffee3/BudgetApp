@@ -12,8 +12,16 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var editBudgetItem = false
@@ -27,10 +35,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // MARK: - Header for Main Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     
@@ -38,134 +44,20 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var navBar: UINavigationBar!
     
-    
-    
-    // *** IBActions
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func edit(_ sender: UIBarButtonItem) {
-        
-        editBudgetItem = !editBudgetItem
-        
-        editBarButton.title = editBudgetItem ? "Done" : "Edit"
-        
-        displayedDataTable.reloadData()
-        
-    }
-    
-    @IBAction func addSomething(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
-        
-        self.loadNecessaryInfo()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        self.loadNecessaryInfo()
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
     @IBOutlet weak var displayedDataTable: UITableView!
     
     
     
+    // ******************************************************
     
-    // *****
-    // MARK: - IBActions
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - TableView
-    // *****
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return budget.budgetItems.count
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-        let item = budget.budgetItems[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetItemCell", for: indexPath) as! BudgetItemTableViewCell
-        
-        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-        
-        if editBudgetItem == true {
-            
-            cell.accessoryType = .detailButton
-            
-        } else {
-            
-            cell.accessoryType = item.checked ? .checkmark : .none
-            
-        }
-        
-        cell.nameLabel?.text = "\(item.name!)"
-        cell.dueDayLabel?.text = item.day > 0 ? "Due: \(item.day)" : ""
-        cell.amountLabel?.text = "\(convertedAmountToDollars(amount: item.amount))"
-        
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let item = budget.budgetItems[indexPath.row]
-        
-        if editBudgetItem == true {
-            
-            editableBudgetItem = item
-            
-            performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
-            
-        } else {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
-            
-            item.checked = !item.checked
-            
-            tableView.deselectRow(at: indexPath, animated: false)
-            
-            saveData()
-            
-        }
-        
-    }
-    
-    
-    
-    // *****
     // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
     // *****
     
     func loadNecessaryInfo() {
@@ -182,11 +74,55 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         displayedDataTable.reloadData()
         
+        
     }
     
     
+    
     // *****
-    // MARK: - Prepare For Segue
+    // Mark: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editBudgetItem = !editBudgetItem
+        
+        editBarButton.title = editBudgetItem ? "Done" : "Edit"
+        
+        displayedDataTable.reloadData()
+        
+    }
+    
+    @IBAction func addSomething(_ sender: UIButton) {
+        isNewBudgetItem = true
+        performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -215,12 +151,126 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
+    // *****
+    // Mark: - Tap Functions
+    // *****
     
     
     
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // ****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
+        
+        self.loadNecessaryInfo()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        self.loadNecessaryInfo()
+        
+    }
+    
+   
+   
     
     
    
+    
+    
+    
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension BudgetItemsViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return budget.budgetItems.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let item = budget.budgetItems[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetItemCell", for: indexPath) as! BudgetItemTableViewCell
+        
+        cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
+        
+        if editBudgetItem == true {
+            
+            cell.accessoryType = .detailButton
+            
+        } else {
+            
+            cell.accessoryType = item.checked ? .checkmark : .none
+            
+        }
+        
+        cell.nameLabel?.text = "\(item.name!)"
+        cell.dueDayLabel?.text = item.day > 0 ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
+        cell.amountLabel?.text = "\(convertedAmountToDollars(amount: item.amount))"
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let item = budget.budgetItems[indexPath.row]
+        
+        if editBudgetItem == true {
+            
+            isNewBudgetItem = false
+            
+            editableBudgetItem = item
+            
+            performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
+            
+        } else {
+            
+            tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
+            
+            item.checked = !item.checked
+            
+            tableView.deselectRow(at: indexPath, animated: false)
+            
+            saveData()
+            
+        }
+        
+    }
     
     
     

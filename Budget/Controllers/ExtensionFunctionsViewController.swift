@@ -10,10 +10,88 @@ import UIKit
 
 class ExtensionFunctionsViewController: UIViewController {
     
+    // ******************************************************
+    
+    // MARK: - Variables
+    
+    // ******************************************************
+    
     
     
     // *****
-    // MARK: - Header for Main
+    // Mark: - Declared
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - IBOutlets
+    // *****
+    
+    
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - IBActions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
     // *****
     
     
@@ -28,66 +106,19 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     
-    // *****
-    // MARK: - Variables
-    // *****
     
     
     
+    // IN EXTENSION
+    // ******************************************************
     
+    // MARK: - Table/Picker
     
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - IBActions
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - TableView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - PickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - DatePickerView
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Functions
-    // *****
-    
-    
+    // ******************************************************
     
 
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
+
+
     
     
     

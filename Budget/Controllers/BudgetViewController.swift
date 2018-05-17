@@ -12,8 +12,16 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // MARK: - Declared
     // *****
     
     var editBudgetTimeFrame = false
@@ -31,18 +39,44 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     // *****
-    // MARK: - Header for Main Views
+    // MARK: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     
     @IBOutlet weak var mainBalanceLabel: UILabel!
     
+    @IBOutlet weak var displayedDataTable: UITableView!
     
     
-    // *** IBActions
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // MARK: - General Functions
+    // *****
+    
+    func loadNecessaryInfo(itemsToLoad: () -> Void) {
+        
+        itemsToLoad()
+        
+        displayedDataTable.separatorStyle = .none
+        displayedDataTable.reloadData()
+        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - IBActions
+    // *****
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         
@@ -62,18 +96,72 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     // *****
-    // MARK: - Loadables
+    // MARK: - Submissions
     // *****
     
-    func loadNecessaryInfo(itemsToLoad: () -> Void) {
+    
+    
+    
+    
+    // *****
+    // MARK: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        itemsToLoad()
-        
-        displayedDataTable.separatorStyle = .none
-        displayedDataTable.reloadData()
-        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        if segue.identifier == budgetToBudgetItemsSegueKey {
+            
+            let destinationVC = segue.destination as! BudgetItemsViewController
+            
+            destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
+            
+        } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
+            
+            destinationVC.isNewBudgetTimeFrame = isNewBudgetTimeFrame
+            
+            if !isNewBudgetTimeFrame {
+                
+                guard let editableTimeFrame = editableBudgetTimeFrame else { return }
+                
+                destinationVC.editableBudgetTimeFrame = editableTimeFrame
+                
+            }
+            
+        }
         
     }
+    
+    
+    
+    // *****
+    // MARK: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Keyboard functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,25 +181,30 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
-    @IBOutlet weak var displayedDataTable: UITableView!
-    
-    
-    // *****
-    // MARK: - IBActions
-    // *****
+
     
     
     
+
     
+
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension BudgetViewController {
     
-    // *****
-    // MARK: - TableView
-    // *****
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return budget.budgetedTimeFrames.count
@@ -124,7 +217,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         addBorderAroundBudgetTableCellViews(cellView: cell.budgetedTimeFrameView)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
-            
+        
         cell.accessoryType = editBudgetTimeFrame ? .detailButton : .disclosureIndicator
         
         if budget.budgetedTimeFrames.count > 0 {
@@ -152,7 +245,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+        
         if indexPath.row == 0 {
             
             tableView.deselectRow(at: indexPath, animated: true)
@@ -221,56 +314,10 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-
-    
-    // *****
-    // MARK: - Functions
-    // *****
     
     
     
     
-    
-    
-    
-    // *****
-    // MARK: - Prepare For Segue
-    // *****
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == budgetToBudgetItemsSegueKey {
-            
-            let destinationVC = segue.destination as! BudgetItemsViewController
-            
-            destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
-            
-        } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
-            
-            let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
-            
-            destinationVC.isNewBudgetTimeFrame = isNewBudgetTimeFrame
-            
-            if !isNewBudgetTimeFrame {
-                
-                guard let editableTimeFrame = editableBudgetTimeFrame else { return }
-                
-                destinationVC.editableBudgetTimeFrame = editableTimeFrame
-                
-            }
-            
-        }
-        
-    }
-    
-  
-    
-    
-    
-    
-
-    
-
 }
 
 

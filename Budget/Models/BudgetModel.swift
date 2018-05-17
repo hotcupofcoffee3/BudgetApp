@@ -46,6 +46,72 @@ class Budget {
 
     }
     
+
+    
+    
+    
+    // *****
+    // MARK: - Budget Item functions
+    // *****
+    
+    
+    
+    
+    func updateBudgetItemName(name: String, forItem item: BudgetItem) {
+        
+        let budgetItem = item
+        budgetItem.name = name
+        
+        saveData()
+        
+    }
+    
+    func updateBudgetItemCategory(category: String, forItem item: BudgetItem) {
+        
+        let budgetItem = item
+        budgetItem.category = category
+        
+        saveData()
+        
+    }
+    
+    func updateBudgetItemAmount(amount: Double, forItem item: BudgetItem) {
+        
+        let budgetItem = item
+        budgetItem.amount = amount
+        
+        saveData()
+        
+    }
+    
+    func updateBudgetItemDueDate(dueDate: Date?, forItem item: BudgetItem) {
+        
+        let budgetItem = item
+        
+        if let dueDate = dueDate {
+            
+            let dateDict = convertDateToInts(dateToConvert: dueDate)
+            
+            guard let dueDay = dateDict[dayKey] else { return }
+            
+            budgetItem.day = Int64(dueDay)
+            
+        } else {
+            
+            budgetItem.day = 0
+            
+        }
+        
+        
+        saveData()
+        
+    }
+    
+    
+    
+    
+    
+    
     
     
     // *****

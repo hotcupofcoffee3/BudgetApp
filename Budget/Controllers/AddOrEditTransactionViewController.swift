@@ -12,8 +12,16 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var isNewTransaction = true
@@ -29,10 +37,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // MARK: - Header for Add & Main Edit Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
@@ -45,142 +51,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     @IBOutlet weak var navBar: UINavigationBar!
     
     @IBOutlet weak var backButton: UIBarButtonItem!
-    
-    
-    
-    // *** IBActions
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func submitTransaction(_ sender: UIButton) {
-        
-        if isNewTransaction {
-            
-            submitAddTransactionForReview()
-            
-        } else {
-            
-            submitEditItemsForReview()
-            
-        }
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        
-        if isNewTransaction == true {
-            
-            let dateFormat = DateFormatter()
-            dateFormat.dateStyle = .short
-            
-            dateLabel.text = dateFormat.string(from: Date())
-            
-            if let category = selectedCategory {
-                
-                categoryLabel.text = category
-                
-            }
-            
-            backButton.title = "Back"
-            
-            navBar.topItem?.title = "Add Transaction"
-            
-            submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
-            
-        } else {
-            
-            backButton.title = "Cancel"
-            navBar.topItem?.title = "Edit Transaction"
-            
-            guard let currentTransaction = editableTransaction else { return }
-            
-            guard let name = currentTransaction.title else { return }
-            guard let category = currentTransaction.forCategory else { return }
-            
-            
-            guard let type = currentTransaction.type else { return }
-            transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey) ? 0 : 1
-            transactionSelection = (type == withdrawalKey) ? .withdrawal : .deposit
-            transactionSegmentedControl.isEnabled = false
-            categoryLabel.isEnabled = (transactionSelection == .withdrawal)
-            
-            transactionNameTextField.text = name
-            transactionAmountTextField.text = "\(convertedAmountToDouble(amount: currentTransaction.inTheAmountOf))"
-            date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
-            categoryLabel.text = category
-            setDate(date: date)
-            holdToggle.isOn = currentTransaction.onHold
-            
-            submitTransactionButton.setTitle("Save Changes", for: .normal)
-            
-        }
-        
-        
-        // MARK: Add tap gesture to textfields and their labels
-        
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
-        
-        nameView.addGestureRecognizer(nameViewTap)
-        amountView.addGestureRecognizer(amountViewTap)
-        dateView.addGestureRecognizer(dateViewTap)
-        categoryView.addGestureRecognizer(categoryViewTap)
-        
-        
-        addToolBarToNumberPad(textField: transactionAmountTextField)
-        
-        
-        
-        // MARK: Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        addCircleAroundButton(named: submitTransactionButton)
-        
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-        
-        self.transactionNameTextField.delegate = self
-        self.transactionAmountTextField.delegate = self
-        
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-    }
-    
-    
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
     
     @IBOutlet weak var transactionSegmentedControl: UISegmentedControl!
     
@@ -206,40 +76,17 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // ******************************************************
     
-    @IBAction func transactionSelected(_ sender: UISegmentedControl) {
-        
-        if isNewTransaction {
-            
-            if transactionSegmentedControl.selectedSegmentIndex == 0 {
-                
-                transactionSelection = .withdrawal
-                
-                updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-                
-            } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
-                
-                transactionSelection = .deposit
-                
-                updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    
-    // *****
     // MARK: - Functions
-    // *****
-   
     
-    // Update elements because of success
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
+    // *****
     
     func updateUIElementsBecauseOfSuccess(forCategory category: String) {
         
@@ -279,124 +126,47 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
     }
     
-   
-    
-    func setDate(date: Date) {
-        
-        self.date = date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
-            
-            dateLabel.text = "\(month)/\(day)/\(year)"
-            
-        }
-        
-    }
-    
-    func setCategory(category: String) {
-        categoryLabel.text = category
-    }
-    
-    @objc func nameTapped() {
-        
-        transactionNameTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func amountTapped() {
-        
-        transactionAmountTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func dateTapped() {
-        
-        performSegue(withIdentifier: addOrEditTransactionToDatePickerSegueKey, sender: self)
-        
-    }
-    
-    @objc func categoryTapped() {
-        
-        if transactionSelection == .withdrawal {
-            
-            performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
-            
-        }
-        
-    }
-
     
     
     // *****
-    // MARK: - Keyboard functions
+    // Mark: - IBActions
     // *****
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+    @IBAction func submitTransaction(_ sender: UIButton) {
         
-        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
+        if isNewTransaction {
             
             submitAddTransactionForReview()
             
         } else {
-            specificTextField.resignFirstResponder()
+            
+            submitEditItemsForReview()
+            
         }
         
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    @IBAction func transactionSelected(_ sender: UISegmentedControl) {
         
-        submissionFromKeyboardReturnKey(specificTextField: textField)
-        
-        return true
-    }
-    
-    @objc override func dismissNumberKeyboard() {
-        transactionAmountTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
-        
-    }
-    
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
-        
-        self.view.endEditing(true)
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - Prepare For Segue
-    // *****
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == addOrEditTransactionToDatePickerSegueKey {
+        if isNewTransaction {
             
-            let datePickerVC = segue.destination as! DatePickerViewController
-            
-            datePickerVC.delegate = self
-            
-            datePickerVC.date = date
-            
-        } else if segue.identifier == addOrEditTransactionToCategoryPickerSegueKey {
-            
-            let categoryPickerVC = segue.destination as! CategoryPickerViewController
-            
-            categoryPickerVC.delegate = self
-            
-            guard let currentCategory = categoryLabel.text else { return }
-            
-            categoryPickerVC.selectedCategory = currentCategory
+            if transactionSegmentedControl.selectedSegmentIndex == 0 {
+                
+                transactionSelection = .withdrawal
+                
+                updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+                
+            } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
+                
+                transactionSelection = .deposit
+                
+                updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+                
+            }
             
         }
         
@@ -404,6 +174,9 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     
+    // *****
+    // Mark: - Submissions
+    // *****
     
     // ************************************************************************************************
     // ************************************************************************************************
@@ -417,9 +190,9 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     
-    // *****
-    // MARK: - Add Transaction
-    // *****
+    // **************************************
+    // ***** Add Transaction
+    // **************************************
     
     
     
@@ -560,13 +333,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
     }
     
+
     
-    
-    
-    
-    // *****
-    // MARK: - Edit Transaction
-    // *****
+    // **************************************
+    // ***** Edit Transaction
+    // **************************************
     
     
     
@@ -680,9 +451,9 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     }
     
     
-
+    
     // ***** Edit Name
-
+    
     func submitEditNameForReview() {
         
         guard let newNameText = transactionNameTextField.text else { return }
@@ -706,7 +477,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     }
     
     
-   
+    
     // ***** Edit Amount
     
     func submitEditAmountForReview() {
@@ -748,7 +519,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         }
         
     }
- 
+    
     
     
     // ***** Edit Category
@@ -772,9 +543,268 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         }
         
     }
-  
     
-   
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
+    
+    func setCategory(category: String) {
+        categoryLabel.text = category
+    }
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addOrEditTransactionToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        } else if segue.identifier == addOrEditTransactionToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.selectedCategory = currentCategory
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    @objc func nameTapped() {
+        
+        transactionNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        transactionAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        performSegue(withIdentifier: addOrEditTransactionToDatePickerSegueKey, sender: self)
+        
+    }
+    
+    @objc func categoryTapped() {
+        
+        if transactionSelection == .withdrawal {
+            
+            performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
+            
+            submitAddTransactionForReview()
+            
+        } else {
+            specificTextField.resignFirstResponder()
+        }
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
+        return true
+    }
+    
+    @objc override func dismissNumberKeyboard() {
+        transactionAmountTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: transactionAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        
+        if isNewTransaction == true {
+            
+            let dateFormat = DateFormatter()
+            dateFormat.dateStyle = .short
+            
+            dateLabel.text = dateFormat.string(from: Date())
+            
+            if let category = selectedCategory {
+                
+                categoryLabel.text = category
+                
+            }
+            
+            backButton.title = "Back"
+            
+            navBar.topItem?.title = "Add Transaction"
+            
+            submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            navBar.topItem?.title = "Edit Transaction"
+            
+            guard let currentTransaction = editableTransaction else { return }
+            
+            guard let name = currentTransaction.title else { return }
+            guard let category = currentTransaction.forCategory else { return }
+            
+            
+            guard let type = currentTransaction.type else { return }
+            transactionSegmentedControl.selectedSegmentIndex = (type == withdrawalKey) ? 0 : 1
+            transactionSelection = (type == withdrawalKey) ? .withdrawal : .deposit
+            transactionSegmentedControl.isEnabled = false
+            categoryLabel.isEnabled = (transactionSelection == .withdrawal)
+            
+            transactionNameTextField.text = name
+            transactionAmountTextField.text = "\(convertedAmountToDouble(amount: currentTransaction.inTheAmountOf))"
+            date = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+            categoryLabel.text = category
+            setDate(date: date)
+            holdToggle.isOn = currentTransaction.onHold
+            
+            submitTransactionButton.setTitle("Save Changes", for: .normal)
+            
+        }
+        
+        
+        // MARK: Add tap gesture to textfields and their labels
+        
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        dateView.addGestureRecognizer(dateViewTap)
+        categoryView.addGestureRecognizer(categoryViewTap)
+        
+        
+        addToolBarToNumberPad(textField: transactionAmountTextField)
+        
+        
+        
+        // MARK: Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        addCircleAroundButton(named: submitTransactionButton)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        
+        self.transactionNameTextField.delegate = self
+        self.transactionAmountTextField.delegate = self
+        
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+    }
+    
+    
+
+    
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension AddOrEditTransactionViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    
+    
     
 }
 

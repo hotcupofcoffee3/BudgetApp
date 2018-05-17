@@ -1796,6 +1796,9 @@
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rEr-YP-eLj">
                                                         <rect key="frame" x="0.0" y="0.0" width="104.5" height="30"/>
                                                         <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="dueDateToggleSwitch:" destination="dl1-W9-TrT" eventType="valueChanged" id="aHn-SK-8Eg"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tR-HV-uaJ">
                                                         <rect key="frame" x="102.5" y="0.0" width="102.5" height="30"/>
@@ -1943,9 +1946,9 @@
                         <outlet property="balanceOnNavBar" destination="Ykr-om-ovI" id="e3c-50-N8J"/>
                         <outlet property="categoryLabel" destination="nEA-za-PRI" id="rfT-L4-aNt"/>
                         <outlet property="categoryView" destination="SYC-bM-PZ1" id="Gwp-M2-gTN"/>
-                        <outlet property="dateView" destination="rp2-Bx-ynJ" id="0yD-jU-3nk"/>
-                        <outlet property="dueDateLabel" destination="0tR-HV-uaJ" id="Q16-S9-ZUr"/>
+                        <outlet property="dateLabel" destination="0tR-HV-uaJ" id="9Ij-6M-aYc"/>
                         <outlet property="dueDateSwitch" destination="rEr-YP-eLj" id="5G5-ni-dp5"/>
+                        <outlet property="dueDateView" destination="rp2-Bx-ynJ" id="YQJ-Pb-hyo"/>
                         <outlet property="nameTextField" destination="BOQ-dn-tJt" id="tOO-3o-n1d"/>
                         <outlet property="nameView" destination="wbt-WK-w1R" id="C9l-3R-Q97"/>
                         <outlet property="navBar" destination="l4b-7c-rca" id="eUh-Wu-uyp"/>

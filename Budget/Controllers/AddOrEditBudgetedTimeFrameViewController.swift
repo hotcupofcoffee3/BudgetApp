@@ -12,8 +12,16 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var isNewBudgetTimeFrame = true
@@ -33,10 +41,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // MARK: - Header for Add & Main Edit Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
@@ -47,98 +53,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     @IBOutlet weak var submitTimeFrameButton: UIButton!
     
     @IBOutlet weak var backButton: UIBarButtonItem!
-
+    
     @IBOutlet weak var navBar: UINavigationBar!
-    
-    
-    
-    // *** IBActions
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func submitTimeFrame(_ sender: UIButton) {
-        submitTimeFrameForReview()
-    }
-    
-
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        if isNewBudgetTimeFrame {
-            
-            startDate = Date()
-            endDate = Date()
-            
-            backButton.title = "Back"
-            
-            navBar.topItem?.title = "Add New Time Frame"
-            
-            submitTimeFrameButton.setTitle("Add Time Frame", for: .normal)
-            
-        } else {
-            
-            backButton.title = "Cancel"
-            
-            navBar.topItem?.title = "Edit Time Frame"
-            
-            guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }
-            
-            startDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.startYear), month: Int(currentBudgetTimeFrame.startMonth), day: Int(currentBudgetTimeFrame.startDay))
-            
-            endDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.endYear), month: Int(currentBudgetTimeFrame.endMonth), day: Int(currentBudgetTimeFrame.endDay))
-            
-            submitTimeFrameButton.setTitle("Save Changes", for: .normal)
-            
-        }
-        
-        
-        
-        loadSavedBudgetedTimeFrames()
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
-        
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
-    
-        let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
-        let endDateViewTap = UITapGestureRecognizer(target: self, action: #selector(endDateTapped))
-        
-        startDateView.addGestureRecognizer(startDateViewTap)
-        endDateView.addGestureRecognizer(endDateViewTap)
-        
-        addCircleAroundButton(named: submitTimeFrameButton)
-        
-        
-        
-        
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
-        
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
-        
-    }
-    
-    
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
     
     @IBOutlet weak var startDateLabel: UILabel!
     
@@ -150,84 +66,39 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // ******************************************************
     
-    
-    
-    
-    
-    // *****
     // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
     // *****
     
-    // *** Taps
     
-    @objc func startDateTapped() {
-        
-        isStart = true
-        
-        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
-        
+    
+    
+    
+    // *****
+    // Mark: - IBActions
+    // *****
+    
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @objc func endDateTapped() {
-        
-        isStart = false
-        
-        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
-        
-    }
-    
-    
-    
-    // *** Segue
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == addOrEditBudgetToDatePickerSegueKey {
-            
-            let datePickerVC = segue.destination as! DatePickerViewController
-            
-            datePickerVC.delegate = self
-                
-            datePickerVC.date = isStart ? startDate : endDate
-          
-        }
-        
+    @IBAction func submitTimeFrame(_ sender: UIButton) {
+        submitTimeFrameForReview()
     }
     
     
     
-    // *** Delegate Method
-    
-    func setDate(date: Date) {
-        
-        startDate = isStart ? date : startDate
-        
-        endDate = isStart ? endDate : date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            if isStart {
-                
-                startDateLabel.text = "\(month)/\(day)/\(year)"
-                
-            } else {
-                
-                endDateLabel.text = "\(month)/\(day)/\(year)"
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    
+    // *****
+    // Mark: - Submissions
+    // *****
     
     // ************************************************************************************************
     // ************************************************************************************************
@@ -241,9 +112,9 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
-    // *****
-    // MARK: - Add Budgeted Time Frame
-    // *****
+    // **************************************
+    // ***** Add Budgeted Time Frame
+    // **************************************
     
     
     func submitTimeFrameForReview () {
@@ -333,11 +204,11 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
-  
     
-    // *****
-    // MARK: - Edit BudgetTimeFrame
-    // *****
+    
+    // **************************************
+    // ***** Edit Budgeted Time Frame
+    // **************************************
     
     // *** Only the Alert for edits shows, as the check for review is the same for adding or editing the budgeted time frames.
     
@@ -349,7 +220,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }
         
         var updatedItemsConfirmationMessage = ""
-
+        
         
         // Start Date
         let newStartDate = startDate
@@ -422,15 +293,184 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    func setDate(date: Date) {
+        
+        startDate = isStart ? date : startDate
+        
+        endDate = isStart ? endDate : date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            if isStart {
+                
+                startDateLabel.text = "\(month)/\(day)/\(year)"
+                
+            } else {
+                
+                endDateLabel.text = "\(month)/\(day)/\(year)"
+                
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addOrEditBudgetToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = isStart ? startDate : endDate
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    @objc func startDateTapped() {
+        
+        isStart = true
+        
+        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
+        
+    }
+    
+    @objc func endDateTapped() {
+        
+        isStart = false
+        
+        performSegue(withIdentifier: addOrEditBudgetToDatePickerSegueKey, sender: self)
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
     
     
     
     
     
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        if isNewBudgetTimeFrame {
+            
+            startDate = Date()
+            endDate = Date()
+            
+            backButton.title = "Back"
+            
+            navBar.topItem?.title = "Add New Time Frame"
+            
+            submitTimeFrameButton.setTitle("Add Time Frame", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            
+            navBar.topItem?.title = "Edit Time Frame"
+            
+            guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }
+            
+            startDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.startYear), month: Int(currentBudgetTimeFrame.startMonth), day: Int(currentBudgetTimeFrame.startDay))
+            
+            endDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.endYear), month: Int(currentBudgetTimeFrame.endMonth), day: Int(currentBudgetTimeFrame.endDay))
+            
+            submitTimeFrameButton.setTitle("Save Changes", for: .normal)
+            
+        }
+        
+        
+        
+        loadSavedBudgetedTimeFrames()
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        startDateLabel.text = dateFormat.string(from: startDate)
+        endDateLabel.text = dateFormat.string(from: endDate)
+        
+        let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
+        let endDateViewTap = UITapGestureRecognizer(target: self, action: #selector(endDateTapped))
+        
+        startDateView.addGestureRecognizer(startDateViewTap)
+        endDateView.addGestureRecognizer(endDateViewTap)
+        
+        addCircleAroundButton(named: submitTimeFrameButton)
+        
+        
+        
+        
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        startDateLabel.text = dateFormat.string(from: startDate)
+        endDateLabel.text = dateFormat.string(from: endDate)
+        
+    }
+    
+  
     
     
 
 
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension AddOrEditBudgetedTimeFrameViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    
+    
+    
 }
 
 

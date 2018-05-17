@@ -12,8 +12,16 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var editCategory = false
@@ -25,10 +33,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // MARK: - Header for Main Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var navBar: UINavigationBar!
     
@@ -36,9 +42,31 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     
+    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    @IBOutlet weak var viewAllTransactionsButton: UIButton!
     
     
-    // *** IBActions
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - IBActions
+    // *****
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         
@@ -53,6 +81,79 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func addSomething(_ sender: UIButton) {
         addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
     }
+    
+    @IBAction func viewAllTransactions(_ sender: UIButton) {
+        
+        selectedCategory = nil
+        
+        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == categoriesToAddOrEditTransactionSegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditTransactionViewController
+            
+            destinationVC.isNewTransaction = true
+            
+        } else if segue.identifier == categoriesToAddOrEditCategorySegueKey {
+            
+            let destinationVC = segue.destination as! AddOrEditCategoryViewController
+            
+            destinationVC.isNewCategory = isNewCategory
+            
+            if !isNewCategory {
+                
+                guard let editableCategory = loadSpecificCategory(named: editableCategoryName) else { return }
+                
+                destinationVC.editableCategory = editableCategory
+                
+                
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    
     
     
     
@@ -92,33 +193,25 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
-    @IBOutlet weak var viewAllTransactionsButton: UIButton!
-    
-    @IBOutlet weak var displayedDataTable: UITableView!
-    
-    
-    
-    // *****
-    // MARK: - IBActions
-    // *****
-    
-    @IBAction func viewAllTransactions(_ sender: UIButton) {
-        
-        selectedCategory = nil
-        
-        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
-        
-    }
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension CategoryViewController {
     
     
     
-    // *****
-    // MARK: - TableView
-    // *****
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -257,53 +350,10 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-
-    
-    // *****
-    // MARK: - Functions
-    // *****
-    
-    
-    // *****
-    // MARK: - Prepare For Segue
-    // *****
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == categoriesToAddOrEditTransactionSegueKey {
-            
-            let destinationVC = segue.destination as! AddOrEditTransactionViewController
-            
-            destinationVC.isNewTransaction = true
-            
-        } else if segue.identifier == categoriesToAddOrEditCategorySegueKey {
-            
-            let destinationVC = segue.destination as! AddOrEditCategoryViewController
-            
-            destinationVC.isNewCategory = isNewCategory
-            
-            if !isNewCategory {
-
-                guard let editableCategory = loadSpecificCategory(named: editableCategoryName) else { return }
-                
-                destinationVC.editableCategory = editableCategory
-                
-                
-            }
-            
-        }
-        
-    }
- 
     
     
     
     
-    
-    
-   
-    
-   
     
 }
 

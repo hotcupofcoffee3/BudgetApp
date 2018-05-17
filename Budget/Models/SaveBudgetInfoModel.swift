@@ -121,6 +121,8 @@ func createAndSaveNewBudgetItem(timeSpanID: Int, type: String, named: String, am
     itemToSave.category = category
     itemToSave.year = Int64(year)
     itemToSave.month = Int64(month)
+    
+    // The 'day' is the set due day, NOT the date from the 'timeSpanID'
     itemToSave.day = Int64(day)
     
     saveData()
@@ -136,6 +138,12 @@ func createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: Int) {
     loadSavedCategories()
     
     for category in budget.categories {
+        
+        if category.name == unallocatedKey {
+            
+            continue
+            
+        }
         
         // The 'type' is currently set to "category" until a property for having a 'paycheck' as a category (a depositable category) is added. Nothing is done with it right now, other than simply serving as a placeholder.
         // The 'category' property is set to its own category name.

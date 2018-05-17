@@ -330,9 +330,7 @@ func loadAllBudgetItems() {
         print("Fuck you; you suck: \(error)")
         
     }
-    
-    print(budget.budgetItems.count)
-    
+   
 }
 
 

@@ -14,8 +14,16 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var isNewTransaction = true
@@ -27,18 +35,34 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // MARK: - Header for Main Views
+    // Mark: - IBOutlets
+    // *****
+    
+    @IBOutlet weak var mainBalanceLabel: UILabel!
+    
+    @IBOutlet weak var displayedDataTable: UITableView!
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
     // *****
     
     
     
-    // *** IBOutlets
-    
-    @IBOutlet weak var mainBalanceLabel: UILabel!
     
     
-    
-    // *** IBActions
+    // *****
+    // Mark: - IBActions
+    // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -51,11 +75,64 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
+    // *****
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! AddOrEditTransactionViewController
+        
+        destinationVC.isNewTransaction = isNewTransaction
+        
+        if !isNewTransaction {
+            
+            guard let editableTransaction = selectedTransaction else { return }
+            
+            destinationVC.editableTransaction = editableTransaction
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    
+    
+    
     
     // *****
     // MARK: - Loadables
     // *****
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,32 +162,31 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         
     }
+  
+   
+  
+ 
     
     
     
+
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension TransactionViewController {
     
+    // ******************************************************
     
+    // MARK: - Table/Picker
     
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
-    @IBOutlet weak var displayedDataTable: UITableView!
-    
-    
-    
-    // *****
-    // MARK: - IBActions
-    // *****
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - TableView
-    // *****
+    // ******************************************************
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -206,34 +282,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-
-    
-    // *****
-    // MARK: - Functions
-    // *****
-  
-    
-
-    
-    // *****
-    // MARK: - Prepare For Segue
-    // *****
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let destinationVC = segue.destination as! AddOrEditTransactionViewController
-        
-        destinationVC.isNewTransaction = isNewTransaction
-        
-        if !isNewTransaction {
-          
-            guard let editableTransaction = selectedTransaction else { return }
-            
-            destinationVC.editableTransaction = editableTransaction
-            
-        }
-        
-    }
     
     
     
@@ -241,7 +289,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-
 }
 
 

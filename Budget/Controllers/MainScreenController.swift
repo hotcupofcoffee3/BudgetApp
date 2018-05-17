@@ -12,76 +12,17 @@ import CoreData
 class MainScreen: UIViewController {
     
     
-    // *****
-    // MARK: - Header for Main Views
-    // *****
     
+    // ******************************************************
     
-    
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        // ********************
-        // Core Data Testing (& Other Testing)
-        // ********************
-        
-        
-        
-        // ********************
-        // ********************
-        // ********************
-        
-        
-        // ***** Starting From Scratch on New Device
-        loadSavedCategories()
-        if budget.categories.count == 0 {
-            budget.deleteEVERYTHING()
-        }
-        
-        loadSavedCategories()
-        loadSavedTransactions(descending: true)
-        loadSavedBudgetedTimeFrames()
-        
-        selectedCategory = nil
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        
-        addCircleAroundMainButtons(named: categoriesButtonTitle)
-        addCircleAroundMainButtons(named: paycheckButtonTitle)
-        addCircleAroundMainButtons(named: transactionsButtonTitle)
-        addCircleAroundMainButtons(named: budgetButtonTitle)
-        
-        // Long press gesture recognizers
-        let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
-        
-        let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddCategoriesAndTransactions(gestureRecognizer:)))
-        
-        uilprDELETE.minimumPressDuration = 2
-        uilprADD.minimumPressDuration = 2
-        
-        hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
-        hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        selectedCategory = nil
-        
-    }
-    
-    
-    
-    // *****
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     
@@ -89,7 +30,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // MARK: - IBOutlets
+    // Mark: - IBOutlets
     // *****
     
     @IBOutlet weak var hiddenDeleteButton: UIButton!
@@ -108,8 +49,24 @@ class MainScreen: UIViewController {
     
     
     
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
     // *****
-    // MARK: - IBActions
+    // Mark: - General Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - IBActions
     // *****
     
     @IBAction func budgetButton(_ sender: UIButton) {
@@ -137,7 +94,31 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // MARK: - Functions
+    // Mark: - Submissions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
     // *****
     
     // *** Long press recognizer function to - DELETE EVERYTHING
@@ -212,14 +193,105 @@ class MainScreen: UIViewController {
     
     
     
+    // *****
+    // Mark: - Keyboard functions
+    // *****
     
     
     
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        // ********************
+        // Core Data Testing (& Other Testing)
+        // ********************
+        
+        
+        
+        // ********************
+        // ********************
+        // ********************
+        
+        
+        // ***** Starting From Scratch on New Device
+        loadSavedCategories()
+        if budget.categories.count == 0 {
+            budget.deleteEVERYTHING()
+        }
+        
+        loadSavedCategories()
+        loadSavedTransactions(descending: true)
+        loadSavedBudgetedTimeFrames()
+        
+        selectedCategory = nil
+        
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        
+        addCircleAroundMainButtons(named: categoriesButtonTitle)
+        addCircleAroundMainButtons(named: paycheckButtonTitle)
+        addCircleAroundMainButtons(named: transactionsButtonTitle)
+        addCircleAroundMainButtons(named: budgetButtonTitle)
+        
+        // Long press gesture recognizers
+        let uilprDELETE = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressDeleteEverything(gestureRecognizer:)))
+        
+        let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddCategoriesAndTransactions(gestureRecognizer:)))
+        
+        uilprDELETE.minimumPressDuration = 2
+        uilprADD.minimumPressDuration = 2
+        
+        hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
+        hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        refreshAvailableBalanceLabel(label: availableBalanceLabel)
+        selectedCategory = nil
+        
+    }
+    
+    
+    
+    
+    
+  
     
     
     
 
 
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension MainScreen {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    
+    
+    
 }
 
 

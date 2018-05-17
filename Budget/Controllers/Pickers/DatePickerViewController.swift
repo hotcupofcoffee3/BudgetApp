@@ -16,8 +16,18 @@ protocol ChooseDate {
 
 class DatePickerViewController: UIViewController {
 
-    // *****
+    
+    
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var delegate: ChooseDate?
@@ -27,15 +37,32 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // MARK: - IBOutlets
+    // Mark: - IBOutlets
     // *****
     
     @IBOutlet weak var chosenDate: UIDatePicker!
     
     
     
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
     // *****
-    // MARK: - IBActions
+    // Mark: - General Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - IBActions
     // *****
     
     @IBAction func done(_ sender: UIButton) {
@@ -48,7 +75,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // MARK: - DatePickerView
+    // Mark: - Submissions
     // *****
     
     
@@ -56,7 +83,31 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // MARK: - Functions
+    // Mark: - Delegates
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
     // *****
     
     
@@ -75,17 +126,39 @@ class DatePickerViewController: UIViewController {
     }
     
     
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    
+  
     
     
 
 
 }
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension DatePickerViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    
+    
+    
+}
+
+
+
+
 
 
 

@@ -13,8 +13,16 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var isNewCategory = true
@@ -34,10 +42,8 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // MARK: - Header for Add & Main Edit Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
@@ -51,8 +57,53 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     
+    @IBOutlet weak var nameView: UIView!
     
-    // *** IBActions
+    @IBOutlet weak var categoryNameTextField: UITextField!
+    
+    @IBOutlet weak var amountView: UIView!
+    
+    @IBOutlet weak var categoryAmountTextField: UITextField!
+    
+    @IBOutlet weak var currentAllocationStatus: UISwitch!
+    
+    @IBOutlet weak var allocateView: UIView!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var dueDateSwitch: UISwitch!
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
+    // *****
+    
+    func updateUIElementsBecauseOfSuccess() {
+        
+        // Success notification haptic
+        let successHaptic = UINotificationFeedbackGenerator()
+        successHaptic.notificationOccurred(.success)
+        
+        // Set text fields back to being empty
+        categoryNameTextField.text = nil
+        categoryAmountTextField.text = nil
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - IBActions
+    // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -72,124 +123,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if isNewCategory {
-            
-            backButton.title = "Back"
-            navBar.topItem?.title = "Add Category"
-            submitCategoryButton.setTitle("Add Category", for: .normal)
-            
-        } else {
-            
-            backButton.title = "Cancel"
-            navBar.topItem?.title = "Edit Category"
-            
-            guard let currentCategory = editableCategory else { return }
-            
-            guard let name = currentCategory.name else { return }
-            let budgeted = currentCategory.budgeted
-            let dueDay = Int(currentCategory.dueDay)
-            
-            categoryNameTextField.text = name
-            categoryAmountTextField.text = "\(convertedAmountToDouble(amount: budgeted))"
-            
-            if currentCategory.dueDay > 0 {
-                
-                date = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
-                dateLabel.text = "\(convertDayToOrdinal(day: dueDay))"
-                
-            } else {
-                
-                date = Date()
-                dateLabel.text = ""
-                
-            }
-            
-            currentAllocationStatus.isOn = false
-            
-            submitCategoryButton.setTitle("Save Changes", for: .normal)
-            
-        }
-        
-        
-        // *** Tap gesture to textfields and their labels
-        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
-        let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
-        
-        nameView.addGestureRecognizer(nameViewTap)
-        amountView.addGestureRecognizer(amountViewTap)
-        allocateView.addGestureRecognizer(allocateViewTap)
-        dateLabel.addGestureRecognizer(datetap)
-        
-        
-        // *** Toolbar with 'Done' on Number Pad
-        addToolBarToNumberPad(textField: categoryAmountTextField)
-        
-        
-        // *** Swipe gesture to close keyboard
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        // *** Update labels
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
-        
-        // *** Circle around button
-        addCircleAroundButton(named: submitCategoryButton)
-        
-        
-        // *** Textfield Delegates
-        self.categoryNameTextField.delegate = self
-        self.categoryAmountTextField.delegate = self
-        
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-    }
-    
-    
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
-    
-    @IBOutlet weak var nameView: UIView!
-    
-    @IBOutlet weak var categoryNameTextField: UITextField!
-    
-    @IBOutlet weak var amountView: UIView!
-    
-    @IBOutlet weak var categoryAmountTextField: UITextField!
-    
-    @IBOutlet weak var currentAllocationStatus: UISwitch!
-
-    @IBOutlet weak var allocateView: UIView!
-    
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    @IBOutlet weak var dueDateSwitch: UISwitch!
-    
-    
-    
-    // *****
-    // MARK: - IBActions
-    // *****
-    
     @IBAction func dueDateToggleSwitch(_ sender: UISwitch) {
         
         if dueDateSwitch.isOn == true {
@@ -207,157 +140,8 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // MARK: - Functions
+    // Mark: - Submissions
     // *****
-    
-    func updateUIElementsBecauseOfSuccess() {
-        
-        // Success notification haptic
-        let successHaptic = UINotificationFeedbackGenerator()
-        successHaptic.notificationOccurred(.success)
-        
-        // Set text fields back to being empty
-        categoryNameTextField.text = nil
-        categoryAmountTextField.text = nil
-        
-    }
-    
-
-    
-    @objc func nameTapped() {
-        
-        categoryNameTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func amountTapped() {
-        
-        categoryAmountTextField.becomeFirstResponder()
-        
-    }
-    
-    @objc func allocateTapped() {
-        
-        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
-        
-    }
-    
-    @objc func dateTapped() {
-        
-        if dueDateSwitch.isOn == true {
-            
-            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
-            
-        }
-        
-    }
-    
-    func setDate(date: Date) {
-        
-        self.date = date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
-            
-            dateLabel.text = "\(month)/\(day)/\(year)"
-            
-        }
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // *****
-    // MARK: - Keyboard functions
-    // *****
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    
-    // Test for submitability
-    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
-        
-        if categoryNameTextField.text != "" {
-            
-            if isNewCategory {
-           
-                submitAddCategoryForReview()
-           
-            } else {
-           
-                submitEditItemsForReview()
-           
-            }
-            
-        } else {
-            
-            specificTextField.resignFirstResponder()
-            
-        }
-        
-    }
-    
-    // Submit for review of final submitability
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        submissionFromKeyboardReturnKey(specificTextField: textField)
-        
-        return true
-    }
-    
-    // 'Done' button on number pad to submit for review of final submitability
-    @objc override func dismissNumberKeyboard() {
-        
-        categoryAmountTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
-        
-    }
-    
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
-        
-        self.view.endEditing(true)
-        
-    }
-    
-    // Remove warning label text
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        warningLabel.text = ""
-    }
-    
-    
-    
-    // *****
-    // MARK: - Prepare For Segue
-    // *****
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == addOrEditCategoryToDatePickerSegueKey {
-            
-            let datePickerVC = segue.destination as! DatePickerViewController
-            
-            datePickerVC.delegate = self
-            
-            datePickerVC.date = date
-            
-        }
-        
-    }
-    
-    
     
     // ************************************************************************************************
     // ************************************************************************************************
@@ -371,9 +155,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    // *****
-    // MARK: - Add Category
-    // *****
+    // **************************************
+    // ***** Add Category
+    // **************************************
     
     
     
@@ -497,14 +281,11 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
+
     
-    
-    
-    
-    // *****
-    // MARK: - Edit Category
-    // *****
-    
+    // **************************************
+    // ***** Edit Category
+    // **************************************
     
     
     // *** Submit Edit Items For Review
@@ -643,7 +424,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-
+    
     
     // *** Edit Budgeted Check
     
@@ -732,9 +513,263 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    func setDate(date: Date) {
+        
+        self.date = date
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            
+            dateLabel.text = "\(month)/\(day)/\(year)"
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == addOrEditCategoryToDatePickerSegueKey {
+            
+            let datePickerVC = segue.destination as! DatePickerViewController
+            
+            datePickerVC.delegate = self
+            
+            datePickerVC.date = date
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
+    @objc func nameTapped() {
+        
+        categoryNameTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func amountTapped() {
+        
+        categoryAmountTextField.becomeFirstResponder()
+        
+    }
+    
+    @objc func allocateTapped() {
+        
+        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
+        
+    }
+    
+    @objc func dateTapped() {
+        
+        if dueDateSwitch.isOn == true {
+            
+            performSegue(withIdentifier: addOrEditCategoryToDatePickerSegueKey, sender: self)
+            
+        } else {
+            
+            dateLabel.text = ""
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Keyboard functions
+    // *****
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    // Test for submitability
+    func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
+        
+        if categoryNameTextField.text != "" {
+            
+            if isNewCategory {
+                
+                submitAddCategoryForReview()
+                
+            } else {
+                
+                submitEditItemsForReview()
+                
+            }
+            
+        } else {
+            
+            specificTextField.resignFirstResponder()
+            
+        }
+        
+    }
+    
+    // Submit for review of final submitability
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        submissionFromKeyboardReturnKey(specificTextField: textField)
+        
+        return true
+    }
+    
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc override func dismissNumberKeyboard() {
+        
+        categoryAmountTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
+        
+    }
+    
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    // Remove warning label text
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        warningLabel.text = ""
+    }
+    
+    
+    
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if isNewCategory {
+            
+            backButton.title = "Back"
+            navBar.topItem?.title = "Add Category"
+            submitCategoryButton.setTitle("Add Category", for: .normal)
+            
+        } else {
+            
+            backButton.title = "Cancel"
+            navBar.topItem?.title = "Edit Category"
+            
+            guard let currentCategory = editableCategory else { return }
+            
+            guard let name = currentCategory.name else { return }
+            let budgeted = currentCategory.budgeted
+            let dueDay = Int(currentCategory.dueDay)
+            
+            categoryNameTextField.text = name
+            categoryAmountTextField.text = "\(convertedAmountToDouble(amount: budgeted))"
+            
+            if currentCategory.dueDay > 0 {
+                
+                date = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
+                dateLabel.text = "\(convertDayToOrdinal(day: dueDay))"
+                
+            } else {
+                
+                date = Date()
+                dateLabel.text = ""
+                
+            }
+            
+            currentAllocationStatus.isOn = false
+            
+            submitCategoryButton.setTitle("Save Changes", for: .normal)
+            
+        }
+        
+        
+        // *** Tap gesture to textfields and their labels
+        let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
+        let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
+        
+        nameView.addGestureRecognizer(nameViewTap)
+        amountView.addGestureRecognizer(amountViewTap)
+        allocateView.addGestureRecognizer(allocateViewTap)
+        dateLabel.addGestureRecognizer(datetap)
+        
+        
+        // *** Toolbar with 'Done' on Number Pad
+        addToolBarToNumberPad(textField: categoryAmountTextField)
+        
+        
+        // *** Swipe gesture to close keyboard
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        // *** Update labels
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        
+        // *** Circle around button
+        addCircleAroundButton(named: submitCategoryButton)
+        
+        
+        // *** Textfield Delegates
+        self.categoryNameTextField.delegate = self
+        self.categoryAmountTextField.delegate = self
+        
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+    }
+    
     
 
 
+
+    
+    
+    
+}
+
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension AddOrEditCategoryViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
     
     
     

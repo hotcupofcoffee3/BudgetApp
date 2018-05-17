@@ -12,8 +12,16 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
 
     
     
-    // *****
+    // ******************************************************
+    
     // MARK: - Variables
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - Declared
     // *****
     
     var isToCategory = true
@@ -21,10 +29,8 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     
     
     // *****
-    // MARK: - Header for Add & Main Edit Views
+    // Mark: - IBOutlets
     // *****
-    
-    // *** IBOutlets
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
@@ -33,79 +39,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var moveFundsButtonTitle: UIButton!
-    
-    
-    
-    // *** IBActions
-    
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func moveFundsButton(_ sender: UIButton) {
-        submitAllOptionsForReview()
-    }
-    
-    
-    
-    // *****
-    // MARK: - Loadables
-    // *****
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let toCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(toCategoryTapped))
-        let fromCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(fromCategoryTapped))
-        
-        // Add tap gesture to textfields and their labels
-        amountView.addGestureRecognizer(amountViewTap)
-        toCategoryView.addGestureRecognizer(toCategoryViewTap)
-        fromCategoryView.addGestureRecognizer(fromCategoryViewTap)
-        
-        
-        addToolBarToNumberPad(textField: fundsTextField)
-        
-        
-        // Add swipe gesture to close keyboard
-        
-        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
-        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
-        self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        budget.sortCategoriesByKey(withUnallocated: true)
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
-        toCategoryLabel.text = unallocatedKey
-        fromCategoryLabel.text = unallocatedKey
-        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
-        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
-        
-        addCircleAroundButton(named: moveFundsButtonTitle)
-        
-        updateUIForAllocate()
-        
-        self.fundsTextField.delegate = self
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        budget.sortCategoriesByKey(withUnallocated: true)
-        
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
-        updateUIForAllocate()
-        
-    }
-
-    
-    
-    // *****
-    // MARK: - IBOutlets
-    // *****
     
     @IBOutlet weak var allocateRemoveOrShift: UISegmentedControl!
     
@@ -127,33 +60,16 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     
     
     
-    // *****
-    // MARK: - IBActions
-    // *****
+    // ******************************************************
     
-    @IBAction func allocateRemoveOrShiftSwitch(_ sender: UISegmentedControl) {
-        
-        if allocateRemoveOrShift.selectedSegmentIndex == 0 {
-            
-            updateUIForAllocate()
-            
-        } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
-            
-            updateUIForRemove()
-            
-        } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
-            
-            updateUIForShift()
-            
-        }
-        
-        fundsTextField.resignFirstResponder()
-    }
-    
-    
-    
-    // *****
     // MARK: - Functions
+    
+    // ******************************************************
+    
+    
+    
+    // *****
+    // Mark: - General Functions
     // *****
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
@@ -178,7 +94,7 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         fundsTextField.text = nil
         
     }
-
+    
     func updateUIForAllocate() {
         
         moveFundsButtonTitle.setTitle("Allocate Funds", for: .normal)
@@ -223,6 +139,45 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         toCategoryLabel.isEnabled = true
         
     }
+    
+    
+    
+    // *****
+    // Mark: - IBActions
+    // *****
+    
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func moveFundsButton(_ sender: UIButton) {
+        submitAllOptionsForReview()
+    }
+    
+    @IBAction func allocateRemoveOrShiftSwitch(_ sender: UISegmentedControl) {
+        
+        if allocateRemoveOrShift.selectedSegmentIndex == 0 {
+            
+            updateUIForAllocate()
+            
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 1 {
+            
+            updateUIForRemove()
+            
+        } else if allocateRemoveOrShift.selectedSegmentIndex == 2 {
+            
+            updateUIForShift()
+            
+        }
+        
+        fundsTextField.resignFirstResponder()
+    }
+    
+    
+    
+    // *****
+    // Mark: - Submissions
+    // *****
     
     // *** Allocate Check
     
@@ -468,6 +423,68 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         
     }
     
+    
+    
+    // *****
+    // Mark: - Delegates
+    // *****
+    
+    func setCategory(category: String) {
+        
+        if isToCategory == true {
+            
+            toCategoryLabel.text = category
+            
+            updateCategoryBalanceLabel(for: category, atLabel: toCategoryCurrentBalanceLabel)
+            
+        } else if isToCategory == false {
+            
+            fromCategoryLabel.text = category
+            
+            updateCategoryBalanceLabel(for: category, atLabel: fromCategoryCurrentBalanceLabel)
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Segues
+    // *****
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == moveFundsToCategoryPickerSegueKey {
+            
+            let categoryPickerVC = segue.destination as! CategoryPickerViewController
+            
+            categoryPickerVC.delegate = self
+            
+            if isToCategory == true {
+                
+                guard let currentCategory = toCategoryLabel.text else { return }
+                
+                categoryPickerVC.selectedCategory = currentCategory
+                
+            } else if isToCategory == false {
+                
+                guard let currentCategory = fromCategoryLabel.text else { return }
+                
+                categoryPickerVC.selectedCategory = currentCategory
+                
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    // *****
+    // Mark: - Tap Functions
+    // *****
+    
     @objc func amountTapped() {
         
         fundsTextField.becomeFirstResponder()
@@ -498,64 +515,30 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         
     }
     
-    func setCategory(category: String) {
+    // 'Done' button on number pad to submit for review of final submitability
+    @objc override func dismissNumberKeyboard() {
         
-        if isToCategory == true {
-            
-            toCategoryLabel.text = category
-            
-            updateCategoryBalanceLabel(for: category, atLabel: toCategoryCurrentBalanceLabel)
-            
-        } else if isToCategory == false {
-            
-            fromCategoryLabel.text = category
-            
-            updateCategoryBalanceLabel(for: category, atLabel: fromCategoryCurrentBalanceLabel)
-            
-        }
+        fundsTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: fundsTextField)
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Swipe to close keyboard
+    @objc func closeKeyboardFromSwipe() {
         
-        if segue.identifier == moveFundsToCategoryPickerSegueKey {
-            
-            let categoryPickerVC = segue.destination as! CategoryPickerViewController
-            
-            categoryPickerVC.delegate = self
-            
-            if isToCategory == true {
-                
-                guard let currentCategory = toCategoryLabel.text else { return }
-                
-                categoryPickerVC.selectedCategory = currentCategory
-                
-            } else if isToCategory == false {
-                
-                guard let currentCategory = fromCategoryLabel.text else { return }
-                
-                categoryPickerVC.selectedCategory = currentCategory
-                
-            }
-            
-        }
+        self.view.endEditing(true)
         
     }
-    
-    
-    
-    
     
     
     
     // *****
-    // MARK: - Keyboard functions
+    // Mark: - Keyboard functions
     // *****
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
     
     // Test for submitability
     func submissionFromKeyboardReturnKey(specificTextField: UITextField) {
@@ -578,21 +561,6 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
         return true
     }
     
-    // 'Done' button on number pad to submit for review of final submitability
-    @objc override func dismissNumberKeyboard() {
-        
-        fundsTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: fundsTextField)
-        
-    }
-    
-    // Swipe to close keyboard
-    @objc func closeKeyboardFromSwipe() {
-        
-        self.view.endEditing(true)
-        
-    }
-    
     // Remove warning label text
     func textFieldDidBeginEditing(_ textField: UITextField) {
         warningLabel.text = ""
@@ -600,17 +568,90 @@ class MoveFundsViewController: UIViewController, UITextFieldDelegate, ChooseCate
     
     
     
+    // *****
+    // MARK: - Loadables
+    // *****
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
+        let toCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(toCategoryTapped))
+        let fromCategoryViewTap = UITapGestureRecognizer(target: self, action: #selector(fromCategoryTapped))
+        
+        // Add tap gesture to textfields and their labels
+        amountView.addGestureRecognizer(amountViewTap)
+        toCategoryView.addGestureRecognizer(toCategoryViewTap)
+        fromCategoryView.addGestureRecognizer(fromCategoryViewTap)
+        
+        
+        addToolBarToNumberPad(textField: fundsTextField)
+        
+        
+        // Add swipe gesture to close keyboard
+        
+        let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
+        closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(closeKeyboardGesture)
+        
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        toCategoryLabel.text = unallocatedKey
+        fromCategoryLabel.text = unallocatedKey
+        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: fromCategoryCurrentBalanceLabel)
+        updateCategoryBalanceLabel(for: budget.sortedCategoryKeys[0], atLabel: toCategoryCurrentBalanceLabel)
+        
+        addCircleAroundButton(named: moveFundsButtonTitle)
+        
+        updateUIForAllocate()
+        
+        self.fundsTextField.delegate = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        updateUIForAllocate()
+        
+    }
+    
+    
+    
+    
+    
     
     
     
 
-    
-    
-    
-    
-    
-    
+}
 
+
+
+// **************************************************************************************************
+// **************************************************************************************************
+// **************************************************************************************************
+
+
+
+extension MoveFundsViewController {
+    
+    
+    
+    // ******************************************************
+    
+    // MARK: - Table/Picker
+    
+    // ******************************************************
+    
+    
+    
+    
 }
 
 
