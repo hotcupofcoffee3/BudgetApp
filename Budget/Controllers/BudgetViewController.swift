@@ -214,7 +214,7 @@ extension BudgetViewController {
         
         let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "BudgetCell", for: indexPath) as! BudgetTableViewCell
         
-        addBorderAroundBudgetTableCellViews(cellView: cell.budgetedTimeFrameView)
+        addBorderAroundLargerTableCellViews(cellView: cell.budgetedTimeFrameView)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
@@ -226,8 +226,8 @@ extension BudgetViewController {
             
             if indexPath.row == 0 {
                 
-                cell.startLabel?.text = "Very early -"
-                cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+                cell.startLabel?.text = "Current"
+                cell.endLabel?.text = "Categories"
                 cell.amountLabel?.text = "\(convertedAmountToDollars(amount: budget.balance))"
                 
             } else {

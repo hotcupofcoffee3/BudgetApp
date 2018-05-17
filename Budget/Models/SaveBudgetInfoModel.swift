@@ -133,7 +133,7 @@ func createAndSaveNewBudgetItem(timeSpanID: Int, type: String, named: String, am
 
 // MARK: - Save all Categories into newly created Budgeted Time Frame
 
-func createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: Int) {
+func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int) {
     
     loadSavedCategories()
     
@@ -152,7 +152,13 @@ func createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: Int) {
         
     }
     
+    loadSavedPaychecks()
     
+    for paycheck in budget.paychecks {
+        
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: paycheckKey, named: paycheck.name!, amount: paycheck.amount, category: paycheckKey, year: 0, month: 0, day: 0)
+        
+    }
     
     saveData()
     

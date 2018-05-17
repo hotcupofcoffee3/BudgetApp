@@ -242,7 +242,7 @@ extension UIViewController {
     
     // MARK: - Cell for Budget
     
-    func addBorderAroundBudgetTableCellViews(cellView: UIView) {
+    func addBorderAroundLargerTableCellViews(cellView: UIView) {
         
         cellView.layer.cornerRadius = 15
         cellView.layer.masksToBounds = true

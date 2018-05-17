@@ -238,8 +238,10 @@ extension BudgetItemsViewController {
             
         }
         
-        cell.nameLabel?.text = "\(item.name!)"
-        cell.dueDayLabel?.text = item.day > 0 ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
+        cell.nameLabel?.text = (item.type == paycheckKey) ? "💸 \(item.name!)" : "\(item.name!)"
+        
+        cell.dueDayLabel?.text = (item.day > 0) ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
+        
         cell.amountLabel?.text = "\(convertedAmountToDollars(amount: item.amount))"
         
         return cell

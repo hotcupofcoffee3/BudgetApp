@@ -1335,7 +1335,7 @@
                                     <navigationItem title="Add /Edit Paycheck" id="PJS-UQ-ku1">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="hP5-qt-c7K">
                                             <connections>
-                                                <action selector="backButton:" destination="ljx-wi-SIt" id="HaW-cy-k94"/>
+                                                <action selector="back:" destination="ljx-wi-SIt" id="OxM-38-vj4"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="Mre-rM-KmZ"/>
@@ -1441,7 +1441,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="addPaycheck:" destination="ljx-wi-SIt" eventType="touchUpInside" id="lNf-Dv-5x7"/>
+                                    <action selector="submitPaycheck:" destination="ljx-wi-SIt" eventType="touchUpInside" id="kGv-7O-fAK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1470,16 +1470,16 @@
                         <viewLayoutGuide key="safeArea" id="0sw-Vu-HgN"/>
                     </view>
                     <connections>
-                        <outlet property="addPaycheckButton" destination="Lb0-Kp-eFm" id="bHB-WL-lWv"/>
                         <outlet property="amountTextField" destination="Zug-eJ-ES6" id="opG-FW-Ezj"/>
                         <outlet property="amountView" destination="e0m-A2-YQI" id="pGJ-GW-mhE"/>
+                        <outlet property="backButton" destination="hP5-qt-c7K" id="UvY-tx-NMS"/>
                         <outlet property="balanceOnNavBar" destination="Mre-rM-KmZ" id="s7h-WS-1lv"/>
-                        <outlet property="categoryWarningLabel" destination="I4c-vY-3mQ" id="uqT-wa-Nip"/>
                         <outlet property="nameTextField" destination="yqU-EX-Dbz" id="bbT-A5-9ST"/>
                         <outlet property="nameView" destination="Te1-KR-h40" id="Me5-W0-b31"/>
+                        <outlet property="navBar" destination="bSb-E6-GVL" id="te4-u1-c7r"/>
+                        <outlet property="submitPaycheckButton" destination="Lb0-Kp-eFm" id="QE8-cw-z1l"/>
                         <outlet property="unallocatedLabelAtTop" destination="RT2-Jg-nJX" id="QJ1-LZ-CZl"/>
                         <outlet property="warningLabel" destination="I4c-vY-3mQ" id="3pX-4A-134"/>
-                        <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditPaycheckToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="OsH-4M-2a9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ydb-8m-BPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1528,6 +1528,7 @@
                                     <navigationItem title="Paychecks" id="tbk-KU-Qhp">
                                         <barButtonItem key="leftBarButtonItem" title="Home" id="KUD-ic-pbt">
                                             <connections>
+                                                <action selector="backButton:" destination="YtX-Km-TRk" id="AEi-W9-eQT"/>
                                                 <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="crossDissolve" id="nKN-Av-9XL"/>
                                             </connections>
                                         </barButtonItem>
@@ -1969,12 +1970,12 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xOp-Mq-eWc"/>
+        <segue reference="S9i-T2-HlC"/>
         <segue reference="Tqy-bs-W0K"/>
         <segue reference="1AE-Ye-tTi"/>
         <segue reference="C7a-lO-baq"/>
         <segue reference="8K3-ts-dmR"/>
         <segue reference="8ar-qL-cfd"/>
-        <segue reference="C8p-9T-DZF"/>
+        <segue reference="nKN-Av-9XL"/>
     </inferredMetricsTieBreakers>
 </document>

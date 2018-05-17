@@ -327,6 +327,7 @@ extension CategoryViewController {
                         self.successHaptic()
                         
                         self.refreshAvailableBalanceLabel(label: self.mainBalanceLabel)
+
                         budget.sortCategoriesByKey(withUnallocated: true)
                         self.displayedDataTable.reloadData()
                         

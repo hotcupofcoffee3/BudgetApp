@@ -22,6 +22,7 @@ let timeSpanIDMatchesKey = "timeSpanID MATCHES %@"
 // Class keys
 let categoryKey = "Category"
 let transactionKey = "Transaction"
+let paycheckKey = "Paycheck"
 
 
 // Category Keys

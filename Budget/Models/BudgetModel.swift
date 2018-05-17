@@ -46,6 +46,49 @@ class Budget {
 
     }
     
+    
+    
+    
+    
+    
+    // *****
+    // MARK: - Paycheck functions
+    // *****
+    
+    
+    
+    
+    func updatePaycheckName(name: String, forPaycheck paycheck: Paycheck) {
+        
+        let paycheck = paycheck
+        paycheck.name = name
+        
+        saveData()
+        
+    }
+    
+    func updatePaycheckAmount(amount: Double, forPaycheck paycheck: Paycheck) {
+        
+        let paycheck = paycheck
+        paycheck.amount = amount
+        
+        saveData()
+        
+    }
+    
+    func deletePaycheck(paycheck: Paycheck) {
+       
+        context.delete(paycheck)
+        
+        saveData()
+        
+    }
+    
+    
+    
+    
+    
+    
 
     
     
@@ -254,10 +297,8 @@ class Budget {
                 context.delete(deletedCategory)
             }
             
-            loadSavedCategories()
-            sortCategoriesByKey(withUnallocated: true)
             saveData()
-
+            
         }
 
     }
@@ -619,7 +660,7 @@ class Budget {
         
         createUnallocatedCategory()
 
-        createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date())
+        createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date.distantPast)
 
         loadSavedCategories()
         loadSavedBudgetedTimeFrames()

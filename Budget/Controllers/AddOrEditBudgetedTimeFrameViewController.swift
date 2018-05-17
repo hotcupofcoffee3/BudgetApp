@@ -187,7 +187,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             budget.addTimeFrame(start: self.startDate, end: self.endDate)
             
-            createAndSaveNewSetOfBudgetItemsWithCategories(startDateID: startID)
+            createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startID)
             
             self.successHaptic()
             

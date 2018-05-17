@@ -298,7 +298,11 @@ func loadSpecificBudgetItems(startID: Int) {
     
     request.predicate = NSPredicate(format: timeSpanIDMatchesKey, String(startID))
     
-    request.sortDescriptors = [NSSortDescriptor(key: dayKey, ascending: true), NSSortDescriptor(key: nameKey, ascending: true)]
+    let sortByDay: NSSortDescriptor = NSSortDescriptor(key: dayKey, ascending: true)
+    
+    let sortByName: NSSortDescriptor = NSSortDescriptor(key: nameKey, ascending: true)
+    
+    request.sortDescriptors = [sortByDay, sortByName]
     
     do {
         
