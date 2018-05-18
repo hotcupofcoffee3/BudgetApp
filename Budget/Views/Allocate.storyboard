@@ -10,11 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Move Funds View Controller-->
+        <!--Allocate View Controller-->
         <scene sceneID="ChJ-zw-1lz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bDd-Sb-3mG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="tri-DP-ugM" customClass="MoveFundsViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tri-DP-ugM" customClass="AllocateViewController" customModule="Alloc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Oy2-Q8-u3n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,11 +26,11 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Move Funds" id="ofX-CZ-jVh">
+                                    <navigationItem title="Allocate" id="ofX-CZ-jVh">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="iJZ-3U-21L">
                                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
-                                                <action selector="backButton:" destination="tri-DP-ugM" id="WyV-6b-O7O"/>
+                                                <action selector="back:" destination="tri-DP-ugM" id="J83-M8-Max"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="$100.00" id="UQH-XI-zvt"/>
@@ -44,20 +43,8 @@
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="by2-m7-8vh" userLabel="Allocate, Remove">
-                                <rect key="frame" x="0.0" y="102" width="375" height="29"/>
-                                <segments>
-                                    <segment title="Allocate"/>
-                                    <segment title="Remove"/>
-                                    <segment title="Shift"/>
-                                </segments>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="allocateRemoveOrShiftSwitch:" destination="tri-DP-ugM" eventType="valueChanged" id="eC2-GC-b69"/>
-                                </connections>
-                            </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kc-sO-xNs" userLabel="Amount View">
-                                <rect key="frame" x="20" y="150" width="335" height="50"/>
+                                <rect key="frame" x="20" y="112" width="335" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Kag-FE-phc" userLabel="Amount Stack">
                                         <rect key="frame" x="10" y="10" width="315" height="30"/>
@@ -95,7 +82,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="g1a-Zr-tMS" userLabel="To/From Stack">
-                                <rect key="frame" x="20" y="220" width="335" height="24"/>
+                                <rect key="frame" x="20" y="182" width="335" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJU-CG-50d">
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="24"/>
@@ -112,7 +99,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-nI-Pz8" userLabel="Categories Stack">
-                                <rect key="frame" x="20" y="254" width="335" height="50"/>
+                                <rect key="frame" x="20" y="216" width="335" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNt-Se-wWe" userLabel="From Category View">
                                         <rect key="frame" x="0.0" y="0.0" width="157.5" height="50"/>
@@ -155,7 +142,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="h4g-bF-3pI" userLabel="Current balances">
-                                <rect key="frame" x="20" y="314" width="335" height="35.5"/>
+                                <rect key="frame" x="20" y="276" width="335" height="35.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left: $100.00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lep-il-wcp">
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="35.5"/>
@@ -178,23 +165,23 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zU-5N-O6X" userLabel="Warning Label">
-                                <rect key="frame" x="20" y="360" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="322" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFg-Q8-9dk">
-                                <rect key="frame" x="100" y="370" width="175" height="54"/>
+                                <rect key="frame" x="127.5" y="332" width="120" height="54"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="9vw-0b-nfP"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="9vw-0b-nfP"/>
                                     <constraint firstAttribute="height" constant="54" id="Uu4-wZ-paw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="Allocate Funds">
+                                <state key="normal" title="Allocate">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="moveFundsButton:" destination="tri-DP-ugM" eventType="touchUpInside" id="4BV-lV-pWY"/>
+                                    <action selector="allocateButton:" destination="tri-DP-ugM" eventType="touchUpInside" id="XQz-av-ZLP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -206,22 +193,19 @@
                             <constraint firstItem="PnC-VU-LTJ" firstAttribute="trailing" secondItem="gsJ-IE-EBk" secondAttribute="trailing" id="AXh-RV-0D5"/>
                             <constraint firstItem="h4g-bF-3pI" firstAttribute="top" secondItem="Opf-nI-Pz8" secondAttribute="bottom" constant="10" id="BX1-bi-o7v"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="g1a-Zr-tMS" secondAttribute="trailing" constant="20" id="ElU-8Z-L72"/>
-                            <constraint firstItem="by2-m7-8vh" firstAttribute="leading" secondItem="gsJ-IE-EBk" secondAttribute="leading" id="EtT-tL-8Dr"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="6kc-sO-xNs" secondAttribute="trailing" constant="20" id="FeM-Wr-Obd"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="3zU-5N-O6X" secondAttribute="trailing" constant="20" id="GAh-Lx-JGO"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="h4g-bF-3pI" secondAttribute="trailing" constant="20" id="LSe-gf-FIy"/>
-                            <constraint firstItem="by2-m7-8vh" firstAttribute="top" secondItem="aiq-3B-ZIK" secondAttribute="bottom" constant="10" id="LxQ-1p-03j"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="Opf-nI-Pz8" secondAttribute="trailing" constant="20" id="MgS-zs-KVx"/>
                             <constraint firstItem="iFg-Q8-9dk" firstAttribute="top" secondItem="3zU-5N-O6X" secondAttribute="bottom" constant="10" id="NUg-5c-apn"/>
                             <constraint firstItem="3zU-5N-O6X" firstAttribute="leading" secondItem="gsJ-IE-EBk" secondAttribute="leading" constant="20" id="PwC-PE-nwR"/>
                             <constraint firstItem="Opf-nI-Pz8" firstAttribute="leading" secondItem="gsJ-IE-EBk" secondAttribute="leading" constant="20" id="Q0X-56-5Yd"/>
                             <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="aiq-3B-ZIK" secondAttribute="trailing" constant="20" id="TgK-Ov-K6r"/>
-                            <constraint firstItem="6kc-sO-xNs" firstAttribute="top" secondItem="by2-m7-8vh" secondAttribute="bottom" constant="20" id="UQy-Gr-9wI"/>
                             <constraint firstItem="PnC-VU-LTJ" firstAttribute="top" secondItem="gsJ-IE-EBk" secondAttribute="top" id="a5y-qO-PWJ"/>
                             <constraint firstItem="Opf-nI-Pz8" firstAttribute="top" secondItem="g1a-Zr-tMS" secondAttribute="bottom" constant="10" id="aA8-xk-vhu"/>
                             <constraint firstItem="h4g-bF-3pI" firstAttribute="leading" secondItem="gsJ-IE-EBk" secondAttribute="leading" constant="20" id="gIf-ls-8HX"/>
-                            <constraint firstItem="gsJ-IE-EBk" firstAttribute="trailing" secondItem="by2-m7-8vh" secondAttribute="trailing" id="iOz-eS-rfc"/>
                             <constraint firstItem="aiq-3B-ZIK" firstAttribute="top" secondItem="PnC-VU-LTJ" secondAttribute="bottom" constant="10" id="ikY-6U-Ld7"/>
+                            <constraint firstItem="6kc-sO-xNs" firstAttribute="top" secondItem="aiq-3B-ZIK" secondAttribute="bottom" constant="20" id="klF-bd-3Xb"/>
                             <constraint firstItem="3zU-5N-O6X" firstAttribute="top" secondItem="h4g-bF-3pI" secondAttribute="bottom" constant="10" id="mxB-4m-OPL"/>
                             <constraint firstItem="aiq-3B-ZIK" firstAttribute="leading" secondItem="gsJ-IE-EBk" secondAttribute="leading" constant="20" id="oQ8-wD-TZn"/>
                             <constraint firstItem="iFg-Q8-9dk" firstAttribute="centerX" secondItem="Oy2-Q8-u3n" secondAttribute="centerX" id="qQL-j6-YnV"/>
@@ -230,14 +214,13 @@
                         <viewLayoutGuide key="safeArea" id="gsJ-IE-EBk"/>
                     </view>
                     <connections>
-                        <outlet property="allocateRemoveOrShift" destination="by2-m7-8vh" id="4o8-GU-tM8"/>
+                        <outlet property="allocateButton" destination="iFg-Q8-9dk" id="UVH-ZA-siT"/>
+                        <outlet property="amountTextField" destination="Xoe-aq-1GN" id="GOR-KH-w0K"/>
                         <outlet property="amountView" destination="6kc-sO-xNs" id="OOR-Vo-mmZ"/>
                         <outlet property="balanceOnNavBar" destination="UQH-XI-zvt" id="h4h-VW-Aas"/>
                         <outlet property="fromCategoryCurrentBalanceLabel" destination="lep-il-wcp" id="3Et-FU-3Ml"/>
                         <outlet property="fromCategoryLabel" destination="B5Z-eI-2wr" id="jUu-W5-Nee"/>
                         <outlet property="fromCategoryView" destination="oNt-Se-wWe" id="qXZ-JZ-PtT"/>
-                        <outlet property="fundsTextField" destination="Xoe-aq-1GN" id="w16-lz-d5D"/>
-                        <outlet property="moveFundsButtonTitle" destination="iFg-Q8-9dk" id="pQw-rx-yUO"/>
                         <outlet property="toCategoryCurrentBalanceLabel" destination="WEX-bv-utc" id="zB7-9X-r4n"/>
                         <outlet property="toCategoryLabel" destination="6g5-6Z-3O9" id="xnc-xg-EyH"/>
                         <outlet property="toCategoryView" destination="Zz8-pw-mnC" id="wqo-wN-B6B"/>
@@ -246,6 +229,7 @@
                         <segue destination="Ahf-nS-FZ0" kind="presentation" identifier="moveFundsToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="QTx-Bi-QvH"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bDd-Sb-3mG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-705" y="663"/>
         </scene>

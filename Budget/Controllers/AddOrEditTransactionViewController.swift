@@ -74,6 +74,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var holdView: UIView!
     
+    @IBOutlet weak var paycheckLabel: UITextField!
+    
+    @IBOutlet weak var paycheckView: UIView!
+    
+    
+    
     
     
     // ******************************************************
@@ -151,7 +157,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     }
     
     @IBAction func transactionSelected(_ sender: UISegmentedControl) {
-        
+       
         if isNewTransaction {
             
             if transactionSegmentedControl.selectedSegmentIndex == 0 {
@@ -693,7 +699,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         
         if isNewTransaction == true {
             

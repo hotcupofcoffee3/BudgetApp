@@ -85,12 +85,6 @@ class MainScreen: UIViewController {
         performSegue(withIdentifier: mainToTransactionsSegueKey, sender: self)
     }
     
-    @IBAction func addSomething(_ sender: UIButton) {
-        
-        addSomethingAlertPopup(addCategorySegue: mainToAddOrEditCategorySegueKey, addTransactionSegue: mainToAddOrEditTransactionSegueKey, moveFundsSegue: mainToMoveFundsSegueKey)
-        
-    }
-    
     
     
     // *****

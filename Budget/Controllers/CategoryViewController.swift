@@ -79,7 +79,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
-        addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey, moveFundsSegue: categoriesToMoveFundsSegueKey)
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey, moveFundsSegue: categoriesToAllocateSegueKey)
     }
     
     @IBAction func viewAllTransactions(_ sender: UIButton) {
