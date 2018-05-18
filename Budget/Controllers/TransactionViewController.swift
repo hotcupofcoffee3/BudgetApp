@@ -152,7 +152,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         transactionsToDisplay = loadChosenTransactions()
         

@@ -170,7 +170,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.loadNecessaryInfo()
         

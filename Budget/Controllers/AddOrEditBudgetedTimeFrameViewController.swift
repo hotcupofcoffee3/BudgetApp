@@ -187,8 +187,6 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             budget.addTimeFrame(start: self.startDate, end: self.endDate)
             
-            createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startID)
-            
             self.successHaptic()
             
             self.dismiss(animated: true, completion: nil)
@@ -427,19 +425,21 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         addCircleAroundButton(named: submitTimeFrameButton)
         
         
-        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
         
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = .short
         
         startDateLabel.text = dateFormat.string(from: startDate)
         endDateLabel.text = dateFormat.string(from: endDate)
+        
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }
     

@@ -32,6 +32,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var selectedBudgetTimeFrameStartID = Int()
     
+    var runningBudgetTimeFrameTotal = Double()
+    
     
     
     // *****
@@ -63,7 +65,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     func loadNecessaryInfo() {
         
         loadSpecificBudgetItems(startID: selectedBudgetTimeFrameStartID)
-        refreshAvailableBalanceLabel(label: mainBalanceLabel)
+//        refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
         displayedDataTable.rowHeight = 60
         displayedDataTable.separatorStyle = .none
@@ -74,6 +76,33 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         displayedDataTable.reloadData()
         
+        mainBalanceLabel.text = convertedAmountToDollars(amount: runningBudgetTimeFrameTotal)
+        
+        
+    }
+    
+    func updateRunningTotalPerCheckage(forItem itemChecked: BudgetItem) {
+        
+        // Either positive or negative to be added to the running total, depending on how the item.
+        var amountToChangeBy = Double()
+        
+        // If it was checked, but isn't anymore
+        if !itemChecked.checked {
+            
+            // Amount taken away if a paycheck, added back if it was a withdrawal
+            amountToChangeBy = (itemChecked.type == paycheckKey) ? -itemChecked.amount : itemChecked.amount
+            
+            // If it wasn't checked, but now it is.
+        } else {
+            
+            // Amount added if a paycheck, taken away if it was a withdrawal
+            amountToChangeBy = (itemChecked.type == paycheckKey) ? itemChecked.amount : -itemChecked.amount
+            
+        }
+        
+        runningBudgetTimeFrameTotal += amountToChangeBy
+        
+        mainBalanceLabel.text = convertedAmountToDollars(amount: runningBudgetTimeFrameTotal)
         
     }
     
@@ -180,7 +209,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.loadNecessaryInfo()
         
@@ -238,7 +267,9 @@ extension BudgetItemsViewController {
             
         }
         
-        cell.nameLabel?.text = (item.type == paycheckKey) ? "💸 \(item.name!)" : "\(item.name!)"
+        cell.paycheckIconLabel?.text = (item.type == paycheckKey) ? "💰" : ""
+        
+        cell.nameLabel?.text = "\(item.name!)"
         
         cell.dueDayLabel?.text = (item.day > 0) ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
         
@@ -266,6 +297,8 @@ extension BudgetItemsViewController {
             
             item.checked = !item.checked
             
+            updateRunningTotalPerCheckage(forItem: item)
+            
             tableView.deselectRow(at: indexPath, animated: false)
             
             saveData()
@@ -274,7 +307,39 @@ extension BudgetItemsViewController {
         
     }
     
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if budget.budgetItems[indexPath.row].type == oneTimeAddedKey {
+            
+            if editingStyle == .delete {
+                
+                let itemToDelete = budget.budgetItems[indexPath.row]
+                
+                let message = "Delete \"\(itemToDelete.name!)\"?"
+                
+                let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                    
+                    budget.deleteBudgetItem(itemToDelete: itemToDelete)
+                    
+                    self.successHaptic()
+                    
+                    loadSpecificBudgetItems(startID: self.selectedBudgetTimeFrameStartID)
+                    self.displayedDataTable.reloadData()
+                    
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
+            
+        }
+        
+    }
     
 }
 

@@ -180,7 +180,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         budget.sortCategoriesByKey(withUnallocated: true)
         displayedDataTable.reloadData()

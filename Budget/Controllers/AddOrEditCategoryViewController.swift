@@ -739,7 +739,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
     }
     

@@ -253,7 +253,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            createAndSaveNewBudgetItem(timeSpanID: self.selectedBudgetTimeFrameStartID, type: "none", named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
+            createAndSaveNewBudgetItem(timeSpanID: self.selectedBudgetTimeFrameStartID, type: oneTimeAddedKey, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
             
             saveData()
             
@@ -325,18 +325,29 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         guard let currentBudgetItem = editableBudgetItem else { return }
         
         guard let newSelectedCategoryName = categoryLabel.text else { return }
-        guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
-        if currentBudgetItem.amount > newCategoryItself.available {
+        if currentBudgetItem.type != paycheckKey {
             
-            failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
+            guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
             
+            if currentBudgetItem.amount > newCategoryItself.available {
+                
+                failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
+                
+                
+            } else {
+                
+                submitEditAmountForReview()
+                
+            }
             
         } else {
             
             submitEditAmountForReview()
             
         }
+        
+        
         
     }
     
@@ -645,6 +656,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     override func viewDidLoad() {
         
+        
         super.viewDidLoad()
         
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
@@ -717,7 +729,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         

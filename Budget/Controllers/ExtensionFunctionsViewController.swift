@@ -162,6 +162,29 @@ extension UIViewController {
     
     
     
+    // MARK: - Convert Dollars to Amount
+    
+    func convertedDollarsToAmount(dollars: String) -> Double? {
+        
+        var convertedDollars: Double?
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        
+        if let convertedAmountOptional = numberFormatter.number(from: dollars) {
+            
+            convertedDollars = convertedAmountOptional.doubleValue
+            
+        }
+        
+        return convertedDollars
+        
+    }
+    
+    
+    
+    
+    
     // MARK: - Convert Day/Int to Ordinal
     
     func convertDayToOrdinal(day: Int) -> String {

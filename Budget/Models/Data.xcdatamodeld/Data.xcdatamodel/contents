@@ -3,7 +3,7 @@
     <entity name="BudgetItem" representedClassName=".BudgetItem" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="checked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="checked" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="day" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -45,8 +45,8 @@
     <elements>
         <element name="BudgetItem" positionX="36" positionY="63" width="128" height="180"/>
         <element name="Category" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Paycheck" positionX="45" positionY="99" width="128" height="75"/>
         <element name="Period" positionX="36" positionY="36" width="128" height="165"/>
         <element name="Transaction" positionX="133" positionY="-27" width="128" height="180"/>
-        <element name="Paycheck" positionX="45" positionY="99" width="128" height="75"/>
     </elements>
 </model>

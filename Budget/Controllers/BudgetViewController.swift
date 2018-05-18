@@ -36,6 +36,10 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selectedBudgetTimeFrameStartID = Int()
     
+    var previousBudgetTimeFrameRunningTotal = Double()
+    
+    var selectedBudgetTimeFrameRunningTotal = Double()
+    
     
     
     // *****
@@ -69,6 +73,34 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         displayedDataTable.separatorStyle = .none
         displayedDataTable.reloadData()
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
+        
+    }
+    
+    func loadRunningTotal(withStartingAmount startingAmount: Double, forBudgetItemsWithStartingID startID: Int) -> Double {
+        
+        loadSpecificBudgetItems(startID: startID)
+        
+        var newRunningTotal = startingAmount
+        
+        for item in budget.budgetItems {
+            
+            if item.checked {
+                
+                if item.type == paycheckKey {
+                    
+                    newRunningTotal += item.amount
+                    
+                } else {
+                    
+                    newRunningTotal -= item.amount
+                    
+                }
+                
+            }
+            
+        }
+        
+        return newRunningTotal
         
     }
     
@@ -123,6 +155,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
             
+            destinationVC.runningBudgetTimeFrameTotal = selectedBudgetTimeFrameRunningTotal
+            
         } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
             
             let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
@@ -174,7 +208,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
         
@@ -224,21 +258,30 @@ extension BudgetViewController {
             
             let period = budget.budgetedTimeFrames[indexPath.row]
             
+            cell.startLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) -"
+            cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+            
+            var startingTotal = Double()
+            
             if indexPath.row == 0 {
                 
-                cell.startLabel?.text = "Current"
-                cell.endLabel?.text = "Categories"
-                cell.amountLabel?.text = "\(convertedAmountToDollars(amount: budget.balance))"
+                startingTotal = budget.balance
                 
             } else {
                 
-                cell.startLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) -"
-                cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
-                cell.amountLabel?.text = "\(convertedAmountToDollars(amount: budget.balance))"
+                startingTotal = previousBudgetTimeFrameRunningTotal
                 
             }
             
+            let runningTotalForCurrentPeriod = loadRunningTotal(withStartingAmount: startingTotal, forBudgetItemsWithStartingID: Int(period.startDateID))
             
+            
+            // Sets the 'previous' total to the current one, to be used for the next cell's starting info.
+            previousBudgetTimeFrameRunningTotal = runningTotalForCurrentPeriod
+            
+            
+            cell.amountLabel?.text = "\(convertedAmountToDollars(amount: runningTotalForCurrentPeriod))"
+
         }
         
         return cell
@@ -246,69 +289,61 @@ extension BudgetViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.row == 0 {
-            
-            tableView.deselectRow(at: indexPath, animated: true)
-            
-            performSegue(withIdentifier: budgetToCategoriesSegueKey, sender: self)
-            
-        } else {
-            
-            tableView.deselectRow(at: indexPath, animated: true)
-            
-            let selectedTimeFrame = budget.budgetedTimeFrames[indexPath.row]
-            
-            editableBudgetTimeFrame = selectedTimeFrame
-            
-            selectedBudgetTimeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
-            
-            performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
-            
-        }
+        let selectedTimeFrame = budget.budgetedTimeFrames[indexPath.row]
+        
+        editableBudgetTimeFrame = selectedTimeFrame
+        
+        selectedBudgetTimeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
+        
+        let selectedCell = tableView.cellForRow(at: indexPath) as! BudgetTableViewCell
+        
+        guard let selectedAmount = convertedDollarsToAmount(dollars: selectedCell.amountLabel.text!) else { return }
+        
+        selectedBudgetTimeFrameRunningTotal = selectedAmount
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
         
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if indexPath.row != 0 {
+
+        if editingStyle == .delete {
             
-            if editingStyle == .delete {
+            let timeFrameToDelete = budget.budgetedTimeFrames[indexPath.row]
+            
+            let message = "Delete the whole budgeted time frame:\n\(timeFrameToDelete.startMonth)/\(timeFrameToDelete.startDay)/\(timeFrameToDelete.startYear) - \(timeFrameToDelete.endMonth)/\(timeFrameToDelete.endDay)/\(timeFrameToDelete.endYear)?"
+            
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                 
-                let timeFrameToDelete = budget.budgetedTimeFrames[indexPath.row]
+                // *** Additional check before deleting a Category, as this is a big deal.
+                let additionalAlert = UIAlertController(title: nil, message: "Deleting this budgeted time frame will remove all of the work you've done to budget for this time period. Do it anyway?", preferredStyle: .alert)
                 
-                let message = "Delete the whole budgeted time frame:\n\(timeFrameToDelete.startMonth)/\(timeFrameToDelete.startDay)/\(timeFrameToDelete.startYear) - \(timeFrameToDelete.endMonth)/\(timeFrameToDelete.endDay)/\(timeFrameToDelete.endYear)?"
-                
-                let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                additionalAlert.addAction(UIAlertAction(title: "Yes, do it anyway", style: .destructive, handler: { (action) in
                     
-                    // *** Additional check before deleting a Category, as this is a big deal.
-                    let additionalAlert = UIAlertController(title: nil, message: "Deleting this budgeted time frame will remove all of the work you've done to budget for this time period. Do it anyway?", preferredStyle: .alert)
+                    budget.deleteTimeFrame(period: timeFrameToDelete)
                     
-                    additionalAlert.addAction(UIAlertAction(title: "Yes, do it anyway", style: .destructive, handler: { (action) in
-                        
-                        budget.deleteTimeFrame(period: timeFrameToDelete)
-                        
-                        self.successHaptic()
-                        
-                        loadSavedBudgetedTimeFrames()
-                        self.displayedDataTable.reloadData()
-                        
-                    }))
+                    self.successHaptic()
                     
-                    additionalAlert.addAction(UIAlertAction(title: "No, don't do it.", style: .cancel, handler: nil))
-                    
-                    self.present(additionalAlert, animated: true, completion: nil)
-                    
+                    loadSavedBudgetedTimeFrames()
+                    self.displayedDataTable.reloadData()
                     
                 }))
                 
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                additionalAlert.addAction(UIAlertAction(title: "No, don't do it.", style: .cancel, handler: nil))
+                
+                self.present(additionalAlert, animated: true, completion: nil)
                 
                 
-                present(alert, animated: true, completion: nil)
-                
-            }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            
+            present(alert, animated: true, completion: nil)
             
         }
         

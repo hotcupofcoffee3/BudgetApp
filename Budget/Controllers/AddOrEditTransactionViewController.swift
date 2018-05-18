@@ -531,7 +531,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         guard let newSelectedCategoryName = categoryLabel.text else { return }
         guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
-        if currentTransaction.inTheAmountOf > newCategoryItself.available {
+        if currentTransaction.inTheAmountOf > newCategoryItself.available && currentTransaction.type == withdrawalKey {
             
             failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
             
@@ -648,7 +648,15 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         if transactionNameTextField.text != "" && transactionAmountTextField.text != "" {
             
-            submitAddTransactionForReview()
+            if isNewTransaction {
+                
+                submitAddTransactionForReview()
+                
+            } else {
+                
+                submitEditItemsForReview()
+                
+            }
             
         } else {
             specificTextField.resignFirstResponder()
@@ -773,7 +781,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         budget.sortCategoriesByKey(withUnallocated: true)
         
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)

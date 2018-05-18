@@ -102,6 +102,8 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
         
     }
     
+    createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startDateID)
+    
     saveData()
     
 }
@@ -156,7 +158,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
     
     for paycheck in budget.paychecks {
         
-        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: paycheckKey, named: paycheck.name!, amount: paycheck.amount, category: paycheckKey, year: 0, month: 0, day: 0)
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: paycheckKey, named: paycheck.name!, amount: paycheck.amount, category: unallocatedKey, year: 0, month: 0, day: 0)
         
     }
     

@@ -423,7 +423,15 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         
         if nameTextField.text != "" && amountTextField.text != "" {
             
-            submitAddPaycheckForReview()
+            if isNewPaycheck {
+                
+                submitAddPaycheckForReview()
+                
+            } else {
+                
+                submitEditPaycheckForReview()
+                
+            }
             
         } else {
             specificTextField.resignFirstResponder()

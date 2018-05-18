@@ -97,7 +97,13 @@ class Budget {
     // MARK: - Budget Item functions
     // *****
     
-    
+    func deleteBudgetItem(itemToDelete: BudgetItem) {
+        
+        context.delete(itemToDelete)
+        
+        saveData()
+        
+    }
     
     
     func updateBudgetItemName(name: String, forItem item: BudgetItem) {
@@ -633,6 +639,7 @@ class Budget {
         loadSavedCategories()
         loadSavedTransactions(descending: true)
         loadSavedBudgetedTimeFrames()
+        loadSavedPaychecks()
         loadAllBudgetItems()
 
         balance = 0.0
@@ -647,6 +654,11 @@ class Budget {
             context.delete(transaction)
             
         }
+        for paycheck in paychecks {
+            
+            context.delete(paycheck)
+            
+        }
         for timeFrame in budgetedTimeFrames {
             
             context.delete(timeFrame)
@@ -659,8 +671,6 @@ class Budget {
         }
         
         createUnallocatedCategory()
-
-        createAndSaveNewBudgetedTimeFrame(start: Date.distantPast, end: Date.distantPast)
 
         loadSavedCategories()
         loadSavedBudgetedTimeFrames()
