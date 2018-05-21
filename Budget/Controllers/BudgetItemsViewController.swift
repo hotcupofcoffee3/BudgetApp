@@ -263,17 +263,25 @@ extension BudgetItemsViewController {
             
         } else {
             
-            cell.accessoryType = item.checked ? .checkmark : .none
+            if item.addedToLedger {
+                
+                cell.accessoryType = .checkmark
+                
+            } else {
+                
+                cell.accessoryType = item.checked ? .checkmark : .none
+                
+            }
             
         }
         
-        cell.paycheckIconLabel?.text = (item.type == paycheckKey) ? "💰" : ""
+        cell.addedToLedgerImage.image = item.addedToLedger ? UIImage(named: "postit.png") : UIImage(named: "")
         
         cell.nameLabel?.text = "\(item.name!)"
         
         cell.dueDayLabel?.text = (item.day > 0) ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
         
-        cell.amountLabel?.text = "\(convertedAmountToDollars(amount: item.amount))"
+        cell.amountLabel?.text = (item.type == paycheckKey) ? "+ \(convertedAmountToDollars(amount: item.amount))" : "\(convertedAmountToDollars(amount: item.amount))"
         
         return cell
         

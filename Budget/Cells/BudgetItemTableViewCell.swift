@@ -10,7 +10,7 @@ import UIKit
 
 class BudgetItemTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var paycheckIconLabel: UILabel!
+    @IBOutlet weak var addedToLedgerImage: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
     

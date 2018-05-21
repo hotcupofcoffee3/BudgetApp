@@ -65,7 +65,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
         
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
-        displayedDataTable.rowHeight = 90
+        displayedDataTable.rowHeight = 60
         displayedDataTable.separatorStyle = .none
         
         displayedDataTable.reloadData()
@@ -213,8 +213,6 @@ extension PaychecksViewController {
         let paycheck = budget.paychecks[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PaycheckCell", for: indexPath) as! PaycheckTableViewCell
-        
-        addBorderAroundLargerTableCellViews(cellView: cell.paycheckCellView)
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         

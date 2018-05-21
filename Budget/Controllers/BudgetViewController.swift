@@ -248,8 +248,6 @@ extension BudgetViewController {
         
         let cell = displayedDataTable.dequeueReusableCell(withIdentifier: "BudgetCell", for: indexPath) as! BudgetTableViewCell
         
-        addBorderAroundLargerTableCellViews(cellView: cell.budgetedTimeFrameView)
-        
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
         cell.accessoryType = editBudgetTimeFrame ? .detailButton : .disclosureIndicator
