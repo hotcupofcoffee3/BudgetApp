@@ -341,10 +341,10 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 
                 if changeName {
-                    budget.updatePaycheckName(name: newName, forPaycheck: currentPaycheck)
+                    budget.updatePaycheckName(newName: newName, forPaycheck: currentPaycheck)
                 }
                 if changeAmount {
-                    budget.updatePaycheckAmount(amount: newAmount, forPaycheck: currentPaycheck)
+                    budget.updatePaycheckAmount(newAmount: newAmount, forPaycheck: currentPaycheck)
                 }
                 
                 self.successHaptic()

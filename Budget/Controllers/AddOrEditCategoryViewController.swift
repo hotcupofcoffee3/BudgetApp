@@ -247,22 +247,24 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             
-            budget.addCategory(named: newCategoryName, withBudgeted: amount)
-            
-            guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
-            
-            if self.currentAllocationStatus.isOn {
-                budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
-            }
+            var dueDay = Int()
             
             if self.dueDateSwitch.isOn {
                 
                 let dateDict = convertDateToInts(dateToConvert: self.date)
                 guard let day = dateDict[dayKey] else { return }
                 
-                newCategory.dueDay = Int64(day)
+                dueDay = day
                 
             }
+            
+            budget.addCategory(named: newCategoryName, withBudgeted: amount, withDueDay: dueDay)
+         
+            if self.currentAllocationStatus.isOn {
+                budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
+            }
+            
+            
             
             saveData()
             

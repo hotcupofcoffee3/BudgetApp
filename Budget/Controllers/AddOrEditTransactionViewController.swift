@@ -78,6 +78,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var paycheckView: UIView!
     
+    @IBOutlet weak var paycheckViewHeight: NSLayoutConstraint!
     
     
     
@@ -162,11 +163,29 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             if transactionSegmentedControl.selectedSegmentIndex == 0 {
                 
+                
+//                UIView.animate(withDuration: 0.5) {
+//                    self.paycheckViewHeight.constant = 0
+//                }
+                
+                
+                
+                
+                
+                
                 transactionSelection = .withdrawal
                 
                 updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
                 
             } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
+                
+                
+//                self.paycheckViewHeight.constant = 0
+//                UIView.animate(withDuration: 0.5) {
+//                    self.paycheckViewHeight.constant = 50
+//                }
+                
+                
                 
                 transactionSelection = .deposit
                 
@@ -697,6 +716,27 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     // *****
     
     override func viewDidLoad() {
+        
+        
+        
+        
+//        self.paycheckViewHeight.constant = 0
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         super.viewDidLoad()
         

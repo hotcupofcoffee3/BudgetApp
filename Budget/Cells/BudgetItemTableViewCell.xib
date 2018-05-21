@@ -19,10 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="295" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$10,000.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI">
-                        <rect key="frame" x="207" y="20" width="100" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$10,000.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI">
+                        <rect key="frame" x="207" y="20" width="90" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="FeW-hB-Aol"/>
+                            <constraint firstAttribute="width" constant="90" id="FeW-hB-Aol"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

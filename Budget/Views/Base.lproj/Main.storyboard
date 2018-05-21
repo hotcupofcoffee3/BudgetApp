@@ -780,6 +780,7 @@
                         <outlet property="navBar" destination="aKj-WS-5nJ" id="Z9V-9c-wW0"/>
                         <outlet property="paycheckLabel" destination="ULx-Tm-Yc1" id="nK9-1o-zGd"/>
                         <outlet property="paycheckView" destination="BSt-Az-Tst" id="b6P-6e-K4k"/>
+                        <outlet property="paycheckViewHeight" destination="TfJ-MA-lRL" id="KpL-Ve-JbC"/>
                         <outlet property="submitTransactionButton" destination="VfQ-0L-VWK" id="7kz-qm-R0v"/>
                         <outlet property="transactionAmountTextField" destination="nWl-rx-sNc" id="dJW-A9-m6T"/>
                         <outlet property="transactionNameTextField" destination="h8m-Na-mTR" id="LQl-Mt-oGh"/>

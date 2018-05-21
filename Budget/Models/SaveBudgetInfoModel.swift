@@ -40,13 +40,14 @@ func saveData() {
 
 // MARK: - Save a new category to saved categories
 
-func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double) {
+func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, andAvailable available: Double, dueDay: Int) {
     
     let categoryToSave = Category(context: context)
     
     categoryToSave.name = named
     categoryToSave.budgeted = budgeted
     categoryToSave.available = available
+    categoryToSave.dueDay = Int64(dueDay)
     
     saveData()
     
@@ -178,6 +179,19 @@ func createAndSaveNewPaycheck(named: String, withAmount amount: Double) {
     paycheckToSave.name = named
     paycheckToSave.amount = amount
     
+    
+    
+    // Create and save new budget items based on this.
+    loadSavedBudgetedTimeFrames()
+    
+    for period in budget.budgetedTimeFrames {
+        
+        createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: paycheckKey, named: named, amount: amount, category: unallocatedKey, year: 0, month: 0, day: 0)
+        
+    }
+    
+    
+    
     saveData()
     
 }
@@ -192,7 +206,7 @@ func createAndSaveNewPaycheck(named: String, withAmount amount: Double) {
 
 func createUnallocatedCategory(){
     
-    createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0)
+    createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0, dueDay: 0)
     
 }
 

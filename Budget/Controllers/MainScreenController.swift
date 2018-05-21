@@ -157,8 +157,8 @@ class MainScreen: UIViewController {
                     budget.addTransaction(onHold: false, type: .deposit, title: "Madelyn's Paycheck", forCategory: unallocatedKey, inTheAmountOf: 1700.00, year: 2018, month: 5, day: 15)
                     
                     // Two categories with some budgeted amounts
-                    budget.addCategory(named: "Food", withBudgeted: 200.0)
-                    budget.addCategory(named: "Extra", withBudgeted: 50.0)
+                    budget.addCategory(named: "Food", withBudgeted: 200.0, withDueDay: 0)
+                    budget.addCategory(named: "Extra", withBudgeted: 50.0, withDueDay: 0)
                     
                     // Allocate their budgeted amounts into their available amounts
                     budget.shiftFunds(withThisAmount: 200, from: unallocatedKey, to: "Food")

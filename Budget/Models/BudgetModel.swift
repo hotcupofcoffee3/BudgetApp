@@ -58,25 +58,49 @@ class Budget {
     
     
     
-    func updatePaycheckName(name: String, forPaycheck paycheck: Paycheck) {
+    func updatePaycheckName(newName: String, forPaycheck paycheck: Paycheck) {
         
         let paycheck = paycheck
-        paycheck.name = name
+        
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: newName, oldAmount: paycheck.amount, newAmount: paycheck.amount)
+        
+        paycheck.name = newName
         
         saveData()
         
     }
     
-    func updatePaycheckAmount(amount: Double, forPaycheck paycheck: Paycheck) {
+    func updatePaycheckAmount(newAmount: Double, forPaycheck paycheck: Paycheck) {
         
         let paycheck = paycheck
-        paycheck.amount = amount
+        
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: paycheck.name!, oldAmount: paycheck.amount, newAmount: newAmount)
+        
+        paycheck.amount = newAmount
         
         saveData()
         
     }
     
     func deletePaycheck(paycheck: Paycheck) {
+        
+        
+        
+        // Delete budget items based on this.
+
+        loadAllBudgetItems()
+        
+        for item in budgetItems {
+            
+            if paycheck.name == item.name && item.type == paycheckKey {
+                
+                context.delete(item)
+                
+            }
+            
+        }
+        
+        
        
         context.delete(paycheck)
         
@@ -151,6 +175,43 @@ class Budget {
             
         }
         
+        
+        saveData()
+        
+    }
+    
+    // *** Update Budget Item from Category or Paycheck Updates
+    
+    func updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: String, newName: String, oldAmount: Double, newAmount: Double) {
+        
+        // Update budget items based on updating Category
+        loadAllBudgetItems()
+        
+        if budgetItems.count > 0 {
+            
+            for item in budgetItems {
+                
+                if item.name == oldName {
+                    
+                    item.name = newName
+                    
+                }
+                
+                if item.category == oldName {
+                    
+                    item.category = newName
+                    
+                }
+                
+                if item.amount == oldAmount {
+                    
+                    item.amount = newAmount
+                    
+                }
+                
+            }
+            
+        }
         
         saveData()
         
@@ -250,7 +311,7 @@ class Budget {
     
     // *** Add Category
 
-    func addCategory(named: String, withBudgeted amount: Double) {
+    func addCategory(named: String, withBudgeted amount: Double, withDueDay dueDay: Int) {
 
         if named != unallocatedKey {
             
@@ -264,7 +325,19 @@ class Budget {
                 
             }
 
-            createAndSaveNewCategory(named: named, withBudgeted: amount, andAvailable: 0.0)
+            createAndSaveNewCategory(named: named, withBudgeted: amount, andAvailable: 0.0, dueDay: dueDay)
+            
+            
+            // Create and save new budget items based on this.
+            loadSavedBudgetedTimeFrames()
+            
+            for period in budgetedTimeFrames {
+                
+                createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: categoryKey, named: named, amount: amount, category: named, year: 0, month: 0, day: dueDay)
+                
+            }
+            
+            
 
             sortCategoriesByKey(withUnallocated: true)
             saveData()
@@ -279,6 +352,26 @@ class Budget {
     func deleteCategory (named: String) {
 
         if named != unallocatedKey {
+            
+            
+            
+            // Delete budget items based on this.
+            
+            loadAllBudgetItems()
+            
+            guard let categoryToDelete = loadSpecificCategory(named: named) else { return }
+            
+            for item in budgetItems {
+                
+                if categoryToDelete.name == item.name && item.type == categoryKey {
+                    
+                    context.delete(item)
+                    
+                }
+                
+            }
+            
+            
 
             if transactions.count > 0 {
 
@@ -342,6 +435,7 @@ class Budget {
         }
 
     }
+    
 
     
     // *** Update Category
@@ -349,6 +443,11 @@ class Budget {
     func updateCategory(named oldCategoryName: String, updatedNewName newCategoryName: String, andNewAmountBudgeted newCategoryBudgetedAmount: Double) {
 
         guard let categoryToUpdate = loadSpecificCategory(named: oldCategoryName) else { return }
+        
+        
+        
+        // Update budget items based on updating Category
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: oldCategoryName, newName: newCategoryName, oldAmount: categoryToUpdate.budgeted, newAmount: newCategoryBudgetedAmount)
         
         categoryToUpdate.name = newCategoryName
         categoryToUpdate.budgeted = newCategoryBudgetedAmount
