@@ -10,9 +10,7 @@ import UIKit
 
 class BudgetTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var startLabel: UILabel!
-    
-    @IBOutlet weak var endLabel: UILabel!
+    @IBOutlet weak var timeFrameLabel: UILabel!
 
     @IBOutlet weak var budgetedTimeFrameView: UIView!
     

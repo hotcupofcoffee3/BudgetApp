@@ -258,8 +258,7 @@ extension BudgetViewController {
             
             let period = budget.budgetedTimeFrames[indexPath.row]
             
-            cell.startLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) -"
-            cell.endLabel?.text = "\(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+            cell.timeFrameLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) - \(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
             
             var startingTotal = Double()
             
