@@ -174,13 +174,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             if transactionSegmentedControl.selectedSegmentIndex == 0 {
                 
                 
-//                UIView.animate(withDuration: 0.5) {
-//                    self.paycheckViewHeight.constant = 0
-//                }
                 
-                
-                
-                
+                UIView.animate(withDuration: 0.3) {
+                    self.paycheckViewHeight.constant = 0
+                    self.view.layoutIfNeeded()
+                }
+
                 
                 
                 transactionSelection = .withdrawal
@@ -190,10 +189,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
                 
                 
-//                self.paycheckViewHeight.constant = 0
-//                UIView.animate(withDuration: 0.5) {
-//                    self.paycheckViewHeight.constant = 50
-//                }
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.paycheckViewHeight.constant = 50
+                    self.view.layoutIfNeeded()
+                }
                 
                 
                 
@@ -760,13 +760,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     override func viewDidLoad() {
         
-        
-        
-        
-//        self.paycheckViewHeight.constant = 0
-        
-        
-
+        self.paycheckViewHeight.constant = 0
         
         super.viewDidLoad()
         
