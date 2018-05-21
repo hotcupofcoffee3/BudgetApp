@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
+class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory, ChoosePaycheck {
     
     
     
@@ -74,7 +74,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var holdView: UIView!
     
-    @IBOutlet weak var paycheckLabel: UITextField!
+    @IBOutlet weak var paycheckLabel: UILabel!
     
     @IBOutlet weak var paycheckView: UIView!
     
@@ -118,7 +118,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             if typeOfTransaction == .withdrawal {
                 
                 submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
+                transactionNameTextField.text = ""
+                transactionAmountTextField.text = ""
                 categoryLabel.isEnabled = true
+                paycheckLabel.isEnabled = false
+                paycheckLabel.text = ""
                 
             } else if typeOfTransaction == .deposit {
                 
@@ -126,6 +130,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
                 categoryLabel.text = unallocatedKey
                 categoryLabel.isEnabled = false
+                paycheckLabel.isEnabled = true
+                if !budget.paychecks.isEmpty {
+                    
+                    paycheckLabel.text = "\(budget.paychecks[0].name!)"
+                    
+                }
                 
             }
             
@@ -572,7 +582,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     func setDate(date: Date) {
@@ -593,6 +603,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     func setCategory(category: String) {
         categoryLabel.text = category
+    }
+    
+    func populateFromPaycheck(paycheck: Paycheck) {
+        transactionNameTextField.text = paycheck.name!
+        transactionAmountTextField.text = "\(String(format: "%0.2f", paycheck.amount))"
     }
     
     
@@ -620,6 +635,24 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             guard let currentCategory = categoryLabel.text else { return }
             
             categoryPickerVC.selectedCategory = currentCategory
+            
+        } else if segue.identifier == addOrEditTransactionToPaycheckPickerSegueKey {
+            
+            let paycheckPickerVC = segue.destination as! PaycheckPickerViewController
+            
+            paycheckPickerVC.delegate = self
+            
+            if paycheckLabel.text != "" {
+                
+                guard let paycheck = loadSpecificPaycheck(named: paycheckLabel.text!) else { return }
+                
+                paycheckPickerVC.selectedPaycheck = paycheck
+                
+            } else {
+                
+                paycheckPickerVC.selectedPaycheck = budget.paychecks[0]
+                
+            }
             
         }
         
@@ -654,6 +687,16 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         if transactionSelection == .withdrawal {
             
             performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
+            
+        }
+        
+    }
+    
+    @objc func paycheckTapped() {
+        
+        if transactionSelection == .deposit {
+            
+            performSegue(withIdentifier: addOrEditTransactionToPaycheckPickerSegueKey, sender: self)
             
         }
         
@@ -723,20 +766,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
 //        self.paycheckViewHeight.constant = 0
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         super.viewDidLoad()
         
@@ -759,6 +789,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
             
+            paycheckLabel.text = ""
+            
         } else {
             
             backButton.title = "Cancel"
@@ -775,6 +807,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             transactionSelection = (type == withdrawalKey) ? .withdrawal : .deposit
             transactionSegmentedControl.isEnabled = false
             categoryLabel.isEnabled = (transactionSelection == .withdrawal)
+            paycheckLabel.isEnabled = (transactionSelection == .deposit)
             
             transactionNameTextField.text = name
             transactionAmountTextField.text = "\(convertedAmountToDouble(amount: currentTransaction.inTheAmountOf))"
@@ -794,11 +827,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         let dateViewTap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
         let categoryViewTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        let paycheckViewTap = UITapGestureRecognizer(target: self, action: #selector(paycheckTapped))
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
         dateView.addGestureRecognizer(dateViewTap)
         categoryView.addGestureRecognizer(categoryViewTap)
+        paycheckView.addGestureRecognizer(paycheckViewTap)
         
         
         addToolBarToNumberPad(textField: transactionAmountTextField)
@@ -813,6 +848,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         
         budget.sortCategoriesByKey(withUnallocated: true)
+        loadSavedPaychecks()
         
         addCircleAroundButton(named: submitTransactionButton)
         

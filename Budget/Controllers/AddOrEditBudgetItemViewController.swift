@@ -186,9 +186,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
                 guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
                 
-                if (categoryBeingWithdrawnFrom.available - amount) < 0 {
+                if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 && name != category {
                     
-                    failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
+                    failureWithWarning(label: warningLabel, message: "You don't have enough funds budgeted in this category.")
                     
                 } else if amount <= 0 {
                     
@@ -330,9 +330,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
             
-            if currentBudgetItem.amount > newCategoryItself.available {
+            if currentBudgetItem.amount > newCategoryItself.budgeted && currentBudgetItem.name != currentBudgetItem.category {
                 
-                failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
+                failureWithWarning(label: warningLabel, message: "There are not enough funds budgeted in that category for this.")
                 
                 
             } else {

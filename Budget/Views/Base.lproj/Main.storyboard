@@ -706,16 +706,12 @@
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ULx-Tm-Yc1">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Madelyn's Paycheck" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3d-Jz-gR2">
                                                 <rect key="frame" x="110" y="0.0" width="205" height="30"/>
-                                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="HME-n8-SWE" id="LZN-jI-p5m"/>
-                                                </connections>
-                                            </textField>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -778,7 +774,7 @@
                         <outlet property="holdView" destination="Xqh-mk-u4o" id="rMy-qG-sCU"/>
                         <outlet property="nameView" destination="kuR-VC-H4K" id="iLe-17-Kwk"/>
                         <outlet property="navBar" destination="aKj-WS-5nJ" id="Z9V-9c-wW0"/>
-                        <outlet property="paycheckLabel" destination="ULx-Tm-Yc1" id="nK9-1o-zGd"/>
+                        <outlet property="paycheckLabel" destination="Y3d-Jz-gR2" id="2DE-QO-zmn"/>
                         <outlet property="paycheckView" destination="BSt-Az-Tst" id="b6P-6e-K4k"/>
                         <outlet property="paycheckViewHeight" destination="TfJ-MA-lRL" id="KpL-Ve-JbC"/>
                         <outlet property="submitTransactionButton" destination="VfQ-0L-VWK" id="7kz-qm-R0v"/>
@@ -789,6 +785,7 @@
                         <outlet property="warningLabel" destination="TEt-e4-A1x" id="scg-3D-zgP"/>
                         <segue destination="SSf-za-taf" kind="presentation" identifier="addOrEditTransactionToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="6ek-xa-S2V"/>
                         <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditTransactionToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="s2V-Nq-kYo"/>
+                        <segue destination="Bbj-q6-wuW" kind="show" identifier="addOrEditTransactionToPaycheckPickerSegue" id="g5l-va-m1y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1180,6 +1177,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lX-Ch-c74" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1709" y="1219"/>
+        </scene>
+        <!--PaycheckPicker-->
+        <scene sceneID="lr2-nZ-xE4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PaycheckPicker" id="Bbj-q6-wuW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hqm-ni-DxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-416" y="1185"/>
         </scene>
         <!--DatePicker-->
         <scene sceneID="YUm-hm-VEx">

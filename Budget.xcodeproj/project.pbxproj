@@ -20,6 +20,8 @@
 		B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EAC2073CC830061C9E5 /* MainScreenController.swift */; };
 		B5380EB32073D3430061C9E5 /* BudgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5380EB22073D3430061C9E5 /* BudgetModel.swift */; };
 		B54EFF3A20A0A19600EF3FB8 /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */; };
+		B5668BA420B335A2008D02D1 /* PaycheckPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5668BA320B335A2008D02D1 /* PaycheckPicker.storyboard */; };
+		B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5668BA520B335C9008D02D1 /* PaycheckPickerViewController.swift */; };
 		B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */; };
 		B5759A272076690700410FF9 /* KeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5759A262076690700410FF9 /* KeyModel.swift */; };
 		B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B576FD2B208F86BD00565082 /* DetailsViewController.swift */; };
@@ -64,6 +66,8 @@
 		B5380EAC2073CC830061C9E5 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		B5380EB22073D3430061C9E5 /* BudgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetModel.swift; sourceTree = "<group>"; };
 		B54EFF3920A0A19600EF3FB8 /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
+		B5668BA320B335A2008D02D1 /* PaycheckPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PaycheckPicker.storyboard; sourceTree = "<group>"; };
+		B5668BA520B335C9008D02D1 /* PaycheckPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckPickerViewController.swift; sourceTree = "<group>"; };
 		B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFunctionsViewController.swift; sourceTree = "<group>"; };
 		B5759A262076690700410FF9 /* KeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyModel.swift; sourceTree = "<group>"; };
 		B576FD2B208F86BD00565082 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 				B533E36120700B01007A72E0 /* Main.storyboard */,
 				B5CB41A520AB4192000BF325 /* Allocate.storyboard */,
 				B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */,
+				B5668BA320B335A2008D02D1 /* PaycheckPicker.storyboard */,
 				B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */,
 				B533E36620700B01007A72E0 /* LaunchScreen.storyboard */,
 			);
@@ -202,6 +207,7 @@
 			children = (
 				B5F86FF020A22E9F00B87BD3 /* CategoryPickerViewController.swift */,
 				B5F86FEE20A22E9100B87BD3 /* DatePickerViewController.swift */,
+				B5668BA520B335C9008D02D1 /* PaycheckPickerViewController.swift */,
 			);
 			path = Pickers;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 				B5E81E1E20A3860400E8C3D3 /* CategoryPicker.storyboard in Resources */,
 				B5E8316E20A4DA720068DD05 /* BudgetTableViewCell.xib in Resources */,
 				B5F401D4209B958F00103C7F /* CategoryTableViewCell.xib in Resources */,
+				B5668BA420B335A2008D02D1 /* PaycheckPicker.storyboard in Resources */,
 				B5CB41A620AB4192000BF325 /* Allocate.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +315,7 @@
 				B5CB41A420AB3016000BF325 /* AddOrEditBudgetItemViewController.swift in Sources */,
 				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveBudgetInfoModel.swift in Sources */,
+				B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */,
 				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddOrEditCategoryViewController.swift in Sources */,

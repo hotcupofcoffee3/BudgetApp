@@ -115,6 +115,10 @@ let addOrEditTransactionToCategoryPickerSegueKey = "addOrEditTransactionToCatego
 let addOrEditCategoryToCategoryPickerSegueKey = "addOrEditCategoryToCategoryPickerSegue"
 
 
+// Paycheck Picker Segues
+let addOrEditTransactionToPaycheckPickerSegueKey = "addOrEditTransactionToPaycheckPickerSegue"
+
+
 
 
 
