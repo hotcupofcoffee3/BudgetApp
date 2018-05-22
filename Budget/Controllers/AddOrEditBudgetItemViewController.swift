@@ -40,21 +40,29 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     var selectedBudgetTimeFrameStartID = Int()
     
+    var typeOfItem: TransactionType = .withdrawal
+    
+    var ledgerDate = Date()
+    
+    var isSettingLedgerDate = false
+    
+    var isSettingDueDate = false
+    
     
     
     // *****
     // MARK: - IBOutlets
     // *****
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
     @IBOutlet weak var unallocatedLabelAtTop: UILabel!
     
-    @IBOutlet weak var submitBudgetItemButton: UIButton!
-    
-    @IBOutlet weak var navBar: UINavigationBar!
-    
-    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var typeSegment: UISegmentedControl!
     
     @IBOutlet weak var nameView: UIView!
     
@@ -74,7 +82,15 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var addToLedgerView: UIView!
+    
+    @IBOutlet weak var addToLedgerSwitch: UISwitch!
+    
+    @IBOutlet weak var ledgerDateLabel: UILabel!
+    
     @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var submitBudgetItemButton: UIButton!
     
     
     
@@ -120,6 +136,24 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
 
     }
     
+    func toggleTypeSegmentInfo(forItem: BudgetItem?) {
+        
+        if let item = forItem {
+            
+            if item.type == categoryKey || item.type == paycheckKey {
+                
+                typeSegment.isEnabled = false
+                
+            } else {
+                
+                typeSegment.selectedSegmentIndex = (item.type == withdrawalKey) ? 0 : 1
+                
+            }
+            
+        }
+        
+    }
+    
     
     
     // *****
@@ -130,19 +164,14 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func submitBudgetItem(_ sender: UIButton) {
+    @IBAction func changeType(_ sender: UISegmentedControl) {
         
-        if isNewBudgetItem {
-            
-            submitAddBudgetItemForReview()
-            
-        } else {
-            
-            submitEditItemsForReview()
-            
-        }
+        // TODO: Add code for locking 'Category' for 'Unallocated' if it is 'Income'
+        
         
     }
+    
+    
     
     @IBAction func dueDateToggleSwitch(_ sender: UISwitch) {
         
@@ -158,6 +187,35 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             date = Date.distantPast
 
+        }
+        
+    }
+    
+    @IBAction func addToLedgerToggleSwitch(_ sender: UISwitch) {
+        
+        if typeSegment.selectedSegmentIndex == 0 {
+            
+            typeOfItem = .withdrawal
+            
+        } else {
+            
+            typeOfItem = .deposit
+            
+        }
+        
+    }
+    
+    
+    @IBAction func submitBudgetItem(_ sender: UIButton) {
+        
+        if isNewBudgetItem {
+            
+            submitAddBudgetItemForReview()
+            
+        } else {
+            
+            submitEditItemsForReview()
+            
         }
         
     }
@@ -188,6 +246,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     func submitAddBudgetItemForReview() {
         
+        guard let currentItem = editableBudgetItem else { return }
         guard let name = nameTextField.text else { return }
         guard let amount = amountTextField.text else { return }
         guard let category = categoryLabel.text else { return }
@@ -214,7 +273,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
                 guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
                 
-                if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 && name != category {
+                if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 && currentItem.type == withdrawalKey {
                     
                     failureWithWarning(label: warningLabel, message: "You don't have enough funds budgeted in this category.")
                     
@@ -265,7 +324,13 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         }
         
-        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: oneTimeAddedKey, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
+        let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
+        
+        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: type, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
+        
+        // TODO: Add function to add a transaction to the ledger based on the info here.
+        // TODO: Also change 'createAndSaveNewBudgetItem' to include the 'addedToLedger' and 'checked' items, so that they can be manually set here.
+        // TODO: Also change the function for updating and added a Paycheck, Category, and Other Item in the 'BudgetModel' so that they can take all of the 'BudgetItem' properties to be manually set.
         
         saveData()
         
@@ -337,7 +402,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
             
-            if currentBudgetItem.amount > newCategoryItself.budgeted && currentBudgetItem.name != currentBudgetItem.category {
+            if currentBudgetItem.amount > newCategoryItself.budgeted && currentBudgetItem.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "There are not enough funds budgeted in that category for this.")
                 
@@ -363,6 +428,8 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     // *** Edit Budgeted Check
     
     func submitEditAmountForReview() {
+        
+        guard let currentItem = editableBudgetItem else { return }
         
         if let newAmount = amountTextField.text {
             
@@ -400,7 +467,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
                     
-                } else if newAmountDouble > currentCategory.available {
+                } else if newAmountDouble > (currentCategory.available + currentItem.amount) && typeOfItem == .withdrawal {
                     
                     failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
                     
@@ -540,15 +607,37 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     func setDate(date: Date) {
         
-        self.date = date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+        if isSettingDueDate {
             
-            dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+            self.date = date
             
-            dateLabel.text = "\(month)/\(day)/\(year)"
+            var dateDict = convertDateToInts(dateToConvert: date)
+            
+            if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+                
+                dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+                
+                dateLabel.text = "\(month)/\(day)/\(year)"
+                
+            }
+            
+            isSettingDueDate = false
+            
+        } else {
+            
+            self.ledgerDate = date
+            
+            var dateDict = convertDateToInts(dateToConvert: date)
+            
+            if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+                
+                dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
+                
+                ledgerDateLabel.text = "\(month)/\(day)/\(year)"
+                
+            }
+            
+            isSettingLedgerDate = false
             
         }
         
@@ -572,7 +661,15 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             datePickerVC.delegate = self
             
-            datePickerVC.date = date
+            if isSettingDueDate {
+                
+                datePickerVC.date = date
+                
+            } else {
+                
+                datePickerVC.date = ledgerDate
+                
+            }
             
         } else if segue.identifier == addOrEditBudgetItemToCategoryPickerSegueKey {
             
@@ -620,6 +717,10 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @objc func dueDateTapped() {
         
+        isSettingDueDate = true
+        
+        dueDateSwitch.isOn = !dueDateSwitch.isOn
+        
         if dueDateSwitch.isOn == true {
             
             performSegue(withIdentifier: addOrEditBudgetItemToDatePickerSegueKey, sender: self)
@@ -630,6 +731,38 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         }
         
+    }
+    
+    @objc func addToLedgerTapped() {
+        
+        guard let currentItem = editableBudgetItem else { return }
+        
+        if currentItem.addedToLedger == false {
+            
+            isSettingLedgerDate = true
+            
+            addToLedgerSwitch.isOn = !addToLedgerSwitch.isOn
+            
+            if addToLedgerSwitch.isOn {
+                
+                if currentItem.type != categoryKey {
+                    
+                    performSegue(withIdentifier: addOrEditBudgetItemToDatePickerSegueKey, sender: self)
+                    
+                } else {
+                    
+                    ledgerDateLabel.text = "OK!"
+                    
+                }
+                
+            } else {
+                
+                ledgerDateLabel.text = ""
+                
+            }
+            
+        }
+
     }
     
     
@@ -655,11 +788,13 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         let categoryTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
         let amountTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         let dueDateTap = UITapGestureRecognizer(target: self, action: #selector(dueDateTapped))
+        let addToLedgerTap = UITapGestureRecognizer(target: self, action: #selector(addToLedgerTapped))
         
         nameView.addGestureRecognizer(nameTap)
         categoryView.addGestureRecognizer(categoryTap)
         amountView.addGestureRecognizer(amountTap)
         dueDateView.addGestureRecognizer(dueDateTap)
+        addToLedgerView.addGestureRecognizer(addToLedgerTap)
         
         addCircleAroundButton(named: submitBudgetItemButton)
         
@@ -689,6 +824,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             guard let name = currentBudgetItem.name else { return }
             
+            toggleTypeSegmentInfo(forItem: currentBudgetItem)
             nameTextField.text = name
             amountTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.amount))"
             toggleCategoryLabelInfo(forItem: currentBudgetItem)
@@ -708,6 +844,14 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 dateLabel.text = ""
                 
                 dueDateSwitch.isOn = false
+                
+            }
+            
+            if currentBudgetItem.addedToLedger {
+                
+                addToLedgerSwitch.isOn = true
+                addToLedgerSwitch.isEnabled = false
+                ledgerDateLabel.text = "Added!"
                 
             }
             

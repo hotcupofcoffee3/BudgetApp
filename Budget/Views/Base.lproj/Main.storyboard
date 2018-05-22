@@ -1784,6 +1784,9 @@
                                     <segment title="Income"/>
                                 </segments>
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="changeType:" destination="dl1-W9-TrT" eventType="valueChanged" id="5mo-MO-shb"/>
+                                </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wbt-WK-w1R" userLabel="Name View">
                                 <rect key="frame" x="20" y="150" width="335" height="50"/>
@@ -1987,6 +1990,9 @@
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pWE-dJ-J2k">
                                                         <rect key="frame" x="0.0" y="0.0" width="84.5" height="30"/>
                                                         <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="addToLedgerToggleSwitch:" destination="dl1-W9-TrT" eventType="valueChanged" id="1g2-VP-qGZ"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36c-v8-jjx">
                                                         <rect key="frame" x="82.5" y="0.0" width="82.5" height="30"/>
@@ -2044,6 +2050,8 @@
                         <viewLayoutGuide key="safeArea" id="974-nQ-RZz"/>
                     </view>
                     <connections>
+                        <outlet property="addToLedgerSwitch" destination="pWE-dJ-J2k" id="fi3-IR-rFD"/>
+                        <outlet property="addToLedgerView" destination="spO-yl-jBY" id="3NW-iY-HSA"/>
                         <outlet property="amountTextField" destination="RgU-0c-ALT" id="gPB-D8-2lV"/>
                         <outlet property="amountView" destination="qBZ-7K-ncy" id="GXS-lY-od1"/>
                         <outlet property="backButton" destination="mmN-11-yfi" id="hZJ-uI-dYd"/>
@@ -2053,10 +2061,12 @@
                         <outlet property="dateLabel" destination="0tR-HV-uaJ" id="9Ij-6M-aYc"/>
                         <outlet property="dueDateSwitch" destination="rEr-YP-eLj" id="5G5-ni-dp5"/>
                         <outlet property="dueDateView" destination="rp2-Bx-ynJ" id="YQJ-Pb-hyo"/>
+                        <outlet property="ledgerDateLabel" destination="36c-v8-jjx" id="X7u-ZV-7SK"/>
                         <outlet property="nameTextField" destination="BOQ-dn-tJt" id="tOO-3o-n1d"/>
                         <outlet property="nameView" destination="wbt-WK-w1R" id="C9l-3R-Q97"/>
                         <outlet property="navBar" destination="l4b-7c-rca" id="eUh-Wu-uyp"/>
                         <outlet property="submitBudgetItemButton" destination="Dn9-kh-psl" id="Q8k-ir-Ft2"/>
+                        <outlet property="typeSegment" destination="WIJ-1x-VAK" id="uOW-ex-TPa"/>
                         <outlet property="unallocatedLabelAtTop" destination="mxF-2L-R8F" id="VVe-O2-ore"/>
                         <outlet property="warningLabel" destination="977-ij-NAL" id="qTF-Pz-vBa"/>
                         <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditBudgetItemToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="xOp-Mq-eWc"/>
