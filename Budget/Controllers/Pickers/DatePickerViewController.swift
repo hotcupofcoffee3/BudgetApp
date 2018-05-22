@@ -27,7 +27,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var delegate: ChooseDate?
@@ -37,7 +37,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var chosenDate: UIDatePicker!
@@ -54,7 +54,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -62,7 +62,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func done(_ sender: UIButton) {
@@ -75,7 +75,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -83,7 +83,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -91,7 +91,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -99,7 +99,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -107,7 +107,7 @@ class DatePickerViewController: UIViewController {
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

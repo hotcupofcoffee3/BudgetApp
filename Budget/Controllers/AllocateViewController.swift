@@ -21,7 +21,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isToCategory = true
@@ -29,7 +29,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
@@ -67,7 +67,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func updateCategoryBalanceLabel(for categoryName: String, atLabel: UILabel) {
@@ -96,7 +96,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -110,7 +110,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // *** Allocate Check
@@ -187,7 +187,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     func setCategory(category: String) {
@@ -211,7 +211,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -243,7 +243,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func amountTapped() {
@@ -286,7 +286,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

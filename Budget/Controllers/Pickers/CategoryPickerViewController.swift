@@ -27,7 +27,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var delegate: ChooseCategory?
@@ -37,7 +37,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var currentCategoryBalanceLabel: UILabel!
@@ -56,7 +56,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
@@ -70,7 +70,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func done(_ sender: UIButton) {
@@ -83,7 +83,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -91,7 +91,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -99,7 +99,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -107,7 +107,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -115,7 +115,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

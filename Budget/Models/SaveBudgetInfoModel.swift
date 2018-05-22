@@ -151,7 +151,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         // The 'type' is currently set to "category" until a property for having a 'paycheck' as a category (a depositable category) is added. Nothing is done with it right now, other than simply serving as a placeholder.
         // The 'category' property is set to its own category name.
         // The 'year' and month' properties are set to 0, as they are not used.
-        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: categoryKey, named: category.name!, amount: category.budgeted, category: category.name!, year: 0, month: 0, day: Int(category.dueDay))
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: categoryKey, named: category.name!, amount: category.budgeted, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay))
         
     }
     

@@ -21,7 +21,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var editCategory = false
@@ -33,7 +33,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var navBar: UINavigationBar!
@@ -57,7 +57,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -65,7 +65,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
@@ -93,7 +93,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -101,7 +101,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -109,7 +109,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -142,7 +142,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -150,7 +150,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

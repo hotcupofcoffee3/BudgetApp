@@ -22,7 +22,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewCategory = true
@@ -42,7 +42,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
@@ -84,7 +84,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func updateUIElementsBecauseOfSuccess() {
@@ -102,7 +102,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -140,7 +140,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // ************************************************************************************************
@@ -516,7 +516,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     func setDate(date: Date) {
@@ -538,7 +538,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -558,7 +558,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func nameTapped() {
@@ -596,7 +596,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

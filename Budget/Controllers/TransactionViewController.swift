@@ -23,7 +23,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewTransaction = true
@@ -35,7 +35,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var mainBalanceLabel: UILabel!
@@ -53,7 +53,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -61,7 +61,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
@@ -76,7 +76,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -84,7 +84,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -92,7 +92,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -114,7 +114,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -122,7 +122,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

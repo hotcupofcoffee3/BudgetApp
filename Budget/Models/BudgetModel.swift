@@ -197,12 +197,6 @@ class Budget {
                     
                 }
                 
-                if item.category == oldName {
-                    
-                    item.category = newName
-                    
-                }
-                
                 if item.amount == oldAmount {
                     
                     item.amount = newAmount
@@ -333,7 +327,7 @@ class Budget {
             
             for period in budgetedTimeFrames {
                 
-                createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: categoryKey, named: named, amount: amount, category: named, year: 0, month: 0, day: dueDay)
+                createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: categoryKey, named: named, amount: amount, category: categoryKey, year: 0, month: 0, day: dueDay)
                 
             }
             
@@ -774,8 +768,8 @@ class Budget {
         loadSavedCategories()
         loadSavedBudgetedTimeFrames()
         
-        UserDefaults.standard.set(nil, forKey: categoryKey)
-        UserDefaults.standard.set(nil, forKey: transactionKey)
+//        UserDefaults.standard.set(nil, forKey: categoryKey)
+//        UserDefaults.standard.set(nil, forKey: transactionKey)
 
     }
 

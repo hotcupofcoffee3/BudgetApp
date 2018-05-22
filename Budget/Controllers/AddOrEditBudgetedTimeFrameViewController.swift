@@ -21,7 +21,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewBudgetTimeFrame = true
@@ -41,7 +41,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
@@ -75,7 +75,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -83,7 +83,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -97,7 +97,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // ************************************************************************************************
@@ -292,7 +292,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     func setDate(date: Date) {
@@ -322,7 +322,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -342,7 +342,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func startDateTapped() {
@@ -364,7 +364,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

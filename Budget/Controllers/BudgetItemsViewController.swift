@@ -21,7 +21,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var editBudgetItem = false
@@ -37,7 +37,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
@@ -59,7 +59,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func loadNecessaryInfo() {
@@ -109,7 +109,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
@@ -135,7 +135,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -143,7 +143,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -151,7 +151,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -181,7 +181,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -189,7 +189,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

@@ -10,7 +10,7 @@ import UIKit
 
 protocol ChoosePaycheck {
     
-    func populateFromPaycheck(paycheck: Paycheck)
+    func setPaycheck(paycheck: Paycheck)
     
 }
 
@@ -27,7 +27,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var delegate: ChoosePaycheck?
@@ -39,7 +39,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var currentPaycheckAmountLabel: UILabel!
@@ -66,14 +66,14 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func done(_ sender: UIButton) {
         
         guard let paycheck = selectedPaycheck else { return }
         
-        delegate?.populateFromPaycheck(paycheck: paycheck)
+        delegate?.setPaycheck(paycheck: paycheck)
         
         dismiss(animated: true, completion: nil)
     }
@@ -81,7 +81,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -89,7 +89,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -97,7 +97,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -105,7 +105,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -113,7 +113,7 @@ class PaycheckPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

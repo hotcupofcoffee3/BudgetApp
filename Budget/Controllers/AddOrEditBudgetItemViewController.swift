@@ -21,7 +21,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewBudgetItem = true
@@ -43,7 +43,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
@@ -87,15 +87,43 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
-    
+    func toggleCategoryLabelInfo(forItem: BudgetItem?) {
+        
+        if let item = forItem {
+            
+            if item.type == categoryKey {
+                
+                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+                categoryLabel.text = categoryKey
+                
+            } else if item.type == paycheckKey {
+                
+                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+                categoryLabel.text = unallocatedKey
+                
+            } else {
+                
+                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+                
+                if item.type != categoryKey && item.type != paycheckKey {
+                    
+                    categoryLabel.text = item.category!
+                    
+                }
+                
+            }
+            
+        }
+
+    }
     
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -137,7 +165,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // ************************************************************************************************
@@ -549,7 +577,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     func setDate(date: Date) {
@@ -575,7 +603,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -605,7 +633,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func nameTapped() {
@@ -615,9 +643,15 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     }
     
     @objc func categoryTapped() {
-            
-        performSegue(withIdentifier: addOrEditBudgetItemToCategoryPickerSegueKey, sender: self)
         
+        guard let item = editableBudgetItem else { return }
+        
+        if item.type != categoryKey && item.type != paycheckKey {
+            
+            performSegue(withIdentifier: addOrEditBudgetItemToCategoryPickerSegueKey, sender: self)
+            
+        }
+
     }
     
     @objc func amountTapped() {
@@ -643,7 +677,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     
@@ -696,11 +730,10 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             guard let currentBudgetItem = editableBudgetItem else { return }
             
             guard let name = currentBudgetItem.name else { return }
-            guard let category = currentBudgetItem.category else { return }
             
             nameTextField.text = name
             amountTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.amount))"
-            categoryLabel.text = category
+            toggleCategoryLabelInfo(forItem: currentBudgetItem)
             
             if currentBudgetItem.day > 0 {
                 

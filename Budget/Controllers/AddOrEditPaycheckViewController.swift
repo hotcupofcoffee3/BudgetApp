@@ -21,7 +21,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewPaycheck = true
@@ -35,7 +35,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -69,7 +69,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func updateUIElementsBecauseOfSuccess() {
@@ -87,7 +87,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -111,7 +111,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // ************************************************************************************************
@@ -369,7 +369,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -377,7 +377,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -385,7 +385,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func nameTapped() {
@@ -410,7 +410,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

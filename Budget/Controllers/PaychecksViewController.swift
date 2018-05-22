@@ -21,7 +21,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var editPaycheck = false
@@ -35,7 +35,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
@@ -56,7 +56,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func loadNecessaryInfo() {
@@ -75,7 +75,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
@@ -100,7 +100,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -108,7 +108,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -116,7 +116,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -142,7 +142,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -150,7 +150,7 @@ class PaychecksViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

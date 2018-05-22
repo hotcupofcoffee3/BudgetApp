@@ -21,7 +21,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     var isNewTransaction = true
@@ -37,7 +37,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
@@ -92,7 +92,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     func updateUIElementsBecauseOfSuccess(forCategory category: String) {
@@ -121,8 +121,19 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 transactionNameTextField.text = ""
                 transactionAmountTextField.text = ""
                 categoryLabel.isEnabled = true
-                paycheckLabel.isEnabled = false
-                paycheckLabel.text = ""
+                
+                if !budget.paychecks.isEmpty {
+                    
+                    paycheckLabel.isEnabled = false
+                    
+                    UIView.animate(withDuration: 0.3) {
+                        self.paycheckViewHeight.constant = 0
+                        self.view.layoutIfNeeded()
+                    }
+                    
+                    paycheckLabel.text = ""
+                    
+                }
                 
             } else if typeOfTransaction == .deposit {
                 
@@ -130,10 +141,17 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
                 categoryLabel.text = unallocatedKey
                 categoryLabel.isEnabled = false
-                paycheckLabel.isEnabled = true
+                
                 if !budget.paychecks.isEmpty {
                     
-                    paycheckLabel.text = "\(budget.paychecks[0].name!)"
+                    paycheckLabel.isEnabled = true
+                    
+                    UIView.animate(withDuration: 0.3) {
+                        self.paycheckViewHeight.constant = 50
+                        self.view.layoutIfNeeded()
+                    }
+                    
+                    paycheckLabel.text = "Click to select"
                     
                 }
                 
@@ -146,7 +164,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -172,31 +190,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         if isNewTransaction {
             
             if transactionSegmentedControl.selectedSegmentIndex == 0 {
-                
-                
-                
-                UIView.animate(withDuration: 0.3) {
-                    self.paycheckViewHeight.constant = 0
-                    self.view.layoutIfNeeded()
-                }
 
-                
-                
                 transactionSelection = .withdrawal
                 
                 updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
                 
             } else if transactionSegmentedControl.selectedSegmentIndex == 1 {
-                
-                
-                
-                UIView.animate(withDuration: 0.3) {
-                    self.paycheckViewHeight.constant = 50
-                    self.view.layoutIfNeeded()
-                }
-                
-                
-                
+
                 transactionSelection = .deposit
                 
                 updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
@@ -210,7 +210,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     // ************************************************************************************************
@@ -605,7 +605,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         categoryLabel.text = category
     }
     
-    func populateFromPaycheck(paycheck: Paycheck) {
+    func setPaycheck(paycheck: Paycheck) {
+        paycheckLabel.text = paycheck.name!
         transactionNameTextField.text = paycheck.name!
         transactionAmountTextField.text = "\(String(format: "%0.2f", paycheck.amount))"
     }
@@ -613,7 +614,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -642,7 +643,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             paycheckPickerVC.delegate = self
             
-            if paycheckLabel.text != "" {
+            if paycheckLabel.text != "Click to select" {
                 
                 guard let paycheck = loadSpecificPaycheck(named: paycheckLabel.text!) else { return }
                 
@@ -650,7 +651,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
             } else {
                 
-                paycheckPickerVC.selectedPaycheck = budget.paychecks[0]
+                if budget.paychecks.count > 0 {
+                    
+                    paycheckPickerVC.selectedPaycheck = budget.paychecks[0]
+                    
+                }
                 
             }
             
@@ -661,7 +666,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     @objc func nameTapped() {
@@ -705,7 +710,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

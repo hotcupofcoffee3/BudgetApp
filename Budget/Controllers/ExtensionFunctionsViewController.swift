@@ -19,7 +19,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
     
@@ -27,7 +27,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     
@@ -43,7 +43,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -51,7 +51,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     
@@ -59,7 +59,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -67,7 +67,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -75,7 +75,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -83,7 +83,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     
@@ -91,7 +91,7 @@ class ExtensionFunctionsViewController: UIViewController {
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     

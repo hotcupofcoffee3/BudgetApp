@@ -22,15 +22,15 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Declared
+    // MARK: - Declared
     // *****
     
-    
+    var isDeleted = false
     
     
     
     // *****
-    // Mark: - IBOutlets
+    // MARK: - IBOutlets
     // *****
     
     @IBOutlet weak var hiddenDeleteButton: UIButton!
@@ -58,7 +58,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - General Functions
+    // MARK: - General Functions
     // *****
     
     
@@ -66,7 +66,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - IBActions
+    // MARK: - IBActions
     // *****
     
     @IBAction func budgetButton(_ sender: UIButton) {
@@ -88,7 +88,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Submissions
+    // MARK: - Submissions
     // *****
     
     
@@ -96,7 +96,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Delegates
+    // MARK: - Delegates
     // *****
     
     
@@ -104,7 +104,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Segues
+    // MARK: - Segues
     // *****
     
     
@@ -112,7 +112,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Tap Functions
+    // MARK: - Tap Functions
     // *****
     
     // *** Long press recognizer function to - DELETE EVERYTHING
@@ -128,6 +128,7 @@ class MainScreen: UIViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                 budget.deleteEVERYTHING()
                 self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
+                self.isDeleted = true
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -147,7 +148,7 @@ class MainScreen: UIViewController {
         // If this isn't done, then it'll keep adding a new one of these every 2 seconds (the amount of time we have it set).
         if gestureRecognizer.state == UIGestureRecognizerState.began {
             
-            if budget.transactions.count == 0 && budget.categories.count == 1 {
+            if isDeleted {
                 
                 let alert = UIAlertController(title: nil, message: "Populate from scratch?", preferredStyle: .alert)
                 
@@ -194,7 +195,7 @@ class MainScreen: UIViewController {
     
     
     // *****
-    // Mark: - Keyboard functions
+    // MARK: - Keyboard functions
     // *****
     
     
