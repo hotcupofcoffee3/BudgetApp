@@ -74,6 +74,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var holdView: UIView!
     
+    @IBOutlet weak var paycheckTitleLabel: UILabel!
+    
     @IBOutlet weak var paycheckLabel: UILabel!
     
     @IBOutlet weak var paycheckView: UIView!
@@ -131,6 +133,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         self.view.layoutIfNeeded()
                     }
                     
+                    paycheckTitleLabel.text = ""
                     paycheckLabel.text = ""
                     
                 }
@@ -151,6 +154,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         self.view.layoutIfNeeded()
                     }
                     
+                    paycheckTitleLabel.text = "Paycheck?"
                     paycheckLabel.text = "Click to select"
                     
                 }
@@ -748,6 +752,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
             
+            paycheckTitleLabel.text = ""
             paycheckLabel.text = ""
             
         } else {
