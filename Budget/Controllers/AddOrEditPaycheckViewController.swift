@@ -187,7 +187,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
                     
                 } else {
                     
-                    showAlertToConfirmAddPaycheck(newPaycheckName: newName, with: newAmountAsDouble)
+                    addPaycheckSubmission(newPaycheckName: newName, with: newAmountAsDouble)
                     
                 }
                 
@@ -200,29 +200,19 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     // Alert Confirmation
     
-    func showAlertToConfirmAddPaycheck(newPaycheckName name: String, with amount: Double) {
+    func addPaycheckSubmission(newPaycheckName name: String, with amount: Double) {
         
         nameTextField.resignFirstResponder()
         amountTextField.resignFirstResponder()
         
-        let alert = UIAlertController(title: nil, message: "Add a paycheck called \"\(name)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
+        createAndSaveNewPaycheck(named: name, withAmount: amount)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            createAndSaveNewPaycheck(named: name, withAmount: amount)
-            
-            self.warningLabel.textColor = successColor
-            self.warningLabel.text = "A paycheck named \"\(name)\" with \(self.convertedAmountToDollars(amount: amount)) was just created. Congrats!"
-            
-            self.successHaptic()
-            
-            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-            
-        }))
+        warningLabel.textColor = successColor
+        warningLabel.text = "A paycheck named \"\(name)\" with \(convertedAmountToDollars(amount: amount)) was just created. Congrats!"
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        successHaptic()
         
-        present(alert, animated: true, completion: nil)
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }
     
@@ -294,7 +284,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
                 
             } else {
                 
-                showAlertToConfirmEdits()
+                editSubmission()
                 
             }
             
@@ -302,22 +292,18 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func showAlertToConfirmEdits() {
+    func editSubmission() {
         
         // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
         // *** Alert only shows actual changes being made.
         
         guard let currentPaycheck = editablePaycheck else { return }
         
-        var updatedItemsConfirmationMessage = ""
-        
-        
         // Name
         guard let newName = nameTextField.text else { return }
         var changeName = false
         if newName != currentPaycheck.name {
             changeName = true
-            updatedItemsConfirmationMessage += "Change name to: \(newName)?\n"
         }
         
         
@@ -326,7 +312,6 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         var changeAmount = false
         if newAmount != currentPaycheck.amount {
             changeAmount = true
-            updatedItemsConfirmationMessage += "Change amount to: \(convertedAmountToDollars(amount: newAmount))?\n"
         }
     
         
@@ -336,27 +321,17 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             
-            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            if changeName {
+                budget.updatePaycheckName(newName: newName, forPaycheck: currentPaycheck)
+            }
+            if changeAmount {
+                budget.updatePaycheckAmount(newAmount: newAmount, forPaycheck: currentPaycheck)
+            }
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                
-                if changeName {
-                    budget.updatePaycheckName(newName: newName, forPaycheck: currentPaycheck)
-                }
-                if changeAmount {
-                    budget.updatePaycheckAmount(newAmount: newAmount, forPaycheck: currentPaycheck)
-                }
-                
-                self.successHaptic()
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }))
+            successHaptic()
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
-            
+            self.dismiss(animated: true, completion: nil)
+
         }
         
     }

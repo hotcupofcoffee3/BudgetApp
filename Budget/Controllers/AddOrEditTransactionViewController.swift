@@ -266,7 +266,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                     } else {
                         
-                        showAlertToConfirmTransaction(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: category, year: year, month: month, day: day)
+                        addTransactionSubmission(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: category, year: year, month: month, day: day)
                         
                     }
                     
@@ -280,7 +280,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                     } else {
                         
-                        showAlertToConfirmTransaction(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
+                        addTransactionSubmission(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
                         
                     }
                     
@@ -299,47 +299,33 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     // Alert Confirmation
     
-    func showAlertToConfirmTransaction(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
+    func addTransactionSubmission(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
         
         transactionNameTextField.resignFirstResponder()
         transactionAmountTextField.resignFirstResponder()
         
         if type == .withdrawal {
             
-            let alert = UIAlertController(title: nil, message: "Make a withdrawal called \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
+            var onHold = false
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            if self.holdToggle.isOn {
                 
-                var onHold = false
+                onHold = true
                 
-                if self.holdToggle.isOn {
-                    
-                    onHold = true
-                    
-                }
-                
-                budget.addTransaction(onHold: onHold, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
-                
-                self.warningLabel.textColor = successColor
-                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
-                
-                self.successHaptic()
-                
-                self.updateUIElementsBecauseOfSuccess(forCategory: categoryName)
-                self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-                
-            }))
+            }
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            budget.addTransaction(onHold: onHold, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
             
-            present(alert, animated: true, completion: nil)
+            warningLabel.textColor = successColor
+            warningLabel.text = "\(convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
+            
+            successHaptic()
+            
+            updateUIElementsBecauseOfSuccess(forCategory: categoryName)
+            updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
             
         } else if type == .deposit {
             
-            let alert = UIAlertController(title: nil, message: "Deposit \"\(title)\" in the amount of \(self.convertedAmountToDollars(amount: amount))?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                
                 var onHold = false
                 
                 if self.holdToggle.isOn {
@@ -350,19 +336,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
                 budget.addTransaction(onHold: onHold, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
                 
-                self.warningLabel.textColor = successColor
-                self.warningLabel.text = "\(self.convertedAmountToDollars(amount: amount)) was deposited."
+                warningLabel.textColor = successColor
+                warningLabel.text = "\(convertedAmountToDollars(amount: amount)) was deposited."
                 
-                self.successHaptic()
+                successHaptic()
                 
-                self.updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
-                self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-                
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
+                updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
+                updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
             
         }
         
@@ -383,22 +363,19 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
     }
     
-    func showAlertToConfirmEdits() {
+    func editSubmission() {
         
         // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
         // *** Alert only shows actual changes being made.
         
         guard let currentTransaction = editableTransaction else { return }
-        
-        var updatedItemsConfirmationMessage = ""
-        
+       
         
         // Title
         guard let newTitle = transactionNameTextField.text else { return }
         var changeTitle = false
         if newTitle != currentTransaction.title {
             changeTitle = true
-            updatedItemsConfirmationMessage += "Change title to: \(newTitle)\n"
         }
         
         
@@ -407,22 +384,17 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         var changeAmount = false
         if newAmount != currentTransaction.inTheAmountOf {
             changeAmount = true
-            updatedItemsConfirmationMessage += "Change amount to: \(convertedAmountToDollars(amount: newAmount))\n"
         }
         
         
         // Date
         let newDate = date
         var changeDate = false
-        let newDateDict = convertDateToInts(dateToConvert: newDate)
+        
         let currentDate = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
-        guard let month = newDateDict[monthKey] else { return }
-        guard let day = newDateDict[dayKey] else { return }
-        guard let year = newDateDict[yearKey] else { return }
         
         if newDate != currentDate {
             changeDate = true
-            updatedItemsConfirmationMessage += "Change Date to: \(month)/\(day)/\(year)\n"
         }
         
         
@@ -431,7 +403,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         var changeCategory = false
         if newCategory != currentTransaction.forCategory {
             changeCategory = true
-            updatedItemsConfirmationMessage += "Change category to: \(newCategory)\n"
         }
         
         
@@ -440,7 +411,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         var changeHoldStatus = false
         if newHoldStatus != currentTransaction.onHold {
             changeHoldStatus = true
-            updatedItemsConfirmationMessage += "Change 'On Hold' to: \(newHoldStatus)"
         }
         
         if !changeTitle && !changeAmount && !changeDate && !changeCategory && !changeHoldStatus {
@@ -449,37 +419,27 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
         } else {
             
-            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            let id = Int(currentTransaction.id)
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                
-                let id = Int(currentTransaction.id)
-                
-                if changeTitle {
-                    budget.updateTransactionTitle(title: newTitle, withID: id)
-                }
-                if changeAmount {
-                    budget.updateTransactionAmount(amount: newAmount, withID: id)
-                }
-                if changeDate {
-                    budget.updateTransactionDate(newDate: newDate, withID: id)
-                }
-                if changeCategory {
-                    budget.updateTransactionCategory(category: newCategory, withID: id)
-                }
-                if changeHoldStatus {
-                    budget.updateBalanceAndAvailableForOnHold(withID: id)
-                }
-                
-                self.successHaptic()
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }))
+            if changeTitle {
+                budget.updateTransactionTitle(title: newTitle, withID: id)
+            }
+            if changeAmount {
+                budget.updateTransactionAmount(amount: newAmount, withID: id)
+            }
+            if changeDate {
+                budget.updateTransactionDate(newDate: newDate, withID: id)
+            }
+            if changeCategory {
+                budget.updateTransactionCategory(category: newCategory, withID: id)
+            }
+            if changeHoldStatus {
+                budget.updateBalanceAndAvailableForOnHold(withID: id)
+            }
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            successHaptic()
             
-            present(alert, animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
         }
         
@@ -573,7 +533,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
         } else {
             
-            showAlertToConfirmEdits()
+            editSubmission()
             
         }
         

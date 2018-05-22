@@ -224,7 +224,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     
                 } else {
                     
-                    showAlertToConfirmAddBudgetItem(newItemName: name, with: amount, toCategory: category, withDueDate: dueDate)
+                    addBudgetItemSubmission(newItemName: name, with: amount, toCategory: category, withDueDate: dueDate)
                     
                 }
                 
@@ -242,12 +242,10 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     // *** Add Budget Item Alert Confirmation
     
-    func showAlertToConfirmAddBudgetItem(newItemName name: String, with amount: Double, toCategory categoryName: String, withDueDate: Date?) {
+    func addBudgetItemSubmission(newItemName name: String, with amount: Double, toCategory categoryName: String, withDueDate: Date?) {
         
         nameTextField.resignFirstResponder()
         amountTextField.resignFirstResponder()
-        
-        var confirmationMessage = String()
         
         var year = Int()
         var month = Int()
@@ -267,35 +265,16 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         }
         
-        if withDueDate == nil {
-            
-            confirmationMessage = "Add named \"\(name)\" with an amount of \(convertedAmountToDollars(amount: amount)) for '\(categoryName)'?"
-            
-        } else {
-            
-            confirmationMessage = "Add named \"\(name)\" with an amount of \(convertedAmountToDollars(amount: amount)) for '\(categoryName) due on the \(convertDayToOrdinal(day: day))'?"
-            
-        }
+        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: oneTimeAddedKey, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
         
-        let alert = UIAlertController(title: nil, message: confirmationMessage, preferredStyle: .alert)
+        saveData()
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            createAndSaveNewBudgetItem(timeSpanID: self.selectedBudgetTimeFrameStartID, type: oneTimeAddedKey, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
-            
-            saveData()
-            
-            self.warningLabel.textColor = successColor
-            self.warningLabel.text = "\"\(name)\" with an amount of \(self.convertedAmountToDollars(amount: amount)) has been added."
-            
-            self.successHaptic()
-            self.updateBalanceAndUnallocatedLabelsAtTop(barButton: self.balanceOnNavBar, unallocatedButton: self.unallocatedLabelAtTop)
-            
-        }))
+        warningLabel.textColor = successColor
+        warningLabel.text = "\"\(name)\" with an amount of \(convertedAmountToDollars(amount: amount)) has been added."
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        successHaptic()
+        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
-        present(alert, animated: true, completion: nil)
         
     }
     
@@ -431,7 +410,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     
                     // ***** Go to Allocation Check
                     
-                    showAlertToConfirmEdits()
+                    editSubmission()
                     
                 }
                 
@@ -445,22 +424,18 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     // *** Show Alert To Confirm Edits
     
-    func showAlertToConfirmEdits() {
+    func editSubmission() {
         
         // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
         // *** Alert only shows actual changes being made.
         
         guard let currentBudgetItem = editableBudgetItem else { return }
         
-        var updatedItemsConfirmationMessage = ""
-        
-        
         // Name
         guard let newName = nameTextField.text else { return }
         var changeName = false
         if newName != currentBudgetItem.name {
             changeName = true
-            updatedItemsConfirmationMessage += "Change name to: \(newName)?\n"
         }
         
         
@@ -469,7 +444,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         var changeCategory = false
         if newCategory != currentBudgetItem.category {
             changeCategory = true
-            updatedItemsConfirmationMessage += "Change category to: \(newCategory)?\n"
         }
         
         
@@ -478,7 +452,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         var changeAmount = false
         if newAmount != currentBudgetItem.amount {
             changeAmount = true
-            updatedItemsConfirmationMessage += "Change amount to: \(convertedAmountToDollars(amount: newAmount))?\n"
         }
         
         
@@ -487,23 +460,18 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         var changeDate = false
         let currentDate = convertDayToCurrentDate(day: Int(currentBudgetItem.day))
         
-        let newDateDict = convertDateToInts(dateToConvert: newDate)
-        guard let newDueDay = newDateDict[dayKey] else { return }
-        
         // The 4th possibility, 'nil -> nil', does not change anything.
         // If current set date does not match the newly set date.
         // Accounts for 2 of the 4 possibilities: nil -> set, oldSet -> newSet
         if dateLabel.text != "" && newDate != currentDate {
             
             changeDate = true
-            updatedItemsConfirmationMessage += "Change Due Date to the \(convertDayToOrdinal(day: newDueDay))?\n"
           
             
         // Accounts for 1 of the 4 possibilities: set -> nil
         } else if dateLabel.text == "" && currentBudgetItem.day > 0 {
             
             changeDate = true
-            updatedItemsConfirmationMessage += "Remove Due Date?\n"
             
         }
         
@@ -515,60 +483,50 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         } else {
             
-            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            if changeName {
+                budget.updateBudgetItemName(name: newName, forItem: currentBudgetItem)
+            }
+            if changeCategory {
+                budget.updateBudgetItemCategory(category: newCategory, forItem: currentBudgetItem)
+            }
+            if changeAmount {
+                budget.updateBudgetItemAmount(amount: newAmount, forItem: currentBudgetItem)
+            }
+            if changeDate {
                 
-                if changeName {
-                    budget.updateBudgetItemName(name: newName, forItem: currentBudgetItem)
-                }
-                if changeCategory {
-                    budget.updateBudgetItemCategory(category: newCategory, forItem: currentBudgetItem)
-                }
-                if changeAmount {
-                    budget.updateBudgetItemAmount(amount: newAmount, forItem: currentBudgetItem)
-                }
-                if changeDate {
+                // Only 4 options possible: nil -> nil, nil -> set, set -> nil, oldSet -> newSet.
+                // No need to check 'nil -> nil', as that wouldn't change anything.
+                // So, the other three are accounted for.
+                
+                if currentBudgetItem.day > 0 {
                     
-                    // Only 4 options possible: nil -> nil, nil -> set, set -> nil, oldSet -> newSet.
-                    // No need to check 'nil -> nil', as that wouldn't change anything.
-                    // So, the other three are accounted for.
-                    
-                    if currentBudgetItem.day > 0 {
+                    // There was a date, and it was changed.
+                    if dueDateSwitch.isOn {
                         
-                        // There was a date, and it was changed.
-                        if self.dueDateSwitch.isOn {
-                            
-                            budget.updateBudgetItemDueDate(dueDate: newDate, forItem: currentBudgetItem)
-                            
-                        // There was a date, and it was removed.
-                        } else {
-                            
-                            budget.updateBudgetItemDueDate(dueDate: nil, forItem: currentBudgetItem)
-                            
-                        }
+                        budget.updateBudgetItemDueDate(dueDate: newDate, forItem: currentBudgetItem)
                         
+                    // There was a date, and it was removed.
                     } else {
                         
-                        // There was no date, and it was set.
-                        if self.dueDateSwitch.isOn {
-                            
-                            budget.updateBudgetItemDueDate(dueDate: newDate, forItem: currentBudgetItem)
-                            
-                        }
+                        budget.updateBudgetItemDueDate(dueDate: nil, forItem: currentBudgetItem)
+                        
+                    }
+                    
+                } else {
+                    
+                    // There was no date, and it was set.
+                    if dueDateSwitch.isOn {
+                        
+                        budget.updateBudgetItemDueDate(dueDate: newDate, forItem: currentBudgetItem)
                         
                     }
                     
                 }
-                self.successHaptic()
                 
-                self.dismiss(animated: true, completion: nil)
-                
-            }))
+            }
+            successHaptic()
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
         }
         

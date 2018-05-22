@@ -163,11 +163,11 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             if isNewBudgetTimeFrame {
                 
-                showAlertToConfirmAddition(startID: startID, startYear: startYear, startMonth: startMonth, startDay: startDay, endYear: endYear, endMonth: endMonth, endDay: endDay)
+                addBudgetedTimeFrameSubmission(startID: startID, startYear: startYear, startMonth: startMonth, startDay: startDay, endYear: endYear, endMonth: endMonth, endDay: endDay)
                 
             } else {
                 
-                showAlertToConfirmEdits()
+                editSubmission()
                 
             }
             
@@ -177,25 +177,13 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     // *** Alert to confirm adding a budgeted time frame.
     
-    func showAlertToConfirmAddition(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
+    func addBudgetedTimeFrameSubmission(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
         
-        // *** Alert message to pop up to confirmation
+        budget.addTimeFrame(start: startDate, end: endDate)
         
-        let alert = UIAlertController(title: nil, message: "Add new budgeted time frame:\n\(startMonth)/\(startDay)/\(startYear) - \(endMonth)/\(endDay)/\(endYear)?", preferredStyle: .alert)
+        successHaptic()
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            
-            budget.addTimeFrame(start: self.startDate, end: self.endDate)
-            
-            self.successHaptic()
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
     }
     
@@ -210,14 +198,12 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     // *** Only the Alert for edits shows, as the check for review is the same for adding or editing the budgeted time frames.
     
-    func showAlertToConfirmEdits() {
+    func editSubmission() {
         
         // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
         // *** Alert only shows actual changes being made.
         
         guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }
-        
-        var updatedItemsConfirmationMessage = ""
         
         
         // Start Date
@@ -225,16 +211,9 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         var changeStartDate = false
         
         let currentStartDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.startYear), month: Int(currentBudgetTimeFrame.startMonth), day: Int(currentBudgetTimeFrame.startDay))
-        
-        let currentStartDict = convertDateToInts(dateToConvert: newStartDate)
-        
-        guard let startYear = currentStartDict[yearKey] else { return }
-        guard let startMonth = currentStartDict[monthKey] else { return }
-        guard let startDay = currentStartDict[dayKey] else { return }
-        
+       
         if newStartDate != currentStartDate {
             changeStartDate = true
-            updatedItemsConfirmationMessage += "Change Start Date to: \(startMonth)/\(startDay)/\(startYear)\n"
         }
         
         
@@ -244,15 +223,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         let currentEndDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.endYear), month: Int(currentBudgetTimeFrame.endMonth), day: Int(currentBudgetTimeFrame.endDay))
         
-        let currentEndDict = convertDateToInts(dateToConvert: newEndDate)
-        
-        guard let endYear = currentEndDict[yearKey] else { return }
-        guard let endMonth = currentEndDict[monthKey] else { return }
-        guard let endDay = currentEndDict[dayKey] else { return }
-        
         if newEndDate != currentEndDate {
             changeEndDate = true
-            updatedItemsConfirmationMessage += "Change End Date to: \(endMonth)/\(endDay)/\(endYear)"
         }
         
         
@@ -263,27 +235,17 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
         } else {
             
-            let alert = UIAlertController(title: nil, message: updatedItemsConfirmationMessage, preferredStyle: .alert)
+            if changeStartDate {
+                budget.updateStartDate(currentStartID: Int(currentBudgetTimeFrame.startDateID), newStartDate: newStartDate)
+            }
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                
-                if changeStartDate {
-                    budget.updateStartDate(currentStartID: Int(currentBudgetTimeFrame.startDateID), newStartDate: newStartDate)
-                }
-                
-                if changeEndDate {
-                    budget.updateEndDate(currentStartID: Int(currentBudgetTimeFrame.startDateID), newEndDate: newEndDate)
-                }
-                
-                self.successHaptic()
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }))
+            if changeEndDate {
+                budget.updateEndDate(currentStartID: Int(currentBudgetTimeFrame.startDateID), newEndDate: newEndDate)
+            }
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            successHaptic()
             
-            present(alert, animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
         }
         
