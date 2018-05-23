@@ -301,7 +301,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     }
     
     
-    // Alert Confirmation
+    // Add Transaction Submission
     
     func addTransactionSubmission(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
         
@@ -364,88 +364,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         // The 'else' on this leads to the next 'submit' check, and so on, until the end, in which case the 'else' calls the 'showAlertToConfirmEdits' function.
         submitEditNameForReview()
-        
-    }
-    
-    func editSubmission() {
-        
-        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
-        // *** Alert only shows actual changes being made.
-        
-        guard let currentTransaction = editableTransaction else { return }
-       
-        
-        // Title
-        guard let newTitle = transactionNameTextField.text else { return }
-        var changeTitle = false
-        if newTitle != currentTransaction.title {
-            changeTitle = true
-        }
-        
-        
-        // Amount
-        guard let newAmount = Double(transactionAmountTextField.text!) else { return }
-        var changeAmount = false
-        if newAmount != currentTransaction.inTheAmountOf {
-            changeAmount = true
-        }
-        
-        
-        // Date
-        let newDate = date
-        var changeDate = false
-        
-        let currentDate = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
-        
-        if newDate != currentDate {
-            changeDate = true
-        }
-        
-        
-        // Category
-        guard let newCategory = categoryLabel.text else { return }
-        var changeCategory = false
-        if newCategory != currentTransaction.forCategory {
-            changeCategory = true
-        }
-        
-        
-        // On Hold
-        let newHoldStatus = holdToggle.isOn
-        var changeHoldStatus = false
-        if newHoldStatus != currentTransaction.onHold {
-            changeHoldStatus = true
-        }
-        
-        if !changeTitle && !changeAmount && !changeDate && !changeCategory && !changeHoldStatus {
-            
-            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
-            
-        } else {
-            
-            let id = Int(currentTransaction.id)
-            
-            if changeTitle {
-                budget.updateTransactionTitle(title: newTitle, withID: id)
-            }
-            if changeAmount {
-                budget.updateTransactionAmount(amount: newAmount, withID: id)
-            }
-            if changeDate {
-                budget.updateTransactionDate(newDate: newDate, withID: id)
-            }
-            if changeCategory {
-                budget.updateTransactionCategory(category: newCategory, withID: id)
-            }
-            if changeHoldStatus {
-                budget.updateBalanceAndAvailableForOnHold(withID: id)
-            }
-            
-            successHaptic()
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }
         
     }
     
@@ -538,6 +456,90 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         } else {
             
             editSubmission()
+            
+        }
+        
+    }
+    
+    
+    
+    func editSubmission() {
+        
+        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
+        // *** Alert only shows actual changes being made.
+        
+        guard let currentTransaction = editableTransaction else { return }
+       
+        
+        // Title
+        guard let newTitle = transactionNameTextField.text else { return }
+        var changeTitle = false
+        if newTitle != currentTransaction.title {
+            changeTitle = true
+        }
+        
+        
+        // Amount
+        guard let newAmount = Double(transactionAmountTextField.text!) else { return }
+        var changeAmount = false
+        if newAmount != currentTransaction.inTheAmountOf {
+            changeAmount = true
+        }
+        
+        
+        // Date
+        let newDate = date
+        var changeDate = false
+        
+        let currentDate = convertComponentsToDate(year: Int(currentTransaction.year), month: Int(currentTransaction.month), day: Int(currentTransaction.day))
+        
+        if newDate != currentDate {
+            changeDate = true
+        }
+        
+        
+        // Category
+        guard let newCategory = categoryLabel.text else { return }
+        var changeCategory = false
+        if newCategory != currentTransaction.forCategory {
+            changeCategory = true
+        }
+        
+        
+        // On Hold
+        let newHoldStatus = holdToggle.isOn
+        var changeHoldStatus = false
+        if newHoldStatus != currentTransaction.onHold {
+            changeHoldStatus = true
+        }
+        
+        if !changeTitle && !changeAmount && !changeDate && !changeCategory && !changeHoldStatus {
+            
+            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+            
+        } else {
+            
+            let id = Int(currentTransaction.id)
+            
+            if changeTitle {
+                budget.updateTransactionTitle(title: newTitle, withID: id)
+            }
+            if changeAmount {
+                budget.updateTransactionAmount(amount: newAmount, withID: id)
+            }
+            if changeDate {
+                budget.updateTransactionDate(newDate: newDate, withID: id)
+            }
+            if changeCategory {
+                budget.updateTransactionCategory(category: newCategory, withID: id)
+            }
+            if changeHoldStatus {
+                budget.updateBalanceAndAvailableForOnHold(withID: id)
+            }
+            
+            successHaptic()
+            
+            self.dismiss(animated: true, completion: nil)
             
         }
         

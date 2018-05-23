@@ -299,7 +299,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     
     
-    // *** Add Budget Item Alert Confirmation
+    // *** Add Budget Item Submission
     
     func addBudgetItemSubmission(newItemName name: String, with amount: Double, toCategory categoryName: String, withDueDate: Date?) {
         
@@ -418,8 +418,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             submitEditAmountForReview()
             
         }
-        
-        
         
     }
     

@@ -132,7 +132,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    // *** Add Transaction Check
+    // *** Add Paycheck Check
     
     func submitAddPaycheckForReview() {
         
@@ -198,7 +198,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    // Alert Confirmation
+    // Add Paycheck Submission
     
     func addPaycheckSubmission(newPaycheckName name: String, with amount: Double) {
         
@@ -291,6 +291,8 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    
     
     func editSubmission() {
         

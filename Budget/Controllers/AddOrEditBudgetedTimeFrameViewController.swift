@@ -175,7 +175,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
     }
     
-    // *** Alert to confirm adding a budgeted time frame.
+    // *** A Budgeted Time Frame Submission.
     
     func addBudgetedTimeFrameSubmission(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
         
@@ -196,7 +196,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     // ***** Edit Budgeted Time Frame
     // **************************************
     
-    // *** Only the Alert for edits shows, as the check for review is the same for adding or editing the budgeted time frames.
+    // *** Only the Confirmation for edits shows, as the check for review is the same for adding or editing the budgeted time frames.
     
     func editSubmission() {
         

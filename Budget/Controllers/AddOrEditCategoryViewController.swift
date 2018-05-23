@@ -291,78 +291,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     
     
-    // *** Show Alert To Confirm Edits
-    
-    func editSubmission() {
-        
-        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
-        // *** Alert only shows actual changes being made.
-        
-        guard let currentCategory = editableCategory else { return }
-        guard let currentCategoryName = currentCategory.name else { return }
-       
-        // Name
-        guard let newName = categoryNameTextField.text else { return }
-        var changeName = false
-        if newName != currentCategory.name {
-            changeName = true
-        }
-        
-        
-        // Amount
-        guard let newAmount = Double(categoryAmountTextField.text!) else { return }
-        var changeAmount = false
-        if newAmount != currentCategory.budgeted {
-            changeAmount = true
-        }
-        
-        
-        // Date
-        let newDate = date
-        var changeDate = false
-        let currentDate = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
-        
-        if dateLabel.text != "" && newDate != currentDate {
-            changeDate = true
-        }
-        
-        
-        // Allocate
-        let willAllocate = currentAllocationStatus.isOn
-        
-        
-        // Final confirmation, checking to see if there is even anything to change.
-        if !changeName && !changeAmount && !changeDate && !willAllocate {
-            
-            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
-            
-        } else {
-            
-            if changeName {
-                budget.updateCategory(named: currentCategoryName, updatedNewName: newName, andNewAmountBudgeted: currentCategory.budgeted)
-            }
-            if changeAmount {
-                budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
-            }
-            if willAllocate {
-                budget.shiftFunds(withThisAmount: currentCategory.budgeted, from: unallocatedKey, to: currentCategoryName)
-            }
-            if changeDate {
-                let newDateDict = convertDateToInts(dateToConvert: newDate)
-                guard let newDueDay = newDateDict[dayKey] else { return }
-                currentCategory.dueDay = Int64(newDueDay)
-            }
-            
-            self.successHaptic()
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }
-        
-    }
-    
-    
-    
     // *** Edit Name Check
     
     func submitEditNameForReview() {
@@ -476,6 +404,78 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         } else {
             
             editSubmission()
+            
+        }
+        
+    }
+    
+    
+    
+    // *** Show Alert To Confirm Edits
+    
+    func editSubmission() {
+        
+        // *** Add in all checks to see if something has been changed or not, then pop up alert message with specific items to update.
+        // *** Alert only shows actual changes being made.
+        
+        guard let currentCategory = editableCategory else { return }
+        guard let currentCategoryName = currentCategory.name else { return }
+       
+        // Name
+        guard let newName = categoryNameTextField.text else { return }
+        var changeName = false
+        if newName != currentCategory.name {
+            changeName = true
+        }
+        
+        
+        // Amount
+        guard let newAmount = Double(categoryAmountTextField.text!) else { return }
+        var changeAmount = false
+        if newAmount != currentCategory.budgeted {
+            changeAmount = true
+        }
+        
+        
+        // Date
+        let newDate = date
+        var changeDate = false
+        let currentDate = convertDayToCurrentDate(day: Int(currentCategory.dueDay))
+        
+        if dateLabel.text != "" && newDate != currentDate {
+            changeDate = true
+        }
+        
+        
+        // Allocate
+        let willAllocate = currentAllocationStatus.isOn
+        
+        
+        // Final confirmation, checking to see if there is even anything to change.
+        if !changeName && !changeAmount && !changeDate && !willAllocate {
+            
+            failureWithWarning(label: warningLabel, message: "There is nothing to update.")
+            
+        } else {
+            
+            if changeName {
+                budget.updateCategory(named: currentCategoryName, updatedNewName: newName, andNewAmountBudgeted: currentCategory.budgeted)
+            }
+            if changeAmount {
+                budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
+            }
+            if willAllocate {
+                budget.shiftFunds(withThisAmount: currentCategory.budgeted, from: unallocatedKey, to: currentCategoryName)
+            }
+            if changeDate {
+                let newDateDict = convertDateToInts(dateToConvert: newDate)
+                guard let newDueDay = newDateDict[dayKey] else { return }
+                currentCategory.dueDay = Int64(newDueDay)
+            }
+            
+            self.successHaptic()
+            
+            self.dismiss(animated: true, completion: nil)
             
         }
         
