@@ -67,7 +67,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         loadSpecificBudgetItems(startID: selectedBudgetTimeFrameStartID)
 //        refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
-        displayedDataTable.rowHeight = 60
+        displayedDataTable.rowHeight = 90
         displayedDataTable.separatorStyle = .none
         
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
@@ -90,13 +90,13 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         if !itemChecked.checked {
             
             // Amount taken away if a paycheck, added back if it was a withdrawal
-            amountToChangeBy = (itemChecked.type == paycheckKey) ? -itemChecked.amount : itemChecked.amount
+            amountToChangeBy = (itemChecked.type == paycheckKey) ? -itemChecked.budgeted : itemChecked.budgeted
             
             // If it wasn't checked, but now it is.
         } else {
             
             // Amount added if a paycheck, taken away if it was a withdrawal
-            amountToChangeBy = (itemChecked.type == paycheckKey) ? itemChecked.amount : -itemChecked.amount
+            amountToChangeBy = (itemChecked.type == paycheckKey) ? itemChecked.budgeted : -itemChecked.budgeted
             
         }
         
@@ -281,7 +281,25 @@ extension BudgetItemsViewController {
         
         cell.dueDayLabel?.text = (item.day > 0) ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
         
-        cell.amountLabel?.text = (item.type == paycheckKey) ? "+ \(convertedAmountToDollars(amount: item.amount))" : "\(convertedAmountToDollars(amount: item.amount))"
+        if item.type == categoryKey {
+            
+            var currentAvailable = Double()
+            
+            if let currentCategory = loadSpecificCategory(named: item.name!) {
+                
+                if indexPath.row == 0 {
+                    
+                    currentAvailable = currentCategory.available
+                    
+                }
+                
+            }
+            
+            cell.amountLeftLabel?.text = "Left: \(convertedAmountToDollars(amount: currentAvailable))"
+            
+            cell.amountBudgetedLabel?.text = "Bdgt: \(convertedAmountToDollars(amount: item.budgeted))"
+            
+        }
         
         return cell
         

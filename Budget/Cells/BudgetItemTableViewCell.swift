@@ -14,9 +14,13 @@ class BudgetItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
-    @IBOutlet weak var dueDayLabel: UILabel!
+    @IBOutlet weak var fromCategoryLabel: UILabel!
     
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var amountLeftLabel: UILabel!
+    
+    @IBOutlet weak var amountBudgetedLabel: UILabel!
+    
+    @IBOutlet weak var dueDayLabel: UILabel!
     
 
     override func awakeFromNib() {

@@ -2,7 +2,8 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BudgetItem" representedClassName=".BudgetItem" syncable="YES" codeGenerationType="class">
         <attribute name="addedToLedger" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="available" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="budgeted" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="checked" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="day" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -44,7 +45,7 @@
         <attribute name="year" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BudgetItem" positionX="36" positionY="63" width="128" height="195"/>
+        <element name="BudgetItem" positionX="36" positionY="63" width="128" height="210"/>
         <element name="Category" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Paycheck" positionX="45" positionY="99" width="128" height="75"/>
         <element name="Period" positionX="36" positionY="36" width="128" height="165"/>

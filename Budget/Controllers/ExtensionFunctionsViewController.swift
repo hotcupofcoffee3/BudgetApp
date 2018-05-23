@@ -265,7 +265,7 @@ extension UIViewController {
     
     // MARK: - Add Something Alert Popup Function
     
-    func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String, moveFundsSegue: String) {
+    func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -285,12 +285,6 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
             
             self.performSegue(withIdentifier: addTransactionSegue, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Move Funds", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: moveFundsSegue, sender: self)
             
         })
         
@@ -379,27 +373,6 @@ extension UIViewController {
         }
         
         forLabel.text = "~ Left in \(categoryName): \(convertedAmountToDollars(amount: category.available)) ~"
-        
-    }
-    
-    
-    // MARK: - Convert Calendar Components to Date
-    
-    func convertComponentsToDate(year: Int, month: Int, day: Int) -> Date {
-        
-        var dateConverted: Date
-        
-        let calender = Calendar(identifier: .gregorian)
-        
-        let components = DateComponents(year: Int(year), month: Int(month), day: Int(day))
-        
-        guard let conversion = calender.date(from: components) else {
-            fatalError("Date components could not be converted.")
-        }
-        
-        dateConverted = conversion
-        
-        return dateConverted
         
     }
     

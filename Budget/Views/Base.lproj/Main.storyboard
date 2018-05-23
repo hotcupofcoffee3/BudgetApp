@@ -163,14 +163,6 @@
             </objects>
             <point key="canvasLocation" x="-1908" y="-1032"/>
         </scene>
-        <!--Allocate-->
-        <scene sceneID="IfG-NH-nLE">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Allocate" id="XbA-eI-m3E" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lcv-Cu-JFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-600" y="-510"/>
-        </scene>
         <!--Add Or Edit Category View Controller-->
         <scene sceneID="PnU-1q-BOK">
             <objects>
@@ -198,7 +190,7 @@
                                 </items>
                             </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Zmi-vv-DJS" userLabel="Add Category Stack">
-                                <rect key="frame" x="20" y="112" width="335" height="190"/>
+                                <rect key="frame" x="20" y="112" width="335" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hU-hF-N6u" userLabel="Title View">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
@@ -276,50 +268,6 @@
                                             <constraint firstItem="QSS-nP-gcy" firstAttribute="top" secondItem="cng-ed-s01" secondAttribute="top" constant="10" id="u3v-dr-maP"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOg-Hi-sDC" userLabel="Allocate View">
-                                        <rect key="frame" x="0.0" y="140" width="335" height="50"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="TIN-0e-KJf" userLabel="Allocate Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allocate:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHY-1t-KIS" userLabel="Allocate">
-                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="KfQ-r6-iRj"/>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="xID-J9-Rd2"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iTW-LQ-gtu" userLabel="Switch View">
-                                                        <rect key="frame" x="105" y="0.0" width="230" height="50"/>
-                                                        <subviews>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="t6E-b7-vHJ" userLabel="Allocate">
-                                                                <rect key="frame" x="91" y="9.5" width="51" height="31"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="49" id="J1Z-ps-1GQ"/>
-                                                                </constraints>
-                                                                <color key="onTintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </switch>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="t6E-b7-vHJ" firstAttribute="centerX" secondItem="iTW-LQ-gtu" secondAttribute="centerX" id="21t-Ro-iEo"/>
-                                                            <constraint firstItem="t6E-b7-vHJ" firstAttribute="centerY" secondItem="iTW-LQ-gtu" secondAttribute="centerY" id="GYE-UD-2pZ"/>
-                                                        </constraints>
-                                                    </view>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="TIN-0e-KJf" secondAttribute="trailing" id="08k-gk-URn"/>
-                                            <constraint firstItem="TIN-0e-KJf" firstAttribute="leading" secondItem="uOg-Hi-sDC" secondAttribute="leading" id="7Ym-Zn-yYb"/>
-                                            <constraint firstAttribute="bottom" secondItem="TIN-0e-KJf" secondAttribute="bottom" id="E3y-Ki-SZY"/>
-                                            <constraint firstAttribute="height" constant="50" id="ofv-DH-W3A"/>
-                                            <constraint firstItem="TIN-0e-KJf" firstAttribute="top" secondItem="uOg-Hi-sDC" secondAttribute="top" id="r16-7h-cKA"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unallocated: $100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49r-Dq-A83">
@@ -329,7 +277,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jE-bY-Rzn" userLabel="Due Date View">
-                                <rect key="frame" x="20" y="322" width="335" height="50"/>
+                                <rect key="frame" x="20" y="252" width="335" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3CJ-jA-u87" userLabel="Due Date Stack">
                                         <rect key="frame" x="10" y="10" width="315" height="30"/>
@@ -375,13 +323,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brs-4a-HOv" userLabel="Add Category Warning Label">
-                                <rect key="frame" x="20" y="382" width="335" height="0.0"/>
+                                <rect key="frame" x="20" y="312" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.1658303539" blue="0.13616003339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8V-Gw-KiM">
-                                <rect key="frame" x="100" y="392" width="175" height="54"/>
+                                <rect key="frame" x="100" y="322" width="175" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="GPL-hq-HHJ"/>
                                     <constraint firstAttribute="height" constant="54" id="tiz-D8-nUV"/>
@@ -418,13 +366,11 @@
                         <viewLayoutGuide key="safeArea" id="aeT-Hq-GGT"/>
                     </view>
                     <connections>
-                        <outlet property="allocateView" destination="uOg-Hi-sDC" id="aIZ-eB-FLg"/>
                         <outlet property="amountView" destination="cng-ed-s01" id="WLe-Az-SRO"/>
                         <outlet property="backButton" destination="2oE-23-8FR" id="aBG-wX-Vra"/>
                         <outlet property="balanceOnNavBar" destination="6YZ-eR-ZXu" id="M6P-MV-GL2"/>
                         <outlet property="categoryAmountTextField" destination="0qq-T4-TeK" id="Po0-WG-6On"/>
                         <outlet property="categoryNameTextField" destination="Ekd-UJ-C6E" id="6gm-UR-6Sf"/>
-                        <outlet property="currentAllocationStatus" destination="t6E-b7-vHJ" id="WyK-gG-lEo"/>
                         <outlet property="dateLabel" destination="AAL-PX-JrJ" id="hHy-6g-Xc6"/>
                         <outlet property="dueDateSwitch" destination="Mef-yf-rXm" id="KjZ-Vh-GQ6"/>
                         <outlet property="nameView" destination="6hU-hF-N6u" id="kng-g5-Siv"/>
@@ -1017,7 +963,6 @@
                         <segue destination="hY6-l5-vLB" kind="show" identifier="categoriesToAddOrEditCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="categoriesToAddOrEditTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="categoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
-                        <segue destination="XbA-eI-m3E" kind="show" identifier="categoriesToAllocateSegue" id="rJZ-ef-c3q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1870,7 +1815,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hBK-bW-oVV" userLabel="Amount Stack">
                                         <rect key="frame" x="10" y="10" width="315" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLj-Wi-PVc">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeted:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLj-Wi-PVc">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="HaC-7T-uRW"/>
@@ -2052,10 +1997,10 @@
                     <connections>
                         <outlet property="addToLedgerSwitch" destination="pWE-dJ-J2k" id="fi3-IR-rFD"/>
                         <outlet property="addToLedgerView" destination="spO-yl-jBY" id="3NW-iY-HSA"/>
-                        <outlet property="amountTextField" destination="RgU-0c-ALT" id="gPB-D8-2lV"/>
-                        <outlet property="amountView" destination="qBZ-7K-ncy" id="GXS-lY-od1"/>
                         <outlet property="backButton" destination="mmN-11-yfi" id="hZJ-uI-dYd"/>
                         <outlet property="balanceOnNavBar" destination="Ykr-om-ovI" id="e3c-50-N8J"/>
+                        <outlet property="budgetedTextField" destination="RgU-0c-ALT" id="aUV-nh-gdK"/>
+                        <outlet property="budgetedView" destination="qBZ-7K-ncy" id="FZc-Io-Dbd"/>
                         <outlet property="categoryLabel" destination="nEA-za-PRI" id="rfT-L4-aNt"/>
                         <outlet property="categoryView" destination="SYC-bM-PZ1" id="Gwp-M2-gTN"/>
                         <outlet property="dateLabel" destination="0tR-HV-uaJ" id="9Ij-6M-aYc"/>

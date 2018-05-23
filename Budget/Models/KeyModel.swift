@@ -91,7 +91,6 @@ let addOrEditPaycheckToDatePickerSegueKey = "addOrEditPaycheckToDatePickerSegue"
 // Categories to others
 let categoriesToAddOrEditCategorySegueKey = "categoriesToAddOrEditCategorySegue"
 let categoriesToAddOrEditTransactionSegueKey = "categoriesToAddOrEditTransactionSegue"
-let categoriesToAllocateSegueKey = "categoriesToAllocateSegue"
 let categoriesToTransactionsSegueKey = "categoriesToTransactionsSegue"
 
 

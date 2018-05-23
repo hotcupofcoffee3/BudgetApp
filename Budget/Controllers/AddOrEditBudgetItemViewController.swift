@@ -72,9 +72,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @IBOutlet weak var categoryView: UIView!
     
-    @IBOutlet weak var amountView: UIView!
+    @IBOutlet weak var budgetedView: UIView!
     
-    @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var budgetedTextField: UITextField!
     
     @IBOutlet weak var dueDateView: UIView!
     
@@ -248,7 +248,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         guard let currentItem = editableBudgetItem else { return }
         guard let name = nameTextField.text else { return }
-        guard let amount = amountTextField.text else { return }
+        guard let amount = budgetedTextField.text else { return }
         guard let category = categoryLabel.text else { return }
         
         var dueDate: Date?
@@ -304,7 +304,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     func addBudgetItemSubmission(newItemName name: String, with amount: Double, toCategory categoryName: String, withDueDate: Date?) {
         
         nameTextField.resignFirstResponder()
-        amountTextField.resignFirstResponder()
+        budgetedTextField.resignFirstResponder()
         
         var year = Int()
         var month = Int()
@@ -326,7 +326,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
-        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: type, named: name, amount: amount, category: categoryName, year: year, month: month, day: day)
+        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day)
         
         // TODO: Add function to add a transaction to the ledger based on the info here.
         // TODO: Also change 'createAndSaveNewBudgetItem' to include the 'addedToLedger' and 'checked' items, so that they can be manually set here.
@@ -402,7 +402,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
             
-            if currentBudgetItem.amount > newCategoryItself.budgeted && currentBudgetItem.type == withdrawalKey {
+            if currentBudgetItem.available > newCategoryItself.available && currentBudgetItem.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "There are not enough funds budgeted in that category for this.")
                 
@@ -429,7 +429,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         guard let currentItem = editableBudgetItem else { return }
         
-        if let newAmount = amountTextField.text {
+        if let newAmount = budgetedTextField.text {
             
             var newAmountDouble = Double()
             
@@ -448,7 +448,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 // *** All impossible entries are taken care of.
             } else {
                 
-                // Sets 'newAmountDouble' to the number entered in the 'amountTextField'.
+                // Sets 'newAmountDouble' to the number entered in the 'budgetedTextField'.
                 if let newAmountDoubleConfirmed = Double(newAmount) {
                 
                     newAmountDouble = newAmountDoubleConfirmed
@@ -465,7 +465,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
                     
-                } else if newAmountDouble > (currentCategory.available + currentItem.amount) && typeOfItem == .withdrawal {
+                } else if newAmountDouble > (currentCategory.available + currentItem.budgeted) && typeOfItem == .withdrawal {
                     
                     failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
                     
@@ -513,9 +513,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         
         // Amount
-        guard let newAmount = Double(amountTextField.text!) else { return }
+        guard let newAmount = Double(budgetedTextField.text!) else { return }
         var changeAmount = false
-        if newAmount != currentBudgetItem.amount {
+        if newAmount != currentBudgetItem.budgeted {
             changeAmount = true
         }
         
@@ -709,7 +709,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @objc func amountTapped() {
         
-        amountTextField.becomeFirstResponder()
+        budgetedTextField.becomeFirstResponder()
         
     }
     
@@ -790,7 +790,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         nameView.addGestureRecognizer(nameTap)
         categoryView.addGestureRecognizer(categoryTap)
-        amountView.addGestureRecognizer(amountTap)
+        budgetedView.addGestureRecognizer(amountTap)
         dueDateView.addGestureRecognizer(dueDateTap)
         addToLedgerView.addGestureRecognizer(addToLedgerTap)
         
@@ -824,7 +824,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             toggleTypeSegmentInfo(forItem: currentBudgetItem)
             nameTextField.text = name
-            amountTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.amount))"
+            budgetedTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.budgeted))"
             toggleCategoryLabelInfo(forItem: currentBudgetItem)
             
             if currentBudgetItem.day > 0 {
@@ -858,7 +858,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         }
         
         self.nameTextField.delegate = self
-        self.amountTextField.delegate = self
+        self.budgetedTextField.delegate = self
         
     }
     

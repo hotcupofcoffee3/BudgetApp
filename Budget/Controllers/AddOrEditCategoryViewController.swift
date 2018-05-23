@@ -365,7 +365,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                     
                     // ***** Go to Allocation Check
                     
-                    submitAllocateForReview()
+                    editSubmission()
                     
                 }
                 
@@ -374,41 +374,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         }
         
     }
-    
-    
-    
-    // *** Allocate Check
-    
-    func submitAllocateForReview() {
-        
-        if currentAllocationStatus.isOn {
-            
-            guard let currentCategory = editableCategory else { return }
-            guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
-            
-            // *** Were there enough funds available in the 'From' Category?
-            if currentCategory.budgeted > unallocatedCategory.available {
-                
-                failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
-                
-                
-                // ***** SUCCESS!
-            } else {
-                
-                // ***** Present confirm popup
-                
-                editSubmission()
-                
-            }
-            
-        } else {
-            
-            editSubmission()
-            
-        }
-        
-    }
-    
     
     
     // *** Show Alert To Confirm Edits
@@ -446,13 +411,8 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             changeDate = true
         }
         
-        
-        // Allocate
-        let willAllocate = currentAllocationStatus.isOn
-        
-        
         // Final confirmation, checking to see if there is even anything to change.
-        if !changeName && !changeAmount && !changeDate && !willAllocate {
+        if !changeName && !changeAmount && !changeDate {
             
             failureWithWarning(label: warningLabel, message: "There is nothing to update.")
             
@@ -463,9 +423,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             }
             if changeAmount {
                 budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
-            }
-            if willAllocate {
-                budget.shiftFunds(withThisAmount: currentCategory.budgeted, from: unallocatedKey, to: currentCategoryName)
             }
             if changeDate {
                 let newDateDict = convertDateToInts(dateToConvert: newDate)

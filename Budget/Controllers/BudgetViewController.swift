@@ -88,11 +88,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 if item.type == paycheckKey {
                     
-                    newRunningTotal += item.amount
+                    newRunningTotal += item.budgeted
                     
                 } else {
                     
-                    newRunningTotal -= item.amount
+                    newRunningTotal -= item.budgeted
                     
                 }
                 

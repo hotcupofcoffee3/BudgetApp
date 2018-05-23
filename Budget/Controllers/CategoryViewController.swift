@@ -79,7 +79,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func addSomething(_ sender: UIButton) {
-        addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey, moveFundsSegue: categoriesToAllocateSegueKey)
+        addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey)
     }
     
     @IBAction func viewAllTransactions(_ sender: UIButton) {
@@ -262,12 +262,10 @@ extension CategoryViewController {
             if category.name == unallocatedKey {
                 
                 cell.categoryBudgetedLabel?.text = "N/A"
-                cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
             } else {
                 
                 cell.categoryBudgetedLabel?.text = "\(convertedAmountToDollars(amount: category.budgeted))"
-                cell.categoryAvailableLabel?.text = "\(convertedAmountToDollars(amount: category.available))"
                 
             }
             

@@ -84,8 +84,8 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     let startDict = convertDateToInts(dateToConvert: start)
     let endDict = convertDateToInts(dateToConvert: end)
     
-    let startDateID = convertedDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
-    let endDateID = convertedDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
+    let startDateID = convertDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
+    let endDateID = convertDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
     
     let budgetedTimeFrameToSave = Period(context: context)
     
@@ -113,14 +113,15 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
 
 // MARK: - Save a new budget item
 
-func createAndSaveNewBudgetItem(timeSpanID: Int, type: String, named: String, amount: Double, category: String, year: Int, month: Int, day: Int) {
+func createAndSaveNewBudgetItem(timeSpanID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int) {
     
     let itemToSave = BudgetItem(context: context)
     
     itemToSave.timeSpanID = Int64(timeSpanID)
     itemToSave.type = type
     itemToSave.name = named
-    itemToSave.amount = amount
+    itemToSave.budgeted = budgeted
+    itemToSave.available = available
     itemToSave.category = category
     itemToSave.year = Int64(year)
     itemToSave.month = Int64(month)
@@ -148,10 +149,9 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
             
         }
         
-        // The 'type' is currently set to "category" until a property for having a 'paycheck' as a category (a depositable category) is added. Nothing is done with it right now, other than simply serving as a placeholder.
         // The 'category' property is set to its own category name.
         // The 'year' and month' properties are set to 0, as they are not used.
-        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: categoryKey, named: category.name!, amount: category.budgeted, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay))
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: categoryKey, named: category.name!, budgeted: category.budgeted, available: 0, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay))
         
     }
     
@@ -159,7 +159,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
     
     for paycheck in budget.paychecks {
         
-        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: paycheckKey, named: paycheck.name!, amount: paycheck.amount, category: unallocatedKey, year: 0, month: 0, day: 0)
+        createAndSaveNewBudgetItem(timeSpanID: startDateID, type: paycheckKey, named: paycheck.name!, budgeted: paycheck.amount, available: 0, category: unallocatedKey, year: 0, month: 0, day: 0)
         
     }
     
@@ -184,15 +184,39 @@ func createAndSaveNewPaycheck(named: String, withAmount amount: Double) {
     // Create and save new budget items based on this.
     loadSavedBudgetedTimeFrames()
     
+    let currentDateIDForAddingPurposes = convertDateToNewCategoryOrPaycheckDateAddInfoForAddingOrDeletingPurposes(dateAdded: Date())
+    
     for period in budget.budgetedTimeFrames {
         
-        createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: paycheckKey, named: named, amount: amount, category: unallocatedKey, year: 0, month: 0, day: 0)
+        if period.endDateID > currentDateIDForAddingPurposes {
+            
+            addPaycheckAsBudgetedItem(period: period, idForAdding: currentDateIDForAddingPurposes, named: named, budgeted: amount)
+            
+        }
         
     }
     
     
     
     saveData()
+    
+}
+
+func addPaycheckAsBudgetedItem(period: Period, idForAdding: Int, named: String, budgeted: Double) {
+    
+    var available = Double()
+    
+    if idForAdding > period.endDateID {
+        
+        available = 0
+        
+    } else if idForAdding > period.startDateID && idForAdding < period.endDateID {
+        
+        available = budgeted
+        
+    }
+    
+    createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: paycheckKey, named: named, budgeted: budgeted, available: available, category: unallocatedKey, year: 0, month: 0, day: 0)
     
 }
 
@@ -207,6 +231,33 @@ func createAndSaveNewPaycheck(named: String, withAmount amount: Double) {
 func createUnallocatedCategory(){
     
     createAndSaveNewCategory(named: unallocatedKey, withBudgeted: 0.0, andAvailable: 0.0, dueDay: 0)
+    
+}
+
+// MARK: - Create Current Budget Time Frame based on Month
+
+func createCurrentTimeFrame(){
+    
+    let currentDate = Date()
+    
+    let dateDict = convertDateToInts(dateToConvert: currentDate)
+    
+    guard let currentMonth = dateDict[monthKey] else { return }
+    guard let currentYear = dateDict[yearKey] else { return }
+    
+    let startDay = 1
+    var endDay = Int()
+    
+    switch currentMonth {
+        case 2: endDay = 28
+        case 4, 6, 9, 11: endDay = 30
+        default: endDay = 31
+    }
+    
+    let startDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: startDay)
+    let endDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: endDay)
+    
+    createAndSaveNewBudgetedTimeFrame(start: startDate, end: endDate)
     
 }
 

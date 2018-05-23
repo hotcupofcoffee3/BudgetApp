@@ -132,8 +132,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         let startDateYYYYMMDD = convertDateInfoToYYYYMMDD(year: startYear, month: startMonth, day: startDay)
         let endDateYYYYMMDD = convertDateInfoToYYYYMMDD(year: endYear, month: endMonth, day: endDay)
         
-        let startID = convertedDateToBudgetedTimeFrameID(timeFrame: startDate, isEnd: false)
-        let endID = convertedDateToBudgetedTimeFrameID(timeFrame: endDate, isEnd: true)
+        let startID = convertDateToBudgetedTimeFrameID(timeFrame: startDate, isEnd: false)
+        let endID = convertDateToBudgetedTimeFrameID(timeFrame: endDate, isEnd: true)
         
         
         if startDateYYYYMMDD > endDateYYYYMMDD {
