@@ -275,7 +275,7 @@ extension BudgetItemsViewController {
             
         }
         
-        cell.addedToLedgerImage.image = item.addedToLedger ? UIImage(named: "postit.png") : UIImage(named: "")
+        cell.addedToLedgerImage.image = item.addedToLedger ? UIImage(named: "postit.png") : nil
         
         cell.nameLabel?.text = "\(item.name!)"
         
@@ -317,7 +317,7 @@ extension BudgetItemsViewController {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if budget.budgetItems[indexPath.row].type == oneTimeAddedKey {
+        if budget.budgetItems[indexPath.row].type != categoryKey && budget.budgetItems[indexPath.row].type != paycheckKey {
             
             if editingStyle == .delete {
                 

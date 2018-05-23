@@ -202,7 +202,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
         
-        self.displayedDataTable.rowHeight = 90
+        self.displayedDataTable.rowHeight = 78.5
         
         self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
         
