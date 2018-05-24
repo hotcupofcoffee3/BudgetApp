@@ -11,18 +11,21 @@ import UIKit
 
 // Query Keys
 let nameMatchesKey = "name MATCHES %@"
+let typeMatchesKey = "type MATCHES %@"
 let idMatchesKey = "id MATCHES %@"
 let categoryMatchesKey = "forCategory MATCHES %@"
 let startDateIDMatchesKey = "startDateID MATCHES %@"
 let idAsDateEarlierThanKey = "id <= %@"
 let idAsDateLaterThanKey = "id >= %@"
-let timeSpanIDMatchesKey = "timeSpanID MATCHES %@"
+let periodStartIDMatchesKey = "periodStartID MATCHES %@"
 
 
 // Class keys
 let categoryKey = "Category"
 let transactionKey = "Transaction"
 let paycheckKey = "Paycheck"
+let depositKey = "Deposit"
+let withdrawalKey = "Withdrawal"
 
 
 // Category Keys
@@ -35,8 +38,6 @@ let unallocatedKey = "Unallocated"
 // Transaction Keys
 let idKey = "id"
 let typeKey = "type"
-let depositKey = "deposit"
-let withdrawalKey = "withdrawal"
 let titleKey = "title"
 let amountKey = "amount"
 let inTheAmountOfKey = "inTheAmountOf"

@@ -20,24 +20,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="295" height="89.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postit" translatesAutoresizingMaskIntoConstraints="NO" id="Th7-kZ-9B4">
-                        <rect key="frame" x="0.0" y="35" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="Hq1-9c-FoZ"/>
-                            <constraint firstAttribute="height" constant="20" id="JgN-SQ-OS0"/>
-                        </constraints>
-                    </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wkI-OU-vVJ" userLabel="Name &amp; Category Stack">
-                        <rect key="frame" x="30" y="11" width="160" height="68"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wkI-OU-vVJ" userLabel="Name &amp; Category Stack">
+                        <rect key="frame" x="30" y="11" width="160" height="41.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" text="Eating Out" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ieo-ww-P6a">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="33"/>
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From: Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xnf-iO-bGS" userLabel="From Category Label">
-                                <rect key="frame" x="0.0" y="38" width="160" height="30"/>
+                                <rect key="frame" x="0.0" y="25" width="160" height="16.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16.5" id="JjF-PJ-6xK"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.39919838990000001" green="0.62303551450000005" blue="0.63855395049999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -47,39 +43,45 @@
                             <constraint firstAttribute="width" constant="160" id="tY0-Ys-eNi"/>
                         </constraints>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kwX-pq-stx" userLabel="Amounts &amp; Due Day Stack">
-                        <rect key="frame" x="200" y="10" width="94" height="69.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="kwX-pq-stx" userLabel="Amounts &amp; Due Day Stack">
+                        <rect key="frame" x="200" y="10" width="88.5" height="69.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Left: $159.67" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI" userLabel="Left Label">
-                                <rect key="frame" x="0.0" y="0.0" width="94" height="23"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bal: $159.67" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI" userLabel="Left Label">
+                                <rect key="frame" x="0.0" y="0.0" width="88.5" height="22.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bdgt: $200.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-A5-5fq" userLabel="Budget Label">
-                                <rect key="frame" x="0.0" y="23" width="94" height="23.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bgt: $200.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-A5-5fq" userLabel="Budget Label">
+                                <rect key="frame" x="0.0" y="23.5" width="88.5" height="22.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Due: 28th" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGe-jb-WtZ">
-                                <rect key="frame" x="0.0" y="46.5" width="94" height="23"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <rect key="frame" x="0.0" y="47" width="88.5" height="22.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                     </stackView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postit" translatesAutoresizingMaskIntoConstraints="NO" id="Th7-kZ-9B4">
+                        <rect key="frame" x="0.0" y="10" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="Hq1-9c-FoZ"/>
+                            <constraint firstAttribute="height" constant="20" id="JgN-SQ-OS0"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Th7-kZ-9B4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="1GQ-g1-ux3"/>
+                    <constraint firstItem="Th7-kZ-9B4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="608-BC-t7B"/>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="65m-4k-BCA"/>
                     <constraint firstItem="wkI-OU-vVJ" firstAttribute="leading" secondItem="Th7-kZ-9B4" secondAttribute="trailing" constant="10" id="6CA-BF-xyX"/>
                     <constraint firstAttribute="bottom" secondItem="kwX-pq-stx" secondAttribute="bottom" constant="10" id="9iL-oG-7kY"/>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="leading" secondItem="wkI-OU-vVJ" secondAttribute="trailing" constant="10" id="Dum-oK-frz"/>
                     <constraint firstItem="Th7-kZ-9B4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Fb1-q0-3v6"/>
                     <constraint firstItem="wkI-OU-vVJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="RFX-rV-GWH"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="wkI-OU-vVJ" secondAttribute="bottom" id="ie1-v0-NQD"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

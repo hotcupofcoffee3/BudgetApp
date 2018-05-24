@@ -157,26 +157,28 @@ class MainScreen: UIViewController {
                     // An initial Deposit
                     budget.addTransaction(onHold: false, type: .deposit, title: "Madelyn's Paycheck", forCategory: unallocatedKey, inTheAmountOf: 1700.00, year: 2018, month: 5, day: 15)
                     
-                    // Two categories with some budgeted amounts
+                    // Three categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0, withDueDay: 0)
                     budget.addCategory(named: "Extra", withBudgeted: 50.0, withDueDay: 0)
+                    budget.addCategory(named: "Netflix", withBudgeted: 14.15, withDueDay: 7)
                     
-                    // Allocate their budgeted amounts into their available amounts
-                    budget.shiftFunds(withThisAmount: 200, from: unallocatedKey, to: "Food")
-                    budget.shiftFunds(withThisAmount: 50, from: unallocatedKey, to: "Extra")
-                    
-                    // Two transactions with some amounts.
+                    // Three transactions with some amounts.
                     budget.addTransaction(onHold: false, type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 5, day: 16)
                     budget.addTransaction(onHold: false, type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 5, day: 17)
+                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Starbucks", forCategory: "Extra", inTheAmountOf: 2.98, year: 2018, month: 5, day: 24)
                     
                     //One Paycheck
                     createAndSaveNewPaycheck(named: "Madelyn's Paycheck", withAmount: 1756.84)
                     
-                    // One Budget Period
-                    budget.addTimeFrame(start: Date(), end: Date())
+                    // One Past and One Future Budget Period
                     
-                    loadSavedCategories()
-                    loadSavedTransactions(descending: true)
+                    let pastStartDate = convertComponentsToDate(year: 2018, month: 3, day: 1)
+                    let pastEndDate = convertComponentsToDate(year: 2018, month: 3, day: 31)
+                    budget.addTimeFrame(start: pastStartDate, end: pastEndDate)
+                    
+                    let futureStartDate = convertComponentsToDate(year: 2018, month: 12, day: 1)
+                    let futureEndDate = convertComponentsToDate(year: 2018, month: 12, day: 31)
+                    budget.addTimeFrame(start: futureStartDate, end: futureEndDate)
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

@@ -38,7 +38,6 @@
 		B5E8316A20A4DA660068DD05 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */; };
 		B5E8316D20A4DA720068DD05 /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8316B20A4DA720068DD05 /* BudgetTableViewCell.swift */; };
 		B5E8316E20A4DA720068DD05 /* BudgetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E8316C20A4DA720068DD05 /* BudgetTableViewCell.xib */; };
-		B5EAB52E20B6269800BC7859 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EAB52D20B6269800BC7859 /* Plan.swift */; };
 		B5EE2BA320AA33FE0059CFA4 /* BudgetItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */; };
 		B5EE2BA420AA33FE0059CFA4 /* BudgetItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */; };
 		B5EE2BC620AA5CA90059CFA4 /* AddOrEditPaycheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE2BC520AA5CA90059CFA4 /* AddOrEditPaycheckViewController.swift */; };
@@ -87,7 +86,6 @@
 		B5E8316820A4DA660068DD05 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
 		B5E8316B20A4DA720068DD05 /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		B5E8316C20A4DA720068DD05 /* BudgetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetTableViewCell.xib; sourceTree = "<group>"; };
-		B5EAB52D20B6269800BC7859 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetItemTableViewCell.swift; sourceTree = "<group>"; };
 		B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetItemTableViewCell.xib; sourceTree = "<group>"; };
 		B5EE2BC520AA5CA90059CFA4 /* AddOrEditPaycheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditPaycheckViewController.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				B5380EB22073D3430061C9E5 /* BudgetModel.swift */,
 				B5E052432074676300C69153 /* LoadSavedBudgetInfoModel.swift */,
 				B5E05245207467BF00C69153 /* SaveBudgetInfoModel.swift */,
-				B5EAB52D20B6269800BC7859 /* Plan.swift */,
 				B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */,
 			);
 			path = Models;
@@ -328,7 +325,6 @@
 				B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */,
 				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
-				B5EAB52E20B6269800BC7859 /* Plan.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddOrEditCategoryViewController.swift in Sources */,
 				B5F401D3209B958F00103C7F /* CategoryTableViewCell.swift in Sources */,
 				B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */,

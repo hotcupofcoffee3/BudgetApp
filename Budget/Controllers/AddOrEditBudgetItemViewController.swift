@@ -326,7 +326,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
-        createAndSaveNewBudgetItem(timeSpanID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day)
+        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day)
         
         // TODO: Add function to add a transaction to the ledger based on the info here.
         // TODO: Also change 'createAndSaveNewBudgetItem' to include the 'addedToLedger' and 'checked' items, so that they can be manually set here.
@@ -400,9 +400,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         if currentBudgetItem.type != paycheckKey {
             
-            guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
+            guard let newCategoryAsBudgetItem = loadSpecificBudgetItem(startID: Int(currentBudgetItem.periodStartID), named: newSelectedCategoryName, type: categoryKey) else { return }
             
-            if currentBudgetItem.available > newCategoryItself.available && currentBudgetItem.type == withdrawalKey {
+            if currentBudgetItem.budgeted > newCategoryAsBudgetItem.available && currentBudgetItem.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "There are not enough funds budgeted in that category for this.")
                 
@@ -456,7 +456,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 }
                 
                 guard let categoryName = categoryLabel.text else { return }
-                guard let currentCategory = loadSpecificCategory(named: categoryName) else { return }
+                guard let currentBudgetItemAsCategory = loadSpecificBudgetItem(startID: Int(currentItem.periodStartID), named: categoryName, type: categoryKey) else { return }
                   
                     
                 // *** Was the amount entered less than 0?
@@ -465,7 +465,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
                     
-                } else if newAmountDouble > (currentCategory.available + currentItem.budgeted) && typeOfItem == .withdrawal {
+                } else if newAmountDouble > (currentBudgetItemAsCategory.available + currentItem.budgeted) && typeOfItem == .withdrawal {
                     
                     failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
                     

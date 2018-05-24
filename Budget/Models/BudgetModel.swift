@@ -35,15 +35,11 @@ class Budget {
 
     func updateBalance() {
 
-        var newBalance = 0.0
+//        var newBalance = 0.0
 
-        for category in categories {
+        // TODO: - FIX BALANCE TO ONLY BE FOR CURRENT BUDGETED TIME PERIOD.
 
-            newBalance += category.available
-
-        }
-
-        balance = newBalance
+//        balance = newBalance
 
     }
     
@@ -67,7 +63,7 @@ class Budget {
                 
             }
             
-            createAndSaveNewCategory(named: named, withBudgeted: amount, andAvailable: 0.0, dueDay: dueDay)
+            createAndSaveNewCategory(named: named, withBudgeted: amount, dueDay: dueDay)
             
             
             // Create and save new budget items based on this.
@@ -85,29 +81,32 @@ class Budget {
                 
             }
             
-            sortCategoriesByKey(withUnallocated: true)
             saveData()
             
         }
-        
+
     }
     
     
     func addCategoryAsBudgetedItem(period: Period, idForAdding: Int, named: String, budgeted: Double, dueDay: Int) {
         
-        var available = Double()
-        
-        if idForAdding > period.endDateID {
+        if named != unallocatedKey {
             
-            available = 0
+            var available = Double()
             
-        } else if idForAdding > period.startDateID && idForAdding < period.endDateID {
+            if idForAdding > period.endDateID {
+                
+                available = 0
+                
+            } else if idForAdding > period.startDateID && idForAdding < period.endDateID {
+                
+                available = budgeted
+                
+            }
             
-            available = budgeted
+            createAndSaveNewBudgetItem(periodStartID: Int(period.startDateID), type: categoryKey, named: named, budgeted: budgeted, available: available, category: categoryKey, year: 0, month: 0, day: dueDay)
             
         }
-        
-        createAndSaveNewBudgetItem(timeSpanID: Int(period.startDateID), type: categoryKey, named: named, budgeted: budgeted, available: available, category: categoryKey, year: 0, month: 0, day: dueDay)
         
     }
     
@@ -118,11 +117,11 @@ class Budget {
     func deleteCategory (named: String) {
         
         if named != unallocatedKey {
-
+            
             // Delete budget items based on this.
-           
+            
             guard let categoryToDelete = loadSpecificCategory(named: named) else { return }
-
+            
             let currentDateIDForDeletingPurposes = convertDateToNewCategoryOrPaycheckDateAddInfoForAddingOrDeletingPurposes(dateAdded: Date())
             
             loadSavedBudgetedTimeFrames()
@@ -132,9 +131,9 @@ class Budget {
                 // If the end date is greater than today's date; in other words, the category being deleted for the current budget time frame and the future ones, but not the past ones, as the 'endDateID' would be less (in the past) than the current date.
                 if period.endDateID > currentDateIDForDeletingPurposes {
                     
-                    loadSpecificBudgetItems(startID: Int(period.startDateID))
+                    let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
                     
-                    for item in budgetItems {
+                    for item in items {
                         
                         if categoryToDelete.name == item.name && item.type == categoryKey {
                             
@@ -148,7 +147,6 @@ class Budget {
                 
             }
             
-
             if transactions.count > 0 {
                 
                 for transaction in transactions {
@@ -163,14 +161,9 @@ class Budget {
                 
             }
             
-            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
             guard let deletedCategory = loadSpecificCategory(named: named) else { return }
             
-            unallocated.available += deletedCategory.available
-            
-            if named != unallocatedKey {
-                context.delete(deletedCategory)
-            }
+            context.delete(deletedCategory)
             
             saveData()
             
@@ -220,8 +213,6 @@ class Budget {
         
         guard let categoryToUpdate = loadSpecificCategory(named: oldCategoryName) else { return }
         
-        
-        
         // Update budget items based on updating Category
         updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: oldCategoryName, newName: newCategoryName, oldAmount: categoryToUpdate.budgeted, newAmount: newCategoryBudgetedAmount)
         
@@ -265,9 +256,9 @@ class Budget {
     
     func deleteTimeFrame(period: Period) {
         
-        loadSpecificBudgetItems(startID: Int(period.startDateID))
+        let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
         
-        for item in budgetItems {
+        for item in items {
             
             context.delete(item)
             
@@ -283,9 +274,9 @@ class Budget {
         
         let newStartID = convertDateToBudgetedTimeFrameID(timeFrame: newStartDate, isEnd: false)
         
-        loadSpecificBudgetItems(startID: currentStartID)
-        for item in budgetItems {
-            item.timeSpanID = Int64(newStartID)
+        let items = loadSpecificBudgetItems(startID: currentStartID)
+        for item in items {
+            item.periodStartID = Int64(newStartID)
         }
         
         
@@ -322,6 +313,54 @@ class Budget {
         currentTimeFrame.endYear = Int64(newYear)
         currentTimeFrame.endMonth = Int64(newMonth)
         currentTimeFrame.endDay = Int64(newDay)
+        
+        saveData()
+        
+    }
+    
+    func updateBalanceForSpecificTimeFrame(withStartID id: Int) {
+        
+        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
+        
+        var balance = Double()
+        
+        let items = loadSpecificBudgetItems(startID: id)
+        
+        for item in items {
+            
+            if item.type == paycheckKey || item.type == depositKey {
+                
+                balance += item.available
+                
+            } else {
+                
+                balance -= item.available
+                
+            }
+            
+        }
+        
+        period.balance = balance
+        
+        saveData()
+        
+    }
+    
+    func updateUnallocatedForSpecificTimeFrame(withStartID id: Int) {
+        
+        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
+        
+        var unallocated = period.balance
+        
+        let items = loadSpecificBudgetItems(startID: id)
+        
+        for item in items {
+            
+            unallocated -= item.budgeted
+            
+        }
+        
+        period.unallocated = unallocated
         
         saveData()
         
@@ -396,7 +435,7 @@ class Budget {
     func updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: String, newName: String, oldAmount: Double, newAmount: Double) {
         
         // Update budget items based on updating Category
-        loadAllBudgetItems()
+        loadSavedBudgetItems()
         
         if budgetItems.count > 0 {
             
@@ -435,29 +474,13 @@ class Budget {
         let formattedTransactionID = convertDateComponentsToTransactionID(year: year, month: month, day: day)
         
         if type == .deposit {
-            
-            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            
-            if onHold == false {
-                
-                unallocated.available += amount
-                
-            }
-            
+           
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
             
         } else if type == .withdrawal {
             
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
-            
-            guard let category = loadSpecificCategory(named: thisCategory)  else { return }
-            
-            if onHold == false {
-                
-                category.available -= amount
-                
-            }
-            
+           
         }
         
         sortTransactionsDescending()
@@ -495,32 +518,6 @@ class Budget {
         
         guard let index = transactions.index(of: transactionToDelete) else { return }
         
-        guard let categoryName = transactionToDelete.forCategory else { return }
-        let amount = transactionToDelete.inTheAmountOf
-        
-        if transactionToDelete.type == depositKey {
-            
-            guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-            
-            if transactionToDelete.onHold == false {
-                
-                unallocated.available -= amount
-                
-            }
-            
-        } else if transactionToDelete.type == withdrawalKey {
-            
-            // Add amount back to category
-            guard let categoryToPutBackTo = loadSpecificCategory(named: categoryName) else { return }
-            
-            if transactionToDelete.onHold == false {
-                
-                categoryToPutBackTo.available += amount
-                
-            }
-            
-        }
-        
         // Delete transaction from the index in transaction array
         context.delete(transactionToDelete)
         transactions.remove(at: index)
@@ -548,19 +545,16 @@ class Budget {
     func updateTransactionAmount(amount newAmount: Double, withID id: Int) {
         
         guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
-        
-        guard let transactionCategory = currentTransaction.forCategory else { return }
-        guard let category = loadSpecificCategory(named: transactionCategory) else { return }
-        
+       
         if currentTransaction.type == depositKey {
             
-            category.available -= currentTransaction.inTheAmountOf
-            category.available += newAmount
+//            category.available -= currentTransaction.inTheAmountOf
+//            category.available += newAmount
             
         } else {
             
-            category.available += currentTransaction.inTheAmountOf
-            category.available -= newAmount
+//            category.available += currentTransaction.inTheAmountOf
+//            category.available -= newAmount
             
         }
         
@@ -608,45 +602,14 @@ class Budget {
     func updateTransactionCategory(category newCategoryName: String, withID id: Int) {
         
         guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
-        guard let oldTransactionCategoryName = currentTransaction.forCategory else { return }
-        
-        guard let oldCategory = loadSpecificCategory(named: oldTransactionCategoryName) else { return }
-        guard let newCategory = loadSpecificCategory(named: newCategoryName) else { return }
-        
+    
         if currentTransaction.type == withdrawalKey {
             
-            oldCategory.available += currentTransaction.inTheAmountOf
-            newCategory.available -= currentTransaction.inTheAmountOf
+           
             
         }
         
         currentTransaction.forCategory = newCategoryName
-        
-        saveData()
-        
-    }
-    
-    
-    
-    func updateBalanceAndAvailableForOnHold(withID id: Int) {
-        
-        guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
-        
-        guard let currentCategoryName = currentTransaction.forCategory else { return }
-        
-        guard let category = loadSpecificCategory(named: currentCategoryName) else { return }
-        
-        if currentTransaction.onHold == true {
-            
-            category.available += currentTransaction.inTheAmountOf
-            updateBalance()
-            
-        } else if currentTransaction.onHold == false {
-            
-            category.available -= currentTransaction.inTheAmountOf
-            updateBalance()
-            
-        }
         
         saveData()
         
@@ -686,7 +649,7 @@ class Budget {
         
         // Delete budget items based on this.
         
-        loadAllBudgetItems()
+        loadSavedBudgetItems()
         
         for item in budgetItems {
             
@@ -733,10 +696,6 @@ class Budget {
         
         if let item = categoryItem {
         
-            guard let matchingCategory = loadSpecificCategory(named: item.name!) else { return }
-            
-            matchingCategory.available += item.budgeted
-            
             item.checked = true
             item.addedToLedger = true
             
@@ -797,11 +756,11 @@ class Budget {
     
     func shiftFunds (withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
         
-        guard let fromCategory = loadSpecificCategory(named: fromCategory) else { return }
-        guard let toCategory = loadSpecificCategory(named: toCategory) else { return }
-        
-        toCategory.available += amount
-        fromCategory.available -= amount
+        if fromCategory == unallocatedKey {
+            
+            
+            
+        }
         
         saveData()
         
@@ -825,7 +784,7 @@ class Budget {
         loadSavedTransactions(descending: true)
         loadSavedBudgetedTimeFrames()
         loadSavedPaychecks()
-        loadAllBudgetItems()
+        loadSavedBudgetItems()
 
         balance = 0.0
         
@@ -854,11 +813,10 @@ class Budget {
             context.delete(budgetItem)
             
         }
-        
+       
         createUnallocatedCategory()
         createCurrentTimeFrame()
 
-        loadSavedCategories()
         loadSavedBudgetedTimeFrames()
         
 //        UserDefaults.standard.set(nil, forKey: categoryKey)

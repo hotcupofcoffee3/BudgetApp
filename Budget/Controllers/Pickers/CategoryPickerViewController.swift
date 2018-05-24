@@ -62,7 +62,7 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     func updateCurrentCategoryBalanceLabel(forCategory categoryName: String) {
         
         if let selectedCategory = loadSpecificCategory(named: categoryName) {
-            currentCategoryBalanceLabel.text = "\"\(categoryName)\" has \(convertedAmountToDollars(amount: selectedCategory.available)) left."
+            currentCategoryBalanceLabel.text = "\"\(categoryName)\" has \(convertedAmountToDollars(amount: selectedCategory.budgeted)) left."
         }
         
     }

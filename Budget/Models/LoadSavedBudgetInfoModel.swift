@@ -292,11 +292,13 @@ func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
 
 // Load Specific Budget Items Based on StartID
 
-func loadSpecificBudgetItems(startID: Int) {
+func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
+    
+    var budgetItemArray = [BudgetItem]()
     
     let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
     
-    request.predicate = NSPredicate(format: timeSpanIDMatchesKey, String(startID))
+    request.predicate = NSPredicate(format: periodStartIDMatchesKey, String(startID))
     
     let sortByDay: NSSortDescriptor = NSSortDescriptor(key: dayKey, ascending: true)
     
@@ -306,13 +308,65 @@ func loadSpecificBudgetItems(startID: Int) {
     
     do {
         
-        budget.budgetItems = try context.fetch(request)
+        budgetItemArray = try context.fetch(request)
         
     } catch {
         
         print("Error loading selected budget items: \(error)")
         
     }
+    
+    return budgetItemArray
+    
+}
+
+
+
+// Load Specific Budget Item Based on StartID, Name, and Type
+
+func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> BudgetItem? {
+    
+    var item: BudgetItem?
+    
+    var matchingItemArray = [BudgetItem]()
+    
+    let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
+    
+    let startIDPredicate = NSPredicate(format: periodStartIDMatchesKey, String(startID))
+    
+    let namedPredicate = NSPredicate(format: nameMatchesKey, named)
+    
+    let typePredicate = NSPredicate(format: typeMatchesKey, type)
+    
+    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startIDPredicate, namedPredicate, typePredicate])
+
+    do {
+        
+        matchingItemArray = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading selected budget item: \(error)")
+        
+    }
+    
+    if matchingItemArray.count > 1 {
+        
+        print("Error. There were \(matchingItemArray.count) entries that matched that start date.")
+        item = nil
+        
+    } else if matchingItemArray.count == 0 {
+        
+        print("There was nothing in the array")
+        item = nil
+        
+    } else if matchingItemArray.count == 1 {
+        
+        item = matchingItemArray[0]
+        
+    }
+    
+    return item
     
 }
 
@@ -321,7 +375,7 @@ func loadSpecificBudgetItems(startID: Int) {
 
 // Load All Budget Items Based on StartID (Just to make sure it's all working properly.
 
-func loadAllBudgetItems() {
+func loadSavedBudgetItems() {
     
     let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
     

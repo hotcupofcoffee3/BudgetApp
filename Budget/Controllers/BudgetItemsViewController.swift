@@ -24,6 +24,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Declared
     // *****
     
+    var budgetItems = [BudgetItem]()
+    
     var editBudgetItem = false
     
     var isNewBudgetItem = true
@@ -64,7 +66,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func loadNecessaryInfo() {
         
-        loadSpecificBudgetItems(startID: selectedBudgetTimeFrameStartID)
+        self.budgetItems = loadSpecificBudgetItems(startID: selectedBudgetTimeFrameStartID)
 //        refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
         displayedDataTable.rowHeight = 90
@@ -170,7 +172,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 destinationVC.editableBudgetItem = editableItem
                 
-                destinationVC.selectedBudgetTimeFrameStartID = Int(editableItem.timeSpanID)
+                destinationVC.selectedBudgetTimeFrameStartID = Int(editableItem.periodStartID)
                 
             }
             
@@ -245,13 +247,13 @@ extension BudgetItemsViewController {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return budget.budgetItems.count
+        return budgetItems.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item = budget.budgetItems[indexPath.row]
+        let item = budgetItems[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetItemCell", for: indexPath) as! BudgetItemTableViewCell
         
@@ -289,7 +291,7 @@ extension BudgetItemsViewController {
                 
                 if indexPath.row == 0 {
                     
-                    currentAvailable = currentCategory.available
+                    currentAvailable = currentCategory.budgeted
                     
                 }
                 
@@ -307,7 +309,7 @@ extension BudgetItemsViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let item = budget.budgetItems[indexPath.row]
+        let item = budgetItems[indexPath.row]
         
         if editBudgetItem == true {
             
@@ -335,11 +337,11 @@ extension BudgetItemsViewController {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if budget.budgetItems[indexPath.row].type != categoryKey && budget.budgetItems[indexPath.row].type != paycheckKey {
+        if budgetItems[indexPath.row].type != categoryKey && budgetItems[indexPath.row].type != paycheckKey {
             
             if editingStyle == .delete {
                 
-                let itemToDelete = budget.budgetItems[indexPath.row]
+                let itemToDelete = budgetItems[indexPath.row]
                 
                 let message = "Delete \"\(itemToDelete.name!)\"?"
                 
@@ -351,7 +353,7 @@ extension BudgetItemsViewController {
                     
                     self.successHaptic()
                     
-                    loadSpecificBudgetItems(startID: self.selectedBudgetTimeFrameStartID)
+                    self.budgetItems = loadSpecificBudgetItems(startID: self.selectedBudgetTimeFrameStartID)
                     self.displayedDataTable.reloadData()
                     
                 }))

@@ -306,7 +306,7 @@ extension UIViewController {
         
         guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
         
-        unallocatedButton.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.available))"
+        unallocatedButton.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.budgeted))"
     }
     
     
@@ -372,7 +372,7 @@ extension UIViewController {
             
         }
         
-        forLabel.text = "~ Left in \(categoryName): \(convertedAmountToDollars(amount: category.available)) ~"
+        forLabel.text = "~ Left in \(categoryName): \(convertedAmountToDollars(amount: category.budgeted)) ~"
         
     }
     

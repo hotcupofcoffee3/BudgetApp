@@ -63,7 +63,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     @IBOutlet weak var amountView: UIView!
     
-    @IBOutlet weak var categoryAmountTextField: UITextField!
+    @IBOutlet weak var budgetedAmountTextField: UITextField!
     
     @IBOutlet weak var currentAllocationStatus: UISwitch!
     
@@ -95,7 +95,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         // Set text fields back to being empty
         categoryNameTextField.text = nil
-        categoryAmountTextField.text = nil
+        budgetedAmountTextField.text = nil
         
     }
     
@@ -165,7 +165,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     func submitAddCategoryForReview() {
         
-        if let categoryName = categoryNameTextField.text, let categoryAmount = categoryAmountTextField.text {
+        if let categoryName = categoryNameTextField.text, let budgetedAmount = budgetedAmountTextField.text {
             
             // *** Checks if it's already created.
             var isAlreadyCreated = false
@@ -181,7 +181,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             }
             
             // *** If everything is blank
-            if categoryName == "" || categoryAmount == "" {
+            if categoryName == "" || budgetedAmount == "" {
                 
                 failureWithWarning(label: warningLabel, message: "You have to complete both fields.")
                 
@@ -199,30 +199,30 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                 
                 
                 // *** If both are filled out, but the amount is not a double
-            } else if categoryName != "" && categoryAmount != "" && Double(categoryAmount) == nil {
+            } else if categoryName != "" && budgetedAmount != "" && Double(budgetedAmount) == nil {
                 
                 failureWithWarning(label: warningLabel, message: "You have to enter a number for the amount.")
                 
                 
             } else {
                 
-                if let categoryAmountAsDouble = Double(categoryAmount) {
+                if let budgetedAmountAsDouble = Double(budgetedAmount) {
                     
                     guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
                     
-                    if categoryAmountAsDouble < 0.0 {
+                    if budgetedAmountAsDouble < 0.0 {
                         
                         failureWithWarning(label: warningLabel, message: "You have to enter a positive number")
                         
                         
                         // *** If 'Allocate' is switched on, is there enough in 'Unallocated'
-                    } else if currentAllocationStatus.isOn && categoryAmountAsDouble > unallocated.available {
+                    } else if currentAllocationStatus.isOn && budgetedAmountAsDouble > unallocated.budgeted {
                         
                         failureWithWarning(label: warningLabel, message: "You don't have enough funds to allocate at this time.")
                         
                     } else {
                         
-                        addCategorySubmission(newCategoryName: categoryName, with: categoryAmountAsDouble)
+                        addCategorySubmission(newCategoryName: categoryName, with: budgetedAmountAsDouble)
                         
                     }
                     
@@ -241,7 +241,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     func addCategorySubmission(newCategoryName: String, with amount: Double) {
         
         categoryNameTextField.resignFirstResponder()
-        categoryAmountTextField.resignFirstResponder()
+        budgetedAmountTextField.resignFirstResponder()
         
         var dueDay = Int()
         
@@ -328,7 +328,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     func submitEditBudgetedForReview() {
         
-        if let newBudgetedAmount = categoryAmountTextField.text {
+        if let newBudgetedAmount = budgetedAmountTextField.text {
             
             var newCategoryBudgeted = Double()
             
@@ -395,7 +395,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         
         // Amount
-        guard let newAmount = Double(categoryAmountTextField.text!) else { return }
+        guard let newAmount = Double(budgetedAmountTextField.text!) else { return }
         var changeAmount = false
         if newAmount != currentCategory.budgeted {
             changeAmount = true
@@ -494,7 +494,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     @objc func amountTapped() {
         
-        categoryAmountTextField.becomeFirstResponder()
+        budgetedAmountTextField.becomeFirstResponder()
         
     }
     
@@ -563,8 +563,8 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     // 'Done' button on number pad to submit for review of final submitability
     @objc override func dismissNumberKeyboard() {
         
-        categoryAmountTextField.resignFirstResponder()
-        submissionFromKeyboardReturnKey(specificTextField: categoryAmountTextField)
+        budgetedAmountTextField.resignFirstResponder()
+        submissionFromKeyboardReturnKey(specificTextField: budgetedAmountTextField)
         
     }
     
@@ -607,7 +607,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
             let dueDay = Int(currentCategory.dueDay)
             
             categoryNameTextField.text = name
-            categoryAmountTextField.text = "\(convertedAmountToDouble(amount: budgeted))"
+            budgetedAmountTextField.text = "\(convertedAmountToDouble(amount: budgeted))"
             
             if currentCategory.dueDay > 0 {
                 
@@ -641,7 +641,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         
         // *** Toolbar with 'Done' on Number Pad
-        addToolBarToNumberPad(textField: categoryAmountTextField)
+        addToolBarToNumberPad(textField: budgetedAmountTextField)
         
         
         // *** Swipe gesture to close keyboard
@@ -660,7 +660,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         // *** Textfield Delegates
         self.categoryNameTextField.delegate = self
-        self.categoryAmountTextField.delegate = self
+        self.budgetedAmountTextField.delegate = self
         
         
         

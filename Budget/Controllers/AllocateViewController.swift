@@ -74,7 +74,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
         
         guard let selectedCategory = loadSpecificCategory(named: categoryName) else { return }
         
-        atLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.available))"
+        atLabel.text = "Left: \(convertedAmountToDollars(amount: selectedCategory.budgeted))"
         
     }
     
@@ -134,7 +134,7 @@ class AllocateViewController: UIViewController, UITextFieldDelegate, ChooseCateg
             
             guard let unallocatedCategory = loadSpecificCategory(named: unallocatedKey) else { return }
             
-            if (unallocatedCategory.available - amount) < 0 {
+            if (unallocatedCategory.budgeted - amount) < 0 {
                 
                 failureWithWarning(label: warningLabel, message: "You don't have enough funds left that.")
                 

@@ -78,11 +78,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func loadRunningTotal(withStartingAmount startingAmount: Double, forBudgetItemsWithStartingID startID: Int) -> Double {
         
-        loadSpecificBudgetItems(startID: startID)
+        let items = loadSpecificBudgetItems(startID: startID)
         
         var newRunningTotal = startingAmount
         
-        for item in budget.budgetItems {
+        for item in items {
             
             if item.checked {
                 

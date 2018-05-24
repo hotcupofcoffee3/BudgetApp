@@ -260,7 +260,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                     
                     guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
                     
-                    if (categoryBeingWithdrawnFrom.available - amount) < 0 {
+                    if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 {
                         
                         failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
                         
@@ -422,7 +422,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 failureWithWarning(label: warningLabel, message: "You have to enter an amount greater than 0")
                 
                 
-            } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.available) && currentTransaction.type == withdrawalKey {
+            } else if newAmount > (currentTransaction.inTheAmountOf + currentCategory.budgeted) && currentTransaction.type == withdrawalKey {
                 
                 failureWithWarning(label: warningLabel, message: "You don't have enough funds for this.")
                 
@@ -448,7 +448,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         guard let newSelectedCategoryName = categoryLabel.text else { return }
         guard let newCategoryItself = loadSpecificCategory(named: newSelectedCategoryName) else { return }
         
-        if currentTransaction.inTheAmountOf > newCategoryItself.available && currentTransaction.type == withdrawalKey {
+        if currentTransaction.inTheAmountOf > newCategoryItself.budgeted && currentTransaction.type == withdrawalKey {
             
             failureWithWarning(label: warningLabel, message: "There are not enough funds in that category for this transaction.")
             
@@ -532,9 +532,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             }
             if changeCategory {
                 budget.updateTransactionCategory(category: newCategory, withID: id)
-            }
-            if changeHoldStatus {
-                budget.updateBalanceAndAvailableForOnHold(withID: id)
             }
             
             successHaptic()

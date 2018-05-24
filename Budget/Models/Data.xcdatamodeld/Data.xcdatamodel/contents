@@ -9,12 +9,11 @@
         <attribute name="day" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="timeSpanID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="periodStartID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName=".Category" syncable="YES" codeGenerationType="class">
-        <attribute name="available" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="budgeted" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dueDay" optional="YES" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -24,6 +23,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Period" representedClassName=".Period" syncable="YES" codeGenerationType="class">
+        <attribute name="balance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endDateID" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endDay" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endMonth" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
@@ -32,6 +32,7 @@
         <attribute name="startDay" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startMonth" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startYear" attributeType="Integer 64" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="unallocated" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName=".Transaction" syncable="YES" codeGenerationType="class">
         <attribute name="day" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -46,9 +47,9 @@
     </entity>
     <elements>
         <element name="BudgetItem" positionX="36" positionY="63" width="128" height="210"/>
-        <element name="Category" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Category" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="Paycheck" positionX="45" positionY="99" width="128" height="75"/>
-        <element name="Period" positionX="36" positionY="36" width="128" height="165"/>
+        <element name="Period" positionX="36" positionY="36" width="128" height="195"/>
         <element name="Transaction" positionX="133" positionY="-27" width="128" height="180"/>
     </elements>
 </model>
