@@ -131,7 +131,7 @@ func convertDateToBudgetedTimeFrameID(timeFrame: Date, isEnd: Bool) -> Int {
 
 // *** Convert Date into New Category or Paycheck Date Added Info for Adding Purposes
 
-func convertDateToNewCategoryOrPaycheckDateAddInfoForAddingOrDeletingPurposes(dateAdded: Date) -> Int {
+func convertDateToDateAddedForGeneralPurposes(dateAdded: Date) -> Int {
     
     var formattedDate = Int()
     

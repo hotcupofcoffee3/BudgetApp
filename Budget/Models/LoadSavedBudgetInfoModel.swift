@@ -223,7 +223,9 @@ func loadTransactionsByDate(selectedStartDate: Int, selectedEndDate: Int) -> [Tr
 
 // Load All Budgeted Time Frames
 
-func loadSavedBudgetedTimeFrames() {
+func loadSavedBudgetedTimeFrames() -> [Period] {
+    
+    var periods = [Period]()
     
     let request: NSFetchRequest<Period> = Period.fetchRequest()
     
@@ -231,7 +233,7 @@ func loadSavedBudgetedTimeFrames() {
     
     do {
         
-        budget.budgetedTimeFrames = try context.fetch(request)
+        periods = try context.fetch(request)
         
     } catch {
         
@@ -239,7 +241,53 @@ func loadSavedBudgetedTimeFrames() {
         
     }
     
+    return periods
+    
 }
+
+// Load and Sort Budgeted Time Frames
+
+func loadAndSortBudgetedTimeFrames() -> [Period] {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var allPeriods = [Period]()
+
+    var pastPeriods = [Period]()
+    var presentPeriod: Period?
+    var futurePeriods = [Period]()
+    
+    let currentDateAsPeriodID = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
+    
+    for period in periods {
+        
+        if period.endDateID < currentDateAsPeriodID {
+            
+            pastPeriods.append(period)
+            
+        } else if period.startDateID < currentDateAsPeriodID && period.endDateID > currentDateAsPeriodID {
+            
+            presentPeriod = period
+            
+        } else if period.startDateID > currentDateAsPeriodID {
+            
+            futurePeriods.append(period)
+            
+        }
+        
+    }
+    
+    if let presentPeriod = presentPeriod {
+        allPeriods.append(presentPeriod)
+    }
+    
+    allPeriods.append(contentsOf: futurePeriods)
+    allPeriods.append(contentsOf: pastPeriods)
+    
+    return allPeriods
+    
+}
+
 
 
 // Load Specific Budgeted Time Frame
@@ -296,9 +344,15 @@ func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
     
     var budgetItemArray = [BudgetItem]()
     
+    var unallocatedArray = [BudgetItem]()
+    
     let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
     
-    request.predicate = NSPredicate(format: periodStartIDMatchesKey, String(startID))
+    let startIDPredicate = NSPredicate(format: periodStartIDMatchesKey, String(startID))
+    
+    let withoutUnallocatedPredicate = NSPredicate(format: nameDoesNotMatchKey, unallocatedKey)
+    
+    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startIDPredicate, withoutUnallocatedPredicate])
     
     let sortByDay: NSSortDescriptor = NSSortDescriptor(key: dayKey, ascending: true)
     
@@ -315,6 +369,14 @@ func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
         print("Error loading selected budget items: \(error)")
         
     }
+    
+    if let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
+        
+        unallocatedArray.append(unallocated)
+        
+    }
+    
+    budgetItemArray = unallocatedArray + budgetItemArray
     
     return budgetItemArray
     

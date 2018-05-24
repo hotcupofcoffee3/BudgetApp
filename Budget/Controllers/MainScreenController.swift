@@ -229,10 +229,6 @@ class MainScreen: UIViewController {
             budget.deleteEVERYTHING()
         }
         
-        loadSavedCategories()
-        loadSavedTransactions(descending: true)
-        loadSavedBudgetedTimeFrames()
-        
         selectedCategory = nil
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)

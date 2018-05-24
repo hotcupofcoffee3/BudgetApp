@@ -21,7 +21,6 @@ enum TransactionType {
 class Budget {
     
     var categories = [Category]()
-    var budgetedTimeFrames = [Period]()
     var budgetItems = [BudgetItem]()
     var transactions = [Transaction]()
     var paychecks = [Paycheck]()
@@ -67,11 +66,11 @@ class Budget {
             
             
             // Create and save new budget items based on this.
-            loadSavedBudgetedTimeFrames()
+            let periods = loadSavedBudgetedTimeFrames()
             
-            let currentDateIDForAddingPurposes = convertDateToNewCategoryOrPaycheckDateAddInfoForAddingOrDeletingPurposes(dateAdded: Date())
+            let currentDateIDForAddingPurposes = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
             
-            for period in budgetedTimeFrames {
+            for period in periods {
                 
                 if period.endDateID > currentDateIDForAddingPurposes {
                     
@@ -122,11 +121,11 @@ class Budget {
             
             guard let categoryToDelete = loadSpecificCategory(named: named) else { return }
             
-            let currentDateIDForDeletingPurposes = convertDateToNewCategoryOrPaycheckDateAddInfoForAddingOrDeletingPurposes(dateAdded: Date())
+            let currentDateIDForDeletingPurposes = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
             
-            loadSavedBudgetedTimeFrames()
+            let periods = loadSavedBudgetedTimeFrames()
             
-            for period in budget.budgetedTimeFrames {
+            for period in periods {
                 
                 // If the end date is greater than today's date; in other words, the category being deleted for the current budget time frame and the future ones, but not the past ones, as the 'endDateID' would be less (in the past) than the current date.
                 if period.endDateID > currentDateIDForDeletingPurposes {
@@ -782,7 +781,7 @@ class Budget {
         
         loadSavedCategories()
         loadSavedTransactions(descending: true)
-        loadSavedBudgetedTimeFrames()
+        let periods = loadSavedBudgetedTimeFrames()
         loadSavedPaychecks()
         loadSavedBudgetItems()
 
@@ -803,9 +802,9 @@ class Budget {
             context.delete(paycheck)
             
         }
-        for timeFrame in budgetedTimeFrames {
+        for period in periods {
             
-            context.delete(timeFrame)
+            context.delete(period)
             
         }
         for budgetItem in budgetItems {
@@ -816,8 +815,6 @@ class Budget {
        
         createUnallocatedCategory()
         createCurrentTimeFrame()
-
-        loadSavedBudgetedTimeFrames()
         
 //        UserDefaults.standard.set(nil, forKey: categoryKey)
 //        UserDefaults.standard.set(nil, forKey: transactionKey)

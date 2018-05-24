@@ -16,7 +16,7 @@ class BudgetItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var fromCategoryLabel: UILabel!
     
-    @IBOutlet weak var amountLeftLabel: UILabel!
+    @IBOutlet weak var amountAvailableLabel: UILabel!
     
     @IBOutlet weak var amountBudgetedLabel: UILabel!
     

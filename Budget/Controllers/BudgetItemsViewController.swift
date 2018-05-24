@@ -72,7 +72,19 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         displayedDataTable.rowHeight = 90
         displayedDataTable.separatorStyle = .none
         
+        
+        
+        
+        
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
+        
+        runningBudgetTimeFrameTotal = period.balance
+        
+        
+        
+        
+        
+        
         
         navBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
         
@@ -101,6 +113,19 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             amountToChangeBy = (itemChecked.type == paycheckKey) ? itemChecked.budgeted : -itemChecked.budgeted
             
         }
+        
+        
+        
+        
+        
+        guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
+        
+        print("Bal: \(convertedAmountToDollars(amount: period.balance))")
+        print("Unallocated: \(convertedAmountToDollars(amount: period.unallocated))")
+        
+        
+        
+        
         
         runningBudgetTimeFrameTotal += amountToChangeBy
         
@@ -204,7 +229,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
         
         self.loadNecessaryInfo()
@@ -283,23 +308,22 @@ extension BudgetItemsViewController {
         
         cell.dueDayLabel?.text = (item.day > 0) ? "Due: \(convertDayToOrdinal(day: Int(item.day)))" : ""
         
+        cell.fromCategoryLabel?.text = (item.type == withdrawalKey) ? "From: \(item.category!)" : ""
+        
         if item.type == categoryKey {
             
-            var currentAvailable = Double()
+            cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.available))"
+            cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
             
-            if let currentCategory = loadSpecificCategory(named: item.name!) {
-                
-                if indexPath.row == 0 {
-                    
-                    currentAvailable = currentCategory.budgeted
-                    
-                }
-                
-            }
+        } else if item.type == paycheckKey || item.type == depositKey {
             
-            cell.amountLeftLabel?.text = "Left: \(convertedAmountToDollars(amount: currentAvailable))"
+            cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.budgeted))"
+            cell.amountBudgetedLabel?.text = ""
             
-            cell.amountBudgetedLabel?.text = "Bdgt: \(convertedAmountToDollars(amount: item.budgeted))"
+        } else if item.type == withdrawalKey {
+            
+            cell.amountAvailableLabel?.text = ""
+            cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
             
         }
         

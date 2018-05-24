@@ -30,6 +30,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var editableBudgetTimeFrame: Period?
     
+    var sortedBudgetedTimeFrames = [Period]()
+    
     var startDateFormatYYYYMMDD = Int()
     
     var endDateFormatYYYYMMDD = Int()
@@ -66,9 +68,9 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - General Functions
     // *****
     
-    func loadNecessaryInfo(itemsToLoad: () -> Void) {
+    func loadNecessaryInfo() {
         
-        itemsToLoad()
+        sortedBudgetedTimeFrames = loadAndSortBudgetedTimeFrames()
         
         displayedDataTable.separatorStyle = .none
         displayedDataTable.reloadData()
@@ -200,17 +202,23 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
+        self.loadNecessaryInfo()
         
         self.displayedDataTable.rowHeight = 78.5
         
         self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
         
+        for period in sortedBudgetedTimeFrames {
+            
+            print(period.startDateID)
+            
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.loadNecessaryInfo(itemsToLoad: loadSavedBudgetedTimeFrames)
+        self.loadNecessaryInfo()
         
     }
     
@@ -241,7 +249,7 @@ extension BudgetViewController {
     // ******************************************************
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return budget.budgetedTimeFrames.count
+        return sortedBudgetedTimeFrames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -252,11 +260,30 @@ extension BudgetViewController {
         
         cell.accessoryType = editBudgetTimeFrame ? .detailButton : .disclosureIndicator
         
-        if budget.budgetedTimeFrames.count > 0 {
+        if sortedBudgetedTimeFrames.count > 0 {
             
-            let period = budget.budgetedTimeFrames[indexPath.row]
+            let period = sortedBudgetedTimeFrames[indexPath.row]
             
             cell.timeFrameLabel?.text = "\(period.startMonth)/\(period.startDay)/\((period.startYear % 100)) - \(period.endMonth)/\(period.endDay)/\((period.endYear % 100))"
+            
+            let currentDateAsPeriodID = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
+            
+            if period.endDateID < currentDateAsPeriodID {
+                
+                cell.timeFrameLabel?.textColor = fadedWhiteColor
+                cell.amountLabel?.textColor = fadedLightGreenColor
+                
+            } else if period.startDateID < currentDateAsPeriodID && period.endDateID > currentDateAsPeriodID {
+                
+                cell.timeFrameLabel?.textColor = UIColor.white
+                cell.amountLabel?.textColor = lightGreenColor
+                
+            } else if period.startDateID > currentDateAsPeriodID {
+                
+                cell.timeFrameLabel?.textColor = tealColor
+                cell.amountLabel?.textColor = fadedLightGreenColor
+                
+            }
             
             var startingTotal = Double()
             
@@ -286,11 +313,11 @@ extension BudgetViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedTimeFrame = budget.budgetedTimeFrames[indexPath.row]
+        let selectedTimeFrame = sortedBudgetedTimeFrames[indexPath.row]
         
         editableBudgetTimeFrame = selectedTimeFrame
         
-        selectedBudgetTimeFrameStartID = Int(budget.budgetedTimeFrames[indexPath.row].startDateID)
+        selectedBudgetTimeFrameStartID = Int(sortedBudgetedTimeFrames[indexPath.row].startDateID)
         
         let selectedCell = tableView.cellForRow(at: indexPath) as! BudgetTableViewCell
         
@@ -308,7 +335,7 @@ extension BudgetViewController {
 
         if editingStyle == .delete {
             
-            let timeFrameToDelete = budget.budgetedTimeFrames[indexPath.row]
+            let timeFrameToDelete = sortedBudgetedTimeFrames[indexPath.row]
             
             let message = "Delete the whole budgeted time frame:\n\(timeFrameToDelete.startMonth)/\(timeFrameToDelete.startDay)/\(timeFrameToDelete.startYear) - \(timeFrameToDelete.endMonth)/\(timeFrameToDelete.endDay)/\(timeFrameToDelete.endYear)?"
             
@@ -325,7 +352,7 @@ extension BudgetViewController {
                     
                     self.successHaptic()
                     
-                    loadSavedBudgetedTimeFrames()
+                    self.sortedBudgetedTimeFrames = loadAndSortBudgetedTimeFrames()
                     self.displayedDataTable.reloadData()
                     
                 }))

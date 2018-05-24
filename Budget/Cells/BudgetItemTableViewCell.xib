@@ -89,10 +89,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="addedToLedgerImage" destination="Th7-kZ-9B4" id="aAx-Dd-elj"/>
+                <outlet property="amountAvailableLabel" destination="CiM-Kx-HJI" id="GAM-zm-619"/>
                 <outlet property="amountBudgetedLabel" destination="Vno-A5-5fq" id="YPk-ru-c4t"/>
-                <outlet property="amountLeftLabel" destination="CiM-Kx-HJI" id="Q2J-Tw-KZp"/>
                 <outlet property="dueDayLabel" destination="tGe-jb-WtZ" id="f1q-Pe-9FW"/>
-                <outlet property="fromCategoryLabel" destination="Xnf-iO-bGS" id="CRd-QI-00N"/>
+                <outlet property="fromCategoryLabel" destination="Xnf-iO-bGS" id="INm-nR-s75"/>
                 <outlet property="nameLabel" destination="Ieo-ww-P6a" id="o1v-L9-58G"/>
             </connections>
             <point key="canvasLocation" x="-7.5" y="-147"/>

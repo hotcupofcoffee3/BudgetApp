@@ -189,8 +189,8 @@
 				B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */,
 				B5EE2BA220AA33FE0059CFA4 /* BudgetItemTableViewCell.xib */,
 				B5EE2BA120AA33FE0059CFA4 /* BudgetItemTableViewCell.swift */,
-				B5F0A2DC20B5F72300A51298 /* AllTransactionsTableViewCell.swift */,
 				B5F0A2DD20B5F72300A51298 /* AllTransactionsTableViewCell.xib */,
+				B5F0A2DC20B5F72300A51298 /* AllTransactionsTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

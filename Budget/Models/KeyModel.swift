@@ -11,6 +11,7 @@ import UIKit
 
 // Query Keys
 let nameMatchesKey = "name MATCHES %@"
+let nameDoesNotMatchKey = "!name MATCHES %@"
 let typeMatchesKey = "type MATCHES %@"
 let idMatchesKey = "id MATCHES %@"
 let categoryMatchesKey = "forCategory MATCHES %@"
@@ -60,6 +61,8 @@ let categoryTypeKey = "category"
 let successColor = UIColor.init(red: 100/255, green: 158/255, blue: 55/255, alpha: 1)
 let tealColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1)
 let lightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, alpha: 1)
+let fadedLightGreenColor = UIColor.init(red: 198/255, green: 221/255, blue: 129/255, alpha: 0.7)
+let fadedWhiteColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
 
 
 

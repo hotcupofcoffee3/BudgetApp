@@ -142,7 +142,9 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
         } else {
             
-            for period in budget.budgetedTimeFrames {
+            let periods = loadSavedBudgetedTimeFrames()
+            
+            for period in periods {
                 
                 let periodStartID = Int(period.startDateID)
                 let periodEndID = Int(period.endDateID)
@@ -367,10 +369,6 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             submitTimeFrameButton.setTitle("Save Changes", for: .normal)
             
         }
-        
-        
-        
-        loadSavedBudgetedTimeFrames()
         
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = .short

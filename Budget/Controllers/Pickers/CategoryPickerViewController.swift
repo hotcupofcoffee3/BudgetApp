@@ -129,6 +129,8 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        budget.sortCategoriesByKey(withUnallocated: true)
+        
         updateCurrentCategoryBalanceLabel(forCategory: selectedCategory)
         
         guard let sortedCategoryKeyIndex = budget.sortedCategoryKeys.index(of: selectedCategory) else { return }
