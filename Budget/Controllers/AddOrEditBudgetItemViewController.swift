@@ -345,7 +345,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
-        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day)
+        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day, checked: true)
         
         
         

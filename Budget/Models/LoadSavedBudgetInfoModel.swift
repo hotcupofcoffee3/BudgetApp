@@ -434,6 +434,21 @@ func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> Budget
 
 
 
+func loadUnallocatedItem(startID: Int) -> BudgetItem? {
+    
+    var unallocated: BudgetItem?
+    
+    if let unallocatedItem = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
+        
+        unallocated = unallocatedItem
+        
+    }
+    
+    return unallocated
+    
+}
+
+
 
 // Load All Budget Items Based on StartID (Just to make sure it's all working properly.
 

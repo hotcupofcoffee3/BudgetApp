@@ -64,49 +64,10 @@ class Budget {
             
             createAndSaveNewCategory(named: named, withBudgeted: amount, dueDay: dueDay)
             
-            
-            // Create and save new budget items based on this.
-            let periods = loadSavedBudgetedTimeFrames()
-            
-            let currentDateIDForAddingPurposes = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
-            
-            for period in periods {
-                
-                if period.endDateID > currentDateIDForAddingPurposes {
-                    
-                    addCategoryAsBudgetedItem(period: period, idForAdding: currentDateIDForAddingPurposes, named: named, budgeted: amount, dueDay: dueDay)
-                    
-                }
-                
-            }
-            
             saveData()
             
         }
 
-    }
-    
-    
-    func addCategoryAsBudgetedItem(period: Period, idForAdding: Int, named: String, budgeted: Double, dueDay: Int) {
-        
-        if named != unallocatedKey {
-            
-            var available = Double()
-            
-            if idForAdding > period.endDateID {
-                
-                available = 0
-                
-            } else if idForAdding > period.startDateID && idForAdding < period.endDateID {
-                
-                available = budgeted
-                
-            }
-            
-            createAndSaveNewBudgetItem(periodStartID: Int(period.startDateID), type: categoryKey, named: named, budgeted: budgeted, available: available, category: categoryKey, year: 0, month: 0, day: dueDay)
-            
-        }
-        
     }
     
     
