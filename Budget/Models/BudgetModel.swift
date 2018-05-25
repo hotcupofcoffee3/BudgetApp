@@ -792,21 +792,25 @@ class Budget {
             context.delete(category)
             
         }
+        
         for transaction in transactions {
             
             context.delete(transaction)
             
         }
+        
         for paycheck in paychecks {
             
             context.delete(paycheck)
             
         }
+        
         for period in periods {
             
             context.delete(period)
             
         }
+        
         for budgetItem in budgetItems {
             
             context.delete(budgetItem)

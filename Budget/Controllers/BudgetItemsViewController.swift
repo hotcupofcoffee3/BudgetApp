@@ -310,20 +310,53 @@ extension BudgetItemsViewController {
         
         cell.fromCategoryLabel?.text = (item.type == withdrawalKey) ? "From: \(item.category!)" : ""
         
-        if item.type == categoryKey {
-            
-            cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.available))"
-            cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
-            
-        } else if item.type == paycheckKey || item.type == depositKey {
-            
-            cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.budgeted))"
-            cell.amountBudgetedLabel?.text = ""
-            
-        } else if item.type == withdrawalKey {
+        
+        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: true)
+        
+        
+        
+        // Future
+        
+        if selectedBudgetTimeFrameStartID > currentDateAsPeriodID {
             
             cell.amountAvailableLabel?.text = ""
-            cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
+            
+            if item.type == categoryKey || item.type == withdrawalKey {
+                
+                cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
+                
+            } else if item.type == paycheckKey || item.type == depositKey {
+                
+                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
+                
+            }
+            
+            
+            
+        // Past and Present
+            
+        } else {
+            
+            if item.type == categoryKey || item.type == withdrawalKey {
+                
+                if item.name == unallocatedKey {
+                    
+                    cell.amountAvailableLabel?.text = "\(convertedAmountToDollars(amount: item.available))"
+                    cell.amountBudgetedLabel?.text = ""
+                    
+                } else {
+                    
+                    cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.available))"
+                    cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
+                    
+                }
+                
+            } else if item.type == paycheckKey || item.type == depositKey {
+                
+                cell.amountAvailableLabel?.text = "+ \(convertedAmountToDollars(amount: item.available))"
+                cell.amountBudgetedLabel?.text = ""
+                
+            }
             
         }
         
@@ -345,15 +378,19 @@ extension BudgetItemsViewController {
             
         } else {
             
-            tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
-            
-            item.checked = !item.checked
-            
-            updateRunningTotalPerCheckage(forItem: item)
-            
-            tableView.deselectRow(at: indexPath, animated: false)
-            
-            saveData()
+            if item.name != unallocatedKey {
+                
+                tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
+                
+                item.checked = !item.checked
+                
+                updateRunningTotalPerCheckage(forItem: item)
+                
+                tableView.deselectRow(at: indexPath, animated: false)
+                
+                saveData()
+                
+            }
             
         }
         
