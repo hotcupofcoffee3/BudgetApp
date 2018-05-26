@@ -121,7 +121,6 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
         
         print("Bal: \(convertedAmountToDollars(amount: period.balance))")
-        print("Unallocated: \(convertedAmountToDollars(amount: period.unallocated))")
         
         
         

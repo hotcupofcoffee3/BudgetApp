@@ -278,53 +278,51 @@ class Budget {
         
     }
     
-    func updateBalanceForSpecificTimeFrame(withStartID id: Int) {
-        
-        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
-        
-        var balance = Double()
-        
-        let items = loadSpecificBudgetItems(startID: id)
-        
-        for item in items {
-            
-            if item.type == paycheckKey || item.type == depositKey {
-                
-                balance += item.available
-                
-            } else {
-                
-                balance -= item.available
-                
-            }
-            
-        }
-        
-        period.balance = balance
-        
-        saveData()
-        
-    }
-    
-    func updateUnallocatedForSpecificTimeFrame(withStartID id: Int) {
-        
-        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
-        
-        var unallocated = period.balance
-        
-        let items = loadSpecificBudgetItems(startID: id)
-        
-        for item in items {
-            
-            unallocated -= item.budgeted
-            
-        }
-        
-        period.unallocated = unallocated
-        
-        saveData()
-        
-    }
+//    func updateBalanceForSpecificTimeFrame(withStartID id: Int) {
+//
+//        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
+//
+//        var balance = Double()
+//
+//        let items = loadSpecificBudgetItems(startID: id)
+//
+//        for item in items {
+//
+//            if item.type == paycheckKey || item.type == depositKey {
+//
+//                balance += item.available
+//
+//            } else {
+//
+//                balance -= item.available
+//
+//            }
+//
+//        }
+//
+//        period.balance = balance
+//
+//        saveData()
+//
+//    }
+//
+//    func updateUnallocatedForSpecificTimeFrame(withStartID id: Int) {
+//
+//        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
+//
+//        var unallocated = period.balance
+//
+//        let items = loadSpecificBudgetItems(startID: id)
+//
+//        for item in items {
+//
+//            unallocated -= item.budgeted
+//
+//        }
+//
+//        saveData()
+//
+//    }
     
     
     

@@ -136,46 +136,91 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     
     createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startDateID, endDateID: endDateID)
     
-    // Calculate balance
-    // Set new period's balance to the calculated balance
-    // Calculate unallocated
-    // Set new period's unallocated to the calculated unallocated
     
-    let items = loadSpecificBudgetItems(startID: startDateID)
     
-    let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+    // Calculate new Period's balance with balance of previous Period.
     
-    guard let currentUnallocatedItem = loadUnallocatedItem(startID: startDateID) else { return }
+    let previousPeriodBalance = retrievePreviousPeriodBalance(startID: startDateID)
     
-    budgetedTimeFrameToSave.unallocated = currentUnallocatedItem.budgeted
+    let balanceOfItems = calculateNewPeriodBalance(startID: startDateID)
     
-    var startingPeriodBalance = Double()
+    budgetedTimeFrameToSave.balance = previousPeriodBalance + balanceOfItems
     
-    for item in items {
+    print(budgetedTimeFrameToSave.balance)
+    
+    
+    
+    // TODO: - Calculate new Period's unallocated item with unallocated item of previous Period.
+    
+    // TODO: - Update all Periods' balances after the Period created with the new Period's calculated balance.
+    
+    // TODO: - Update all Periods' unallocated items after the Period created with the new Period's calculated unallocated item.
+    
+    
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Retrieve Previous Period's Balance
+
+func retrievePreviousPeriodBalance(startID: Int) -> Double {
+    
+    var previousPeriodBalance = Double()
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var previousPeriods = [Period]()
+    
+    for period in periods {
         
-        if item.name != unallocatedKey {
+        if period.endDateID < startID {
             
-            print(item.budgeted)
-            
-            if startDateID > currentDateAsPeriodID {
-                
-                startingPeriodBalance += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
-                
-            } else {
-                
-                startingPeriodBalance += (item.type == paycheckKey) ? item.available : -item.available
-                
-            }
+            previousPeriods.append(period)
             
         }
         
     }
     
-    print(startingPeriodBalance)
+    if !previousPeriods.isEmpty {
+        
+        let previousPeriod = previousPeriods[(previousPeriods.count - 1)]
+        
+        previousPeriodBalance = previousPeriod.balance
+        
+    } else {
+        
+        previousPeriodBalance = 0
+        
+    }
     
-    budgetedTimeFrameToSave.balance = startingPeriodBalance
+    return previousPeriodBalance
     
-    saveData()
+}
+
+
+
+// MARK: - Calculate New Period's Balance
+
+func calculateNewPeriodBalance(startID: Int) -> Double {
+    
+    let items = loadSpecificBudgetItems(startID: startID)
+    
+    var balanceOfItems = Double()
+    
+    for item in items {
+        
+        if item.name != unallocatedKey {
+            
+            balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+        }
+        
+    }
+    
+    return balanceOfItems
     
 }
 
@@ -246,13 +291,19 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
             
             createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: available, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
             
+            
+            
+            // TODO: - Update balance for present and future Periods
+            
+            // TODO: - Update unallocated item for present and future Periods
+            
+            
+            
             guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
             
             updateUnallocatedItemBudgetedAndAvailable(currentUnallocatedItem: currentUnallocated, budgeted: amount, available: available, type: paycheckKey)
             
-            updatePeriodBalance(startID: startID, amount: amount, type: paycheckKey)
-            
-            updatePeriodUnallocated(startID: startID, amount: amount, type: paycheckKey)
+            updatePresentOrFuturePeriodBalance(startID: startID, amount: amount, type: paycheckKey)
             
         }
         
@@ -300,13 +351,19 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
                 
                 createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: available, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
                 
+                
+                
+                // TODO: - Update balance for present and future Periods
+                
+                // TODO: - Update unallocated item for present and future Periods
+                
+                
+                
                 guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
                 
                 updateUnallocatedItemBudgetedAndAvailable(currentUnallocatedItem: currentUnallocated, budgeted: budgeted, available: available, type: categoryKey)
                 
-                updatePeriodBalance(startID: startID, amount: budgeted, type: categoryKey)
-                
-                updatePeriodUnallocated(startID: startID, amount: budgeted, type: categoryKey)
+                updatePresentOrFuturePeriodBalance(startID: startID, amount: budgeted, type: categoryKey)
                 
             }
             
@@ -387,7 +444,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         }
         
     }
-
+    
     saveData()
     
 }
@@ -399,28 +456,24 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
 // *****
 
 
+// TODO: - Calculate new Period balance for all periods when a new period is created.
+
+
+// TODO: - Calculate new Period unallocated for all periods when a new period is created.
+
+
 
 // MARK: - Updates the Period Balance for a particular Period already created.
 
-func updatePeriodBalance(startID: Int, amount: Double, type: String) {
+// TODO: - Update Balance for Period being updated and future Periods.
+
+// TODO: - Update Unallocated Item for Period being updated, which will include the updates to the balances from the Period being updated and the future ones (or the function right above this).
+
+func updatePresentOrFuturePeriodBalance(startID: Int, amount: Double, type: String) {
     
     guard let period = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
     
     period.balance += (type == paycheckKey || type == depositKey) ? amount : -amount
-    
-    saveData()
-    
-}
-
-
-
-// MARK: - Updates the Period Unallocated amount for a particular Period already created when an amount is changed.
-
-func updatePeriodUnallocated(startID: Int, amount: Double, type: String) {
-    
-    guard let period = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
-    
-    period.unallocated += (type == paycheckKey || type == depositKey) ? amount : -amount
     
     saveData()
     
