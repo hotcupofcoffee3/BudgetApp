@@ -233,8 +233,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.loadNecessaryInfo()
         
+        
     }
-    
+   
     override func viewWillAppear(_ animated: Bool) {
         
         self.loadNecessaryInfo()
