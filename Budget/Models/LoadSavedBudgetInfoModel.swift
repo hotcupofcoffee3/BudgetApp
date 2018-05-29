@@ -434,6 +434,42 @@ func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> Budget
 
 
 
+// Load Specific Budget Items Across Periods
+
+func loadAllSpecificBudgetItemsAcrossPeriods(named: String, type: String) -> [BudgetItem] {
+    
+    var specificBudgetItemArray = [BudgetItem]()
+    
+    let request: NSFetchRequest<BudgetItem> = BudgetItem.fetchRequest()
+    
+    let namePredicate = NSPredicate(format: nameMatchesKey, named)
+    
+    let typePredicate = NSPredicate(format: typeMatchesKey, type)
+    
+    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [namePredicate, typePredicate])
+    
+    let sortAscending: NSSortDescriptor = NSSortDescriptor(key: periodStartIDKey, ascending: true)
+    
+    request.sortDescriptors = [sortAscending]
+    
+    do {
+        
+        specificBudgetItemArray = try context.fetch(request)
+        
+    } catch {
+        
+        print("Error loading selected budget items: \(error)")
+        
+    }
+    
+    return specificBudgetItemArray
+    
+}
+
+
+
+// Load Unallocated Item
+
 func loadUnallocatedItem(startID: Int) -> BudgetItem? {
     
     var unallocated: BudgetItem?
@@ -536,6 +572,57 @@ func loadSpecificPaycheck(named: String) -> Paycheck? {
     }
     
     return paycheck
+    
+}
+
+
+
+// MARK: - Load Previous Period
+
+func loadPreviousPeriod(currentStartID: Int) -> Period? {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var previousPeriods = [Period]()
+    
+    var previousPeriod: Period?
+    
+    for period in periods {
+        
+        if period.endDateID < currentStartID {
+            
+            previousPeriods.append(period)
+            
+        }
+        
+    }
+    
+    if !previousPeriods.isEmpty {
+        
+        previousPeriod = previousPeriods[(previousPeriods.count - 1)]
+        
+    } else {
+        
+        previousPeriod = nil
+        
+    }
+    
+    
+    return previousPeriod
+    
+}
+
+
+
+// MARK: - Load Previous Period's Balance
+
+func loadPreviousPeriodBalance(startID: Int) -> Double {
+    
+    let previousPeriod = loadPreviousPeriod(currentStartID: startID)
+    
+    let previousPeriodBalance = (previousPeriod != nil) ? previousPeriod!.balance : 0
+    
+    return previousPeriodBalance
     
 }
 

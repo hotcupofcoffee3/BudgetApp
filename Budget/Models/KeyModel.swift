@@ -19,6 +19,7 @@ let startDateIDMatchesKey = "startDateID MATCHES %@"
 let idAsDateEarlierThanKey = "id <= %@"
 let idAsDateLaterThanKey = "id >= %@"
 let periodStartIDMatchesKey = "periodStartID MATCHES %@"
+let periodStartIDKey = "periodStartID"
 
 
 // Class keys

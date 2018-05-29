@@ -311,32 +311,36 @@ extension BudgetItemsViewController {
         cell.fromCategoryLabel?.text = (item.type == withdrawalKey) ? "From: \(item.category!)" : ""
         
         
-        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: true)
+        
+      
+        
+        
+//        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: true)
         
         
         
-        // Future
-        
-        if selectedBudgetTimeFrameStartID > currentDateAsPeriodID {
-            
-            cell.amountAvailableLabel?.text = ""
-            
-            if item.type == categoryKey || item.type == withdrawalKey {
-                
-                cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
-                
-            } else if item.type == paycheckKey || item.type == depositKey {
-                
-                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
-                
-            }
-            
-            
-            
-        // Past and Present
-            
-        } else {
-            
+//        // Future
+//
+//        if selectedBudgetTimeFrameStartID > currentDateAsPeriodID {
+//
+//            cell.amountAvailableLabel?.text = ""
+//
+//            if item.type == categoryKey || item.type == withdrawalKey {
+//
+//                cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
+//
+//            } else if item.type == paycheckKey || item.type == depositKey {
+//
+//                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
+//
+//            }
+//
+//
+//
+//        // Past and Present
+//
+//        } else {
+//
             if item.type == categoryKey || item.type == withdrawalKey {
                 
                 if item.name == unallocatedKey {
@@ -357,8 +361,8 @@ extension BudgetItemsViewController {
                 cell.amountBudgetedLabel?.text = ""
                 
             }
-            
-        }
+        
+//        }
         
         return cell
         
