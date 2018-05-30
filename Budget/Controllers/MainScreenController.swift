@@ -172,13 +172,21 @@ class MainScreen: UIViewController {
                     
                     // One Past and One Future Budget Period
                     
-                    let pastStartDate = convertComponentsToDate(year: 2018, month: 3, day: 1)
-                    let pastEndDate = convertComponentsToDate(year: 2018, month: 3, day: 31)
-                    addNewPeriod(start: pastStartDate, end: pastEndDate)
+                    let pastStartDate1 = convertComponentsToDate(year: 2018, month: 3, day: 1)
+                    let pastEndDate1 = convertComponentsToDate(year: 2018, month: 3, day: 31)
+                    addNewPeriod(start: pastStartDate1, end: pastEndDate1)
                     
-                    let futureStartDate = convertComponentsToDate(year: 2018, month: 12, day: 1)
-                    let futureEndDate = convertComponentsToDate(year: 2018, month: 12, day: 31)
-                    addNewPeriod(start: futureStartDate, end: futureEndDate)
+                    let futureStartDate1 = convertComponentsToDate(year: 2018, month: 12, day: 1)
+                    let futureEndDate1 = convertComponentsToDate(year: 2018, month: 12, day: 31)
+                    addNewPeriod(start: futureStartDate1, end: futureEndDate1)
+                    
+                    let pastStartDate2 = convertComponentsToDate(year: 2018, month: 4, day: 1)
+                    let pastEndDate2 = convertComponentsToDate(year: 2018, month: 4, day: 30)
+                    addNewPeriod(start: pastStartDate2, end: pastEndDate2)
+                    
+                    let futureStartDate2 = convertComponentsToDate(year: 2018, month: 10, day: 1)
+                    let futureEndDate2 = convertComponentsToDate(year: 2018, month: 10, day: 31)
+                    addNewPeriod(start: futureStartDate2, end: futureEndDate2)
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

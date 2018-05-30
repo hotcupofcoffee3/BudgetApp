@@ -51,20 +51,27 @@ func createAndSaveNewCategory(named: String, withBudgeted budgeted: Double, dueD
 
 func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
     
+    let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+    
     // Create and save new budget items based on this.
     let periods = loadSavedBudgetedTimeFrames()
     
     for period in periods {
         
         let startID = Int(period.startDateID)
+        let endID = Int(period.endDateID)
         
-        createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
+        if !(endID < currentDateAsPeriodID) {
         
-        guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
-        
-        updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: amount, type: paycheckKey)
-        
-        updatePeriodBalanceWhenAddingItem(startID: startID, amount: amount, type: paycheckKey)
+            createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
+            
+            guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
+            
+            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: amount, type: paycheckKey)
+            
+            updatePeriodBalanceWhenAddingItem(startID: startID, amount: amount, type: paycheckKey)
+            
+        }
         
     }
     
@@ -78,6 +85,8 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
 
 func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Double, dueDay: Int) {
     
+    let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+    
     if named != unallocatedKey {
         
         // Create and save new budget items based on this.
@@ -86,15 +95,20 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
         for period in periods {
             
             let startID = Int(period.startDateID)
+            let endID = Int(period.endDateID)
             
-            createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: budgeted, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
-            
-            guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
-            
-            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: budgeted, type: categoryKey)
-            
-            updatePeriodBalanceWhenAddingItem(startID: startID, amount: budgeted, type: categoryKey)
-            
+            if !(endID < currentDateAsPeriodID) {
+                
+                createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: budgeted, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
+                
+                guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
+                
+                updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: budgeted, type: categoryKey)
+                
+                updatePeriodBalanceWhenAddingItem(startID: startID, amount: budgeted, type: categoryKey)
+                
+            }
+
         }
         
         saveData()
