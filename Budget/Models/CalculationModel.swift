@@ -1,5 +1,5 @@
 //
-//  CalculateBudgetInfoModel.swift
+//  CalculationModel.swift
 //  Budget
 //
 //  Created by Adam Moore on 5/29/18.
@@ -9,42 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-
-
-
-
-
-
-
-// *****
-// *** Creating a new Paycheck
-// *****
-
-// A. Add info to create Item
-// B. Add to every Period
-    // Within here, update unallocated and balances.
-
-// 6. -> Add new item to current and all future Periods.
-
-// 7 (+). -> Update current and future unallocated.
-
-// 8. -> Update current and future Period balances.
-
-
-
-// *****
-// *** Creating a new Category
-// *****
-
-// A. Add info to create Item
-// B. Add to every Period
-    // Within here, update unallocated and balances.
-
-// 6. -> Add new item to current and all future Periods.
-
-// 7 (-). -> Update current and future unallocated.
-
-// 8. -> Update current and future Period balances.
 
 
 
@@ -105,6 +69,30 @@ func calculateNewPeriodStartingBalance(startID: Int) -> Double {
     for item in items {
         
         balanceOfItems += (item.type == categoryKey) ? item.budgeted : 0
+        
+    }
+    
+    return balanceOfItems
+    
+}
+
+
+
+// MARK: - Calculate Period Balance from ONLY Categories and Paychecks (excluding Unallocated)
+
+func calculatePeriodBalanceInIsolation(startID: Int) -> Double {
+    
+    let items = loadSpecificBudgetItems(startID: startID)
+    
+    var balanceOfItems = Double()
+    
+    for item in items {
+        
+        if item.name != unallocatedKey {
+            
+            balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+        }
         
     }
     

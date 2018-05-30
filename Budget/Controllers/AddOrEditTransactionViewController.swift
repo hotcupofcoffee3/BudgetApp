@@ -252,7 +252,27 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
         } else {
             
-            if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
+            let periods = loadSavedBudgetedTimeFrames()
+            
+            let dateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: date, isEnd: false)
+            
+            var dateIsInAPeriod = false
+            
+            for period in periods {
+                
+                if dateAsPeriodID > period.startDateID && dateAsPeriodID < period.endDateID {
+                    
+                    dateIsInAPeriod = true
+                    
+                }
+                
+            }
+            
+            if !dateIsInAPeriod {
+                
+                failureWithWarning(label: warningLabel, message: "The date you chose is not in a Budget Period.")
+                
+            } else if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
                 
                 // MARK: Withdrawal
                 
@@ -597,6 +617,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             categoryPickerVC.delegate = self
             
             guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.categoryList = budget.sortedCategoryKeys
             
             categoryPickerVC.selectedCategory = currentCategory
             

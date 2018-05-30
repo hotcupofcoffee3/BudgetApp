@@ -34,7 +34,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var selectedBudgetTimeFrameStartID = Int()
     
-    var runningBudgetTimeFrameTotal = Double()
+    var runningTotalFromThisPeriodAlone = Double()
     
     
     
@@ -47,6 +47,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var mainBalanceLabel: UILabel!
     
     @IBOutlet weak var navBar: UINavigationBar!
+    
+    @IBOutlet weak var leftThisPeriodLabel: UILabel!
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
@@ -77,58 +79,43 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
+        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
         
-        runningBudgetTimeFrameTotal = period.balance
+        runningTotalFromThisPeriodAlone = calculatePeriodBalanceInIsolation(startID: Int(period.startDateID))
         
-        
-        
-        
-        
-        
+        if period.startDateID > currentDateAsPeriodID {
+            
+            leftThisPeriodLabel.text = "{ This Period: \(convertedAmountToDollars(amount: runningTotalFromThisPeriodAlone))}"
+            
+        } else {
+            
+            leftThisPeriodLabel.text = ""
+            
+        }
         
         navBar.topItem?.title = "\(period.startMonth)/\(period.startDay)/\(period.startYear)"
         
         displayedDataTable.reloadData()
         
-        mainBalanceLabel.text = convertedAmountToDollars(amount: runningBudgetTimeFrameTotal)
-        
+        mainBalanceLabel.text = convertedAmountToDollars(amount: period.balance)
         
     }
     
-    func updateRunningTotalPerCheckage(forItem itemChecked: BudgetItem) {
+    func updateBalancePerCheckage(forItem itemChecked: BudgetItem) {
         
-        // Either positive or negative to be added to the running total, depending on how the item.
-        var amountToChangeBy = Double()
-        
-        // If it was checked, but isn't anymore
-        if !itemChecked.checked {
-            
-            // Amount taken away if a paycheck, added back if it was a withdrawal
-            amountToChangeBy = (itemChecked.type == paycheckKey) ? -itemChecked.budgeted : itemChecked.budgeted
-            
-            // If it wasn't checked, but now it is.
-        } else {
-            
-            // Amount added if a paycheck, taken away if it was a withdrawal
-            amountToChangeBy = (itemChecked.type == paycheckKey) ? itemChecked.budgeted : -itemChecked.budgeted
-            
-        }
-        
-        
-        
-        
-        
-        guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
-        
-        print("Bal: \(convertedAmountToDollars(amount: period.balance))")
-        
-        
-        
-        
-        
-        runningBudgetTimeFrameTotal += amountToChangeBy
-        
-        mainBalanceLabel.text = convertedAmountToDollars(amount: runningBudgetTimeFrameTotal)
+        let startID = Int(itemChecked.periodStartID)
+
+        let name = itemChecked.name!
+
+        let type = itemChecked.type!
+
+        updateItemAndBalancePerCheckage(startID: startID, named: name, type: type)
+
+//        guard let currentPeriod = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
+//
+//        mainBalanceLabel.text = convertedAmountToDollars(amount: currentPeriod.balance)
+//
+//        leftThisPeriodLabel.text = convertedAmountToDollars(amount: calculatePeriodBalanceInIsolation(startID: startID))
         
     }
     
@@ -232,7 +219,6 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
         
         self.loadNecessaryInfo()
-        
         
     }
    
@@ -388,7 +374,7 @@ extension BudgetItemsViewController {
                 
                 item.checked = !item.checked
                 
-                updateRunningTotalPerCheckage(forItem: item)
+                updateBalancePerCheckage(forItem: item)
                 
                 tableView.deselectRow(at: indexPath, animated: false)
                 

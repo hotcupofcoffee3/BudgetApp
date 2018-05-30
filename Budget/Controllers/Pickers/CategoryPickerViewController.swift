@@ -34,6 +34,8 @@ class CategoryPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     var selectedCategory = String()
     
+    var categoryList = [String]()
+    
     
     
     // *****
@@ -171,17 +173,17 @@ extension CategoryPickerViewController {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return budget.sortedCategoryKeys.count
+        return categoryList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = NSAttributedString(string: budget.sortedCategoryKeys[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        let title = NSAttributedString(string: categoryList[row], attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        selectedCategory = budget.sortedCategoryKeys[row]
+        selectedCategory = categoryList[row]
         
         updateCurrentCategoryBalanceLabel(forCategory: selectedCategory)
         

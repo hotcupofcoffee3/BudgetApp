@@ -64,11 +64,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     @IBOutlet weak var amountView: UIView!
     
     @IBOutlet weak var budgetedAmountTextField: UITextField!
-    
-    @IBOutlet weak var currentAllocationStatus: UISwitch!
-    
-    @IBOutlet weak var allocateView: UIView!
-    
+   
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var dueDateSwitch: UISwitch!
@@ -208,17 +204,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                 
                 if let budgetedAmountAsDouble = Double(budgetedAmount) {
                     
-                    guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
-                    
                     if budgetedAmountAsDouble < 0.0 {
                         
                         failureWithWarning(label: warningLabel, message: "You have to enter a positive number")
-                        
-                        
-                        // *** If 'Allocate' is switched on, is there enough in 'Unallocated'
-                    } else if currentAllocationStatus.isOn && budgetedAmountAsDouble > unallocated.budgeted {
-                        
-                        failureWithWarning(label: warningLabel, message: "You don't have enough funds to allocate at this time.")
                         
                     } else {
                         
@@ -256,12 +244,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         budget.addCategory(named: newCategoryName, withBudgeted: amount, withDueDay: dueDay)
      
-        if currentAllocationStatus.isOn {
-            budget.shiftFunds(withThisAmount: amount, from: unallocatedKey, to: newCategoryName)
-        }
-        
-        
-        
         saveData()
         
         warningLabel.textColor = successColor
@@ -498,12 +480,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
     }
     
-    @objc func allocateTapped() {
-        
-        currentAllocationStatus.isOn = !currentAllocationStatus.isOn
-        
-    }
-    
     @objc func dateTapped() {
         
         if dueDateSwitch.isOn == true {
@@ -621,8 +597,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                 
             }
             
-            currentAllocationStatus.isOn = false
-            
             submitCategoryButton.setTitle("Save Changes", for: .normal)
             
         }
@@ -631,12 +605,10 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         // *** Tap gesture to textfields and their labels
         let nameViewTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         let amountViewTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
-        let allocateViewTap = UITapGestureRecognizer(target: self, action: #selector(allocateTapped))
         let datetap = UITapGestureRecognizer(target: self, action: #selector(dateTapped))
         
         nameView.addGestureRecognizer(nameViewTap)
         amountView.addGestureRecognizer(amountViewTap)
-        allocateView.addGestureRecognizer(allocateViewTap)
         dateLabel.addGestureRecognizer(datetap)
         
         

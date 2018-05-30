@@ -345,7 +345,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
-        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: 0, category: categoryName, year: year, month: month, day: day, checked: true)
+        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: categoryName, year: year, month: month, day: day, checked: true)
         
         
         
@@ -716,6 +716,8 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             categoryPickerVC.delegate = self
             
             guard let currentCategory = categoryLabel.text else { return }
+            
+            categoryPickerVC.categoryList = loadPeriodCategories(startID: selectedBudgetTimeFrameStartID)
             
             categoryPickerVC.selectedCategory = currentCategory
             

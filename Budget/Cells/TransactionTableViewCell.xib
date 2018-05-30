@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88/88/88" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCF-hI-7l0">
-                        <rect key="frame" x="0.0" y="24.5" width="75" height="21"/>
+                        <rect key="frame" x="20" y="24.5" width="75" height="21"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="75" id="79Y-c2-fBk"/>
@@ -31,7 +31,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="mdC-Rw-B5w" userLabel="Category &amp; Name Stack">
-                        <rect key="frame" x="75" y="11" width="140" height="48"/>
+                        <rect key="frame" x="95" y="11" width="140" height="48"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtE-SJ-iYC">
                                 <rect key="frame" x="0.0" y="0.0" width="140" height="24"/>
@@ -54,7 +54,7 @@
                         </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✋🏽 $25.64" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="778-0G-jJ2">
-                        <rect key="frame" x="292" y="24" width="82.5" height="21"/>
+                        <rect key="frame" x="272.5" y="24" width="82.5" height="21"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                         <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -64,12 +64,12 @@
                 <constraints>
                     <constraint firstItem="mdC-Rw-B5w" firstAttribute="top" secondItem="wah-dz-bGx" secondAttribute="topMargin" id="173-UT-w7K"/>
                     <constraint firstItem="778-0G-jJ2" firstAttribute="centerY" secondItem="wah-dz-bGx" secondAttribute="centerY" id="5Ua-NF-lit"/>
-                    <constraint firstItem="CCF-hI-7l0" firstAttribute="leading" secondItem="wah-dz-bGx" secondAttribute="leading" id="eMw-ij-HU8"/>
+                    <constraint firstItem="CCF-hI-7l0" firstAttribute="leading" secondItem="wah-dz-bGx" secondAttribute="leading" constant="20" id="eMw-ij-HU8"/>
                     <constraint firstItem="CCF-hI-7l0" firstAttribute="centerY" secondItem="wah-dz-bGx" secondAttribute="centerY" id="f1C-Tq-GTo"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mdC-Rw-B5w" secondAttribute="bottom" id="ldP-jO-5L8"/>
                     <constraint firstItem="mdC-Rw-B5w" firstAttribute="leading" secondItem="CCF-hI-7l0" secondAttribute="trailing" id="tbu-VL-H0l"/>
                     <constraint firstItem="mdC-Rw-B5w" firstAttribute="centerY" secondItem="wah-dz-bGx" secondAttribute="centerY" id="uXb-4Q-Y7q"/>
-                    <constraint firstAttribute="trailing" secondItem="778-0G-jJ2" secondAttribute="trailing" id="ylX-hB-cUO"/>
+                    <constraint firstAttribute="trailing" secondItem="778-0G-jJ2" secondAttribute="trailing" constant="20" id="ylX-hB-cUO"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -658,7 +658,7 @@ class Budget {
     // MARK: - Shift Funds Function
     // *****
     
-    func shiftFunds (withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
+    func shiftFunds(withThisAmount amount: Double, from fromCategory: String, to toCategory: String) {
         
         if fromCategory == unallocatedKey {
             

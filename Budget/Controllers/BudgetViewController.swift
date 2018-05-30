@@ -131,8 +131,6 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
             
-            destinationVC.runningBudgetTimeFrameTotal = selectedBudgetTimeFrameRunningTotal
-            
         } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
             
             let destinationVC = segue.destination as! AddOrEditBudgetedTimeFrameViewController
@@ -182,11 +180,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
         
-        for period in sortedBudgetedTimeFrames {
-            
-            print(period.startDateID)
-            
-        }
+//        for period in sortedBudgetedTimeFrames {
+//
+//            print(period.startDateID)
+//
+//        }
         
     }
     
