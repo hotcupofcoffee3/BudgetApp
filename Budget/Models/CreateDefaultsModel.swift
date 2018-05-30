@@ -33,7 +33,7 @@ func createCurrentTimeFrame(){
     let startDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: startDay)
     let endDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: endDay)
     
-    createAndSaveNewBudgetedTimeFrame(start: startDate, end: endDate)
+    addNewPeriod(start: startDate, end: endDate)
     
 }
 
@@ -54,7 +54,24 @@ func createUnallocatedCategory(){
 
 func createUnallocatedBudgetItem(startID: Int){
     
-    // 'Unallocated' always has a budgeted amount of 0.
-    createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: unallocatedKey, budgeted: 0.0, available: 0.0, category: categoryKey, year: 0, month: 0, day: 0, checked: false)
+    var available = Double()
+    
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
+        
+        available = previousUnallocatedItem.available
+        
+    }
+    
+    // Budgeted is calculated from the Paychecks and Categories.
+    // Available is calculated from previous 'unallocated', and the difference between the Paychecks & Categories available.
+    createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: unallocatedKey, budgeted: 0.0, available: available, category: categoryKey, year: 0, month: 0, day: 0, checked: false)
     
 }
+
+
+
+
+
+
+
+

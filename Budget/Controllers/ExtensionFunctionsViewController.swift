@@ -229,9 +229,9 @@ extension UIViewController {
     
     func refreshAvailableBalanceLabel(label: UILabel) {
         
-        budget.updateBalance()
+        let periods = loadAndSortBudgetedTimeFrames()
         
-        label.text = "\(convertedAmountToDollars(amount: budget.balance))"
+        label.text = "\(convertedAmountToDollars(amount: periods[0].balance))"
         
     }
     

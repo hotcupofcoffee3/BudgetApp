@@ -60,17 +60,9 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
         
         createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
         
-        
-        
-        // BELOW: - Update all Periods' balances AFTER the Period created with the new Period's calculated balance.
-        
-        // BELOW: - Update all Periods' budget items AFTER the Period created with the new Period's calculated budget items.
-        
-        
-        
         guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
         
-        updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: amount, available: amount, type: paycheckKey)
+        updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: amount, type: paycheckKey)
         
         updatePeriodBalanceWhenAddingItem(startID: startID, amount: amount, type: paycheckKey)
         
@@ -97,16 +89,9 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
             
             createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: budgeted, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
             
-            
-            // BELOW: - Update all Periods' balances AFTER the Period created with the new Period's calculated balance.
-            
-            // BELOW: - Update all Periods' budget items AFTER the Period created with the new Period's calculated budget items.
-            
-            
-            
             guard let currentUnallocated = loadUnallocatedItem(startID: startID) else { return }
             
-            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: budgeted, available: budgeted, type: categoryKey)
+            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocated, budgeted: budgeted, type: categoryKey)
             
             updatePeriodBalanceWhenAddingItem(startID: startID, amount: budgeted, type: categoryKey)
             

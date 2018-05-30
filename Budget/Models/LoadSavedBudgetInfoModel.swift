@@ -613,6 +613,27 @@ func loadPreviousPeriod(currentStartID: Int) -> Period? {
 }
 
 
+// MARK: - Load Previous Period's Specified Budget Item
+
+func loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int, named: String, type: String) -> BudgetItem? {
+    
+    var previousBudgetItem: BudgetItem?
+    
+    if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
+        
+        if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
+            
+            previousBudgetItem = previousItem
+            
+        }
+        
+    }
+    
+    return previousBudgetItem
+    
+}
+
+
 
 // MARK: - Load Previous Period's Balance
 

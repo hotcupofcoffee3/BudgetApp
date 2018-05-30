@@ -206,14 +206,6 @@ class Budget {
     // MARK: - Budgeted Time Frame Functions
     // *****
     
-    func addTimeFrame(start: Date, end: Date) {
-        
-        createAndSaveNewBudgetedTimeFrame(start: start, end: end)
-        
-        saveData()
-        
-    }
-    
     func deleteTimeFrame(period: Period) {
         
         let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
@@ -277,52 +269,6 @@ class Budget {
         saveData()
         
     }
-    
-//    func updateBalanceForSpecificTimeFrame(withStartID id: Int) {
-//
-//        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
-//
-//        var balance = Double()
-//
-//        let items = loadSpecificBudgetItems(startID: id)
-//
-//        for item in items {
-//
-//            if item.type == paycheckKey || item.type == depositKey {
-//
-//                balance += item.available
-//
-//            } else {
-//
-//                balance -= item.available
-//
-//            }
-//
-//        }
-//
-//        period.balance = balance
-//
-//        saveData()
-//
-//    }
-//
-//    func updateUnallocatedForSpecificTimeFrame(withStartID id: Int) {
-//
-//        guard let period = loadSpecificBudgetedTimeFrame(startID: id) else { return }
-//
-//        var unallocated = period.balance
-//
-//        let items = loadSpecificBudgetItems(startID: id)
-//
-//        for item in items {
-//
-//            unallocated -= item.budgeted
-//
-//        }
-//
-//        saveData()
-//
-//    }
     
     
     

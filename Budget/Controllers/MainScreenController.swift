@@ -154,31 +154,31 @@ class MainScreen: UIViewController {
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                     
-                    // An initial Deposit
-                    budget.addTransaction(onHold: false, type: .deposit, title: "Madelyn's Paycheck", forCategory: unallocatedKey, inTheAmountOf: 1700.00, year: 2018, month: 5, day: 15)
+//                    // An initial Deposit
+//                    budget.addTransaction(onHold: false, type: .deposit, title: "Madelyn's Paycheck", forCategory: unallocatedKey, inTheAmountOf: 1700.00, year: 2018, month: 5, day: 15)
                     
                     // Three categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0, withDueDay: 0)
-                    budget.addCategory(named: "Extra", withBudgeted: 50.0, withDueDay: 0)
-                    budget.addCategory(named: "Netflix", withBudgeted: 14.15, withDueDay: 7)
+                    budget.addCategory(named: "Extra", withBudgeted: 80.0, withDueDay: 0)
+                    budget.addCategory(named: "Netflix", withBudgeted: 20.0, withDueDay: 7)
                     
-                    // Three transactions with some amounts.
-                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 5, day: 16)
-                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 5, day: 17)
-                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Starbucks", forCategory: "Extra", inTheAmountOf: 2.98, year: 2018, month: 5, day: 24)
+//                    // Three transactions with some amounts.
+//                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Sprouts", forCategory: "Food", inTheAmountOf: 25, year: 2018, month: 5, day: 16)
+//                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 5, day: 17)
+//                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Starbucks", forCategory: "Extra", inTheAmountOf: 2.98, year: 2018, month: 5, day: 24)
                     
                     //One Paycheck
-                    createAndSaveNewPaycheck(named: "Madelyn's Paycheck", withAmount: 1756.84)
+                    createAndSaveNewPaycheck(named: "Madelyn's Paycheck", withAmount: 2000.00)
                     
                     // One Past and One Future Budget Period
                     
                     let pastStartDate = convertComponentsToDate(year: 2018, month: 3, day: 1)
                     let pastEndDate = convertComponentsToDate(year: 2018, month: 3, day: 31)
-                    budget.addTimeFrame(start: pastStartDate, end: pastEndDate)
+                    addNewPeriod(start: pastStartDate, end: pastEndDate)
                     
                     let futureStartDate = convertComponentsToDate(year: 2018, month: 12, day: 1)
                     let futureEndDate = convertComponentsToDate(year: 2018, month: 12, day: 31)
-                    budget.addTimeFrame(start: futureStartDate, end: futureEndDate)
+                    addNewPeriod(start: futureStartDate, end: futureEndDate)
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

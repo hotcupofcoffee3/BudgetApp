@@ -12,24 +12,7 @@ import CoreData
 
 
 
-// *****
-// *** Creating a new Period
-// *****
 
-// A. Add date info to create Period
-// B. Add all Paychecks and Categories
-    // In here, calculate the current and future amounts
-// C. Calculate Period balance.
-
-// 1. -> (For Loop): Calculate current items' available based on budgeted amount and ONLY THE MOST PREVIOUS available.
-
-// 2. -> (For Loop): Update all future items' available based on current available.
-
-// 3. -> Calculate current unallocated (previous period's unallocated + (paychecks' budgeted - categories' budgeted)).
-
-// 4. -> (For Loop): Calculate all future unallocated based on the current available.
-
-// 5. -> Calculate balance (All Categories' available, including 'Unallocated').
 
 
 
@@ -111,13 +94,6 @@ import CoreData
 
 
 
-
-
-
-
-
-
-
 // MARK: - Calculate New Period's Balance
 
 func calculateNewPeriodStartingBalance(startID: Int) -> Double {
@@ -128,11 +104,7 @@ func calculateNewPeriodStartingBalance(startID: Int) -> Double {
     
     for item in items {
         
-        if item.name != unallocatedKey {
-            
-            balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
-            
-        }
+        balanceOfItems += (item.type == categoryKey) ? item.budgeted : 0
         
     }
     
@@ -141,32 +113,38 @@ func calculateNewPeriodStartingBalance(startID: Int) -> Double {
 }
 
 
-// MARK: - Calculate new Period's budget items (including unallocated) with budget items of previous Period.
 
-func calculateCurrentItemsWithPreviousPeriodItems(currentStartID: Int) {
+// MARK: - Calculate new Period's Budget Item with Budget Item of previous Period.
+
+func calculateInitialCurrentItemAvailableFromPreviousPeriodItemAvailable(currentStartID: Int, named: String, type: String, budgeted: Double) -> Double {
     
-    let currentItems = loadSpecificBudgetItems(startID: currentStartID)
+    // Start off with the budgeted amount, as that is the default 'available' that is added.
+    var available = budgeted
     
     if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
         
-        let previousItems = loadSpecificBudgetItems(startID: Int(previousPeriod.startDateID))
-        
-        for previousItem in previousItems {
+        if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
             
-            for currentItem in currentItems {
-                
-                if previousItem.name == currentItem.name && previousItem.type == currentItem.type {
-                    
-                    currentItem.available += previousItem.available
-                    
-                }
-                
-            }
+            available += previousItem.available
             
         }
         
     }
     
-    saveData()
+    return available
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

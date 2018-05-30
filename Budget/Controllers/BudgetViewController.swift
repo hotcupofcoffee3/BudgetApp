@@ -72,37 +72,11 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         sortedBudgetedTimeFrames = loadAndSortBudgetedTimeFrames()
         
+        updateAllPeriodsBalances()
+        
         displayedDataTable.separatorStyle = .none
         displayedDataTable.reloadData()
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
-        
-    }
-    
-    func loadRunningTotal(withStartingAmount startingAmount: Double, forBudgetItemsWithStartingID startID: Int) -> Double {
-        
-        let items = loadSpecificBudgetItems(startID: startID)
-        
-        var newRunningTotal = startingAmount
-        
-        for item in items {
-            
-            if item.checked {
-                
-                if item.type == paycheckKey {
-                    
-                    newRunningTotal += item.budgeted
-                    
-                } else {
-                    
-                    newRunningTotal -= item.budgeted
-                    
-                }
-                
-            }
-            
-        }
-        
-        return newRunningTotal
         
     }
     
@@ -285,26 +259,7 @@ extension BudgetViewController {
                 
             }
             
-            var startingTotal = Double()
-            
-            if indexPath.row == 0 {
-                
-                startingTotal = budget.balance
-                
-            } else {
-                
-                startingTotal = previousBudgetTimeFrameRunningTotal
-                
-            }
-            
-            let runningTotalForCurrentPeriod = loadRunningTotal(withStartingAmount: startingTotal, forBudgetItemsWithStartingID: Int(period.startDateID))
-            
-            
-            // Sets the 'previous' total to the current one, to be used for the next cell's starting info.
-            previousBudgetTimeFrameRunningTotal = runningTotalForCurrentPeriod
-            
-            
-            cell.amountLabel?.text = "\(convertedAmountToDollars(amount: runningTotalForCurrentPeriod))"
+            cell.amountLabel?.text = "\(convertedAmountToDollars(amount: period.balance))"
 
         }
         

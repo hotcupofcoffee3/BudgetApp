@@ -10,10 +10,48 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
+func addNewPeriod(start: Date, end: Date) {
+    
+    let startID = convertDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
+    let endID = convertDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
+    
+    
+    // Create new Period
+    createAndSaveNewBudgetedTimeFrame(start: start, end: end)
+    
+    
+    // Create Unallocated Item for new Period, with previous 'available' added
+    createUnallocatedBudgetItem(startID: startID)
+    
+    
+    // Create all Category and Paycheck Items for new Period, with previous 'available' added.
+    // Unallocated is also updated in here
+    createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startID, endDateID: endID)
+    
+    
+    // Update Unallocated for new Period after all Categories and Paychecks have been added.
+    updateAllSpecificBudgetItemAvailableForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey)
+    
+    
+    // Calculate new Period's balance with balance of previous Period.
+    guard let newlyCreatedPeriod = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
+    
+    newlyCreatedPeriod.balance = calculateNewPeriodStartingBalance(startID: startID)
+    
+    saveData()
+    
+}
+
+
+
+
 // MARK: - Save a new Budgeted Time Frame
 
 func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
     
+    // Add date info to create Period
     let startDict = convertDateToInts(dateToConvert: start)
     let endDict = convertDateToInts(dateToConvert: end)
     
@@ -35,32 +73,7 @@ func createAndSaveNewBudgetedTimeFrame(start: Date, end: Date) {
         budgetedTimeFrameToSave.endDateID = Int64(endDateID)
         
     }
-    
-    createUnallocatedBudgetItem(startID: startDateID)
-    
-    createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startDateID, endDateID: endDateID)
-    
-    
-    
-    // Calculate new Period's balance with balance of previous Period.
-    
-    let previousPeriodBalance = loadPreviousPeriodBalance(startID: startDateID)
-    
-    let balanceOfItems = calculateNewPeriodStartingBalance(startID: startDateID)
-    
-    budgetedTimeFrameToSave.balance = previousPeriodBalance + balanceOfItems
-    
-    
-    // Calculate new Period's budget items (including unallocated) with budget items of previous Period.
-    
-    calculateCurrentItemsWithPreviousPeriodItems(currentStartID: startDateID)
-    
-    // BELOW: - Update all Periods' balances AFTER the Period created with the new Period's calculated balance.
-    
-    // BELOW: - Update all Periods' budget items AFTER the Period created with the new Period's calculated budget items.
-    
-    
-    
+
     saveData()
     
 }
@@ -79,9 +92,9 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
     
     for paycheck in budget.paychecks {
         
-        updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocatedItem, budgeted: paycheck.amount, available: paycheck.amount, type: paycheckKey)
-        
         createAndSaveNewBudgetItem(periodStartID: startDateID, type: paycheckKey, named: paycheck.name!, budgeted: paycheck.amount, available: paycheck.amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
+        
+        updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocatedItem, budgeted: paycheck.amount, type: paycheckKey)
         
     }
     
@@ -94,9 +107,13 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         
         if category.name != unallocatedKey {
             
-            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocatedItem, budgeted: category.budgeted, available: category.budgeted, type: categoryKey)
+            let available = calculateInitialCurrentItemAvailableFromPreviousPeriodItemAvailable(currentStartID: startDateID, named: category.name!, type: categoryKey, budgeted: category.budgeted)
             
-            createAndSaveNewBudgetItem(periodStartID: startDateID, type: categoryKey, named: category.name!, budgeted: category.budgeted, available: category.budgeted, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay), checked: true)
+            createAndSaveNewBudgetItem(periodStartID: startDateID, type: categoryKey, named: category.name!, budgeted: category.budgeted, available: available, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay), checked: true)
+            
+            updateUnallocatedWhenAddingItem(currentUnallocatedItem: currentUnallocatedItem, budgeted: category.budgeted, type: categoryKey)
+            
+            updateAllSpecificBudgetItemAvailableForFuturePeriods(startID: startDateID, named: category.name!, type: categoryKey)
             
         }
         

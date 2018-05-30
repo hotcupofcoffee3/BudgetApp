@@ -26,23 +26,9 @@ func updatePeriodBalance(startID: Int) {
     
     period.balance = 0
     
-    let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
-    
     for item in items {
         
-        if item.name != unallocatedKey {
-            
-            if startID > currentDateAsPeriodID {
-                
-                period.balance += (item.type == depositKey || item.type == paycheckKey) ? item.budgeted : -item.budgeted
-                
-            } else {
-                
-                period.balance += (item.type == depositKey || item.type == paycheckKey) ? item.available : -item.available
-                
-            }
-            
-        }
+        period.balance += (item.type == categoryKey || item.type == withdrawalKey) ? item.available : 0
         
     }
     
@@ -90,11 +76,11 @@ func updatePeriodBalanceWhenAddingItem(startID: Int, amount: Double, type: Strin
 
 // MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a particular Period.
 
-func updateUnallocatedWhenAddingItem(currentUnallocatedItem unallocated: BudgetItem, budgeted: Double, available: Double, type: String) {
+func updateUnallocatedWhenAddingItem(currentUnallocatedItem unallocated: BudgetItem, budgeted: Double, type: String) {
     
     unallocated.budgeted += (type == paycheckKey || type == depositKey) ? budgeted : -budgeted
     
-    unallocated.available += (type == paycheckKey || type == depositKey) ? available : -available
+    unallocated.available += (type == paycheckKey || type == depositKey) ? budgeted : -budgeted
     
     saveData()
     
@@ -108,25 +94,21 @@ func updateUnallocatedWhenAddingItem(currentUnallocatedItem unallocated: BudgetI
 
 // MARK: - Updates all future instances of a specific Budget Item for all Periods.
 
-func updateAllSpecificBudgetItemAvailableForFuturePeriods(currentItem: BudgetItem) {
+func updateAllSpecificBudgetItemAvailableForFuturePeriods(startID: Int, named: String, type: String) {
     
-    guard let name = currentItem.name else { return }
-    guard let type = currentItem.type else { return }
+    guard let currentItem = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
     
-    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: name, type: type)
+    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: currentItem.name!, type: currentItem.type!)
     
     // If the period is NOT the last period in the array.
-    if !(currentItem.periodStartID > specificItems[specificItems.count - 2].periodStartID) {
+    if !(currentItem.periodStartID == specificItems[specificItems.count - 1].periodStartID) {
         
         for item in specificItems {
             
+            // All future instances
             if item.periodStartID > currentItem.periodStartID {
                 
-                if item != currentItem {
-                    
-                    item.available += (type == paycheckKey || type == depositKey) ? currentItem.available : -currentItem.available
-                    
-                }
+                item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
                 
             }
             
@@ -137,32 +119,6 @@ func updateAllSpecificBudgetItemAvailableForFuturePeriods(currentItem: BudgetIte
     saveData()
     
 }
-
-
-
-// MARK: - Updates the 'Available' amount for all instances of a specific Budget Item for all future Periods.
-
-func updateAllBudgetItemsAvailableForFuturePeriods(currentStartID: Int) {
-    
-    let periods = loadSavedBudgetedTimeFrames()
-    
-    // If the current period is NOT the last period in the array.
-    if !(currentStartID > periods[periods.count - 2].startDateID) {
-        
-        let currentItems = loadSpecificBudgetItems(startID: currentStartID)
-        
-        for item in currentItems {
-            
-            updateAllSpecificBudgetItemAvailableForFuturePeriods(currentItem: item)
-            
-        }
-        
-    }
-    
-    saveData()
-    
-}
-
 
 
 

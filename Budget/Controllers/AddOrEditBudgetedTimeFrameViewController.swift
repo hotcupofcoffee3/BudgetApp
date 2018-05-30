@@ -181,7 +181,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     func addBudgetedTimeFrameSubmission(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
         
-        budget.addTimeFrame(start: startDate, end: endDate)
+        addNewPeriod(start: startDate, end: endDate)
         
         successHaptic()
         

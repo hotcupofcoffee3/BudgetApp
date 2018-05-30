@@ -316,9 +316,9 @@ extension BudgetItemsViewController {
         
         
 //        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: true)
-        
-        
-        
+//
+//
+//
 //        // Future
 //
 //        if selectedBudgetTimeFrameStartID > currentDateAsPeriodID {
@@ -340,13 +340,13 @@ extension BudgetItemsViewController {
 //        // Past and Present
 //
 //        } else {
-//
+
             if item.type == categoryKey || item.type == withdrawalKey {
                 
                 if item.name == unallocatedKey {
                     
                     cell.amountAvailableLabel?.text = "\(convertedAmountToDollars(amount: item.available))"
-                    cell.amountBudgetedLabel?.text = ""
+                    cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
                     
                 } else {
                     
@@ -358,7 +358,7 @@ extension BudgetItemsViewController {
             } else if item.type == paycheckKey || item.type == depositKey {
                 
                 cell.amountAvailableLabel?.text = "+ \(convertedAmountToDollars(amount: item.available))"
-                cell.amountBudgetedLabel?.text = ""
+                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
                 
             }
         
