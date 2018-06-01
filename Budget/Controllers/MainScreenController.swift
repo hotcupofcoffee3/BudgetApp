@@ -157,6 +157,9 @@ class MainScreen: UIViewController {
 //                    // An initial Deposit
 //                    budget.addTransaction(onHold: false, type: .deposit, title: "Madelyn's Paycheck", forCategory: unallocatedKey, inTheAmountOf: 1700.00, year: 2018, month: 5, day: 15)
                     
+                    //One Paycheck
+                    createAndSaveNewPaycheck(named: "Madelyn's Paycheck", withAmount: 2000.00)
+                    
                     // Three categories with some budgeted amounts
                     budget.addCategory(named: "Food", withBudgeted: 200.0, withDueDay: 0)
                     budget.addCategory(named: "Extra", withBudgeted: 80.0, withDueDay: 0)
@@ -167,26 +170,24 @@ class MainScreen: UIViewController {
 //                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Whole Foods", forCategory: "Food", inTheAmountOf: 15.45, year: 2018, month: 5, day: 17)
 //                    budget.addTransaction(onHold: false, type: .withdrawal, title: "Starbucks", forCategory: "Extra", inTheAmountOf: 2.98, year: 2018, month: 5, day: 24)
                     
-                    //One Paycheck
-                    createAndSaveNewPaycheck(named: "Madelyn's Paycheck", withAmount: 2000.00)
                     
                     // One Past and One Future Budget Period
                     
                     let pastStartDate1 = convertComponentsToDate(year: 2018, month: 3, day: 1)
                     let pastEndDate1 = convertComponentsToDate(year: 2018, month: 3, day: 31)
                     addNewPeriod(start: pastStartDate1, end: pastEndDate1)
-                    
+
                     let futureStartDate1 = convertComponentsToDate(year: 2018, month: 12, day: 1)
                     let futureEndDate1 = convertComponentsToDate(year: 2018, month: 12, day: 31)
                     addNewPeriod(start: futureStartDate1, end: futureEndDate1)
-                    
-                    let pastStartDate2 = convertComponentsToDate(year: 2018, month: 4, day: 1)
-                    let pastEndDate2 = convertComponentsToDate(year: 2018, month: 4, day: 30)
-                    addNewPeriod(start: pastStartDate2, end: pastEndDate2)
-                    
-                    let futureStartDate2 = convertComponentsToDate(year: 2018, month: 10, day: 1)
-                    let futureEndDate2 = convertComponentsToDate(year: 2018, month: 10, day: 31)
-                    addNewPeriod(start: futureStartDate2, end: futureEndDate2)
+//
+//                    let pastStartDate2 = convertComponentsToDate(year: 2018, month: 4, day: 1)
+//                    let pastEndDate2 = convertComponentsToDate(year: 2018, month: 4, day: 30)
+//                    addNewPeriod(start: pastStartDate2, end: pastEndDate2)
+//
+//                    let futureStartDate2 = convertComponentsToDate(year: 2018, month: 10, day: 1)
+//                    let futureEndDate2 = convertComponentsToDate(year: 2018, month: 10, day: 31)
+//                    addNewPeriod(start: futureStartDate2, end: futureEndDate2)
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     

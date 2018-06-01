@@ -689,7 +689,7 @@ class Budget {
         let periods = loadSavedBudgetedTimeFrames()
         loadSavedPaychecks()
         loadSavedBudgetItems()
-
+        
         balance = 0.0
         
         for category in categories {

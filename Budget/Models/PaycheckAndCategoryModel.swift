@@ -66,10 +66,6 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
         
             createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
             
-            updateUnallocatedItem(startID: startID, amountBudgeted: amount, type: paycheckKey)
-            
-            updatePeriodBalanceWhenAddingItem(startID: startID, amount: amount, type: paycheckKey)
-            
         }
         
     }
@@ -100,10 +96,6 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
             if !(endID < currentDateAsPeriodID) {
                 
                 createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: budgeted, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
-                
-                updateUnallocatedItem(startID: startID, amountBudgeted: budgeted, type: categoryKey)
-                
-                updatePeriodBalanceWhenAddingItem(startID: startID, amount: budgeted, type: categoryKey)
                 
             }
 

@@ -16,30 +16,40 @@ func addNewPeriod(start: Date, end: Date) {
     
     let startID = convertDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
     let endID = convertDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
-    
-    
+    print("1")
     // Create new Period
     createAndSaveNewBudgetedTimeFrame(start: start, end: end)
     
-    
+    print("2")
     // Create Unallocated Item for new Period, with previous 'available' added
     createUnallocatedBudgetItem(startID: startID)
     
-    
+    print("3")
     // Create all Category and Paycheck Items for new Period, with previous 'available' added.
-    // Unallocated is also updated in here
     createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startID, endDateID: endID)
     
+    print("4")
+    // Update current Unallocated item
+    updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: startID)
     
-    // Update Unallocated for new Period after all Categories and Paychecks have been added.
-    updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerItemCreation(startID: startID, named: unallocatedKey, type: categoryKey)
+    print("5")
+    // Update Future Category items
+    updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: startID)
     
+    print("6")
+    // Update Future Unallocated items
+    updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID: startID, named: unallocatedKey, type: categoryKey)
     
+    print("7")
     // Update new Period's balance with balance of previous Period.
     guard let newlyCreatedPeriod = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
-    
     newlyCreatedPeriod.balance = calculateNewPeriodStartingBalance(startID: startID)
     
+    print("8")
+    // Update Future balances
+    updateAllPeriodsBalances()
+    
+    print("9")
     saveData()
     
 }
@@ -103,8 +113,6 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         
         createAndSaveNewBudgetItem(periodStartID: startDateID, type: paycheckKey, named: paycheck.name!, budgeted: paycheck.amount, available: paycheck.amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
         
-        updateUnallocatedItem(startID: startDateID, amountBudgeted: paycheck.amount, type: paycheckKey)
-        
     }
     
     
@@ -116,13 +124,9 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         
         if category.name != unallocatedKey {
             
-            let available = calculateInitialCurrentItemAvailableFromPreviousPeriodItemAvailable(currentStartID: startDateID, named: category.name!, type: categoryKey, budgeted: category.budgeted)
+            let available = calculateInitialItemAvailableFromPreviousPeriod(currentStartID: startDateID, named: category.name!, type: categoryKey, budgeted: category.budgeted)
             
             createAndSaveNewBudgetItem(periodStartID: startDateID, type: categoryKey, named: category.name!, budgeted: category.budgeted, available: available, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay), checked: true)
-            
-            updateUnallocatedItem(startID: startDateID, amountBudgeted: category.budgeted, type: categoryKey)
-            
-            updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerItemCreation(startID: startDateID, named: category.name!, type: categoryKey)
             
         }
         
@@ -357,9 +361,22 @@ func updateAllPeriodsBalances() {
     
     let allPeriods = loadSavedBudgetedTimeFrames()
     
-    for period in allPeriods {
+    if !allPeriods.isEmpty {
         
-        updatePeriodBalance(startID: Int(period.startDateID))
+        for period in allPeriods {
+            
+            let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+            
+            period.balance = 0
+            
+            for item in items {
+                
+                period.balance += (item.type == categoryKey || item.type == withdrawalKey) ? item.available : 0
+                
+            }
+            
+            
+        }
         
     }
     

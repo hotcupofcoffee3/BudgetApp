@@ -79,6 +79,7 @@ func calculateNewPeriodStartingBalance(startID: Int) -> Double {
 
 
 // MARK: - Calculate Period Balance from ONLY Categories and Paychecks (excluding Unallocated)
+// Also serves to calculate isolated 'Unallocated' amount.
 
 func calculatePeriodBalanceInIsolation(startID: Int) -> Double {
     
@@ -104,7 +105,7 @@ func calculatePeriodBalanceInIsolation(startID: Int) -> Double {
 
 // MARK: - Calculate new Period's Budget Item with Budget Item of previous Period.
 
-func calculateInitialCurrentItemAvailableFromPreviousPeriodItemAvailable(currentStartID: Int, named: String, type: String, budgeted: Double) -> Double {
+func calculateInitialItemAvailableFromPreviousPeriod(currentStartID: Int, named: String, type: String, budgeted: Double) -> Double {
     
     // Start off with the budgeted amount, as that is the default 'available' that is added.
     var available = budgeted

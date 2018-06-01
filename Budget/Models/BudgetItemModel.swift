@@ -10,6 +10,31 @@ import Foundation
 import UIKit
 import CoreData
 
+// MARK: - Save a new unallocated item
+
+func createAndSaveNewUnallocatedItem(periodStartID: Int, budgeted: Double, available: Double, year: Int, month: Int, day: Int) {
+    
+    let itemToSave = BudgetItem(context: context)
+    
+    itemToSave.periodStartID = Int64(periodStartID)
+    itemToSave.type = categoryKey
+    itemToSave.name = unallocatedKey
+    itemToSave.budgeted = budgeted
+    itemToSave.available = available
+    itemToSave.category = categoryKey
+    itemToSave.year = Int64(year)
+    itemToSave.month = Int64(month)
+    itemToSave.checked = true
+    
+    // The 'day' is the set due day, NOT the date from the 'timeSpanID'
+    itemToSave.day = Int64(day)
+    
+    saveData()
+    
+}
+
+
+
 // MARK: - Save a new budget item
 
 func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int, checked: Bool) {
@@ -28,15 +53,6 @@ func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String,
     
     // The 'day' is the set due day, NOT the date from the 'timeSpanID'
     itemToSave.day = Int64(day)
-    
-    // Update Period's Unallocated
-    updateUnallocatedItem(startID: periodStartID, amountBudgeted: budgeted, type: type)
-   
-    // Update All future Periods' Unallocated
-    updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerItemCreation(startID: periodStartID, named: unallocatedKey, type: type)
-    
-    // Update all Period balances
-    updateAllPeriodsBalances()
     
     saveData()
     
@@ -111,12 +127,13 @@ func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> Budget
     let namedPredicate = NSPredicate(format: nameMatchesKey, named)
     
     let typePredicate = NSPredicate(format: typeMatchesKey, type)
-    
-    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [startIDPredicate, namedPredicate, typePredicate])
-    
+
+    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [namedPredicate, startIDPredicate, typePredicate])
+   
     do {
-        
+//        print("Fart4")
         matchingItemArray = try context.fetch(request)
+//        print("Fart5")
         
     } catch {
         
@@ -276,10 +293,68 @@ func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) 
 func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     
     guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
+  
+    unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
     
-    unallocated.budgeted += (type == paycheckKey || type == depositKey) ? amountBudgeted : -amountBudgeted
+    unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
     
-    unallocated.available += (type == paycheckKey || type == depositKey) ? amountBudgeted : -amountBudgeted
+    saveData()
+    
+}
+
+// MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a particular Period.
+
+func updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: Int) {
+   
+    guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
+    
+    let newPeriodItems = loadSpecificBudgetItems(startID: startID)
+    
+    for item in newPeriodItems {
+        
+        if item.name != unallocatedKey {
+            
+            unallocated.budgeted += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+            unallocated.available += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+        }
+        
+    }
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Updates all future instances of a specific Budget Item for all Periods with New Period Create.
+
+func updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: Int) {
+    
+    let currentItems = loadSpecificBudgetItems(startID: startID)
+    
+    for currentItem in currentItems {
+        
+        let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: currentItem.name!, type: currentItem.type!)
+        
+        // If the period is NOT the last period in the array.
+        if !(currentItem.periodStartID == specificItems[specificItems.count - 1].periodStartID) {
+            
+            for item in specificItems {
+                
+                // All future instances
+                if item.periodStartID > currentItem.periodStartID {
+                    
+                    item.available += (currentItem.type == categoryKey || currentItem.type == withdrawalKey) ? currentItem.budgeted : 0
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     
     saveData()
     
@@ -289,7 +364,7 @@ func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
 
 // MARK: - Updates all future instances of a specific Budget Item for all Periods.
 
-func updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerItemCreation(startID: Int, named: String, type: String) {
+func updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID: Int, named: String, type: String) {
     
     guard let currentItem = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
     
@@ -302,7 +377,7 @@ func updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerItemCreation(sta
             
             // All future instances
             if item.periodStartID > currentItem.periodStartID {
-                
+
                 item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
                 
             }
