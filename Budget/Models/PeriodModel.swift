@@ -39,7 +39,7 @@ func addNewPeriod(start: Date, end: Date) {
     print("6")
     // Update Future Unallocated items
     updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID: startID, named: unallocatedKey, type: categoryKey)
-    
+
     print("7")
     // Update new Period's balance with balance of previous Period.
     guard let newlyCreatedPeriod = loadSpecificBudgetedTimeFrame(startID: startID) else { return }

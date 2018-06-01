@@ -377,7 +377,7 @@ func updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID
             
             // All future instances
             if item.periodStartID > currentItem.periodStartID {
-
+                
                 item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
                 
             }
