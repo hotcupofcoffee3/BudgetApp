@@ -16,40 +16,39 @@ func addNewPeriod(start: Date, end: Date) {
     
     let startID = convertDateToBudgetedTimeFrameID(timeFrame: start, isEnd: false)
     let endID = convertDateToBudgetedTimeFrameID(timeFrame: end, isEnd: true)
-    print("1")
+    
     // Create new Period
     createAndSaveNewBudgetedTimeFrame(start: start, end: end)
     
-    print("2")
+    
     // Create Unallocated Item for new Period, with previous 'available' added
     createUnallocatedBudgetItem(startID: startID)
     
-    print("3")
+    
     // Create all Category and Paycheck Items for new Period, with previous 'available' added.
     createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: startID, endDateID: endID)
     
-    print("4")
+    
     // Update current Unallocated item
     updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: startID)
     
-    print("5")
+    
     // Update Future Category items
     updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: startID)
     
-    print("6")
+    
     // Update Future Unallocated items
     updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID: startID, named: unallocatedKey, type: categoryKey)
-
-    print("7")
+    
+    
     // Update new Period's balance with balance of previous Period.
     guard let newlyCreatedPeriod = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
     newlyCreatedPeriod.balance = calculateNewPeriodStartingBalance(startID: startID)
     
-    print("8")
+    
     // Update Future balances
     updateAllPeriodsBalances()
     
-    print("9")
     saveData()
     
 }
@@ -111,7 +110,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
     
     for paycheck in budget.paychecks {
         
-        createAndSaveNewBudgetItem(periodStartID: startDateID, type: paycheckKey, named: paycheck.name!, budgeted: paycheck.amount, available: paycheck.amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
+        createPaycheckBudgetItem(startID: startDateID, named: paycheck.name!, amount: paycheck.amount)
         
     }
     
@@ -124,9 +123,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         
         if category.name != unallocatedKey {
             
-            let available = calculateInitialItemAvailableFromPreviousPeriod(currentStartID: startDateID, named: category.name!, type: categoryKey, budgeted: category.budgeted)
-            
-            createAndSaveNewBudgetItem(periodStartID: startDateID, type: categoryKey, named: category.name!, budgeted: category.budgeted, available: available, category: categoryKey, year: 0, month: 0, day: Int(category.dueDay), checked: true)
+            createCategoryBudgetItem(startID: startDateID, named: category.name!, budgeted: category.budgeted, dueDay: Int(category.dueDay), isNew: false)
             
         }
         
@@ -293,15 +290,19 @@ func loadPreviousPeriod(currentStartID: Int) -> Period? {
 
 // MARK: - Load Previous Period's Specified Budget Item
 
-func loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int, named: String, type: String) -> BudgetItem? {
+func loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int, named: String, type: String, isNewThing: Bool) -> BudgetItem? {
     
     var previousBudgetItem: BudgetItem?
     
-    if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
+    if !isNewThing {
         
-        if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
+        if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
             
-            previousBudgetItem = previousItem
+            if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
+                
+                previousBudgetItem = previousItem
+                
+            }
             
         }
         

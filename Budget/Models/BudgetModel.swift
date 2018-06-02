@@ -721,10 +721,11 @@ class Budget {
             context.delete(budgetItem)
             
         }
-       
-        createUnallocatedCategory()
-        createCurrentTimeFrame()
         
+        createUnallocatedCategory()
+
+        createCurrentTimeFrame()
+
 //        UserDefaults.standard.set(nil, forKey: categoryKey)
 //        UserDefaults.standard.set(nil, forKey: transactionKey)
 

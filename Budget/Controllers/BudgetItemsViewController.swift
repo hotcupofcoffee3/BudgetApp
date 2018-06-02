@@ -81,7 +81,7 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
         let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
         
-        runningTotalFromThisPeriodAlone = calculatePeriodBalanceInIsolation(startID: Int(period.startDateID))
+        runningTotalFromThisPeriodAlone = calculatePaycheckMinusCategoryAmounts(startID: Int(period.startDateID))
         
         if period.startDateID > currentDateAsPeriodID {
             

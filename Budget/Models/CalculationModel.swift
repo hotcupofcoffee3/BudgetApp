@@ -81,22 +81,27 @@ func calculateNewPeriodStartingBalance(startID: Int) -> Double {
 // MARK: - Calculate Period Balance from ONLY Categories and Paychecks (excluding Unallocated)
 // Also serves to calculate isolated 'Unallocated' amount.
 
-func calculatePeriodBalanceInIsolation(startID: Int) -> Double {
+func calculatePaycheckMinusCategoryAmounts(startID: Int) -> Double {
     
     let items = loadSpecificBudgetItems(startID: startID)
     
     var balanceOfItems = Double()
     
-    for item in items {
+    if !items.isEmpty {
         
-        if item.name != unallocatedKey {
+        for item in items {
             
-            balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            if item.name != unallocatedKey {
+                
+                balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+                
+            }
             
         }
         
     }
     
+
     return balanceOfItems
     
 }

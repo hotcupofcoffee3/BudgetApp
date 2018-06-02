@@ -10,28 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-// MARK: - Save a new unallocated item
 
-func createAndSaveNewUnallocatedItem(periodStartID: Int, budgeted: Double, available: Double, year: Int, month: Int, day: Int) {
-    
-    let itemToSave = BudgetItem(context: context)
-    
-    itemToSave.periodStartID = Int64(periodStartID)
-    itemToSave.type = categoryKey
-    itemToSave.name = unallocatedKey
-    itemToSave.budgeted = budgeted
-    itemToSave.available = available
-    itemToSave.category = categoryKey
-    itemToSave.year = Int64(year)
-    itemToSave.month = Int64(month)
-    itemToSave.checked = true
-    
-    // The 'day' is the set due day, NOT the date from the 'timeSpanID'
-    itemToSave.day = Int64(day)
-    
-    saveData()
-    
-}
 
 
 
@@ -98,9 +77,13 @@ func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
         
     }
     
-    if let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
+    if !budgetItemArray.isEmpty {
         
-        unallocatedArray.append(unallocated)
+        if let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
+            
+            unallocatedArray.append(unallocated)
+            
+        }
         
     }
     
@@ -343,10 +326,14 @@ func updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: Int) {
             
             for item in specificItems {
                 
-                // All future instances
-                if item.periodStartID > currentItem.periodStartID {
+                if item.name != unallocatedKey {
                     
-                    item.available += (currentItem.type == categoryKey || currentItem.type == withdrawalKey) ? currentItem.budgeted : 0
+                    // All future instances
+                    if item.periodStartID > currentItem.periodStartID {
+                        
+                        item.available += (currentItem.type == categoryKey || currentItem.type == withdrawalKey) ? currentItem.budgeted : 0
+                        
+                    }
                     
                 }
                 

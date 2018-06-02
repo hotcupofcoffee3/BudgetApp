@@ -64,17 +64,48 @@ func createCurrentTimeFrame(){
 
 func createUnallocatedBudgetItem(startID: Int){
     
+    // Initial Available
+    // Available is calculated the difference between the Paychecks & Categories available, and from previous 'unallocated'.
     var available = Double()
-    
-    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
+   
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey, isNewThing: false) {
         
-        available = previousUnallocatedItem.available
+        // Available from previous, if there was one.
+        available += previousUnallocatedItem.available
+        
         
     }
     
-    // Budgeted is calculated from the Paychecks and Categories.
-    // Available is calculated from previous 'unallocated', and the difference between the Paychecks & Categories available.
-    createAndSaveNewUnallocatedItem(periodStartID: startID, budgeted: 0.0, available: available, year: 0, month: 0, day: 0)
+    // Budgeted is calculated after the Categories and Paychecks have been created.
+    createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: unallocatedKey, budgeted: 0.0, available: available, category: categoryKey, year: 0, month: 0, day: 0, checked: true)
+    
+}
+
+// MARK: - Create Category Item
+
+func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, dueDay: Int, isNew: Bool){
+    
+    // Initial Available
+    // Available is calculated the budgeted, and from previous available.
+    var available = budgeted
+    
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: named, type: categoryKey, isNewThing: isNew) {
+        
+        // Available from previous, if there was one.
+        available += previousUnallocatedItem.available
+        
+    }
+
+    createAndSaveNewBudgetItem(periodStartID: startID, type: categoryKey, named: named, budgeted: budgeted, available: available, category: categoryKey, year: 0, month: 0, day: dueDay, checked: true)
+    
+}
+
+
+// MARK: - Create Paycheck Item
+
+func createPaycheckBudgetItem(startID: Int, named: String, amount: Double){
+    
+    createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
     
 }
 
