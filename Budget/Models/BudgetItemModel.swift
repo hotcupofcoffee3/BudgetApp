@@ -285,7 +285,7 @@ func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     
 }
 
-// MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a particular Period.
+// MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a new Period.
 
 func updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: Int) {
    

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eK1-N9-yax">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eK1-N9-yax">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lk-wo-IhG" userLabel="Categories">
-                                <rect key="frame" x="72.5" y="467" width="230" height="70"/>
+                                <rect key="frame" x="72.5" y="537" width="230" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="tFg-y6-zf1"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="uL2-MW-WOD"/>
@@ -36,21 +36,6 @@
                                     <action selector="categoriesButton:" destination="eK1-N9-yax" eventType="touchUpInside" id="AZn-6C-gFq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGE-FZ-5ps" userLabel="Transactions">
-                                <rect key="frame" x="73" y="557" width="230" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="9AL-od-oQK"/>
-                                    <constraint firstAttribute="height" constant="70" id="B9z-pa-exv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
-                                <state key="normal" title="Transactions"/>
-                                <state key="selected">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="transactionsButton:" destination="eK1-N9-yax" eventType="touchUpInside" id="bST-L5-TWR"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alloc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNs-0H-0Rl">
                                 <rect key="frame" x="20" y="80" width="335" height="59"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="50"/>
@@ -58,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-Rd-fRo">
-                                <rect key="frame" x="20" y="179" width="335" height="47.5"/>
+                                <rect key="frame" x="20" y="199" width="335" height="47.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
                                 <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -85,7 +70,7 @@
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnr-5h-PaS" userLabel="Categories">
-                                <rect key="frame" x="73" y="287" width="230" height="70"/>
+                                <rect key="frame" x="73" y="357" width="230" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="kpe-Ow-GAl"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="oXO-AG-0oq"/>
@@ -100,7 +85,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUI-5X-1vL" userLabel="Categories">
-                                <rect key="frame" x="73" y="377" width="230" height="70"/>
+                                <rect key="frame" x="73" y="447" width="230" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="DUK-Cf-HMd"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="qSE-fo-yl5"/>
@@ -120,19 +105,17 @@
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="bottom" secondItem="ZCh-QN-yb3" secondAttribute="bottom" constant="20" id="2Qz-Xv-J2q"/>
                             <constraint firstItem="IUI-5X-1vL" firstAttribute="top" secondItem="nnr-5h-PaS" secondAttribute="bottom" constant="20" id="7f5-GZ-2fD"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="hNs-0H-0Rl" secondAttribute="trailing" constant="20" id="879-Yj-1rG"/>
-                            <constraint firstItem="gWk-Rd-fRo" firstAttribute="top" secondItem="hNs-0H-0Rl" secondAttribute="bottom" constant="40" id="8tT-Mv-gXd"/>
-                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="bottom" secondItem="XGE-FZ-5ps" secondAttribute="bottom" constant="40" id="9cN-en-3Q9"/>
                             <constraint firstItem="T8f-P5-Fkt" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" id="CVE-oA-Q5M"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="ZCh-QN-yb3" secondAttribute="trailing" constant="20" id="Gyz-gQ-Xct"/>
                             <constraint firstItem="hNs-0H-0Rl" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" constant="60" id="INY-2B-CvX"/>
                             <constraint firstItem="9Mm-NX-eaa" firstAttribute="trailing" secondItem="zjU-VC-XHn" secondAttribute="trailing" id="IuB-8Z-sjg"/>
+                            <constraint firstItem="gWk-Rd-fRo" firstAttribute="top" secondItem="hNs-0H-0Rl" secondAttribute="bottom" constant="60" id="JqR-tu-WrI"/>
                             <constraint firstItem="0lk-wo-IhG" firstAttribute="top" secondItem="IUI-5X-1vL" secondAttribute="bottom" constant="20" id="Kg2-vw-PSt"/>
+                            <constraint firstItem="9Mm-NX-eaa" firstAttribute="bottom" secondItem="0lk-wo-IhG" secondAttribute="bottom" constant="60" id="Ntb-sO-fGJ"/>
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="top" secondItem="7EN-fo-1aW" secondAttribute="top" id="Ofp-9V-PW0"/>
                             <constraint firstAttribute="bottom" secondItem="zjU-VC-XHn" secondAttribute="bottom" id="R4J-2z-TTQ"/>
                             <constraint firstItem="zjU-VC-XHn" firstAttribute="leading" secondItem="9Mm-NX-eaa" secondAttribute="leading" id="S1E-i9-ACm"/>
                             <constraint firstItem="lKj-aK-g5l" firstAttribute="top" secondItem="9Mm-NX-eaa" secondAttribute="top" id="Vfx-Dw-eBw"/>
-                            <constraint firstItem="XGE-FZ-5ps" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="WmJ-LS-hgD"/>
-                            <constraint firstItem="XGE-FZ-5ps" firstAttribute="top" secondItem="0lk-wo-IhG" secondAttribute="bottom" constant="20" id="fMm-DF-Q3e"/>
                             <constraint firstItem="nnr-5h-PaS" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="h5b-xg-2zB"/>
                             <constraint firstItem="IUI-5X-1vL" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="if0-hh-Qn9"/>
                             <constraint firstItem="0lk-wo-IhG" firstAttribute="centerX" secondItem="7EN-fo-1aW" secondAttribute="centerX" id="jSb-Eg-PkQ"/>
@@ -150,9 +133,7 @@
                         <outlet property="hiddenDeleteButton" destination="T8f-P5-Fkt" id="e3O-P6-BPC"/>
                         <outlet property="hiddenResetWithCategoriesAndTransactions" destination="lKj-aK-g5l" id="nvQ-Ax-ouC"/>
                         <outlet property="paycheckButtonTitle" destination="IUI-5X-1vL" id="xna-gR-5aO"/>
-                        <outlet property="transactionsButtonTitle" destination="XGE-FZ-5ps" id="SgV-EF-lTF"/>
                         <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="mainToCategoriesSegue" modalTransitionStyle="crossDissolve" id="sum-Cr-7Ay"/>
-                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="mainToTransactionsSegue" modalTransitionStyle="crossDissolve" id="gOi-Bu-AOw"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="mainToAddOrEditCategorySegue" id="mU4-cf-aIR"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="mainToAddOrEditTransactionSegue" id="eXP-Fb-uY0"/>
                         <segue destination="lvi-BA-VNj" kind="show" identifier="mainToBudgetSegue" animates="NO" id="ViF-Zn-d3a"/>
@@ -383,7 +364,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2t-Mu-hSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1075" y="730"/>
+            <point key="canvasLocation" x="-655" y="730"/>
         </scene>
         <!--Add Or Edit Transaction View Controller-->
         <scene sceneID="qUh-bf-mVd">
@@ -733,7 +714,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9y-bH-VTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-218" y="730"/>
+            <point key="canvasLocation" x="-1906" y="730"/>
         </scene>
         <!--Budget View Controller-->
         <scene sceneID="Ias-aB-CIT">
@@ -836,13 +817,12 @@
                         <outlet property="editBarButton" destination="P7r-Fg-xHf" id="wvD-cl-mVU"/>
                         <outlet property="mainBalanceLabel" destination="e4C-vm-44T" id="jvG-1u-25S"/>
                         <segue destination="eR5-Yl-iaE" kind="show" identifier="budgetToAddOrEditBudgetSegue" id="Dgm-sH-8hF"/>
-                        <segue destination="7Ou-Sj-yrA" kind="presentation" identifier="budgetToCategoriesSegue" modalTransitionStyle="crossDissolve" id="C7a-lO-baq"/>
                         <segue destination="pom-jz-MLC" kind="presentation" identifier="budgetToBudgetItemsSegue" modalTransitionStyle="crossDissolve" id="tgV-C6-7Eg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQb-I9-GCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1910" y="-126"/>
+            <point key="canvasLocation" x="-3577" y="-126"/>
         </scene>
         <!--Category View Controller-->
         <scene sceneID="jGS-FH-vSd">
@@ -967,7 +947,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6O-CF-2D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1074" y="-126"/>
+            <point key="canvasLocation" x="-655" y="-126"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="v3I-JP-pOm">
@@ -1007,7 +987,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Phc-N4-lbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1074" y="-1032"/>
+            <point key="canvasLocation" x="-655" y="-1032"/>
         </scene>
         <!--Transaction View Controller-->
         <scene sceneID="tRu-HX-2pi">
@@ -1110,7 +1090,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWu-TV-ofr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-217" y="-126"/>
+            <point key="canvasLocation" x="-1908" y="-126"/>
         </scene>
         <!--CategoryPicker-->
         <scene sceneID="hpy-c6-t0B">
@@ -1305,7 +1285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jsx-sh-U2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1911" y="730"/>
+            <point key="canvasLocation" x="-3577" y="730"/>
         </scene>
         <!--Add Or Edit Paycheck View Controller-->
         <scene sceneID="Hg6-Lu-omA">
@@ -1475,7 +1455,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ydb-8m-BPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3583" y="730"/>
+            <point key="canvasLocation" x="222" y="730"/>
         </scene>
         <!--Paychecks View Controller-->
         <scene sceneID="Aaz-SO-baA">
@@ -1583,7 +1563,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d3M-SD-NOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3582" y="-126"/>
+            <point key="canvasLocation" x="222" y="-126"/>
         </scene>
         <!--Budget Items View Controller-->
         <scene sceneID="ceH-lc-02d">
@@ -2040,12 +2020,11 @@
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="s2V-Nq-kYo"/>
+        <segue reference="BFk-Fg-fMz"/>
         <segue reference="6ek-xa-S2V"/>
-        <segue reference="1AE-Ye-tTi"/>
         <segue reference="LyT-nl-dpa"/>
-        <segue reference="LCW-GF-oV6"/>
+        <segue reference="8K3-ts-dmR"/>
         <segue reference="8ar-qL-cfd"/>
-        <segue reference="nKN-Av-9XL"/>
+        <segue reference="C8p-9T-DZF"/>
     </inferredMetricsTieBreakers>
 </document>

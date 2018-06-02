@@ -73,17 +73,15 @@ let fadedWhiteColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, 
 let mainToBudgetSegueKey = "mainToBudgetSegue"
 let mainToPaycheckSegueKey = "mainToPaycheckSegue"
 let mainToCategoriesSegueKey = "mainToCategoriesSegue"
-let mainToTransactionsSegueKey = "mainToTransactionsSegue"
 
 
 // Budget to others
 let budgetToAddOrEditBudgetSegueKey = "budgetToAddOrEditBudgetSegue"
-let budgetToCategoriesSegueKey = "budgetToCategoriesSegue"
 let budgetToBudgetItemsSegueKey = "budgetToBudgetItemsSegue"
-let budgetItemsToAddOrEditBudgetItemSegueKey = "budgetItemsToAddOrEditBudgetItemSegue"
 
 
 // Budget Items to others
+let budgetItemsToAddOrEditBudgetItemSegueKey = "budgetItemsToAddOrEditBudgetItemSegue"
 let addOrEditBudgetItemToDatePickerSegueKey = "addOrEditBudgetItemToDatePickerSegue"
 let addOrEditBudgetItemToCategoryPickerSegueKey = "addOrEditBudgetItemToCategoryPickerSegue"
 

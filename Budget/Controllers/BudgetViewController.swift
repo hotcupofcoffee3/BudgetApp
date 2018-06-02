@@ -128,7 +128,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if segue.identifier == budgetToBudgetItemsSegueKey {
             
             let destinationVC = segue.destination as! BudgetItemsViewController
-            
+
             destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
             
         } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
@@ -138,7 +138,7 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             destinationVC.isNewBudgetTimeFrame = isNewBudgetTimeFrame
             
             if !isNewBudgetTimeFrame {
-                
+
                 guard let editableTimeFrame = editableBudgetTimeFrame else { return }
                 
                 destinationVC.editableBudgetTimeFrame = editableTimeFrame
@@ -179,12 +179,6 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.displayedDataTable.rowHeight = 78.5
         
         self.displayedDataTable.register(UINib(nibName: "BudgetTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetCell")
-        
-//        for period in sortedBudgetedTimeFrames {
-//
-//            print(period.startDateID)
-//
-//        }
         
     }
     
@@ -266,21 +260,24 @@ extension BudgetViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedTimeFrame = sortedBudgetedTimeFrames[indexPath.row]
-        
-        editableBudgetTimeFrame = selectedTimeFrame
-        
-        selectedBudgetTimeFrameStartID = Int(sortedBudgetedTimeFrames[indexPath.row].startDateID)
-        
-        let selectedCell = tableView.cellForRow(at: indexPath) as! BudgetTableViewCell
-        
-        guard let selectedAmount = convertedDollarsToAmount(dollars: selectedCell.amountLabel.text!) else { return }
-        
-        selectedBudgetTimeFrameRunningTotal = selectedAmount
+        if editBudgetTimeFrame {
+            
+            isNewBudgetTimeFrame = false
+            
+            editableBudgetTimeFrame = sortedBudgetedTimeFrames[indexPath.row]
+            
+            performSegue(withIdentifier: budgetToAddOrEditBudgetSegueKey, sender: self)
+            
+            
+        } else {
+            
+            selectedBudgetTimeFrameStartID = Int(sortedBudgetedTimeFrames[indexPath.row].startDateID)
+
+            performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
+            
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
         
     }
     

@@ -45,8 +45,6 @@ class MainScreen: UIViewController {
     
     @IBOutlet weak var categoriesButtonTitle: UIButton!
     
-    @IBOutlet weak var transactionsButtonTitle: UIButton!
-    
     
     
     // ******************************************************
@@ -79,10 +77,6 @@ class MainScreen: UIViewController {
     
     @IBAction func categoriesButton(_ sender: UIButton) {
         performSegue(withIdentifier: mainToCategoriesSegueKey, sender: self)
-    }
-    
-    @IBAction func transactionsButton(_ sender: UIButton) {
-        performSegue(withIdentifier: mainToTransactionsSegueKey, sender: self)
     }
     
     
@@ -180,14 +174,6 @@ class MainScreen: UIViewController {
                     let futureStartDate1 = convertComponentsToDate(year: 2018, month: 12, day: 1)
                     let futureEndDate1 = convertComponentsToDate(year: 2018, month: 12, day: 31)
                     addNewPeriod(start: futureStartDate1, end: futureEndDate1)
-//
-//                    let pastStartDate2 = convertComponentsToDate(year: 2018, month: 4, day: 1)
-//                    let pastEndDate2 = convertComponentsToDate(year: 2018, month: 4, day: 30)
-//                    addNewPeriod(start: pastStartDate2, end: pastEndDate2)
-//
-//                    let futureStartDate2 = convertComponentsToDate(year: 2018, month: 10, day: 1)
-//                    let futureEndDate2 = convertComponentsToDate(year: 2018, month: 10, day: 31)
-//                    addNewPeriod(start: futureStartDate2, end: futureEndDate2)
                     
                     self.refreshAvailableBalanceLabel(label: self.availableBalanceLabel)
                     
@@ -240,11 +226,8 @@ class MainScreen: UIViewController {
         
         selectedCategory = nil
         
-        refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        
         addCircleAroundMainButtons(named: categoriesButtonTitle)
         addCircleAroundMainButtons(named: paycheckButtonTitle)
-        addCircleAroundMainButtons(named: transactionsButtonTitle)
         addCircleAroundMainButtons(named: budgetButtonTitle)
         
         // Long press gesture recognizers

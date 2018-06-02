@@ -342,7 +342,6 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         if isNewBudgetTimeFrame {
             
             startDate = Date()
@@ -360,7 +359,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             navBar.topItem?.title = "Edit Time Frame"
             
-            guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return }
+            guard let currentBudgetTimeFrame = editableBudgetTimeFrame else { return print("It didn't work") }
             
             startDate = convertComponentsToDate(year: Int(currentBudgetTimeFrame.startYear), month: Int(currentBudgetTimeFrame.startMonth), day: Int(currentBudgetTimeFrame.startDay))
             
@@ -370,11 +369,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
         }
         
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
         
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
         
         let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
         let endDateViewTap = UITapGestureRecognizer(target: self, action: #selector(endDateTapped))
@@ -384,10 +379,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         addCircleAroundButton(named: submitTimeFrameButton)
         
-        
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
-        
         
     }
     

@@ -179,6 +179,24 @@ func convertComponentsToDate(year: Int, month: Int, day: Int) -> Date {
 
 
 
+// MARK: - Convert End Date to One Day After Start Date
+
+func convertEndDateToOneDayAfterStartDate(startDate: Date) -> Date {
+    
+    var endDate = Date()
+    
+    if let convertedEndDate = Calendar(identifier: .gregorian).date(byAdding: .day, value: 1, to: startDate) {
+        
+        endDate = convertedEndDate
+        
+    }
+    
+    return endDate
+    
+}
+
+
+
 
 
 
