@@ -78,7 +78,46 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     // MARK: - General Functions
     // *****
     
+    func convertDateToDateLabelText(date: Date) -> String {
+        
+        var dateAsLabelText = String()
+        
+        var dateDict = convertDateToInts(dateToConvert: date)
+        
+        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
+            
+            dateAsLabelText = "\(month)/\(day)/\(year)"
+            
+        }
+        
+        return dateAsLabelText
+        
+    }
     
+    func updateDateLabels(withDate date: Date) {
+        
+        if isStart {
+            
+            if date >= endDate {
+                
+                endDate = convertEndDateToOneDayAfterStartDate(startDate: startDate)
+                
+            }
+            
+        } else {
+            
+            if date <= startDate {
+                
+                startDate = convertStartDateToOneDayBeforeEndDate(endDate: endDate)
+                
+            }
+            
+        }
+        
+        startDateLabel.text = convertDateToDateLabelText(date: startDate)
+        endDateLabel.text = convertDateToDateLabelText(date: endDate)
+        
+    }
     
     
     
@@ -177,7 +216,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
     }
     
-    // *** A Budgeted Time Frame Submission.
+    // *** Add Budgeted Time Frame Submission.
     
     func addBudgetedTimeFrameSubmission(startID: Int, startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int) {
         
@@ -264,22 +303,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         startDate = isStart ? date : startDate
         
         endDate = isStart ? endDate : date
-        
-        var dateDict = convertDateToInts(dateToConvert: date)
-        
-        if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
-            
-            if isStart {
-                
-                startDateLabel.text = "\(month)/\(day)/\(year)"
-                
-            } else {
-                
-                endDateLabel.text = "\(month)/\(day)/\(year)"
-                
-            }
-            
-        }
+
+        updateDateLabels(withDate: date)
         
     }
     
@@ -345,7 +370,7 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         if isNewBudgetTimeFrame {
             
             startDate = Date()
-            endDate = Date()
+            endDate = convertEndDateToOneDayAfterStartDate(startDate: Date())
             
             backButton.title = "Back"
             
@@ -369,6 +394,11 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
         }
         
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        
+        startDateLabel.text = dateFormat.string(from: startDate)
+        endDateLabel.text = dateFormat.string(from: endDate)
         
         
         let startDateViewTap = UITapGestureRecognizer(target: self, action: #selector(startDateTapped))
@@ -385,12 +415,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        let dateFormat = DateFormatter()
-        dateFormat.dateStyle = .short
         
-        startDateLabel.text = dateFormat.string(from: startDate)
-        endDateLabel.text = dateFormat.string(from: endDate)
-        
+
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }

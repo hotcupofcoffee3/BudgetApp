@@ -196,6 +196,23 @@ func convertEndDateToOneDayAfterStartDate(startDate: Date) -> Date {
 }
 
 
+// MARK: - Convert End Date to One Day After Start Date
+
+func convertStartDateToOneDayBeforeEndDate(endDate: Date) -> Date {
+    
+    var startDate = Date()
+    
+    if let convertedEndDate = Calendar(identifier: .gregorian).date(byAdding: .day, value: -1, to: endDate) {
+        
+        startDate = convertedEndDate
+        
+    }
+    
+    return startDate
+    
+}
+
+
 
 
 
