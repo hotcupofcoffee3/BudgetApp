@@ -38,6 +38,21 @@ func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String,
 }
 
 
+func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int, checked: Bool) {
+    
+    createAndSaveNewBudgetItem(periodStartID: periodStartID, type: type, named: named, budgeted: budgeted, available: available, category: category, year: year, month: month, day: day, checked: checked)
+    
+    updateUnallocatedItem(startID: periodStartID, amountBudgeted: budgeted, type: type)
+    
+    updateAvailableForASpecificBudgetItemForFuturePeriodsPerCreation(startID: periodStartID, named: unallocatedKey, type: categoryKey)
+    
+    updatePeriodBalance(startID: periodStartID)
+    
+    updateAllPeriodsBalances()
+    
+}
+
+
 
 // *****
 // MARK: - Loadables
@@ -315,15 +330,18 @@ func updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: Int) {
 
 func updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: Int) {
     
+    // All Current Budget Items
     let currentItems = loadSpecificBudgetItems(startID: startID)
     
     for currentItem in currentItems {
         
+        // All specific items based on each Budget Item in the current Period.
         let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: currentItem.name!, type: currentItem.type!)
         
         // If the period is NOT the last period in the array.
         if !(currentItem.periodStartID == specificItems[specificItems.count - 1].periodStartID) {
             
+            // For each specific budget item of a particular kind...
             for item in specificItems {
                 
                 if item.name != unallocatedKey {
@@ -331,7 +349,8 @@ func updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: Int) {
                     // All future instances
                     if item.periodStartID > currentItem.periodStartID {
                         
-                        item.available += (currentItem.type == categoryKey || currentItem.type == withdrawalKey) ? currentItem.budgeted : 0
+                        // Add the current item's 'budgeted' amount to the future item's 'available' amount for categories, otherwise add 0 for Paychecks (They don't accumulate amounts).
+                        item.available += (currentItem.type == categoryKey) ? currentItem.budgeted : 0
                         
                     }
                     
@@ -351,7 +370,7 @@ func updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: Int) {
 
 // MARK: - Updates all future instances of a specific Budget Item for all Periods.
 
-func updateAvailableForAllSpecificABudgetItemForFuturePeriodsPerCreation(startID: Int, named: String, type: String) {
+func updateAvailableForASpecificBudgetItemForFuturePeriodsPerCreation(startID: Int, named: String, type: String) {
     
     guard let currentItem = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
     

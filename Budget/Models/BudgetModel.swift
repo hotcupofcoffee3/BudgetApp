@@ -174,7 +174,7 @@ class Budget {
         guard let categoryToUpdate = loadSpecificCategory(named: oldCategoryName) else { return }
         
         // Update budget items based on updating Category
-        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: oldCategoryName, newName: newCategoryName, oldAmount: categoryToUpdate.budgeted, newAmount: newCategoryBudgetedAmount)
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: oldCategoryName, newName: newCategoryName, oldAmount: categoryToUpdate.budgeted, newAmount: newCategoryBudgetedAmount, type: categoryKey)
         
         categoryToUpdate.name = newCategoryName
         categoryToUpdate.budgeted = newCategoryBudgetedAmount
@@ -336,24 +336,37 @@ class Budget {
     
     // *** Update Budget Item from Category or Paycheck Updates
     
-    func updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: String, newName: String, oldAmount: Double, newAmount: Double) {
+    func updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: String, newName: String, oldAmount: Double, newAmount: Double, type: String) {
         
-        // Update budget items based on updating Category
-        loadSavedBudgetItems()
+        // Update budget items based on updating Category or Paycheck
+        let items = loadAllSpecificBudgetItemsAcrossPeriods(named: oldName, type: type)
         
-        if budgetItems.count > 0 {
+        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+        
+        if items.count > 0 {
             
-            for item in budgetItems {
+            for item in items {
                 
-                if item.name == oldName {
-                    
-                    item.name = newName
-                    
-                }
+                guard let period = loadSpecificBudgetedTimeFrame(startID: Int(item.periodStartID)) else { return }
                 
-                if item.budgeted == oldAmount {
+                if !(period.endDateID < currentDateAsPeriodID) {
                     
-                    item.budgeted = newAmount
+                    if item.name == oldName {
+                        
+                        item.name = newName
+                        
+                    }
+                    
+                    if item.budgeted == oldAmount {
+                        
+                        item.budgeted = newAmount
+                        
+                        
+                        // ***** SCREWING UP RIGHT HERE
+                        item.available = calculateInitialItemAvailableFromPreviousPeriod(currentStartID: Int(item.periodStartID), named: item.name!, type: type, budgeted: newAmount)
+                        
+                        
+                    }
                     
                 }
                 
@@ -529,7 +542,7 @@ class Budget {
         
         let paycheck = paycheck
         
-        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: newName, oldAmount: paycheck.amount, newAmount: paycheck.amount)
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: newName, oldAmount: paycheck.amount, newAmount: paycheck.amount, type: paycheckKey)
         
         paycheck.name = newName
         
@@ -541,7 +554,7 @@ class Budget {
         
         let paycheck = paycheck
         
-        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: paycheck.name!, oldAmount: paycheck.amount, newAmount: newAmount)
+        updateBudgetItemsPerCategoryOrPaycheckUpdate(oldName: paycheck.name!, newName: paycheck.name!, oldAmount: paycheck.amount, newAmount: newAmount, type: paycheckKey)
         
         paycheck.amount = newAmount
         
