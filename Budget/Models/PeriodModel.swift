@@ -34,11 +34,11 @@ func addNewPeriod(start: Date, end: Date) {
     
     
     // Update Future Category items
-    updateAvailableForAllBudgetItemsForFuturePeriodsPerCreation(startID: startID)
+    updateAvailableForAllBudgetItemsForFuturePeriods(startID: startID)
     
     
     // Update Future Unallocated items
-    updateAvailableForASpecificBudgetItemForFuturePeriodsPerCreation(startID: startID, named: unallocatedKey, type: categoryKey)
+    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey)
     
     
     // Update new Period's balance with balance of previous Period.
@@ -52,7 +52,6 @@ func addNewPeriod(start: Date, end: Date) {
     saveData()
     
 }
-
 
 
 
@@ -252,6 +251,9 @@ func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
 }
 
 
+
+
+
 // MARK: - Load Previous Period
 
 func loadPreviousPeriod(currentStartID: Int) -> Period? {
@@ -284,6 +286,85 @@ func loadPreviousPeriod(currentStartID: Int) -> Period? {
     
     
     return previousPeriod
+    
+}
+
+
+
+// MARK: - Load Next Period
+
+func loadNextPeriod(currentStartID: Int) -> Period? {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var nextPeriods = [Period]()
+    
+    var nextPeriod: Period?
+    
+    for period in periods {
+        
+        if period.startDateID > currentStartID {
+            
+            nextPeriods.append(period)
+            
+        }
+        
+    }
+    
+    if !nextPeriods.isEmpty {
+        
+        nextPeriod = nextPeriods[0]
+        
+    } else {
+        
+        nextPeriod = nil
+        
+    }
+    
+    
+    return nextPeriod
+    
+}
+
+
+
+// MARK: - Load Next Periods
+
+func loadAllNextPeriods(currentStartID: Int) -> [Period?] {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var allNextPeriods = [Period?]()
+    
+    for period in periods {
+        
+        if period.startDateID > currentStartID {
+            
+            allNextPeriods.append(period)
+            
+        }
+        
+    }
+    
+    return allNextPeriods
+    
+}
+
+
+
+// MARK: - Load Previous Period Start ID
+
+func loadPreviousPeriodStartID(currentStartID: Int) -> Int? {
+    
+    var previousStartID: Int?
+    
+    if let period = loadPreviousPeriod(currentStartID: currentStartID) {
+        
+        previousStartID = Int(period.startDateID)
+        
+    }
+    
+    return previousStartID
     
 }
 
@@ -356,7 +437,11 @@ func updatePeriodBalance(startID: Int) {
 
 
 
-// Mark: - Updates all Periods' balances.
+// MARK: - 
+
+
+
+// MARK: - Updates all Periods' balances.
 
 func updateAllPeriodsBalances() {
     
@@ -375,7 +460,6 @@ func updateAllPeriodsBalances() {
                 period.balance += (item.type == categoryKey || item.type == withdrawalKey) ? item.available : 0
                 
             }
-            
             
         }
         
@@ -426,8 +510,6 @@ func loadPeriodCategories(startID: Int) -> [String] {
     return sortedPeriodCategories
     
 }
-
-
 
 
 

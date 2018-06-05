@@ -208,7 +208,13 @@ class Budget {
     
     func deleteTimeFrame(period: Period) {
         
-        let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+        let startID = Int(period.startDateID)
+        
+        updateAvailableForAllFutureBudgetItemsPerPeriodDeletion(startID: startID)
+        
+        updateAvailableForASpecificBudgetItemForFuturePeriodsPerDeletion(startID: startID, named: unallocatedKey, type: categoryKey)
+        
+        let items = loadSpecificBudgetItems(startID: startID)
         
         for item in items {
             
@@ -218,9 +224,13 @@ class Budget {
         
         context.delete(period)
         
+        updateAllPeriodsBalances()
+        
         saveData()
         
     }
+    
+    
     
     func updateStartDate(currentStartID: Int, newStartDate: Date) {
         
