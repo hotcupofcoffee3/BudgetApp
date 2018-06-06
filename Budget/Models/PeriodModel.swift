@@ -122,7 +122,7 @@ func createAndSaveNewSetOfBudgetItemsWithCategoriesAndPaychecks(startDateID: Int
         
         if category.name != unallocatedKey {
             
-            createCategoryBudgetItem(startID: startDateID, named: category.name!, budgeted: category.budgeted, dueDay: Int(category.dueDay), isNew: false)
+            createCategoryBudgetItem(startID: startDateID, named: category.name!, budgeted: category.budgeted, dueDay: Int(category.dueDay))
             
         }
         
@@ -370,24 +370,20 @@ func loadPreviousPeriodStartID(currentStartID: Int) -> Int? {
 
 // MARK: - Load Previous Period's Specified Budget Item
 
-func loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int, named: String, type: String, isNewThing: Bool) -> BudgetItem? {
+func loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int, named: String, type: String) -> BudgetItem? {
     
     var previousBudgetItem: BudgetItem?
     
-    if !isNewThing {
+    if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
         
-        if let previousPeriod = loadPreviousPeriod(currentStartID: currentStartID) {
+        if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
             
-            if let previousItem = loadSpecificBudgetItem(startID: Int(previousPeriod.startDateID), named: named, type: type) {
-                
-                previousBudgetItem = previousItem
-                
-            }
+            previousBudgetItem = previousItem
             
         }
         
     }
-    
+
     return previousBudgetItem
     
 }
@@ -435,8 +431,6 @@ func updatePeriodBalance(startID: Int) {
 }
 
 
-
-// MARK: - 
 
 
 

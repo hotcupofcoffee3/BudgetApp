@@ -68,8 +68,6 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
             
             updateUnallocatedItem(startID: startID, amountBudgeted: amount, type: paycheckKey)
             
-            updateAvailableForASpecificBudgetItemForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey)
-            
             updatePeriodBalance(startID: startID)
             
         }
@@ -101,15 +99,19 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
             // Add Category to present and future Periods
             if !(endID < currentDateAsPeriodID) {
                 
-                createCategoryBudgetItem(startID: startID, named: named, budgeted: budgeted, dueDay: dueDay, isNew: true)
+                createCategoryBudgetItem(startID: startID, named: named, budgeted: budgeted, dueDay: dueDay)
                 
                 updateUnallocatedItem(startID: startID, amountBudgeted: budgeted, type: categoryKey)
+                
+                // ***** TODO: - Make a function like "updateUnallocatedItem()" that updates all categories for the future based on the previous item's available.
                 
                 updatePeriodBalance(startID: startID)
                 
             }
 
         }
+        
+        
         
         saveData()
         

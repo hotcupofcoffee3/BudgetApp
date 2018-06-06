@@ -288,17 +288,24 @@ func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) 
 
 
 
-// MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a particular Period.
+// MARK: - Updates the Unallocated Item Budgeted and Available for a particular Period.
 
 func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     
     guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
     
-    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey, isNewThing: false) {
+    // Previous Unallocated Item to be used for the previous 'Available'
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
         
-        let currentNewAmount = calculatePaycheckMinusCategoryAmounts(startID: startID)
+        print("Previous Available: \(previousUnallocatedItem.available)")
         
-        unallocated.available = previousUnallocatedItem.available + currentNewAmount
+        // Current Paychecks minus Categories amount
+        let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
+        
+        print("Current Calculated Available: \(currentAmountOfPaychecksMinusCategories)")
+        
+        // Both the Previous 'Available' and the current amounts 'Available' AFTER the new Item has been added.
+        unallocated.available = previousUnallocatedItem.available + currentAmountOfPaychecksMinusCategories
         
     } else {
         
@@ -308,6 +315,39 @@ func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     
     unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
    
+    saveData()
+    
+}
+
+
+
+// MARK: - Updates the Category Item Budgeted and Available for a particular Period.
+
+func updateCategoryItem(startID: Int, amountBudgeted: Double, type: String) {
+    
+    guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
+    
+    // Previous Unallocated Item to be used for the previous 'Available'
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
+        
+        print("Previous Available: \(previousUnallocatedItem.available)")
+        
+        // Current Paychecks minus Categories amount
+        let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
+        
+        print("Current Calculated Available: \(currentAmountOfPaychecksMinusCategories)")
+        
+        // Both the Previous 'Available' and the current amounts 'Available' AFTER the new Item has been added.
+        unallocated.available = previousUnallocatedItem.available + currentAmountOfPaychecksMinusCategories
+        
+    } else {
+        
+        unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
+        
+    }
+    
+    unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
+    
     saveData()
     
 }
@@ -441,12 +481,16 @@ func updateAvailableForASpecificBudgetItemForFuturePeriods(startID: Int, named: 
             if item.periodStartID > currentItem.periodStartID {
                 
                 item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
-                
+//                print(item.name!)
+//                print(item.periodStartID)
+//                print(item.available)
             }
             
         }
         
     }
+    
+    
     
     saveData()
     

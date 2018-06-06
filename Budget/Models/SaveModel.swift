@@ -68,7 +68,7 @@ func createUnallocatedBudgetItem(startID: Int){
     // Available is calculated the difference between the Paychecks & Categories available, and from previous 'unallocated'.
     var available = Double()
    
-    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey, isNewThing: false) {
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
         
         // Available from previous, if there was one.
         available += previousUnallocatedItem.available
@@ -83,16 +83,17 @@ func createUnallocatedBudgetItem(startID: Int){
 
 // MARK: - Create Category Item
 
-func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, dueDay: Int, isNew: Bool){
+func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, dueDay: Int){
     
     // Initial Available
     // Available is calculated the budgeted, and from previous available.
     var available = budgeted
     
-    if let previousCategoryItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: named, type: categoryKey, isNewThing: isNew) {
+    if let previousCategoryItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: named, type: categoryKey) {
         
         // Available from previous, if there was one.
         available += previousCategoryItem.available
+        print("Available from Previous Category: \(available)")
         
     }
 
