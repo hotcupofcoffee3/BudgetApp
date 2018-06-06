@@ -89,10 +89,10 @@ func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, due
     // Available is calculated the budgeted, and from previous available.
     var available = budgeted
     
-    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: named, type: categoryKey, isNewThing: isNew) {
+    if let previousCategoryItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: named, type: categoryKey, isNewThing: isNew) {
         
         // Available from previous, if there was one.
-        available += previousUnallocatedItem.available
+        available += previousCategoryItem.available
         
     }
 

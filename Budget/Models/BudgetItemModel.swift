@@ -286,19 +286,33 @@ func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) 
     
 }
 
+
+
 // MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a particular Period.
 
 func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     
     guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
-  
+    
+    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey, isNewThing: false) {
+        
+        let currentNewAmount = calculatePaycheckMinusCategoryAmounts(startID: startID)
+        
+        unallocated.available = previousUnallocatedItem.available + currentNewAmount
+        
+    } else {
+        
+        unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
+        
+    }
+    
     unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
-    
-    unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
-    
+   
     saveData()
     
 }
+
+
 
 // MARK: - Updates the Unallocated Item Budgeted and Available for the specified Budget Item for a new Period.
 

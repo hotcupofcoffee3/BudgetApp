@@ -63,10 +63,12 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
         
         // Add Paycheck to present and future Periods
         if !(endID < currentDateAsPeriodID) {
-        
+           
             createPaycheckBudgetItem(startID: startID, named: named, amount: amount)
             
             updateUnallocatedItem(startID: startID, amountBudgeted: amount, type: paycheckKey)
+            
+            updateAvailableForASpecificBudgetItemForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey)
             
             updatePeriodBalance(startID: startID)
             

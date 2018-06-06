@@ -284,7 +284,6 @@ func loadPreviousPeriod(currentStartID: Int) -> Period? {
         
     }
     
-    
     return previousPeriod
     
 }

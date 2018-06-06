@@ -220,9 +220,12 @@ class MainScreen: UIViewController {
         
         // ***** Starting From Scratch on New Device
         loadSavedCategories()
+        
         if budget.categories.count == 0 {
             budget.deleteEVERYTHING()
         }
+        
+        
         
         selectedCategory = nil
         
@@ -235,8 +238,8 @@ class MainScreen: UIViewController {
         
         let uilprADD = UILongPressGestureRecognizer(target: self, action: #selector(MainScreen.longpressAddSomeStarterStuff(gestureRecognizer:)))
         
-        uilprDELETE.minimumPressDuration = 2
-        uilprADD.minimumPressDuration = 2
+        uilprDELETE.minimumPressDuration = 1
+        uilprADD.minimumPressDuration = 1
         
         hiddenDeleteButton.addGestureRecognizer(uilprDELETE)
         hiddenResetWithCategoriesAndTransactions.addGestureRecognizer(uilprADD)
