@@ -255,6 +255,41 @@ func loadSpecificCategory(named: String) -> Category? {
 
 
 
+// *****
+// MARK: - Deletions
+// *****
+
+
+
+// MARK: - Delete Category Item
+
+func deleteCategoryItem(forItem item: BudgetItem, andUnallocatedItem unallocated: BudgetItem) {
+    
+    // Add Category Item Budgeted to Unallocated Item Budgeted.
+    unallocated.budgeted += item.budgeted
+     
+    // Add Category Item Available to Unallocated Item Available.
+    unallocated.available += item.available
+     
+    // Change Category in Transactions to Unallocated.
+    
+    
+    // Delete Category Item.
+    context.delete(item)
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Delete Paycheck Item
+
+
+
+
+
+
 
 
 

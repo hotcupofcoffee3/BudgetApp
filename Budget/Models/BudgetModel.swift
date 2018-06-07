@@ -84,20 +84,25 @@ class Budget {
             
             let currentDateIDForDeletingPurposes = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
             
-            let periods = loadSavedBudgetedTimeFrames()
+            // Only Present and Future Periods will have the Category Item deleted.
+            
+            let periods = loadPresentAndFutureTimeFrames()
             
             for period in periods {
                 
-                // If the end date is greater than today's date; in other words, the category being deleted for the current budget time frame and the future ones, but not the past ones, as the 'endDateID' would be less (in the past) than the current date.
                 if period.endDateID > currentDateIDForDeletingPurposes {
                     
                     let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+                    
+                    guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return print("Didn't work loading Unallocated in 'deleteCategory()'")}
                     
                     for item in items {
                         
                         if categoryToDelete.name == item.name && item.type == categoryKey {
                             
-                            context.delete(item)
+                            // Delete Category Item
+                            
+                            deleteCategoryItem(forItem: item, andUnallocatedItem: unallocated)
                             
                         }
                         

@@ -163,6 +163,8 @@ func loadSavedBudgetedTimeFrames() -> [Period] {
     
 }
 
+
+
 // Load and Sort Budgeted Time Frames
 
 func loadAndSortBudgetedTimeFrames() -> [Period] {
@@ -203,6 +205,32 @@ func loadAndSortBudgetedTimeFrames() -> [Period] {
     allPeriods.append(contentsOf: pastPeriods)
     
     return allPeriods
+    
+}
+
+
+
+// Load Present and Future Time Frames
+
+func loadPresentAndFutureTimeFrames() -> [Period] {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var presentAndFuturePeriods = [Period]()
+    
+    let currentDateAsPeriodID = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
+    
+    for period in periods {
+        
+        if !(period.endDateID < currentDateAsPeriodID) {
+            
+            presentAndFuturePeriods.append(period)
+            
+        }
+        
+    }
+    
+    return presentAndFuturePeriods
     
 }
 
