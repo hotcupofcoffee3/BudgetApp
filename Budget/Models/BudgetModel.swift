@@ -82,33 +82,29 @@ class Budget {
             
             guard let categoryToDelete = loadSpecificCategory(named: named) else { return }
             
-            let currentDateIDForDeletingPurposes = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
-            
             // Only Present and Future Periods will have the Category Item deleted.
             
             let periods = loadPresentAndFutureTimeFrames()
             
             for period in periods {
                 
-                if period.endDateID > currentDateIDForDeletingPurposes {
+                let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+                
+                guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return print("Didn't work loading Unallocated in 'deleteCategory()'")}
+                
+                for item in items {
                     
-                    let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
-                    
-                    guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return print("Didn't work loading Unallocated in 'deleteCategory()'")}
-                    
-                    for item in items {
+                    if categoryToDelete.name == item.name && item.type == categoryKey {
                         
-                        if categoryToDelete.name == item.name && item.type == categoryKey {
-                            
-                            // Delete Category Item
-                            
-                            deleteCategoryItem(forItem: item, andUnallocatedItem: unallocated)
-                            
-                        }
+                        // Delete Category Item
+                        
+                        deleteCategoryItem(forItem: item, andUnallocatedItem: unallocated)
                         
                     }
                     
                 }
+                
+                updatePeriodBalance(startID: Int(period.startDateID))
                 
             }
             
@@ -126,9 +122,7 @@ class Budget {
                 
             }
             
-            guard let deletedCategory = loadSpecificCategory(named: named) else { return }
-            
-            context.delete(deletedCategory)
+            context.delete(categoryToDelete)
             
             saveData()
             
@@ -577,26 +571,62 @@ class Budget {
         
     }
     
-    func deletePaycheck(paycheck: Paycheck) {
+    
+    
+    // *** Delete Category
+    
+    func deletePaycheck(named: String) {
+       
+        guard let paycheckToDelete = loadSpecificPaycheck(named: named) else { return }
         
-        // Delete budget items based on this.
+        // Only Present and Future Periods will have the Category Item deleted.
         
-        loadSavedBudgetItems()
+        let periods = loadPresentAndFutureTimeFrames()
         
-        for item in budgetItems {
+        for period in periods {
             
-            if paycheck.name == item.name && item.type == paycheckKey {
+            let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+            
+            guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return print("Didn't work loading Unallocated in 'deleteCategory()'")}
+            
+            for item in items {
                 
-                context.delete(item)
+                if paycheckToDelete.name == item.name && item.type == paycheckKey {
+                    
+                    // Delete Paycheck Item
+                    
+                    deletePaycheckItem(forItem: item, andUnallocatedItem: unallocated)
+                    
+                    updateUnallocatedItemWithDeletingAPaycheck(paycheckItem: item, unallocatedItem: unallocated)
+                    
+                    context.delete(item)
+                    
+                }
+                
+            }
+            
+            updatePeriodBalance(startID: Int(period.startDateID))
+            
+        }
+        
+        if transactions.count > 0 {
+            
+            for transaction in transactions {
+                
+                if transaction.forCategory == named {
+                    
+                    transaction.forCategory = unallocatedKey
+                    
+                }
                 
             }
             
         }
         
-        context.delete(paycheck)
+        context.delete(paycheckToDelete)
         
         saveData()
-        
+
     }
     
     

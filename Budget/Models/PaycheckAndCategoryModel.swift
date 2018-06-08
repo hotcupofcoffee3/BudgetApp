@@ -285,6 +285,19 @@ func deleteCategoryItem(forItem item: BudgetItem, andUnallocatedItem unallocated
 
 // MARK: - Delete Paycheck Item
 
+func deletePaycheckItem(forItem item: BudgetItem, andUnallocatedItem unallocated: BudgetItem) {
+    
+    // Remove Paycheck Item Budgeted from Unallocated Item Budgeted.
+    unallocated.budgeted -= item.budgeted
+    
+    // Remove Paycheck Item Available to Unallocated Item Available.
+    unallocated.available -= item.available
+    
+    // Change Category in Transactions to Unallocated.
+    
+    saveData()
+    
+}
 
 
 

@@ -129,9 +129,9 @@ func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> Budget
     request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [namedPredicate, startIDPredicate, typePredicate])
    
     do {
-//        print("Fart4")
+        
         matchingItemArray = try context.fetch(request)
-//        print("Fart5")
+        
         
     } catch {
         
@@ -374,6 +374,44 @@ func updateUnallocatedItemWithAddedCategoriesAndPaychecks(startID: Int) {
         
     }
     
+    saveData()
+    
+}
+
+
+
+// MARK: - Updates the Unallocated For Deleting a Paycheck.
+
+func updateUnallocatedItemWithDeletingAPaycheck(paycheckItem: BudgetItem, unallocatedItem: BudgetItem) {
+    
+    let startID = Int(paycheckItem.periodStartID)
+    
+    let allPeriodItems = loadSpecificBudgetItems(startID: startID)
+    
+    if let previousUnallocated = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
+        
+        unallocatedItem.available = previousUnallocated.available
+        
+    } else {
+        
+        unallocatedItem.available = 0.0
+        
+    }
+    
+    unallocatedItem.budgeted = 0.0
+    
+    for item in allPeriodItems {
+        
+        if item.name != unallocatedKey && !(item.name == paycheckItem.name && item.type == paycheckKey){
+            
+            unallocatedItem.budgeted += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+            unallocatedItem.available += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+            
+        }
+        
+    }
+   
     saveData()
     
 }

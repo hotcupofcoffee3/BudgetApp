@@ -270,11 +270,12 @@ extension PaychecksViewController {
                 
                 additionalAlert.addAction(UIAlertAction(title: "Yes, I'm sure.", style: .destructive, handler: { (action) in
                     
-                    budget.deletePaycheck(paycheck: paycheckToDelete)
+                    budget.deletePaycheck(named: name)
                     
                     self.successHaptic()
                     
                     loadSavedPaychecks()
+                    
                     self.displayedDataTable.reloadData()
                     
                 }))

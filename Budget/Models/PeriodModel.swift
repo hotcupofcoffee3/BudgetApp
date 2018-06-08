@@ -460,8 +460,6 @@ func updatePeriodBalance(startID: Int) {
 
 
 
-
-
 // MARK: - Updates all Periods' balances.
 
 func updateAllPeriodsBalances() {
