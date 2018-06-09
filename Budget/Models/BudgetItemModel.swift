@@ -297,18 +297,15 @@ func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     // Previous Unallocated Item to be used for the previous 'Available'
     if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
         
-        print("Previous Available: \(previousUnallocatedItem.available)")
-        
         // Current Paychecks minus Categories amount
         let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
-        
-        print("Current Calculated Available: \(currentAmountOfPaychecksMinusCategories)")
         
         // Both the Previous 'Available' and the current amounts 'Available' AFTER the new Item has been added.
         unallocated.available = previousUnallocatedItem.available + currentAmountOfPaychecksMinusCategories
         
     } else {
         
+        // Only changes the available of Unallocated for the specific item being added, instead of calculating everything from scratch, as there is no previous to add to calculate, so the total only changes based by the 'amountBudgeted'.
         unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
         
     }
@@ -418,6 +415,79 @@ func updateUnallocatedItemWithDeletingAPaycheck(paycheckItem: BudgetItem, unallo
 
 
 
+// MARK: - Add Specific Period's Created 'Budget Item' Available and Budgeted back to Unallocated.
+
+func updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item: BudgetItem) {
+    
+    guard let unallocated = loadUnallocatedItem(startID: Int(item.periodStartID)) else { return }
+    
+    unallocated.available += (item.type == withdrawalKey) ? item.available : -item.available
+    
+    unallocated.budgeted += (item.type == withdrawalKey) ? item.budgeted : -item.budgeted
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Delete Budget Item From Core Data
+
+func deleteBudgetItemFromCoreData(item: BudgetItem) {
+    
+    context.delete(item)
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Update Future Unallocated Per Deletion of a Specific Period's Budget Item.
+
+func updateFutureUnallocatedPerBudgetItemDeletion(amount: Double, type: String) {
+    
+    let futurePeriods = loadFutureTimeFrames()
+    
+    if !futurePeriods.isEmpty {
+        
+        for period in futurePeriods {
+            
+            guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return }
+            
+            unallocated.available = (type == withdrawalKey) ? amount : -amount
+            
+        }
+        
+    }
+    
+    saveData()
+    
+}
+
+
+
+// MARK: - Deletion of a Budget Item (a specific one created for a specific Period).
+
+func deleteBudgetItem(item: BudgetItem) {
+    
+    let amount = item.available
+    guard let type = item.type else { return }
+    
+    updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item: item)
+    
+    deleteBudgetItemFromCoreData(item: item)
+    
+    updateFutureUnallocatedPerBudgetItemDeletion(amount: amount, type: type)
+    
+    updateAllPeriodsBalances()
+   
+    //    - Delete Transaction corresponding to Budget Item.
+    
+}
+
+
+
 // MARK: - Updates all future instances of all Budget Items for all Future Periods (except Unallocated).
 
 func updateAvailableForAllBudgetItemsForFuturePeriods(startID: Int) {
@@ -502,7 +572,7 @@ func updateAvailableForAllFutureBudgetItemsPerPeriodDeletion(startID: Int) {
 
 
 
-// MARK: - Updates all future instances of a specific Budget Item for all Future Periods.
+// MARK: - Updates all future instances of a specific Budget Item for all Future Periods upon CREATION of a Period or Budget Item.
 
 func updateAvailableForASpecificBudgetItemForFuturePeriods(startID: Int, named: String, type: String) {
     

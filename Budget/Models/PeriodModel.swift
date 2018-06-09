@@ -236,6 +236,32 @@ func loadPresentAndFutureTimeFrames() -> [Period] {
 
 
 
+// Load Future Time Frames
+
+func loadFutureTimeFrames() -> [Period] {
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    var futurePeriods = [Period]()
+    
+    let currentDateAsPeriodID = convertDateToDateAddedForGeneralPurposes(dateAdded: Date())
+    
+    for period in periods {
+        
+        if period.startDateID > currentDateAsPeriodID {
+            
+            futurePeriods.append(period)
+            
+        }
+        
+    }
+    
+    return futurePeriods
+    
+}
+
+
+
 // Load Specific Budgeted Time Frame
 
 func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
