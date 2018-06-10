@@ -38,6 +38,9 @@ func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String,
 }
 
 
+
+// ***** MARK: - NOTHING IS CALLING THIS FUNCTION, SO DO WE NEED IT???
+
 func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int, checked: Bool) {
     
     createAndSaveNewBudgetItem(periodStartID: periodStartID, type: type, named: named, budgeted: budgeted, available: available, category: category, year: year, month: month, day: day, checked: checked)
@@ -49,6 +52,60 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
     updatePeriodBalance(startID: periodStartID)
     
     updateAllPeriodsBalances()
+    
+}
+
+
+
+func updateCategoryItemPerNewBudgetItemWithCategoryMatching(startID: Int, categoryName: String, amount: Double) {
+    
+    guard let categoryOfBudgetItem = loadSpecificBudgetItem(startID: startID, named: categoryName, type: categoryKey) else { return }
+    
+    categoryOfBudgetItem.available -= amount
+    
+    saveData()
+    
+}
+
+
+
+//func updateFutureCategoryItemsPerNewBudgetItemWithCategoryMatching(startID: Int, categoryName: String, amount: Double) {
+//    
+//    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: categoryName, type: categoryKey)
+//    
+//    for item in specificItems {
+//        
+//        // Only Periods AFTER the one that the Budget Item was added to.
+//        if item.periodStartID > startID {
+//            
+//            item.available -= amount
+//            
+//        }
+//        
+//    }
+//    
+//    saveData()
+//    
+//}
+
+
+
+func updateCurrentAndFutureUnallocatedItemsPerNewBudgetItemAsDeposit(startID: Int, amount: Double) {
+    
+    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: unallocatedKey, type: categoryKey)
+    
+    for item in specificItems {
+        
+        // Only Periods AFTER the one that the Budget Item was added to.
+        if item.periodStartID >= startID {
+            
+            item.available += amount
+            
+        }
+        
+    }
+    
+    saveData()
     
 }
 
@@ -467,6 +524,31 @@ func updateFutureUnallocatedPerBudgetItemDeletion(amount: Double, type: String) 
 
 
 
+// MARK: - Update Current Category from which the Budget Item came.
+
+func updateCurrentCategoryItemFromWhichBudgetItemWasWithdrawn(startID: Int, categoryName: String, type: String, amount: Double) {
+    
+    if type == withdrawalKey {
+        
+        guard let categoryItem = loadSpecificBudgetItem(startID: startID, named: categoryName, type: categoryKey) else { return }
+        
+        categoryItem.available += amount
+        
+    } else {
+        
+        guard let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) else { return }
+        
+        unallocated.available -= amount
+        unallocated.budgeted -= amount
+        
+    }
+
+    saveData()
+    
+}
+
+
+
 // MARK: - Deletion of a Budget Item (a specific one created for a specific Period).
 
 func deleteBudgetItem(item: BudgetItem) {
@@ -474,11 +556,12 @@ func deleteBudgetItem(item: BudgetItem) {
     let amount = item.available
     guard let type = item.type else { return }
     
-    updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item: item)
+    // TODO: Update Category Item based on type.
+    updateCurrentCategoryItemFromWhichBudgetItemWasWithdrawn(startID: Int(item.periodStartID), categoryName: item.category!, type: type, amount: amount)
+    
+    // TODO: Replace the 'updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item:)' with the actual Category with which it is associated.
     
     deleteBudgetItemFromCoreData(item: item)
-    
-    updateFutureUnallocatedPerBudgetItemDeletion(amount: amount, type: type)
     
     updateAllPeriodsBalances()
    

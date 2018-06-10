@@ -93,7 +93,7 @@ func calculatePaycheckMinusCategoryAmounts(startID: Int) -> Double {
             
             if item.name != unallocatedKey {
                 
-                balanceOfItems += (item.type == paycheckKey) ? item.budgeted : -item.budgeted
+                balanceOfItems += (item.type == paycheckKey || item.type == depositKey) ? item.budgeted : -item.budgeted
                 
             }
             

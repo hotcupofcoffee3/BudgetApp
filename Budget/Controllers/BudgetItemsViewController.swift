@@ -400,7 +400,7 @@ extension BudgetItemsViewController {
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
                     
-                    budget.deleteBudgetItem(itemToDelete: itemToDelete)
+                    deleteBudgetItem(item: itemToDelete)
                     
                     self.successHaptic()
                     

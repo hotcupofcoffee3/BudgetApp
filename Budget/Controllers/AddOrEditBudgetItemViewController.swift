@@ -345,11 +345,28 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
+        
+        
         createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: categoryName, year: year, month: month, day: day, checked: true)
         
         
         
+        if type == withdrawalKey {
+            
+            // Update Category Item's 'Available' based.
+            updateCategoryItemPerNewBudgetItemWithCategoryMatching(startID: selectedBudgetTimeFrameStartID, categoryName: categoryName, amount: amount)
+            
+            // Update all future Categories' 'Available' based on Category.
+//            updateFutureCategoryItemsPerNewBudgetItemWithCategoryMatching(startID: selectedBudgetTimeFrameStartID, categoryName: categoryName, amount: amount)
+            
+        } else if type == depositKey {
+            
+            // Updates current and all future Unallocateds' 'Available'.
+            updateCurrentAndFutureUnallocatedItemsPerNewBudgetItemAsDeposit(startID: selectedBudgetTimeFrameStartID, amount: amount)
+            
+        }
         
+        updateAllPeriodsBalances()
         
         
         
