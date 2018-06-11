@@ -57,17 +57,6 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
 
 
 
-func updateCategoryItemPerNewBudgetItemWithCategoryMatching(startID: Int, categoryName: String, amount: Double) {
-    
-    guard let categoryOfBudgetItem = loadSpecificBudgetItem(startID: startID, named: categoryName, type: categoryKey) else { return }
-    
-    categoryOfBudgetItem.available -= amount
-    
-    saveData()
-    
-}
-
-
 
 //func updateFutureCategoryItemsPerNewBudgetItemWithCategoryMatching(startID: Int, categoryName: String, amount: Double) {
 //    
@@ -90,16 +79,16 @@ func updateCategoryItemPerNewBudgetItemWithCategoryMatching(startID: Int, catego
 
 
 
-func updateCurrentAndFutureUnallocatedItemsPerNewBudgetItemAsDeposit(startID: Int, amount: Double) {
+func updateFutureUnallocatedItemsPerNewBudgetItem(startID: Int, amount: Double, type: String) {
     
-    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: unallocatedKey, type: categoryKey)
+    let unallocatedItems = loadAllSpecificBudgetItemsAcrossPeriods(named: unallocatedKey, type: categoryKey)
     
-    for item in specificItems {
+    for item in unallocatedItems {
         
         // Only Periods AFTER the one that the Budget Item was added to.
-        if item.periodStartID >= startID {
+        if item.periodStartID > startID {
             
-            item.available += amount
+            item.available += (type == withdrawalKey) ? -amount : amount
             
         }
         
@@ -526,22 +515,12 @@ func updateFutureUnallocatedPerBudgetItemDeletion(amount: Double, type: String) 
 
 // MARK: - Update Current Category from which the Budget Item came.
 
-func updateCurrentCategoryItemFromWhichBudgetItemWasWithdrawn(startID: Int, categoryName: String, type: String, amount: Double) {
+func updateUnallocatedItemWhenAddingBudgetItem(startID: Int, type: String, amount: Double) {
     
-    if type == withdrawalKey {
-        
-        guard let categoryItem = loadSpecificBudgetItem(startID: startID, named: categoryName, type: categoryKey) else { return }
-        
-        categoryItem.available += amount
-        
-    } else {
-        
-        guard let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) else { return }
-        
-        unallocated.available -= amount
-        unallocated.budgeted -= amount
-        
-    }
+    guard let unallocatedItem = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) else { return }
+    
+    unallocatedItem.available += (type == withdrawalKey) ? -amount : amount
+    unallocatedItem.budgeted += (type == withdrawalKey) ? -amount : amount
 
     saveData()
     
@@ -556,8 +535,9 @@ func deleteBudgetItem(item: BudgetItem) {
     let amount = item.available
     guard let type = item.type else { return }
     
-    // TODO: Update Category Item based on type.
-    updateCurrentCategoryItemFromWhichBudgetItemWasWithdrawn(startID: Int(item.periodStartID), categoryName: item.category!, type: type, amount: amount)
+    // Update Unallocted Item based on type.
+    // The negative amount is added, so it does the opposite of when the Budget Item was added.
+    updateUnallocatedItemWhenAddingBudgetItem(startID: Int(item.periodStartID), type: type, amount: -amount)
     
     // TODO: Replace the 'updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item:)' with the actual Category with which it is associated.
     

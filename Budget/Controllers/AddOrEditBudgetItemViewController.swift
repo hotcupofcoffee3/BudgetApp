@@ -347,25 +347,15 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         
         
-        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: categoryName, year: year, month: month, day: day, checked: true)
+        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: unallocatedKey, year: year, month: month, day: day, checked: true)
         
         
+         // Update all future Categories' 'Available' based on Category.
+        updateUnallocatedItemWhenAddingBudgetItem(startID: selectedBudgetTimeFrameStartID, type: type, amount: amount)
         
-        if type == withdrawalKey {
-            
-            // Update Category Item's 'Available' based.
-            updateCategoryItemPerNewBudgetItemWithCategoryMatching(startID: selectedBudgetTimeFrameStartID, categoryName: categoryName, amount: amount)
-            
-            // Update all future Categories' 'Available' based on Category.
-//            updateFutureCategoryItemsPerNewBudgetItemWithCategoryMatching(startID: selectedBudgetTimeFrameStartID, categoryName: categoryName, amount: amount)
-            
-        } else if type == depositKey {
-            
-            // Updates current and all future Unallocateds' 'Available'.
-            updateCurrentAndFutureUnallocatedItemsPerNewBudgetItemAsDeposit(startID: selectedBudgetTimeFrameStartID, amount: amount)
-            
-        }
-        
+        // Updates current and all future Unallocateds' 'Available'.
+        updateFutureUnallocatedItemsPerNewBudgetItem(startID: selectedBudgetTimeFrameStartID, amount: amount, type: type)
+       
         updateAllPeriodsBalances()
         
         
