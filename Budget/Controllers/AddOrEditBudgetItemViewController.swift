@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory {
+class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, ChooseDate {
 
     
     
@@ -68,10 +68,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @IBOutlet weak var nameTextField: UITextField!
     
-    @IBOutlet weak var categoryLabel: UILabel!
-    
-    @IBOutlet weak var categoryView: UIView!
-    
     @IBOutlet weak var budgetedView: UIView!
     
     @IBOutlet weak var budgetedTextField: UITextField!
@@ -105,36 +101,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     // *****
     // MARK: - General Functions
     // *****
-    
-    func toggleCategoryLabelInfo(forItem: BudgetItem?) {
-        
-        if let item = forItem {
-            
-            if item.type == categoryKey {
-                
-                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-                categoryLabel.text = categoryKey
-                
-            } else if item.type == paycheckKey {
-                
-                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-                categoryLabel.text = unallocatedKey
-                
-            } else {
-                
-                categoryLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-                
-                if item.type != categoryKey && item.type != paycheckKey {
-                    
-                    categoryLabel.text = item.category!
-                    
-                }
-                
-            }
-            
-        }
-
-    }
     
     func toggleTypeSegmentInfo(forItem: BudgetItem?) {
         
@@ -268,8 +234,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
 
         guard let amount = budgetedTextField.text else { return }
 
-        guard let category = categoryLabel.text else { return }
-        
         var dueDate: Date?
         if dateLabel.text != "" {
             
@@ -290,9 +254,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             if let amount = Double(amount) {
                 
-                guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
+                guard let unallocated = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
                 
-                if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 && typeOfItem == .withdrawal {
+                if (unallocated.available - amount) < 0 && typeOfItem == .withdrawal {
                     
                     failureWithWarning(label: warningLabel, message: "You don't have enough funds budgeted in this category.")
                     
@@ -302,7 +266,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     
                 } else {
                     
-                    addBudgetItemSubmission(newItemName: name, with: amount, toCategory: category, withDueDate: dueDate)
+                    addBudgetItemSubmission(newItemName: name, with: amount, withDueDate: dueDate)
                     
                 }
                 
@@ -320,7 +284,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     // *** Add Budget Item Submission
     
-    func addBudgetItemSubmission(newItemName name: String, with amount: Double, toCategory categoryName: String, withDueDate: Date?) {
+    func addBudgetItemSubmission(newItemName name: String, with amount: Double, withDueDate: Date?) {
         
         nameTextField.resignFirstResponder()
         budgetedTextField.resignFirstResponder()
@@ -427,42 +391,9 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
                 // *** Go to Budgeted Amount Check
                 
-                submitEditCategoryForReview()
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    
-    // ***** Edit Category
-    
-    func submitEditCategoryForReview() {
-        
-        guard let currentBudgetItem = editableBudgetItem else { return }
-        
-        guard let newSelectedCategoryName = categoryLabel.text else { return }
-        
-        if currentBudgetItem.type != paycheckKey {
-            
-            guard let newCategoryAsBudgetItem = loadSpecificBudgetItem(startID: Int(currentBudgetItem.periodStartID), named: newSelectedCategoryName, type: categoryKey) else { return }
-            
-            if currentBudgetItem.budgeted > newCategoryAsBudgetItem.available && currentBudgetItem.type == withdrawalKey {
-                
-                failureWithWarning(label: warningLabel, message: "There are not enough funds budgeted in that category for this.")
-                
-                
-            } else {
-                
                 submitEditAmountForReview()
                 
             }
-            
-        } else {
-            
-            submitEditAmountForReview()
             
         }
         
@@ -502,8 +433,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
                 }
                 
-                guard let categoryName = categoryLabel.text else { return }
-                guard let currentBudgetItemAsCategory = loadSpecificBudgetItem(startID: Int(currentItem.periodStartID), named: categoryName, type: categoryKey) else { return }
+                guard let unallocatedItem = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
                   
                     
                 // *** Was the amount entered less than 0?
@@ -512,7 +442,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
                     
-                } else if newAmountDouble > (currentBudgetItemAsCategory.available + currentItem.budgeted) && typeOfItem == .withdrawal {
+                } else if newAmountDouble > (unallocatedItem.available + currentItem.budgeted) && typeOfItem == .withdrawal {
                     
                     failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
                     
@@ -551,13 +481,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         }
         
         
-        // Category
-        guard let newCategory = categoryLabel.text else { return }
-        var changeCategory = false
-        if newCategory != currentBudgetItem.category {
-            changeCategory = true
-        }
-        
         
         // Amount
         guard let newAmount = Double(budgetedTextField.text!) else { return }
@@ -589,7 +512,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         
         // Final confirmation, checking to see if there is even anything to change.
-        if !changeName && !changeCategory && !changeAmount && !changeDate {
+        if !changeName && !changeAmount && !changeDate {
             
             failureWithWarning(label: warningLabel, message: "There is nothing to update.")
             
@@ -598,9 +521,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             if changeName {
                 budget.updateBudgetItemName(name: newName, forItem: currentBudgetItem)
             }
-            if changeCategory {
-                budget.updateBudgetItemCategory(category: newCategory, forItem: currentBudgetItem)
-            }
+            
             if changeAmount {
                 budget.updateBudgetItemAmount(amount: newAmount, forItem: currentBudgetItem)
             }
@@ -688,10 +609,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
     }
     
-    func setCategory(category: String) {
-        categoryLabel.text = category
-    }
-    
     
     
     // *****
@@ -716,18 +633,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
             }
             
-        } else if segue.identifier == addOrEditBudgetItemToCategoryPickerSegueKey {
-            
-            let categoryPickerVC = segue.destination as! CategoryPickerViewController
-            
-            categoryPickerVC.delegate = self
-            
-            guard let currentCategory = categoryLabel.text else { return }
-            
-            categoryPickerVC.categoryList = loadPeriodCategories(startID: selectedBudgetTimeFrameStartID)
-            
-            categoryPickerVC.selectedCategory = currentCategory
-            
         }
         
     }
@@ -742,26 +647,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         nameTextField.becomeFirstResponder()
         
-    }
-    
-    @objc func categoryTapped() {
-        
-        if isNewBudgetItem {
-            
-            performSegue(withIdentifier: addOrEditBudgetItemToCategoryPickerSegueKey, sender: self)
-            
-        } else {
-            
-            guard let item = editableBudgetItem else { return }
-            
-            if item.type != categoryKey && item.type != paycheckKey {
-                
-                performSegue(withIdentifier: addOrEditBudgetItemToCategoryPickerSegueKey, sender: self)
-                
-            }
-            
-        }
-
     }
     
     @objc func amountTapped() {
@@ -864,13 +749,11 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         super.viewDidLoad()
         
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
-        let categoryTap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
         let amountTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         let dueDateTap = UITapGestureRecognizer(target: self, action: #selector(dueDateTapped))
         let addToLedgerTap = UITapGestureRecognizer(target: self, action: #selector(addToLedgerTapped))
         
         nameView.addGestureRecognizer(nameTap)
-        categoryView.addGestureRecognizer(categoryTap)
         budgetedView.addGestureRecognizer(amountTap)
         dueDateView.addGestureRecognizer(dueDateTap)
         addToLedgerView.addGestureRecognizer(addToLedgerTap)
@@ -887,8 +770,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             navBar.topItem?.title = "Add Budget Item"
             
             submitBudgetItemButton.setTitle("Add Budget Item", for: .normal)
-            
-            categoryLabel.text = unallocatedKey
             
             dateLabel.text = ""
             
@@ -908,7 +789,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             toggleTypeSegmentInfo(forItem: currentBudgetItem)
             nameTextField.text = name
             budgetedTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.budgeted))"
-            toggleCategoryLabelInfo(forItem: currentBudgetItem)
             
             if currentBudgetItem.day > 0 {
                 

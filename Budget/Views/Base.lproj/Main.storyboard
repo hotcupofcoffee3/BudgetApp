@@ -1964,7 +1964,6 @@
                         <outlet property="unallocatedLabelAtTop" destination="mxF-2L-R8F" id="VVe-O2-ore"/>
                         <outlet property="warningLabel" destination="977-ij-NAL" id="qTF-Pz-vBa"/>
                         <segue destination="mQN-Jp-RyF" kind="presentation" identifier="addOrEditBudgetItemToDatePickerSegue" modalPresentationStyle="overCurrentContext" id="xOp-Mq-eWc"/>
-                        <segue destination="SSf-za-taf" kind="presentation" identifier="addOrEditBudgetItemToCategoryPickerSegue" modalPresentationStyle="overCurrentContext" id="Tqy-bs-W0K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ut8-Lm-eDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1978,7 +1977,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xOp-Mq-eWc"/>
-        <segue reference="Tqy-bs-W0K"/>
         <segue reference="LyT-nl-dpa"/>
         <segue reference="8K3-ts-dmR"/>
         <segue reference="8ar-qL-cfd"/>

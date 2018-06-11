@@ -501,7 +501,7 @@ func updateFutureUnallocatedPerBudgetItemDeletion(amount: Double, type: String) 
             
             guard let unallocated = loadUnallocatedItem(startID: Int(period.startDateID)) else { return }
             
-            unallocated.available = (type == withdrawalKey) ? amount : -amount
+            unallocated.available += (type == withdrawalKey) ? amount : -amount
             
         }
         
@@ -539,7 +539,7 @@ func deleteBudgetItem(item: BudgetItem) {
     // The negative amount is added, so it does the opposite of when the Budget Item was added.
     updateUnallocatedItemWhenAddingBudgetItem(startID: Int(item.periodStartID), type: type, amount: -amount)
     
-    // TODO: Replace the 'updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item:)' with the actual Category with which it is associated.
+    updateFutureUnallocatedPerBudgetItemDeletion(amount: amount, type: type)
     
     deleteBudgetItemFromCoreData(item: item)
     
