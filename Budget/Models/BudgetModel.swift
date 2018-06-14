@@ -325,15 +325,23 @@ class Budget {
         // If budgeted == 200, newAmount == 100, result is: 100 (So subtracted)
         // If budgeted == 200, newAmount == 300, result is: -100 (So added)
 
-        let availableDifference = budgetItem.budgeted - amount
-        
-        if let previousItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int(budgetItem.periodStartID), named: budgetItem.name!, type: budgetItem.type!) {
+        if budgetItem.type == categoryKey || budgetItem.type == withdrawalKey {
             
-            budgetItem.available = previousItem.available + budgetItem.budgeted
+            let availableDifference = budgetItem.budgeted - amount
+            
+            if let previousItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: Int(budgetItem.periodStartID), named: budgetItem.name!, type: budgetItem.type!) {
+                
+                budgetItem.available = previousItem.available + budgetItem.budgeted
+                
+            }
+            
+            budgetItem.available -= availableDifference
+            
+        } else {
+            
+            budgetItem.available = amount
             
         }
-        
-        budgetItem.available -= availableDifference
         
         budgetItem.budgeted = amount
         
