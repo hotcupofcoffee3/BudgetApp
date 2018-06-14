@@ -45,7 +45,7 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
     
     createAndSaveNewBudgetItem(periodStartID: periodStartID, type: type, named: named, budgeted: budgeted, available: available, category: category, year: year, month: month, day: day, checked: checked)
     
-    updateUnallocatedItem(startID: periodStartID, amountBudgeted: budgeted, type: type)
+    updateUnallocatedItem(startID: periodStartID, type: type)
     
     updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodStartID, named: unallocatedKey, type: categoryKey)
     
@@ -54,28 +54,6 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
     updateAllPeriodsBalances()
     
 }
-
-
-
-
-//func updateFutureCategoryItemsPerNewBudgetItemWithCategoryMatching(startID: Int, categoryName: String, amount: Double) {
-//    
-//    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: categoryName, type: categoryKey)
-//    
-//    for item in specificItems {
-//        
-//        // Only Periods AFTER the one that the Budget Item was added to.
-//        if item.periodStartID > startID {
-//            
-//            item.available -= amount
-//            
-//        }
-//        
-//    }
-//    
-//    saveData()
-//    
-//}
 
 
 
@@ -192,7 +170,7 @@ func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> Budget
         
     } else if matchingItemArray.count == 0 {
         
-        print("There was nothing in the array")
+        print("There was no Specific Budget Item in the array")
         item = nil
         
     } else if matchingItemArray.count == 1 {
@@ -336,15 +314,15 @@ func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) 
 
 // MARK: - Updates the Unallocated Item Budgeted and Available for a particular Period.
 
-func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
+func updateUnallocatedItem(startID: Int, type: String) {
     
     guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
     
+    // Current Paychecks minus Categories amount
+    let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
+    
     // Previous Unallocated Item to be used for the previous 'Available'
     if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
-        
-        // Current Paychecks minus Categories amount
-        let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
         
         // Both the Previous 'Available' and the current amounts 'Available' AFTER the new Item has been added.
         unallocated.available = previousUnallocatedItem.available + currentAmountOfPaychecksMinusCategories
@@ -352,11 +330,11 @@ func updateUnallocatedItem(startID: Int, amountBudgeted: Double, type: String) {
     } else {
         
         // Only changes the available of Unallocated for the specific item being added, instead of calculating everything from scratch, as there is no previous to add to calculate, so the total only changes based by the 'amountBudgeted'.
-        unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
+        unallocated.available = currentAmountOfPaychecksMinusCategories
         
     }
     
-    unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
+    unallocated.budgeted = currentAmountOfPaychecksMinusCategories
    
     saveData()
     
@@ -719,7 +697,7 @@ func updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerCheckage(startID
                 
                 item.available += amount
                 
-                updateUnallocatedItem(startID: Int(item.periodStartID), amountBudgeted: amount, type: type)
+                updateUnallocatedItem(startID: Int(item.periodStartID), type: type)
                 
             }
             

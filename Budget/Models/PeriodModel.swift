@@ -291,7 +291,7 @@ func loadSpecificBudgetedTimeFrame(startID: Int) -> Period? {
         
     } else if matchingTimeFrameArray.count == 0 {
         
-        print("There was nothing in the array")
+        print("There was no Specific Budgeted Time Frame in the array.")
         period = nil
         
     } else if matchingTimeFrameArray.count == 1 {

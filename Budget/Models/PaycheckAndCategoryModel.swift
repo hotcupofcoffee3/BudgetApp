@@ -66,7 +66,7 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
            
             createPaycheckBudgetItem(startID: startID, named: named, amount: amount)
             
-            updateUnallocatedItem(startID: startID, amountBudgeted: amount, type: paycheckKey)
+            updateUnallocatedItem(startID: startID, type: paycheckKey)
             
             updatePeriodBalance(startID: startID)
             
@@ -101,7 +101,7 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
                 
                 createCategoryBudgetItem(startID: startID, named: named, budgeted: budgeted, dueDay: dueDay)
                 
-                updateUnallocatedItem(startID: startID, amountBudgeted: budgeted, type: categoryKey)
+                updateUnallocatedItem(startID: startID, type: categoryKey)
                 
                 // ***** TODO: - Make a function like "updateUnallocatedItem()" that updates all categories for the future based on the previous item's available.
                 
@@ -174,7 +174,7 @@ func loadSpecificPaycheck(named: String) -> Paycheck? {
         
     } else if matchingPaycheck.count == 0 {
         
-        print("There was nothing in the array")
+        print("There was no Specific Paycheck in the array")
         paycheck = nil
         
     } else if matchingPaycheck.count == 1 {
@@ -239,7 +239,7 @@ func loadSpecificCategory(named: String) -> Category? {
         
     } else if matchingCategory.count == 0 {
         
-        print("There was nothing in the array")
+        print("There was no Specific Category in the array")
         category = nil
         
     } else if matchingCategory.count == 1 {

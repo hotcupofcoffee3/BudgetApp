@@ -404,7 +404,7 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
                 budget.updateCategory(named: currentCategoryName, updatedNewName: newName, andNewAmountBudgeted: currentCategory.budgeted)
             }
             if changeAmount {
-                budget.updateCategory(named: currentCategoryName, updatedNewName: currentCategoryName, andNewAmountBudgeted: newAmount)
+                budget.updateCategory(named: newName, updatedNewName: newName, andNewAmountBudgeted: newAmount)
             }
             if changeDate {
                 let newDateDict = convertDateToInts(dateToConvert: newDate)

@@ -323,6 +323,7 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             
+            // TODO: - PAYCHECK UPDATING NAME AND BUDGETED AMOUNT, BUT AVAILABLE ISN'T WORKING. ALSO, THERE IS A PROBLEM LOADING A SPECIFIC BUDGET ITEM
             if changeName {
                 budget.updatePaycheckName(newName: newName, forPaycheck: currentPaycheck)
             }
