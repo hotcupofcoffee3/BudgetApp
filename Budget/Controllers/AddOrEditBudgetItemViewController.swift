@@ -131,19 +131,16 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     }
     
     @IBAction func changeType(_ sender: UISegmentedControl) {
-        
-        // TODO: Add code for locking 'Category' for 'Unallocated' if it is 'Income'
-        
-//        if typeSegment.selectedSegmentIndex == 0 {
-//
-//            typeOfItem = .withdrawal
-//
-//        } else {
-//
-//            typeOfItem = .deposit
-//
-//        }
-        
+       
+        if typeSegment.selectedSegmentIndex == 0 {
+
+            typeOfItem = .withdrawal
+
+        } else {
+
+            typeOfItem = .deposit
+
+        }
         
     }
     
@@ -314,10 +311,10 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: unallocatedKey, year: year, month: month, day: day, checked: true)
         
         
-         // Update all future Categories' 'Available' based on Category.
+        // Update current Unallocated Item.
         updateUnallocatedItemWhenAddingBudgetItem(startID: selectedBudgetTimeFrameStartID, type: type, amount: amount)
         
-        // Updates current and all future Unallocateds' 'Available'.
+        // Updates all future Unallocated 'Available'.
         updateFutureUnallocatedItemsPerNewBudgetItem(startID: selectedBudgetTimeFrameStartID, amount: amount, type: type)
        
         updateAllPeriodsBalances()
@@ -472,6 +469,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         // *** Alert only shows actual changes being made.
         
         guard let currentBudgetItem = editableBudgetItem else { return }
+        let oldAmount = currentBudgetItem.budgeted
         
         // Name
         guard let newName = nameTextField.text else { return }
@@ -485,7 +483,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         // Amount
         guard let newAmount = Double(budgetedTextField.text!) else { return }
         var changeAmount = false
-        if newAmount != currentBudgetItem.budgeted {
+        if newAmount != oldAmount {
             changeAmount = true
         }
         
@@ -523,7 +521,22 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             }
             
             if changeAmount {
+                
                 budget.updateBudgetItemAmount(amount: newAmount, forItem: currentBudgetItem)
+                
+                let differenceAmount = newAmount - oldAmount
+                // *****
+                // Works for editing, too
+                // *****
+                
+                // Update current Unallocated Item.
+                
+                updateUnallocatedItemWhenAddingBudgetItem(startID: selectedBudgetTimeFrameStartID, type: currentBudgetItem.type!, amount: differenceAmount)
+                
+                // Updates all future Unallocated 'Available'.
+                updateFutureUnallocatedItemsPerNewBudgetItem(startID: selectedBudgetTimeFrameStartID, amount: differenceAmount, type: currentBudgetItem.type!)
+                
+                updateAllPeriodsBalances()
             }
             if changeDate {
                 
@@ -765,6 +778,8 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         if isNewBudgetItem {
             
+            typeSegment.isEnabled = true
+            
             backButton.title = "Back"
             
             navBar.topItem?.title = "Add Budget Item"
@@ -787,6 +802,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             guard let name = currentBudgetItem.name else { return }
             
             toggleTypeSegmentInfo(forItem: currentBudgetItem)
+            typeSegment.isEnabled = false
             nameTextField.text = name
             budgetedTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.budgeted))"
             
