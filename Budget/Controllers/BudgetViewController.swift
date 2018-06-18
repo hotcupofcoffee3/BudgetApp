@@ -38,6 +38,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var selectedBudgetTimeFrameStartID = Int()
     
+    var selectedBudgetTimeFrameEndID = Int()
+    
     var previousBudgetTimeFrameRunningTotal = Double()
     
     var selectedBudgetTimeFrameRunningTotal = Double()
@@ -130,6 +132,8 @@ class BudgetViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let destinationVC = segue.destination as! BudgetItemsViewController
 
             destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
+            
+            destinationVC.selectedBudgetTimeFrameEndID = selectedBudgetTimeFrameEndID
             
         } else if segue.identifier == budgetToAddOrEditBudgetSegueKey {
             
@@ -272,6 +276,8 @@ extension BudgetViewController {
         } else {
             
             selectedBudgetTimeFrameStartID = Int(sortedBudgetedTimeFrames[indexPath.row].startDateID)
+            
+            selectedBudgetTimeFrameEndID = Int(sortedBudgetedTimeFrames[indexPath.row].endDateID)
 
             performSegue(withIdentifier: budgetToBudgetItemsSegueKey, sender: self)
             

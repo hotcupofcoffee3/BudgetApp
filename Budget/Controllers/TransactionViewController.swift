@@ -138,7 +138,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.displayedDataTable.register(UINib(nibName: "TransactionTableViewCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         
-        transactionsToDisplay = loadChosenTransactions()
+//        transactionsToDisplay = loadChosenTransactions()
         
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()
@@ -154,7 +154,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         
-        transactionsToDisplay = loadChosenTransactions()
+//        transactionsToDisplay = loadChosenTransactions()
         
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()

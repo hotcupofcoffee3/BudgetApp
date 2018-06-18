@@ -135,9 +135,9 @@ func loadTransactionsByCategory(selectedCategory: String) -> [Transaction] {
 
 
 
-// Load Transactions By Date
+// Load Transactions By Period
 
-func loadTransactionsByDate(selectedStartDate: Int, selectedEndDate: Int) -> [Transaction] {
+func loadTransactionsByPeriod(selectedStartDate: Int, selectedEndDate: Int) -> [Transaction] {
     
     var transactionsInDateRange = [Transaction]()
     
@@ -167,3 +167,39 @@ func loadTransactionsByDate(selectedStartDate: Int, selectedEndDate: Int) -> [Tr
     return transactionsInDateRange
     
 }
+
+
+
+// Load Transactions By Budget Item
+
+func loadTransactionsByBudgetItem(start: Int, end: Int, itemName: String) -> [Transaction] {
+    
+    var budgetItemTransactions = [Transaction]()
+    
+    let periodTransactions = loadTransactionsByPeriod(selectedStartDate: start, selectedEndDate: end)
+    
+    for transaction in periodTransactions {
+        
+        if transaction.forCategory == itemName {
+            
+            budgetItemTransactions.append(transaction)
+            
+        }
+        
+    }
+    
+    return budgetItemTransactions
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
