@@ -83,6 +83,7 @@ let budgetToBudgetItemsSegueKey = "budgetToBudgetItemsSegue"
 // Budget Items to others
 let budgetItemsToAddOrEditBudgetItemSegueKey = "budgetItemsToAddOrEditBudgetItemSegue"
 let addOrEditBudgetItemToDatePickerSegueKey = "addOrEditBudgetItemToDatePickerSegue"
+let budgetItemsToTransactionsSegueKey = "budgetItemsToTransactionsSegue"
 
 
 // Paycheck to others

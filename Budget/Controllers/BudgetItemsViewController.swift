@@ -187,6 +187,37 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
                 
             }
             
+        } else if segue.identifier == budgetItemsToTransactionsSegueKey {
+            
+            let destinationVC = segue.destination as! TransactionViewController
+            
+            // *****
+            // TODO: -
+            // *****
+            
+            // WRITE FUNCTION TO ADD CALCULATION OF NEW TRANSACTION TO SPECIFIC BUDGET PERIOD, THEN SPECIFIC BUDGET ITEM, AND ALL FUTURE PERIODS AND ITEMS.
+            
+            // WITH THIS, ADD CHECK TO SEE IF THERE ARE ENOUGH FUNDS AVAILABLE FOR IT. ALSO, CHECK TO SEE IF THEY AMOUNT CAUSES A NEGATIVE AMOUNT IN THE PAST OR PRESENT, AND IF SO, IT CANNOT BE DONE, EVEN IF THE AMOUNT IS NOT NEGATIVE IN THE SPECIFIC PERIOD BEING UPDATED.
+            
+            // ALSO, CHECK TO SEE IF THE TRANSACTION IS IN THE PAST OR PRESENT PERIOD, AS NO TRANSACTIONS CAN BE DONE FOR FUTURE PERIODS.
+            
+            // WRITE FUNCTION TO LOAD ALL SPECIFIC TRANSACTIONS THAT MATCH THE SPECIFIC BUDGET PERIOD, THEN THE SPECIFIC BUDGET ITEM.
+            
+            // WRITE FUNCTION TO DELETE TRANSACTION, UPDATING FUNDS AS NECESSARY FOR THE SPECIFIC BUDGET PERIOD, THEN SPECIFIC BUDGET ITEM, AND ALL FUTURE PERIODS AND ITEMS.
+            
+            // WRITE FUNCTION TO EDIT TRANSACTION, UPDATING FUNDS AS NECESSARY FOR THE SPECIFIC BUDGET PERIOD, OR UPDATING FUNDS FOR OLD AND NEW PERIODS IF THE PERIOD CHANGES, OR UPDATING FUNDS FOR CATEGORY IF IT CHANGES, CHECKING FOR AMOUNT AVAILABLE TO MATCH, OR IF PERIOD EXISTS (THIS ALSO ON NEW TRANSACTIONS, AS THEY CAN ONLY BE CREATED IF A BUDGET PERIOD EXISTS).
+            
+            // REMOVE 'ADD TO LEDGER' FROM THE 'BUDGET ITEM' VC, AS WHEN THEY CLICK ON THE ITEM, IT GOES TO THE TRANSACTIONS. HOWEVER, ADD AN OPTION THAT IF THE 'ADD TRANSACTION' VC IS OPENED FROM A SELECTED BUDGET ITEM, THEN IT POPULATES THE 'ADD TRANSACTION' TEXT FIELDS IF THERE ARE NO 'TRANSACTIONS' MATCHING THE SPECIFIC 'BUDGET ITEM' AND IF THERE IS A 'DUE DATE' SET, AS THIS MAY SIGNIFY THAT THERE IS A ONE-TIME PAYMENT FOR THIS ONE, SO IT WILL BE MORE SIMPLE TO ADD.
+            
+            // CHECKS ARE ONLY AVAILABLE FOR FUTURE PERIODS TO EVALUATE THE AMOUNT LEFT, IF ON A TIGHT BUDGET. ALSO, CANNOT ACCESS TRANSACTIONS FOR FUTURE PAY PERIODS. PRESENT AND PAST ONES DO NOT INCLUDE A CHECK MARK.
+            
+            // *****
+            // *****
+            // *****
+            
+            
+//            destinationVC.transactionsToDisplay =
+            
         }
         
     }
@@ -368,19 +399,21 @@ extension BudgetItemsViewController {
             
         } else {
             
-            if item.name != unallocatedKey {
-                
-                tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
-                
-                item.checked = !item.checked
-                
-                updateBalancePerCheckage(forItem: item)
-                
-                tableView.deselectRow(at: indexPath, animated: false)
-                
-                saveData()
-                
-            }
+            performSegue(withIdentifier: budgetItemsToTransactionsSegueKey, sender: self)
+            
+//            if item.name != unallocatedKey {
+//
+//                tableView.cellForRow(at: indexPath)?.accessoryType = item.checked ? .none : .checkmark
+//
+//                item.checked = !item.checked
+//
+//                updateBalancePerCheckage(forItem: item)
+//
+//                tableView.deselectRow(at: indexPath, animated: false)
+//
+//                saveData()
+//
+//            }
             
         }
         

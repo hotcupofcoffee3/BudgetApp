@@ -1674,6 +1674,7 @@
                         <outlet property="mainBalanceLabel" destination="D0C-Sc-erA" id="L0f-Wf-etz"/>
                         <outlet property="navBar" destination="hHT-eR-09p" id="eQQ-Ij-Gaa"/>
                         <segue destination="dl1-W9-TrT" kind="show" identifier="budgetItemsToAddOrEditBudgetItemSegue" id="amw-nA-0es"/>
+                        <segue destination="j2U-Hi-75v" kind="presentation" identifier="budgetItemsToTransactionsSegue" animates="NO" id="LWY-GD-npO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZfO-pT-pYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1977,6 +1978,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xOp-Mq-eWc"/>
+        <segue reference="LWY-GD-npO"/>
         <segue reference="LyT-nl-dpa"/>
         <segue reference="8K3-ts-dmR"/>
         <segue reference="8ar-qL-cfd"/>
