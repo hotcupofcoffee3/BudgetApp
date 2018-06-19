@@ -39,6 +39,26 @@ func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String,
 
 
 
+// MARK: - Update Budget Item Per Adding a Transaction
+
+func updateBudgetItemPerAddingTransaction(item: BudgetItem, amount: Double, type: String) {
+    
+    if type == depositKey {
+        
+        item.available += amount
+        
+    } else {
+        
+        item.available -= amount
+        
+    }
+    
+    saveData()
+    
+}
+
+
+
 // ***** MARK: - NOTHING IS CALLING THIS FUNCTION, SO DO WE NEED IT???
 
 func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int, checked: Bool) {
@@ -57,7 +77,7 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
 
 
 
-func updateFutureUnallocatedItemsPerNewBudgetItem(startID: Int, amount: Double, type: String) {
+func updateFutureUnallocatedItems(startID: Int, amount: Double, type: String) {
     
     let unallocatedItems = loadAllSpecificBudgetItemsAcrossPeriods(named: unallocatedKey, type: categoryKey)
     

@@ -242,8 +242,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         guard let title = transactionNameTextField.text else { return }
         guard let amount = transactionAmountTextField.text else { return }
         
-        guard let category = categoryLabel.text else { return }
-        
         let convertedDates = convertDateToInts(dateToConvert: date)
         
         if title == "" || amount == "" {
@@ -258,11 +256,15 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             var dateIsInAPeriod = false
             
+            var startID = Int()
+            
             for period in periods {
                 
                 if dateAsPeriodID > period.startDateID && dateAsPeriodID < period.endDateID {
                     
                     dateIsInAPeriod = true
+                    
+                    startID = Int(period.startDateID)
                     
                 }
                 
@@ -274,13 +276,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
             } else if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
                 
+                guard let budgetItemChosen = loadSpecificBudgetItem(startID: startID, named: categoryLabel.text!, type: categoryKey) else { return }
+                
                 // MARK: Withdrawal
                 
                 if transactionSelection == .withdrawal {
                     
-                    guard let categoryBeingWithdrawnFrom = loadSpecificCategory(named: category) else { return }
-                    
-                    if (categoryBeingWithdrawnFrom.budgeted - amount) < 0 {
+                    if (budgetItemChosen.available - amount) < 0 {
                         
                         failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
                         
@@ -290,7 +292,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                     } else {
                         
-                        addTransactionSubmission(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: category, year: year, month: month, day: day)
+                        addTransactionSubmission(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: budgetItemChosen.name!, year: year, month: month, day: day, periodStartID: startID)
                         
                     }
                     
@@ -304,7 +306,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                     } else {
                         
-                        addTransactionSubmission(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day)
+                        addTransactionSubmission(fullDate: date, type: .deposit, title: title, amount: amount, categoryName: unallocatedKey, year: year, month: month, day: day, periodStartID: startID)
                         
                     }
                     
@@ -323,7 +325,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     // Add Transaction Submission
     
-    func addTransactionSubmission(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int) {
+    func addTransactionSubmission(fullDate: Date, type: TransactionType, title: String, amount: Double, categoryName: String, year: Int, month: Int, day: Int, periodStartID: Int) {
         
         transactionNameTextField.resignFirstResponder()
         transactionAmountTextField.resignFirstResponder()
@@ -338,7 +340,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
             }
             
-            budget.addTransaction(onHold: onHold, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day)
+            budget.addTransaction(onHold: onHold, type: TransactionType.withdrawal, title: title, forCategory: categoryName, inTheAmountOf: amount, year: year, month: month, day: day, periodStartID: periodStartID)
             
             warningLabel.textColor = successColor
             warningLabel.text = "\(convertedAmountToDollars(amount: amount)) withdrawn from \(categoryName)"
@@ -358,7 +360,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                     
                 }
                 
-                budget.addTransaction(onHold: onHold, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day)
+            budget.addTransaction(onHold: onHold, type: TransactionType.deposit, title: title, forCategory: unallocatedKey, inTheAmountOf: amount, year: year, month: month, day: day, periodStartID: periodStartID)
                 
                 warningLabel.textColor = successColor
                 warningLabel.text = "\(convertedAmountToDollars(amount: amount)) was deposited."

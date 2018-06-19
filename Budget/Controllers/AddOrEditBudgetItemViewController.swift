@@ -315,7 +315,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         updateUnallocatedItemWhenAddingBudgetItem(startID: selectedBudgetTimeFrameStartID, type: type, amount: amount)
         
         // Updates all future Unallocated 'Available'.
-        updateFutureUnallocatedItemsPerNewBudgetItem(startID: selectedBudgetTimeFrameStartID, amount: amount, type: type)
+        updateFutureUnallocatedItems(startID: selectedBudgetTimeFrameStartID, amount: amount, type: type)
        
         updateAllPeriodsBalances()
         
@@ -534,7 +534,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 updateUnallocatedItemWhenAddingBudgetItem(startID: selectedBudgetTimeFrameStartID, type: currentBudgetItem.type!, amount: differenceAmount)
                 
                 // Updates all future Unallocated 'Available'.
-                updateFutureUnallocatedItemsPerNewBudgetItem(startID: selectedBudgetTimeFrameStartID, amount: differenceAmount, type: currentBudgetItem.type!)
+                updateFutureUnallocatedItems(startID: selectedBudgetTimeFrameStartID, amount: differenceAmount, type: currentBudgetItem.type!)
                 
                 updateAllPeriodsBalances()
             }

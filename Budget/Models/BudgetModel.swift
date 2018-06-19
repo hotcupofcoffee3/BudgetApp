@@ -381,7 +381,7 @@ class Budget {
     }
     
     
-    // TODO: - DUPLICATE THIS AND SEPARATE INTO NAME AND AMOUNT UPDATES, AS CURRENTLY, THE AMOUNT ISN'T DONE WHEN THE NAME IS DONE, BECAUSE THE ITEMS WILL NOT HAVE SAVED THE NEW NAMES WHEN THE AMOUNT IS CHANGED, IF BOTH ARE CHANGED.
+    
     // *** Update Budget Item from Category or Paycheck Updates
     
     func updateBudgetItemsNamePerCategoryOrPaycheckUpdate(oldName: String, newName: String, type: String) {
@@ -442,7 +442,7 @@ class Budget {
     // MARK: - Transaction Functions
     // *****
     
-    func addTransaction (onHold: Bool, type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int) {
+    func addTransaction (onHold: Bool, type: TransactionType, title: String, forCategory thisCategory: String, inTheAmountOf: Double, year: Int, month: Int, day: Int, periodStartID: Int) {
         
         let amount = inTheAmountOf
         
@@ -452,9 +452,37 @@ class Budget {
            
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
             
+            guard let budgetItemSelected = loadSpecificBudgetItem(startID: periodStartID, named: thisCategory, type: paycheckKey) else { return }
+            
+            // Will always be 'Unallocated' as a deposit.
+            updateBudgetItemPerAddingTransaction(item: budgetItemSelected, amount: amount, type: depositKey)
+            
+            // Updates all Future Unallocated
+            updateFutureUnallocatedItems(startID: periodStartID, amount: amount, type: depositKey)
+            
+            // Update all period balances
+            updateAllPeriodsBalances()
+            
+            // TODO: - WITHDRAWAL WORKS, BUT DEPOSIT DOES NOT.
+            // TODO: - UPDATE UI FOR TRANSACTION TO MATCH THE ITEM BEING ADDED.
+            
+            
         } else if type == .withdrawal {
             
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
+            
+            guard let budgetItemSelected = loadSpecificBudgetItem(startID: periodStartID, named: thisCategory, type: categoryKey) else { return }
+            
+            // Could be any category, including 'Unallocated'.
+            updateBudgetItemPerAddingTransaction(item: budgetItemSelected, amount: amount, type: withdrawalKey)
+            
+            // Updates all Future Unallocated
+            updateFutureUnallocatedItems(startID: periodStartID, amount: amount, type: withdrawalKey)
+            
+            // Update all period balances
+            updateAllPeriodsBalances()
+            
+            
            
         }
         
@@ -542,11 +570,35 @@ class Budget {
     
     
     
+    func getCurrentTransactionPeriodStartID(transactionID: Int) -> Int {
+        
+        var startID = Int()
+        
+        let periods = loadSavedBudgetedTimeFrames()
+        
+        for period in periods {
+            
+            if period.startDateID < transactionID && period.endDateID > transactionID {
+                
+                startID = Int(period.startDateID)
+                
+            }
+            
+        }
+        
+        return startID
+        
+    }
+    
+    
+    
     func updateTransactionDate(newDate: Date, withID id: Int) {
         
         guard let currentTransaction = loadSpecificTransaction(idSubmitted: id) else { return }
         
         let dateDict = convertDateToInts(dateToConvert: newDate)
+        
+        let currentPeriodID = getCurrentTransactionPeriodStartID(transactionID: id)
         
         var type: TransactionType
         
@@ -566,7 +618,7 @@ class Budget {
         
         deleteTransaction(withID: id)
         
-        addTransaction(onHold: onHold, type: type, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day)
+        addTransaction(onHold: onHold, type: type, title: title, forCategory: category, inTheAmountOf: amount, year: year, month: month, day: day, periodStartID: currentPeriodID)
         
         saveData()
         
@@ -694,7 +746,7 @@ class Budget {
             guard let month = dateDict[monthKey] else { return }
             guard let day = dateDict[dayKey] else { return }
             
-            addTransaction(onHold: false, type: .deposit, title: item.name!, forCategory: unallocatedKey, inTheAmountOf: item.budgeted, year: year, month: month, day: day)
+            addTransaction(onHold: false, type: .deposit, title: item.name!, forCategory: unallocatedKey, inTheAmountOf: item.budgeted, year: year, month: month, day: day, periodStartID: Int(item.periodStartID))
             
             item.checked = true
             item.addedToLedger = true
@@ -726,7 +778,7 @@ class Budget {
             
             let typeToSubmit: TransactionType = (item.type == depositKey) ? .deposit : .withdrawal
            
-            addTransaction(onHold: false, type: typeToSubmit, title: item.name!, forCategory: item.category!, inTheAmountOf: item.budgeted, year: year, month: month, day: day)
+            addTransaction(onHold: false, type: typeToSubmit, title: item.name!, forCategory: item.category!, inTheAmountOf: item.budgeted, year: year, month: month, day: day, periodStartID: Int(item.periodStartID))
             
             item.checked = true
             item.addedToLedger = true
