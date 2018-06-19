@@ -452,7 +452,7 @@ class Budget {
            
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: depositKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
             
-            guard let budgetItemSelected = loadSpecificBudgetItem(startID: periodStartID, named: thisCategory, type: paycheckKey) else { return }
+            guard let budgetItemSelected = loadSpecificBudgetItem(startID: periodStartID, named: thisCategory, type: categoryKey) else { return }
             
             // Will always be 'Unallocated' as a deposit.
             updateBudgetItemPerAddingTransaction(item: budgetItemSelected, amount: amount, type: depositKey)
@@ -463,8 +463,12 @@ class Budget {
             // Update all period balances
             updateAllPeriodsBalances()
             
-            // TODO: - WITHDRAWAL WORKS, BUT DEPOSIT DOES NOT.
+            
+            
+            // *****
             // TODO: - UPDATE UI FOR TRANSACTION TO MATCH THE ITEM BEING ADDED.
+            // *****
+            
             
             
         } else if type == .withdrawal {
