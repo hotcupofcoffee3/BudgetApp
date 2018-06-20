@@ -520,6 +520,8 @@ class Budget {
         // Update amount available for specific Budget Item with which the Transaction was associated.
         currentBudgetItem.available += (transactionToDelete.type == withdrawalKey) ? transactionToDelete.inTheAmountOf : -transactionToDelete.inTheAmountOf
         
+        saveData()
+        
         // Update amounts available for all future Budget Items.
         updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodIDs.start, named: transactionToDelete.forCategory!, type: categoryKey)
         

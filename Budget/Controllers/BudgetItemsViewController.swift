@@ -198,9 +198,10 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             guard let selectedItem = selectedBudgetItem else { return print("Could not assign the selectedBudgetItem to selectedItem") }
             
             let transactionsToDisplay = loadTransactionsByBudgetItem(start: selectedBudgetTimeFrameStartID, end: selectedBudgetTimeFrameEndID, itemName: selectedItem.name!)
-            print(transactionsToDisplay)
-            print(selectedBudgetTimeFrameStartID)
-            print(selectedBudgetTimeFrameEndID)
+            
+//            print(transactionsToDisplay)
+//            print(selectedBudgetTimeFrameStartID)
+//            print(selectedBudgetTimeFrameEndID)
             
             destinationVC.transactionsToDisplay = transactionsToDisplay
             

@@ -312,6 +312,14 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                         guard let budgetItemFromValidPeriod = loadSpecificBudgetItem(startID: id, named: budgetItemChosen.name!, type: budgetItemChosen.type!) else { return }
                         
+                        
+                        
+                        print("\(budgetItemFromValidPeriod.available) : \(amount)")
+                        
+                        print("\(startID) : \(id)")
+                        
+                        
+                        
                         if (budgetItemFromValidPeriod.available - amount) < 0 && startID != id {
                             
                             failureWithWarning(label: warningLabel, message: "You don't have enough in this category in future Periods to add this transaction in this Period.")

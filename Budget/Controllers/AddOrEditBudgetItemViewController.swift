@@ -764,12 +764,10 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(nameTapped))
         let amountTap = UITapGestureRecognizer(target: self, action: #selector(amountTapped))
         let dueDateTap = UITapGestureRecognizer(target: self, action: #selector(dueDateTapped))
-        let addToLedgerTap = UITapGestureRecognizer(target: self, action: #selector(addToLedgerTapped))
         
         nameView.addGestureRecognizer(nameTap)
         budgetedView.addGestureRecognizer(amountTap)
         dueDateView.addGestureRecognizer(dueDateTap)
-        addToLedgerView.addGestureRecognizer(addToLedgerTap)
         
         addCircleAroundButton(named: submitBudgetItemButton)
         
