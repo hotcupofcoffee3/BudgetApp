@@ -32,6 +32,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     var transactionsToDisplay = [Transaction]()
     
+    var budgetItemForTransaction: String?
+    
     
     
     // *****
@@ -101,6 +103,14 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         destinationVC.isNewTransaction = isNewTransaction
         
+        if let budgetItemName = budgetItemForTransaction {
+            
+            destinationVC.budgetItemForTransaction = budgetItemName
+            
+            destinationVC.canChooseAnyCategory = false
+            
+        }
+        
         if !isNewTransaction {
             
             guard let editableTransaction = selectedTransaction else { return }
@@ -144,11 +154,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
-        for transaction in transactionsToDisplay {
-            
-            print(transaction.id)
-            
-        }
+//        for transaction in transactionsToDisplay {
+//            
+//            print(transaction.id)
+//            
+//        }
         
     }
     
@@ -159,7 +169,6 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
-        
         
     }
   

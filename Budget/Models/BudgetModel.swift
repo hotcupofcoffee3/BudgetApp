@@ -463,14 +463,6 @@ class Budget {
             // Update all period balances
             updateAllPeriodsBalances()
             
-            
-            
-            // *****
-            // TODO: - UPDATE UI FOR TRANSACTION TO MATCH THE ITEM BEING ADDED.
-            // *****
-            
-            
-            
         } else if type == .withdrawal {
             
             createAndSaveNewTransaction(onHold: onHold, id: Int64(formattedTransactionID), type: withdrawalKey, title: title, year: Int64(year), month: Int64(month), day: Int64(day), inTheAmountOf: amount, forCategory: thisCategory)
@@ -485,8 +477,6 @@ class Budget {
             
             // Update all period balances
             updateAllPeriodsBalances()
-            
-            
            
         }
         

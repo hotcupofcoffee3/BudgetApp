@@ -34,6 +34,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     var dateFormatYYYYMMDD = Int()
     
+    var canChooseAnyCategory = true
+    
+    var budgetItemForTransaction = String()
+    
     
     
     // *****
@@ -122,7 +126,19 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 submitTransactionButton.setTitle("Add Withdrawal", for: .normal)
                 transactionNameTextField.text = ""
                 transactionAmountTextField.text = ""
-                categoryLabel.isEnabled = true
+                
+                if canChooseAnyCategory {
+                    
+                    categoryLabel.isEnabled = true
+                    
+                } else {
+                    
+                    categoryLabel.text = budgetItemForTransaction
+                    categoryLabel.isEnabled = false
+                    
+                }
+                
+                
                 
                 if !budget.paychecks.isEmpty {
                     
@@ -678,7 +694,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         if transactionSelection == .withdrawal {
             
-            performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
+            if canChooseAnyCategory {
+                
+                performSegue(withIdentifier: addOrEditTransactionToCategoryPickerSegueKey, sender: self)
+                
+            }
             
         }
         
@@ -854,6 +874,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
+        
     }
     
     

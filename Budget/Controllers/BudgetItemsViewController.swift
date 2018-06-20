@@ -204,6 +204,8 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             
             destinationVC.transactionsToDisplay = transactionsToDisplay
             
+            destinationVC.budgetItemForTransaction = selectedItem.name!
+            
         }
         
     }
