@@ -270,25 +270,35 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             let dateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: date, isEnd: false)
             
-            var dateIsInAPeriod = false
+            let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+            
+            var dateIsInAValidPeriod = false
             
             var startID = Int()
             
+            var validPeriodIDs = [Int]()
+            
             for period in periods {
                 
-                if dateAsPeriodID > period.startDateID && dateAsPeriodID < period.endDateID {
+                if period.startDateID <= currentDateAsPeriodID {
                     
-                    dateIsInAPeriod = true
+                    validPeriodIDs.append(Int(period.startDateID))
                     
-                    startID = Int(period.startDateID)
+                    if dateAsPeriodID > period.startDateID && dateAsPeriodID < period.endDateID {
+                        
+                        dateIsInAValidPeriod = true
+                        
+                        startID = Int(period.startDateID)
+                        
+                    }
                     
                 }
                 
             }
             
-            if !dateIsInAPeriod {
+            if !dateIsInAValidPeriod {
                 
-                failureWithWarning(label: warningLabel, message: "The date you chose is not in a Budget Period.")
+                failureWithWarning(label: warningLabel, message: "The date you chose is not in a valid Budget Period. It to be in a past Period or the present Period.")
                 
             } else if let amount = Double(amount), let year = convertedDates[yearKey], let month = convertedDates[monthKey], let day = convertedDates[dayKey] {
                 
@@ -297,6 +307,18 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 // MARK: Withdrawal
                 
                 if transactionSelection == .withdrawal {
+                    
+                    for id in validPeriodIDs {
+                        
+                        guard let budgetItemFromValidPeriod = loadSpecificBudgetItem(startID: id, named: budgetItemChosen.name!, type: budgetItemChosen.type!) else { return }
+                        
+                        if (budgetItemFromValidPeriod.available - amount) < 0 && startID != id {
+                            
+                            failureWithWarning(label: warningLabel, message: "You don't have enough in this category in future Periods to add this transaction in this Period.")
+                            
+                        }
+                        
+                    }
                     
                     if (budgetItemChosen.available - amount) < 0 {
                         
