@@ -67,7 +67,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
     
     @IBAction func backButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {

@@ -38,7 +38,7 @@ func addNewPeriod(start: Date, end: Date) {
     
     
     // Update Future Unallocated items
-    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey)
+    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: startID, named: unallocatedKey, type: categoryKey, amountFromTransaction: nil, transactionType: nil, isAddingTransaction: false)
     
     
     // Update new Period's balance with balance of previous Period.

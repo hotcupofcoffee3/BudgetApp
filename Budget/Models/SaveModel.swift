@@ -93,7 +93,7 @@ func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, due
         
         // Available from previous, if there was one.
         available += previousCategoryItem.available
-        print("Available from Previous Category: \(available)")
+//        print("Available from Previous Category: \(available)")
         
     }
 

@@ -308,40 +308,46 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 
                 if transactionSelection == .withdrawal {
                     
+                    var isFutureBudgetItemNegative = false
+                    
                     for id in validPeriodIDs {
                         
                         guard let budgetItemFromValidPeriod = loadSpecificBudgetItem(startID: id, named: budgetItemChosen.name!, type: budgetItemChosen.type!) else { return }
-                        
-                        
-                        
+
                         print("\(budgetItemFromValidPeriod.available) : \(amount)")
                         
                         print("\(startID) : \(id)")
-                        
-                        
-                        
-                        if (budgetItemFromValidPeriod.available - amount) < 0 && startID != id {
+
+                        if (budgetItemFromValidPeriod.available - amount) < 0 && id > startID {
                             
-                            failureWithWarning(label: warningLabel, message: "You don't have enough in this category in future Periods to add this transaction in this Period.")
+                            isFutureBudgetItemNegative = true
+                            print("It got here.")
                             
                         }
                         
                     }
                     
-                    if (budgetItemChosen.available - amount) < 0 {
-                        
-                        failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
-                        
-                    } else if amount <= 0 {
-                        
-                        failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
+                    if isFutureBudgetItemNegative {
+                        print("It got here, and failed!")
+                        failureWithWarning(label: warningLabel, message: "You don't have enough for this Budget Item in future Periods for this transaction.")
                         
                     } else {
                         
-                        addTransactionSubmission(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: budgetItemChosen.name!, year: year, month: month, day: day, periodStartID: startID)
+                        if (budgetItemChosen.available - amount) < 0 {
+                            
+                            failureWithWarning(label: warningLabel, message: "You don't have enough funds in this category.")
+                            
+                        } else if amount <= 0 {
+                            
+                            failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
+                            
+                        } else {
+                            
+                            addTransactionSubmission(fullDate: date, type: .withdrawal, title: title, amount: amount, categoryName: budgetItemChosen.name!, year: year, month: month, day: day, periodStartID: startID)
+                            
+                        }
                         
                     }
-                    
                     
                     // MARK: Deposit - Only can deposit into 'Uncategorized' category
                 } else if transactionSelection == .deposit {

@@ -472,8 +472,8 @@ class Budget {
             // Could be any category, including 'Unallocated'.
             updateBudgetItemPerAddingTransaction(item: budgetItemSelected, amount: amount, type: withdrawalKey)
             
-            // Updates all Future Unallocated
-            updateFutureUnallocatedItems(startID: periodStartID, amount: amount, type: withdrawalKey)
+            // Updates all Future Budget Items
+            updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodStartID, named: budgetItemSelected.name!, type: budgetItemSelected.type!, amountFromTransaction: amount, transactionType: withdrawalKey, isAddingTransaction: true)
             
             // Update all period balances
             updateAllPeriodsBalances()
@@ -523,7 +523,7 @@ class Budget {
         saveData()
         
         // Update amounts available for all future Budget Items.
-        updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodIDs.start, named: transactionToDelete.forCategory!, type: categoryKey)
+        updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodIDs.start, named: transactionToDelete.forCategory!, type: categoryKey, amountFromTransaction: transactionToDelete.inTheAmountOf, transactionType: transactionToDelete.type!, isAddingTransaction: false)
         
         // Delete transaction from the index in transaction array
         context.delete(transactionToDelete)

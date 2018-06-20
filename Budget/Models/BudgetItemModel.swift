@@ -67,7 +67,7 @@ func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted:
     
     updateUnallocatedItem(startID: periodStartID, type: type)
     
-    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodStartID, named: unallocatedKey, type: categoryKey)
+    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodStartID, named: unallocatedKey, type: categoryKey, amountFromTransaction: nil, transactionType: nil, isAddingTransaction: false)
     
     updatePeriodBalance(startID: periodStartID)
     
@@ -663,7 +663,7 @@ func updateAvailableForAllFutureBudgetItemsPerPeriodDeletion(startID: Int) {
 
 // MARK: - Updates all future instances of a specific Budget Item for all Future Periods upon CREATION of a Period or Budget Item.
 
-func updateAvailableForASpecificBudgetItemForFuturePeriods(startID: Int, named: String, type: String) {
+func updateAvailableForASpecificBudgetItemForFuturePeriods(startID: Int, named: String, type: String, amountFromTransaction: Double?, transactionType: String?, isAddingTransaction: Bool) {
     
     guard let currentItem = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
     
@@ -677,10 +677,31 @@ func updateAvailableForASpecificBudgetItemForFuturePeriods(startID: Int, named: 
             // All future instances
             if item.periodStartID > currentItem.periodStartID {
                 
-                item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
-//                print(item.name!)
-//                print(item.periodStartID)
-//                print(item.available)
+                // If the amount from the transaction is set, then it is a transaction being added, and not a Period or Budget Item being added.
+                if amountFromTransaction != nil {
+                    
+                    guard let amount = amountFromTransaction else { return }
+                    
+                    if isAddingTransaction {
+                        
+                        item.available += (transactionType == withdrawalKey) ? -amount : amount
+                        
+                    } else {
+                        
+                        item.available += (transactionType == withdrawalKey) ? amount: -amount
+                        
+                    }
+
+                // If no transaction amount set, then a Period or Budget Item is being added, so no transaction checking is needed.
+                } else {
+                    
+                    item.available += (type == categoryKey || type == withdrawalKey) ? currentItem.budgeted : 0
+                    //                print(item.name!)
+                    //                print(item.periodStartID)
+                    //                print(item.available)
+                    
+                }
+
             }
             
         }
