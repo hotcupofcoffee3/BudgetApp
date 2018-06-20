@@ -513,13 +513,20 @@ class Budget {
         
         guard let transactionToDelete = loadSpecificTransaction(idSubmitted: id) else { return }
         
-        guard let index = transactions.index(of: transactionToDelete) else { return }
+        let periodIDs = loadPeriodIDsWithinWhichATransactionExists(transactionID: id)
+        
+        guard let currentBudgetItem = loadSpecificBudgetItem(startID: periodIDs.start, named: transactionToDelete.forCategory!, type: categoryKey) else { return }
+        
+        // Update amount available for specific Budget Item with which the Transaction was associated.
+        currentBudgetItem.available += (transactionToDelete.type == withdrawalKey) ? transactionToDelete.inTheAmountOf : -transactionToDelete.inTheAmountOf
+        
+        // Update amounts available for all future Budget Items.
+        updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodIDs.start, named: transactionToDelete.forCategory!, type: categoryKey)
         
         // Delete transaction from the index in transaction array
         context.delete(transactionToDelete)
-        transactions.remove(at: index)
         
-        updateBalance()
+        updateAllPeriodsBalances()
         
         saveData()
         

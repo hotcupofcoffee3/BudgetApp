@@ -278,6 +278,7 @@ extension TransactionViewController {
                 self.successHaptic()
                 
                 self.refreshAvailableBalanceLabel(label: self.mainBalanceLabel)
+                
                 self.displayedDataTable.reloadData()
                 
             }))

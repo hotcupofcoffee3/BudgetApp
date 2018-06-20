@@ -154,6 +154,34 @@ func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
 
 
 
+// Load Period within which a Transaction exists
+
+func loadPeriodIDsWithinWhichATransactionExists(transactionID: Int) -> (start: Int, end: Int) {
+    
+    var startID = Int()
+    
+    var endID = Int()
+    
+    let periods = loadSavedBudgetedTimeFrames()
+    
+    for period in periods {
+        
+        if transactionID > period.startDateID && transactionID < period.endDateID {
+            
+            startID = Int(period.startDateID)
+            
+            endID = Int(period.endDateID)
+            
+        }
+        
+    }
+    
+    return (startID, endID)
+    
+}
+
+
+
 // Load Specific Budget Item Based on StartID, Name, and Type
 
 func loadSpecificBudgetItem(startID: Int, named: String, type: String) -> BudgetItem? {
