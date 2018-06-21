@@ -207,6 +207,10 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             
             destinationVC.budgetItemForTransaction = selectedItem.name!
             
+            destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
+            
+            destinationVC.selectedBudgetTimeFrameEndID = selectedBudgetTimeFrameEndID
+            
         }
         
     }

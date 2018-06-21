@@ -38,6 +38,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     var budgetItemForTransaction = String()
     
+    var transactionPeriodStartID = Int()
+    
+    var transactionPeriodEndID = Int()
+    
     
     
     // *****
@@ -314,21 +318,16 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                         
                         guard let budgetItemFromValidPeriod = loadSpecificBudgetItem(startID: id, named: budgetItemChosen.name!, type: budgetItemChosen.type!) else { return }
 
-                        print("\(budgetItemFromValidPeriod.available) : \(amount)")
-                        
-                        print("\(startID) : \(id)")
-
                         if (budgetItemFromValidPeriod.available - amount) < 0 && id > startID {
                             
                             isFutureBudgetItemNegative = true
-                            print("It got here.")
                             
                         }
                         
                     }
                     
                     if isFutureBudgetItemNegative {
-                        print("It got here, and failed!")
+                        
                         failureWithWarning(label: warningLabel, message: "You don't have enough for this Budget Item in future Periods for this transaction.")
                         
                     } else {
@@ -664,6 +663,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             datePickerVC.date = date
             
+            datePickerVC.maxDate = convertPeriodIDToDate(id: transactionPeriodEndID)
+            
+            datePickerVC.minDate = convertPeriodIDToDate(id: transactionPeriodStartID)
+            
         } else if segue.identifier == addOrEditTransactionToCategoryPickerSegueKey {
             
             let categoryPickerVC = segue.destination as! CategoryPickerViewController
@@ -862,6 +865,13 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             submitTransactionButton.setTitle("Save Changes", for: .normal)
             
         }
+        
+        
+        
+//        let transactionPeriod = loadSpecificBudgetedTimeFrame(startID: <#T##Int#>)
+        
+        
+        
         
         
         // MARK: Add tap gesture to textfields and their labels

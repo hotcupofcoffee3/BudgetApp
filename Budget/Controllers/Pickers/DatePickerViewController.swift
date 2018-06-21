@@ -126,6 +126,8 @@ class DatePickerViewController: UIViewController {
         super.viewDidLoad()
         
         chosenDate.setDate(date, animated: true)
+        chosenDate.minimumDate = minDate
+        chosenDate.maximumDate = maxDate
         
         
     }

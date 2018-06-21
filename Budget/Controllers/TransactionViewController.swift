@@ -34,6 +34,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     var budgetItemForTransaction: String?
     
+    var selectedBudgetTimeFrameStartID = Int()
+    
+    var selectedBudgetTimeFrameEndID = Int()
+    
     
     
     // *****
@@ -118,6 +122,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             destinationVC.editableTransaction = editableTransaction
             
         }
+        
+        destinationVC.transactionPeriodStartID = selectedBudgetTimeFrameStartID
+        
+        destinationVC.transactionPeriodEndID = selectedBudgetTimeFrameEndID
         
     }
     

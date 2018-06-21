@@ -129,7 +129,7 @@ func convertDateToBudgetedTimeFrameID(timeFrame: Date, isEnd: Bool) -> Int {
 
 
 
-// *** Convert Date into New Category or Paycheck Date Added Info for Adding Purposes
+// *** Convert Date into New Category or Paycheck Date Added Info for Adding Purposes, to see if the current date the Category or Paycheck are being added fall into a Period range of start and end IDs.
 
 func convertDateToDateAddedForGeneralPurposes(dateAdded: Date) -> Int {
     
@@ -211,6 +211,60 @@ func convertStartDateToOneDayBeforeEndDate(endDate: Date) -> Date {
     return startDate
     
 }
+
+
+// MARK: - Convert Period ID to Date
+
+func convertPeriodIDToDate(id: Int) -> Date {
+    
+    var convertedIdToDate = Date()
+    
+//    let idAsString = String(2018030100000)
+    
+    let idAsString = String(id)
+    
+    // Year
+    var year = idAsString
+    
+    let yearUnneeded = year.index(year.endIndex, offsetBy: -9)..<year.endIndex
+    year.removeSubrange(yearUnneeded)
+    
+    // Month
+    var month = idAsString
+    
+    let monthUnneededEnd = month.index(month.endIndex, offsetBy: -7)..<month.endIndex
+    month.removeSubrange(monthUnneededEnd)
+    
+    let monthUnneededStart = month.startIndex..<month.index(month.startIndex, offsetBy: 4)
+    month.removeSubrange(monthUnneededStart)
+    
+    // Day
+    var day = idAsString
+    
+    let dayUnneededEnd = day.index(day.endIndex, offsetBy: -5)..<day.endIndex
+    day.removeSubrange(dayUnneededEnd)
+    
+    let dayUnneededStart = day.startIndex..<day.index(day.startIndex, offsetBy: 6)
+    day.removeSubrange(dayUnneededStart)
+    
+    if let year = Int(year), let month = Int(month), let day = Int(day) {
+        
+        convertedIdToDate = convertComponentsToDate(year: Int(year), month: Int(month), day: Int(day))
+        
+    }
+    
+    return convertedIdToDate
+    
+}
+
+
+
+
+
+
+
+
+
 
 
 

@@ -56,6 +56,7 @@ func createCurrentTimeFrame(){
     let endDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: endDay)
     addNewPeriod(start: startDate, end: endDate)
     
+    
 }
 
 
