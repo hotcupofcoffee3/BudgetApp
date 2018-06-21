@@ -10,7 +10,8 @@ import UIKit
 
 var selectedCategory: String?
 
-class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShowTransactionsForBudgetItem {
+    
     
     
     
@@ -75,8 +76,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func addTransactionButton(_ sender: UIBarButtonItem) {
+        
         isNewTransaction = true
+        
         performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
+        
     }
     
     
@@ -93,7 +97,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Delegates
     // *****
     
-    
+    func loadTransactionsForBudgetItem(startID: Int, endID: Int, itemName: String) {
+        
+        transactionsToDisplay = loadTransactionsByBudgetItem(start: startID, end: endID, itemName: itemName)
+        
+    }
     
     
     
@@ -127,6 +135,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         destinationVC.transactionPeriodEndID = selectedBudgetTimeFrameEndID
         
+        destinationVC.delegate = self
+        
     }
     
     
@@ -156,23 +166,13 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.displayedDataTable.register(UINib(nibName: "TransactionTableViewCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         
-//        transactionsToDisplay = loadChosenTransactions()
-        
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
         
-//        for transaction in transactionsToDisplay {
-//            
-//            print(transaction.id)
-//            
-//        }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-//        transactionsToDisplay = loadChosenTransactions()
         
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()

@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol ShowTransactionsForBudgetItem {
+    
+    func loadTransactionsForBudgetItem(startID: Int, endID: Int, itemName: String)
+    
+}
+
 class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate, ChooseDate, ChooseCategory, ChoosePaycheck {
     
     
@@ -41,6 +47,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     var transactionPeriodStartID = Int()
     
     var transactionPeriodEndID = Int()
+    
+    var delegate: ShowTransactionsForBudgetItem?
     
     
     
@@ -192,7 +200,11 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     // *****
     
     @IBAction func back(_ sender: UIBarButtonItem) {
+        
+        delegate?.loadTransactionsForBudgetItem(startID: transactionPeriodStartID, endID: transactionPeriodEndID, itemName: budgetItemForTransaction)
+        
         dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func submitTransaction(_ sender: UIButton) {
@@ -865,12 +877,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             submitTransactionButton.setTitle("Save Changes", for: .normal)
             
         }
-        
-        
-        
-//        let transactionPeriod = loadSpecificBudgetedTimeFrame(startID: <#T##Int#>)
-        
-        
         
         
         
