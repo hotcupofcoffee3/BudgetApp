@@ -34,9 +34,9 @@ class DatePickerViewController: UIViewController {
     
     var date = Date()
     
-    var minDate = Date()
+    var minDate: Date?
     
-    var maxDate = Date()
+    var maxDate: Date?
     
     
     
@@ -126,10 +126,14 @@ class DatePickerViewController: UIViewController {
         super.viewDidLoad()
         
         chosenDate.setDate(date, animated: true)
-        chosenDate.minimumDate = minDate
-        chosenDate.maximumDate = maxDate
         
-        
+        if minDate != nil && maxDate != nil {
+            
+            chosenDate.minimumDate = minDate
+            chosenDate.maximumDate = maxDate
+            
+        }
+
     }
     
     
