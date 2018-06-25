@@ -309,6 +309,18 @@ func loadSavedBudgetItems() {
 // MARK: - Updates
 // *****
 
+// Update Checkage
+
+func updateCheckage(selectedItem: BudgetItem) {
+    
+    selectedItem.checked = !selectedItem.checked
+    
+    saveData()
+    
+}
+
+
+
 // Update Budget Item Per Checkage
 
 func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) {
