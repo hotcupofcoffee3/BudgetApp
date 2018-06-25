@@ -42,10 +42,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     var typeOfItem: TransactionType = .withdrawal
     
-    var ledgerDate = Date()
-    
-    var isSettingLedgerDate = false
-    
     var isSettingDueDate = false
     
     
@@ -77,12 +73,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     @IBOutlet weak var dueDateSwitch: UISwitch!
     
     @IBOutlet weak var dateLabel: UILabel!
-    
-    @IBOutlet weak var addToLedgerView: UIView!
-    
-    @IBOutlet weak var addToLedgerSwitch: UISwitch!
-    
-    @IBOutlet weak var ledgerDateLabel: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
     
@@ -166,25 +156,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
     }
     
-    @IBAction func addToLedgerToggleSwitch(_ sender: UISwitch) {
-        
-        if addToLedgerSwitch.isOn == true {
-            
-            isSettingLedgerDate = true
-            
-            ledgerDate = Date()
-            
-            performSegue(withIdentifier: addOrEditBudgetItemToDatePickerSegueKey, sender: self)
-            
-        } else {
-            
-            ledgerDateLabel.text = ""
-            
-            ledgerDate = Date.distantPast
-            
-        }
-        
-    }
     
     
     @IBAction func submitBudgetItem(_ sender: UIButton) {
@@ -318,19 +289,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         updateFutureUnallocatedItems(startID: selectedBudgetTimeFrameStartID, amount: amount, type: type)
        
         updateAllPeriodsBalances()
-        
-        
-        
-        if addToLedgerSwitch.isOn {
-            
-            guard let item = loadSpecificBudgetItem(startID: selectedBudgetTimeFrameStartID, named: name, type: type) else { return }
-            
-            item.addedToLedger = true
-            
-        }
-
-        // TODO: Add function to add a transaction to the ledger based on the info here.
-        // TODO: Also change 'createAndSaveNewBudgetItem' to include the 'addedToLedger' and 'checked' items, so that they can be manually set here.
+    
         // TODO: Also change the function for updating and added a Paycheck, Category, and Other Item in the 'BudgetModel' so that they can take all of the 'BudgetItem' properties to be manually set.
         
         
@@ -604,19 +563,13 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         } else {
             
-            self.ledgerDate = date
-            
             var dateDict = convertDateToInts(dateToConvert: date)
             
             if let year = dateDict[yearKey], let month = dateDict[monthKey], let day = dateDict[dayKey] {
                 
                 dateFormatYYYYMMDD = convertDateInfoToYYYYMMDD(year: year, month: month, day: day)
                 
-                ledgerDateLabel.text = "\(month)/\(day)/\(year)"
-                
             }
-            
-            isSettingLedgerDate = false
             
         }
         
@@ -639,10 +592,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             if isSettingDueDate {
                 
                 datePickerVC.date = date
-                
-            } else {
-                
-                datePickerVC.date = ledgerDate
                 
             }
             
@@ -686,60 +635,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
         }
         
-    }
-    
-    @objc func addToLedgerTapped() {
-        
-        if isNewBudgetItem {
-            
-            if addToLedgerSwitch.isOn {
-                
-                isSettingLedgerDate = true
-                
-                performSegue(withIdentifier: addOrEditBudgetItemToDatePickerSegueKey, sender: self)
-                
-            } else {
-                
-                isSettingLedgerDate = false
-                
-                ledgerDateLabel.text = ""
-                
-            }
-            
-        } else {
-            
-            guard let currentItem = editableBudgetItem else { return }
-            
-            if currentItem.addedToLedger == false {
-                
-                addToLedgerSwitch.isOn = !addToLedgerSwitch.isOn
-                
-                if addToLedgerSwitch.isOn {
-                    
-                    isSettingLedgerDate = true
-                    
-                    if currentItem.type != categoryKey {
-                        
-                        performSegue(withIdentifier: addOrEditBudgetItemToDatePickerSegueKey, sender: self)
-                        
-                    } else {
-                        
-                        ledgerDateLabel.text = "OK!"
-                        
-                    }
-                    
-                } else {
-                    
-                    isSettingLedgerDate = false
-                    
-                    ledgerDateLabel.text = ""
-                    
-                }
-                
-            }
-        
-        }
-
     }
     
     
@@ -788,8 +683,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             dueDateSwitch.isOn = false
             
-            addToLedgerSwitch.isOn = false
-            
         } else {
             
             backButton.title = "Cancel"
@@ -819,19 +712,6 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 dateLabel.text = ""
                 
                 dueDateSwitch.isOn = false
-                
-            }
-            
-            if currentBudgetItem.addedToLedger {
-                
-                addToLedgerSwitch.isOn = true
-                addToLedgerSwitch.isEnabled = false
-                
-                // *************************************************************************************
-                // TODO: LATER, CHANGE TO WHERE THE TRANSACTION CAN BE DELETED FROM HERE
-                // *************************************************************************************
-                
-                ledgerDateLabel.text = "Added!"
                 
             }
             

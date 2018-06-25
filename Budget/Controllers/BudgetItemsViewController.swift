@@ -195,18 +195,30 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
             
             let destinationVC = segue.destination as! TransactionViewController
             
-            guard let selectedItem = selectedBudgetItem else { return print("Could not assign the selectedBudgetItem to selectedItem") }
+            var transactionsToDisplay: [Transaction]
             
-            let transactionsToDisplay = loadTransactionsByBudgetItem(start: selectedBudgetTimeFrameStartID, end: selectedBudgetTimeFrameEndID, itemName: selectedItem.name!)
+            // If Budget Item selected.
+            if let selectedItem = selectedBudgetItem {
+                
+                transactionsToDisplay = loadTransactionsByBudgetItem(start: selectedBudgetTimeFrameStartID, end: selectedBudgetTimeFrameEndID, itemName: selectedItem.name!)
+                
+                destinationVC.budgetItemForTransaction = selectedItem.name!
+                
+                destinationVC.transactionsToDisplay = transactionsToDisplay
+                
+            // If the main Period amount is selected, then all transactions show.
+            } else {
+            
+                transactionsToDisplay = loadTransactionsByPeriod(selectedStartDate: selectedBudgetTimeFrameStartID, selectedEndDate: selectedBudgetTimeFrameEndID)
+                
+                destinationVC.transactionsToDisplay = transactionsToDisplay
+                
+            }
             
 //            print(transactionsToDisplay)
 //            print(selectedBudgetTimeFrameStartID)
 //            print(selectedBudgetTimeFrameEndID)
-            
-            destinationVC.transactionsToDisplay = transactionsToDisplay
-            
-            destinationVC.budgetItemForTransaction = selectedItem.name!
-            
+
             destinationVC.selectedBudgetTimeFrameStartID = selectedBudgetTimeFrameStartID
             
             destinationVC.selectedBudgetTimeFrameEndID = selectedBudgetTimeFrameEndID
@@ -221,7 +233,13 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
     // MARK: - Tap Functions
     // *****
     
-    
+    @objc func balanceTapped() {
+        
+        selectedBudgetItem = nil
+        
+        performSegue(withIdentifier: budgetItemsToTransactionsSegueKey, sender: self)
+        
+    }
     
     
     
@@ -243,6 +261,11 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         self.displayedDataTable.register(UINib(nibName: "BudgetItemTableViewCell", bundle: nil), forCellReuseIdentifier: "BudgetItemCell")
         
         self.loadNecessaryInfo()
+        
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(balanceTapped))
+        
+        self.mainBalanceLabel.isUserInteractionEnabled = true
+        self.mainBalanceLabel.addGestureRecognizer(balanceTap)
         
     }
    
