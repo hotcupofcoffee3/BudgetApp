@@ -366,26 +366,54 @@ extension BudgetItemsViewController {
         
         cell.fromCategoryLabel?.text = (item.type == withdrawalKey) ? "From: \(item.category!)" : ""
         
-        
- 
-        if item.type == categoryKey || item.type == withdrawalKey {
+        // If the Budget Items are in Past or Present Periods, then Available and Budgeted Shown.
+        if selectedBudgetTimeFrameStartID < currentDateAsPeriodID {
             
-            if item.name == unallocatedKey {
+            if item.type == categoryKey || item.type == withdrawalKey {
                 
-                cell.amountAvailableLabel?.text = "\(convertedAmountToDollars(amount: item.available))"
-                cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
+                if item.name == unallocatedKey {
+                    
+                    cell.amountAvailableLabel?.text = "\(convertedAmountToDollars(amount: item.available))"
+                    cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
+                    
+                } else {
+                    
+                    cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.available))"
+                    cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
+                    
+                }
                 
-            } else {
+            } else if item.type == paycheckKey || item.type == depositKey {
                 
-                cell.amountAvailableLabel?.text = "Bal: \(convertedAmountToDollars(amount: item.available))"
-                cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
+                cell.amountAvailableLabel?.text = "+ \(convertedAmountToDollars(amount: item.available))"
+                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
                 
             }
             
-        } else if item.type == paycheckKey || item.type == depositKey {
+        // If the Budget Items are in Future Periods, then only Budgeted Shown.
+        // Available is still updated when something changes, but it will be in the background.
+        } else {
             
-            cell.amountAvailableLabel?.text = "+ \(convertedAmountToDollars(amount: item.available))"
-            cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
+            if item.type == categoryKey || item.type == withdrawalKey {
+                
+                if item.name == unallocatedKey {
+                    
+                    cell.amountAvailableLabel?.text = ""
+                    cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
+                    
+                } else {
+                    
+                    cell.amountAvailableLabel?.text = ""
+                    cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
+                    
+                }
+                
+            } else if item.type == paycheckKey || item.type == depositKey {
+                
+                cell.amountAvailableLabel?.text = ""
+                cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
+                
+            }
             
         }
 
