@@ -59,24 +59,6 @@ func updateBudgetItemPerAddingTransaction(item: BudgetItem, amount: Double, type
 
 
 
-// ***** MARK: - NOTHING IS CALLING THIS FUNCTION, SO DO WE NEED IT???
-
-func addNewBudgetItem(periodStartID: Int, type: String, named: String, budgeted: Double, available: Double, category: String, year: Int, month: Int, day: Int, checked: Bool) {
-    
-    createAndSaveNewBudgetItem(periodStartID: periodStartID, type: type, named: named, budgeted: budgeted, available: available, category: category, year: year, month: month, day: day, checked: checked)
-    
-    updateUnallocatedItem(startID: periodStartID, type: type)
-    
-    updateAvailableForASpecificBudgetItemForFuturePeriods(startID: periodStartID, named: unallocatedKey, type: categoryKey, amountFromTransaction: nil, transactionType: nil, isAddingTransaction: false)
-    
-    updatePeriodBalance(startID: periodStartID)
-    
-    updateAllPeriodsBalances()
-    
-}
-
-
-
 func updateFutureUnallocatedItems(startID: Int, amount: Double, type: String) {
     
     let unallocatedItems = loadAllSpecificBudgetItemsAcrossPeriods(named: unallocatedKey, type: categoryKey)
@@ -329,42 +311,7 @@ func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) 
     print(named)
     print(type)
     
-//    guard let itemChecked = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
-//    
-//    // Either positive or negative to be added to the running total, depending on how the item.
-//    var amountToChangeBy = Double()
-//    
-//    // If it was checked, but isn't anymore
-//    if !itemChecked.checked {
-//
-//        // Amount taken away if a paycheck, added back if it was a withdrawal
-//        amountToChangeBy = (itemChecked.type == paycheckKey || itemChecked.type == depositKey) ? -itemChecked.budgeted : itemChecked.budgeted
-//
-//        // If it wasn't checked, but now it is.
-//    } else {
-//
-//        // Amount added if a paycheck, taken away if it was a withdrawal
-//        amountToChangeBy = (itemChecked.type == paycheckKey || itemChecked.type == depositKey) ? itemChecked.budgeted : -itemChecked.budgeted
-//
-//    }
-//
-//    let startID = Int(itemChecked.periodStartID)
-//    print("Anus45")
-//
-//    // Update current item's available if the budgeted amount is not being considered.
-//    itemChecked.available += amountToChangeBy
-//
-//    let isNewlyChecked = itemChecked.checked
-//
-//    
-//     // Updates current Unallocated
-//    updateUnallocatedItem(startID: startID, amountBudgeted: abs(amountToChangeBy), type: type)
-//   
-//     // Update all future items of this Category or Paycheck to reflect the fact that this one is not being allocated the budgeted funds.
-//    updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerCheckage(startID: startID, named: named, type: type, isNewlyChecked: isNewlyChecked)
-//    
-//    // Update all period balances to reflect this new change.
-//    updateAllPeriodsBalances()
+    
     
     saveData()
     
@@ -396,39 +343,6 @@ func updateUnallocatedItem(startID: Int, type: String) {
     
     unallocated.budgeted = currentAmountOfPaychecksMinusCategories
    
-    saveData()
-    
-}
-
-
-
-// MARK: - Updates the Category Item Budgeted and Available for a particular Period.
-
-func updateCategoryItem(startID: Int, amountBudgeted: Double, type: String) {
-    
-    guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
-    
-    // Previous Unallocated Item to be used for the previous 'Available'
-    if let previousUnallocatedItem = loadSpecificBudgetItemFromPreviousPeriod(currentStartID: startID, named: unallocatedKey, type: categoryKey) {
-        
-        print("Previous Available: \(previousUnallocatedItem.available)")
-        
-        // Current Paychecks minus Categories amount
-        let currentAmountOfPaychecksMinusCategories = calculatePaycheckMinusCategoryAmounts(startID: startID)
-        
-        print("Current Calculated Available: \(currentAmountOfPaychecksMinusCategories)")
-        
-        // Both the Previous 'Available' and the current amounts 'Available' AFTER the new Item has been added.
-        unallocated.available = previousUnallocatedItem.available + currentAmountOfPaychecksMinusCategories
-        
-    } else {
-        
-        unallocated.available += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
-        
-    }
-    
-    unallocated.budgeted += (type == paycheckKey) ? amountBudgeted : -amountBudgeted
-    
     saveData()
     
 }
@@ -493,22 +407,6 @@ func updateUnallocatedItemWithDeletingAPaycheck(paycheckItem: BudgetItem, unallo
         
     }
    
-    saveData()
-    
-}
-
-
-
-// MARK: - Add Specific Period's Created 'Budget Item' Available and Budgeted back to Unallocated.
-
-func updateUnallocatedWithDeletedBudgetItemAvailableAndBudgeted(item: BudgetItem) {
-    
-    guard let unallocated = loadUnallocatedItem(startID: Int(item.periodStartID)) else { return }
-    
-    unallocated.available += (item.type == withdrawalKey) ? item.available : -item.available
-    
-    unallocated.budgeted += (item.type == withdrawalKey) ? item.budgeted : -item.budgeted
-    
     saveData()
     
 }
@@ -757,6 +655,10 @@ func updateAvailableForASpecificBudgetItemForFuturePeriodsPerDeletion(startID: I
 }
 
 
+
+// *********
+// ***!!!*** MAYBE FOR THE CHECKAGE ONE
+// *********
 
 // MARK: - Updates all future instances of a specific Budget Item for all Periods.
 

@@ -677,7 +677,7 @@ class Budget {
     
     
     
-    // *** Delete Category
+    // *** Delete Paycheck
     
     func deletePaycheck(named: String) {
        
@@ -731,87 +731,6 @@ class Budget {
         
         saveData()
 
-    }
-    
-    
-    
-    // *****
-    // MARK: - Adding to ledger functions
-    // *****
-    
-    func addPaycheckToLedger(paycheckItem: BudgetItem?, withDate date: Date) {
-        
-        if let item = paycheckItem {
-            
-            var dateDict = convertDateToInts(dateToConvert: date)
-           
-            guard let year = dateDict[yearKey] else { return }
-            guard let month = dateDict[monthKey] else { return }
-            guard let day = dateDict[dayKey] else { return }
-            
-            addTransaction(onHold: false, type: .deposit, title: item.name!, forCategory: unallocatedKey, inTheAmountOf: item.budgeted, year: year, month: month, day: day, periodStartID: Int(item.periodStartID))
-            
-            item.checked = true
-            item.addedToLedger = true
-            
-        }
-
-    }
-    
-    func addCategoryToLedger(categoryItem: BudgetItem?) {
-        
-        if let item = categoryItem {
-        
-            item.checked = true
-            item.addedToLedger = true
-            
-        }
-        
-    }
-    
-    func addOtherBudgetItemToLedger(otherItem: BudgetItem?, withDate date: Date) {
-        
-        if let item = otherItem {
-            
-            var dateDict = convertDateToInts(dateToConvert: date)
-            
-            guard let year = dateDict[yearKey] else { return }
-            guard let month = dateDict[monthKey] else { return }
-            guard let day = dateDict[dayKey] else { return }
-            
-            let typeToSubmit: TransactionType = (item.type == depositKey) ? .deposit : .withdrawal
-           
-            addTransaction(onHold: false, type: typeToSubmit, title: item.name!, forCategory: item.category!, inTheAmountOf: item.budgeted, year: year, month: month, day: day, periodStartID: Int(item.periodStartID))
-            
-            item.checked = true
-            item.addedToLedger = true
-            
-        }
-        
-    }
-    
-    func addBudgetItemToLedger(budgetItem: BudgetItem?, withDate date: Date) {
-        
-        if let item = budgetItem {
-            
-            if item.type == paycheckKey {
-                
-                addPaycheckToLedger(paycheckItem: item, withDate: date)
-                
-            } else if item.type == categoryKey {
-                
-                addCategoryToLedger(categoryItem: item)
-                
-            } else {
-                
-                
-                
-            }
-            
-            saveData()
-            
-        }
-        
     }
     
     
