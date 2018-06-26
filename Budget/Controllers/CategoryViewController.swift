@@ -44,8 +44,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var displayedDataTable: UITableView!
     
-    @IBOutlet weak var viewAllTransactionsButton: UIButton!
-    
     
     
     // ******************************************************
@@ -80,14 +78,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func addSomething(_ sender: UIButton) {
         addSomethingAlertPopup(addCategorySegue: categoriesToAddOrEditCategorySegueKey, addTransactionSegue: categoriesToAddOrEditTransactionSegueKey)
-    }
-    
-    @IBAction func viewAllTransactions(_ sender: UIButton) {
-        
-        selectedCategory = nil
-        
-        performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
-        
     }
     
     
@@ -167,8 +157,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
         displayedDataTable.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
         
         displayedDataTable.rowHeight = 90
-        
-        addCircleAroundButton(named: viewAllTransactionsButton)
         
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         budget.sortCategoriesByKey(withUnallocated: true)

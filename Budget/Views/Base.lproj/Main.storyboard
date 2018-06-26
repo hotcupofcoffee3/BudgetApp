@@ -864,7 +864,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cG6-sI-Nir">
-                                <rect key="frame" x="0.0" y="275.5" width="375" height="391.5"/>
+                                <rect key="frame" x="0.0" y="221.5" width="375" height="445.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="Vnx-YE-wlf">
@@ -896,38 +896,21 @@
                                     <action selector="addSomething:" destination="7Ou-Sj-yrA" eventType="touchUpInside" id="CNf-bB-nd0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZN-jj-y7m" userLabel="Edit Title Button">
-                                <rect key="frame" x="97" y="211.5" width="180" height="54"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="Uxd-hc-dwK"/>
-                                    <constraint firstAttribute="height" constant="54" id="e4H-VM-OPz"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="180" id="luQ-7o-J54"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="All Transactions">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="viewAllTransactions:" destination="7Ou-Sj-yrA" eventType="touchUpInside" id="cda-3x-N1N"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Oqe-9k-eXA" secondAttribute="trailing" id="0Xp-BU-bUK"/>
                             <constraint firstItem="cG6-sI-Nir" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" id="2TP-41-vuY"/>
                             <constraint firstItem="Oqe-9k-eXA" firstAttribute="top" secondItem="Spr-Cu-Xki" secondAttribute="top" id="5U5-le-v4E"/>
                             <constraint firstItem="87e-1P-jCH" firstAttribute="bottom" secondItem="cG6-sI-Nir" secondAttribute="bottom" id="5VA-zk-Jab"/>
-                            <constraint firstItem="wZN-jj-y7m" firstAttribute="top" secondItem="4X9-r1-T4B" secondAttribute="bottom" constant="10" id="6uq-LH-5TR"/>
                             <constraint firstItem="VuF-MX-zAy" firstAttribute="top" secondItem="LMO-qm-Yz2" secondAttribute="bottom" constant="20" id="B0q-S1-5sV"/>
                             <constraint firstItem="4X9-r1-T4B" firstAttribute="centerX" secondItem="Spr-Cu-Xki" secondAttribute="centerX" id="BTI-Tq-6XW"/>
+                            <constraint firstItem="cG6-sI-Nir" firstAttribute="top" secondItem="4X9-r1-T4B" secondAttribute="bottom" constant="20" id="Is8-fU-8St"/>
                             <constraint firstItem="VuF-MX-zAy" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" constant="20" id="POv-uW-LfG"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="leading" secondItem="87e-1P-jCH" secondAttribute="leading" id="PPU-iD-mnD"/>
-                            <constraint firstItem="wZN-jj-y7m" firstAttribute="centerX" secondItem="Spr-Cu-Xki" secondAttribute="centerX" id="R37-NX-6Y5"/>
                             <constraint firstItem="Oqe-9k-eXA" firstAttribute="leading" secondItem="Spr-Cu-Xki" secondAttribute="leading" id="V2C-iG-6Aj"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="trailing" secondItem="87e-1P-jCH" secondAttribute="trailing" id="bVq-z5-9VY"/>
                             <constraint firstItem="87e-1P-jCH" firstAttribute="trailing" secondItem="VuF-MX-zAy" secondAttribute="trailing" constant="20" id="cD4-57-9l3"/>
                             <constraint firstAttribute="bottom" secondItem="Oqe-9k-eXA" secondAttribute="bottom" id="kj3-kD-eFK"/>
-                            <constraint firstItem="cG6-sI-Nir" firstAttribute="top" secondItem="wZN-jj-y7m" secondAttribute="bottom" constant="10" id="pfK-MG-1pb"/>
                             <constraint firstItem="LMO-qm-Yz2" firstAttribute="top" secondItem="87e-1P-jCH" secondAttribute="top" id="qdc-Vq-Gqy"/>
                             <constraint firstItem="87e-1P-jCH" firstAttribute="trailing" secondItem="cG6-sI-Nir" secondAttribute="trailing" id="v4m-c5-QFe"/>
                             <constraint firstItem="4X9-r1-T4B" firstAttribute="top" secondItem="VuF-MX-zAy" secondAttribute="bottom" constant="20" id="xjZ-Sj-LJR"/>
@@ -939,7 +922,6 @@
                         <outlet property="editBarButton" destination="DOY-LF-cIS" id="nel-Eh-ASn"/>
                         <outlet property="mainBalanceLabel" destination="VuF-MX-zAy" id="w7q-w3-nJe"/>
                         <outlet property="navBar" destination="LMO-qm-Yz2" id="VyM-3w-ATU"/>
-                        <outlet property="viewAllTransactionsButton" destination="wZN-jj-y7m" id="9hd-qb-lhF"/>
                         <segue destination="hY6-l5-vLB" kind="show" identifier="categoriesToAddOrEditCategorySegue" id="8ar-qL-cfd"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="categoriesToAddOrEditTransactionSegue" id="8K3-ts-dmR"/>
                         <segue destination="j2U-Hi-75v" kind="presentation" identifier="categoriesToTransactionsSegue" modalTransitionStyle="crossDissolve" id="1AE-Ye-tTi"/>
@@ -1924,10 +1906,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="s2V-Nq-kYo"/>
-        <segue reference="LWY-GD-npO"/>
+        <segue reference="1AE-Ye-tTi"/>
         <segue reference="LyT-nl-dpa"/>
-        <segue reference="LCW-GF-oV6"/>
+        <segue reference="8K3-ts-dmR"/>
         <segue reference="8ar-qL-cfd"/>
-        <segue reference="C8p-9T-DZF"/>
+        <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>
 </document>
