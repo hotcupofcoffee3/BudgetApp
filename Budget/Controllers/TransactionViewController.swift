@@ -121,6 +121,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
             
             destinationVC.canChooseAnyCategory = false
             
+        } else {
+            
+            destinationVC.canChooseAnyCategory = true
+            
         }
         
         if !isNewTransaction {

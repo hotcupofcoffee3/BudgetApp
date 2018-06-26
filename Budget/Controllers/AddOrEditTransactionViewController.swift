@@ -685,9 +685,21 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             categoryPickerVC.delegate = self
             
+            let items = loadSpecificBudgetItems(startID: transactionPeriodStartID)
+            
+            var itemNamesArray = [String]()
+            
+            for item in items {
+                
+                itemNamesArray.append(item.name!)
+                
+            }
+            
+            itemNamesArray.sort()
+            
             guard let currentCategory = categoryLabel.text else { return }
             
-            categoryPickerVC.categoryList = budget.sortedCategoryKeys
+            categoryPickerVC.categoryList = itemNamesArray
             
             categoryPickerVC.selectedCategory = currentCategory
             
