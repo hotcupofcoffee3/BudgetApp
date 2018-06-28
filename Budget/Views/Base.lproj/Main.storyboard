@@ -1064,6 +1064,7 @@
                         <viewLayoutGuide key="safeArea" id="AhG-2g-A3D"/>
                     </view>
                     <connections>
+                        <outlet property="addTransactionBarButton" destination="Xgr-JA-dtv" id="mVC-8N-9Hx"/>
                         <outlet property="displayedDataTable" destination="ZqH-WV-HTb" id="N7J-xZ-5Ko"/>
                         <outlet property="mainBalanceLabel" destination="t4n-ff-mkf" id="dcd-d1-HKM"/>
                         <segue destination="HME-n8-SWE" kind="show" identifier="transactionsToAddOrEditTransactionSegue" id="LCW-GF-oV6"/>
@@ -1906,9 +1907,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="s2V-Nq-kYo"/>
-        <segue reference="1AE-Ye-tTi"/>
+        <segue reference="LWY-GD-npO"/>
         <segue reference="LyT-nl-dpa"/>
-        <segue reference="8K3-ts-dmR"/>
+        <segue reference="LCW-GF-oV6"/>
         <segue reference="8ar-qL-cfd"/>
         <segue reference="OXX-Ft-DJ2"/>
     </inferredMetricsTieBreakers>

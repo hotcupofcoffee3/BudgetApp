@@ -334,33 +334,6 @@ extension UIViewController {
     
     
     
-    // MARK: - Load Chosen Transactions
-    
-    func loadChosenTransactions() -> [Transaction] {
-        
-        var transactionsToDisplay = [Transaction]()
-        
-        if selectedCategory == nil {
-            
-            loadSavedTransactions(descending: true)
-            
-            transactionsToDisplay = budget.transactions
-            
-        } else {
-            
-            if let category = selectedCategory {
-                
-                transactionsToDisplay = loadTransactionsByCategory(selectedCategory: category)
-                
-            }
-            
-        }
-        
-        return transactionsToDisplay
-        
-    }
-    
-    
     // MARK: - Update Left In Category Amount For Editting VCs
     
     func updateLeftInCategoryAmount(categoryName: String, forLabel: UILabel) {

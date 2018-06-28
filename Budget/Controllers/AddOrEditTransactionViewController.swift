@@ -846,12 +846,6 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             
             dateLabel.text = dateFormat.string(from: Date())
             
-            if let category = selectedCategory {
-                
-                categoryLabel.text = category
-                
-            }
-            
             backButton.title = "Back"
             
             navBar.topItem?.title = "Add Transaction"

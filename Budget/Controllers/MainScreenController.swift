@@ -227,10 +227,6 @@ class MainScreen: UIViewController {
             budget.deleteEVERYTHING()
         }
         
-        
-        
-        selectedCategory = nil
-        
         addCircleAroundMainButtons(named: categoriesButtonTitle)
         addCircleAroundMainButtons(named: paycheckButtonTitle)
         addCircleAroundMainButtons(named: budgetButtonTitle)
@@ -251,7 +247,6 @@ class MainScreen: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         refreshAvailableBalanceLabel(label: availableBalanceLabel)
-        selectedCategory = nil
         
     }
     

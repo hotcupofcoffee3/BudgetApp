@@ -30,6 +30,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
     
     var editableCategoryName = String()
     
+    var selectedCategory: String?
+    
     
     
     // *****
@@ -122,8 +124,13 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 destinationVC.editableCategory = editableCategory
                 
-                
             }
+            
+        } else if segue.identifier == categoriesToTransactionsSegueKey {
+            
+            let destinationVC = segue.destination as! TransactionViewController
+            
+            destinationVC.selectedCategory = selectedCategory
             
         }
         
@@ -281,6 +288,7 @@ extension CategoryViewController {
         } else {
             
             selectedCategory = budget.sortedCategoryKeys[indexPath.row]
+            
             performSegue(withIdentifier: categoriesToTransactionsSegueKey, sender: self)
             
         }

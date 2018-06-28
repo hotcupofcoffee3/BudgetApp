@@ -8,8 +8,6 @@
 
 import UIKit
 
-var selectedCategory: String?
-
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShowTransactionsForBudgetItem {
     
     
@@ -31,6 +29,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     var selectedTransaction: Transaction?
     
+    var selectedCategory: String?
+    
     var transactionsToDisplay = [Transaction]()
     
     var budgetItemForTransaction: String?
@@ -44,6 +44,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
     // MARK: - IBOutlets
     // *****
+    
+    @IBOutlet weak var addTransactionBarButton: UIBarButtonItem!
     
     @IBOutlet weak var mainBalanceLabel: UILabel!
     
@@ -98,9 +100,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     // *****
     
     func loadTransactionsForBudgetItem(startID: Int, endID: Int, itemName: String) {
-        
+
         transactionsToDisplay = loadTransactionsByBudgetItem(start: startID, end: endID, itemName: itemName)
-        
+
     }
     
     
@@ -173,6 +175,10 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         refreshAvailableBalanceLabel(label: mainBalanceLabel)
         displayedDataTable.reloadData()
         displayedDataTable.separatorStyle = .none
+        
+        // If the transactions displayed comes from the 'BudgetItems' VC, then it is enabled.
+        // Otherwise, if it comes from the 'Categories' VC, then the 'selectedCategory' is true, and it is disabled.
+        addTransactionBarButton.isEnabled = (selectedCategory == nil)
         
     }
     
