@@ -231,7 +231,11 @@ extension TransactionViewController {
         
         cell.backgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 0.0)
         
-        cell.accessoryType = .disclosureIndicator
+        if selectedCategory == nil {
+            
+            cell.accessoryType = .disclosureIndicator
+            
+        }
         
         if !transactionsToDisplay.isEmpty {
             
@@ -272,11 +276,15 @@ extension TransactionViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        isNewTransaction = false
-        
-        selectedTransaction = transactionsToDisplay[indexPath.row]
-        
-        performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
+        if selectedCategory == nil {
+            
+            isNewTransaction = false
+            
+            selectedTransaction = transactionsToDisplay[indexPath.row]
+            
+            performSegue(withIdentifier: transactionsToAddOrEditTransactionSegueKey, sender: self)
+            
+        }
         
         displayedDataTable.deselectRow(at: indexPath, animated: true)
         

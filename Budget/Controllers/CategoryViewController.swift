@@ -132,6 +132,8 @@ class CategoryViewController: UIViewController, UITableViewDelegate, UITableView
             
             destinationVC.selectedCategory = selectedCategory
             
+            destinationVC.transactionsToDisplay = loadTransactionsByCategory(selectedCategory: selectedCategory!)
+            
         }
         
     }
