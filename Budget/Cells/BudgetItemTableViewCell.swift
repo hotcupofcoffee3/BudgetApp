@@ -10,8 +10,6 @@ import UIKit
 
 class BudgetItemTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var addedToLedgerImage: UIImageView!
-    
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var fromCategoryLabel: UILabel!

@@ -78,12 +78,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
 //        refreshAvailableBalanceLabel(label: mainBalanceLabel)
         
         displayedDataTable.rowHeight = 90
+        
         displayedDataTable.separatorStyle = .none
-        
-        
-        
-        
-        
+
         guard let period = loadSpecificBudgetedTimeFrame(startID: selectedBudgetTimeFrameStartID) else { return }
         let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
         
@@ -104,39 +101,6 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
         displayedDataTable.reloadData()
         
         mainBalanceLabel.text = convertedAmountToDollars(amount: period.balance)
-        
-    }
-    
-    func updateBalancePerCheckage(forItem itemChecked: BudgetItem) {
-        
-        let startID = Int(itemChecked.periodStartID)
-
-        let name = itemChecked.name!
-
-        let type = itemChecked.type!
-
-        updateItemAndBalancePerCheckage(startID: startID, named: name, type: type)
-
-    }
-    
-    func toggleCheckedStatus(selectedItem: BudgetItem) {
-        
-        // TODO: - Add functionality for toggling the checked status.
-        
-        // ---> Change checked status.
-        // ---> Change Current & Future Budget Items:
-        
-            // - Withdrawal: remove from available. (Only in the background).
-            // - Budgeted shown will not change; only the checkmark.
-        
-        // ---> Change Unallocated Available & Budgeted:
-        
-            // - Deposit: remove funds.
-            // - Withdrawal: add funds back.
-        
-        // ---> Update Future Unallocated Available & Budgeted.
-        // ---> Update All Period Balances.
-        
         
     }
     
@@ -219,7 +183,9 @@ class BudgetItemsViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 transactionsToDisplay = loadTransactionsByBudgetItem(start: selectedBudgetTimeFrameStartID, end: selectedBudgetTimeFrameEndID, itemName: selectedItem.name!)
                 
-                destinationVC.budgetItemForTransaction = selectedItem.name!
+                destinationVC.budgetItemNameForTransaction = selectedItem.name!
+                
+                destinationVC.budgetItemTypeForTransaction = selectedItem.type!
                 
                 destinationVC.transactionsToDisplay = transactionsToDisplay
                 
@@ -338,8 +304,12 @@ extension BudgetItemsViewController {
         
         if editBudgetItem == true {
             
-            cell.accessoryType = .detailButton
-            
+            if item.name != unallocatedKey {
+                
+                cell.accessoryType = .detailButton
+                
+            }
+
         } else {
             
             if selectedBudgetTimeFrameStartID < currentDateAsPeriodID {
@@ -348,17 +318,11 @@ extension BudgetItemsViewController {
                 
             } else {
                 
-                cell.accessoryType = item.checked ? .checkmark : .none
-                
-                toggleCheckedStatus(selectedItem: item)
+                cell.accessoryType = .none
                 
             }
             
         }
-        
-        
-        
-        cell.addedToLedgerImage.image = item.addedToLedger ? UIImage(named: "postit.png") : nil
         
         cell.nameLabel?.text = "\(item.name!)"
         
@@ -427,11 +391,15 @@ extension BudgetItemsViewController {
         
         if editBudgetItem == true {
             
-            isNewBudgetItem = false
-            
-            editableBudgetItem = item
-            
-            performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
+            if item.name != unallocatedKey {
+                
+                isNewBudgetItem = false
+                
+                editableBudgetItem = item
+                
+                performSegue(withIdentifier: budgetItemsToAddOrEditBudgetItemSegueKey, sender: self)
+                
+            }
             
         } else {
             
@@ -440,16 +408,6 @@ extension BudgetItemsViewController {
                 selectedBudgetItem = budgetItems[indexPath.row]
                 
                 performSegue(withIdentifier: budgetItemsToTransactionsSegueKey, sender: self)
-                
-            } else {
-                
-                if item.name != unallocatedKey {
-                    
-                    updateCheckage(selectedItem: item)
-                    
-                    tableView.reloadData()
-                    
-                }
                 
             }
 

@@ -33,7 +33,9 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     var transactionsToDisplay = [Transaction]()
     
-    var budgetItemForTransaction: String?
+    var budgetItemNameForTransaction: String?
+    
+    var budgetItemTypeForTransaction: String?
     
     var selectedBudgetTimeFrameStartID = Int()
     
@@ -117,9 +119,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         destinationVC.isNewTransaction = isNewTransaction
         
-        if let budgetItemName = budgetItemForTransaction {
+        if let budgetItemName = budgetItemNameForTransaction, let budgetItemType = budgetItemTypeForTransaction {
             
-            destinationVC.budgetItemForTransaction = budgetItemName
+            destinationVC.budgetItemNameForTransaction = budgetItemName
+            
+            destinationVC.budgetItemTypeForTransaction = budgetItemType
             
             destinationVC.canChooseAnyCategory = false
             

@@ -44,10 +44,6 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     // MARK: - IBOutlets
     // *****
     
-    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
-    
-    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
-    
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var submitTimeFrameButton: UIButton!
@@ -409,15 +405,11 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         addCircleAroundButton(named: submitTimeFrameButton)
         
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         
-
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }
     

@@ -298,15 +298,52 @@ extension UIViewController {
     
     // MARK: - Update Budget Balance & Unallocated Balance on Top Right of Nav Bars
     
-    func updateBalanceAndUnallocatedLabelsAtTop(barButton: UIBarButtonItem, unallocatedButton: UILabel) {
+    func updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: UIBarButtonItem, itemOrTransactionBalance: UILabel, startID: Int, itemName: String?, itemType: String?, isNewBudgetItem: Bool) {
         
-        budget.updateBalance()
         
-        barButton.title = "\(convertedAmountToDollars(amount: budget.balance))"
         
-        guard let unallocated = loadSpecificCategory(named: unallocatedKey) else { return }
+        // Period Balance
+        guard let period = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
         
-        unallocatedButton.text = "Unallocated: \(convertedAmountToDollars(amount: unallocated.budgeted))"
+        barButton.title = "\(convertedAmountToDollars(amount: period.balance))"
+        
+        
+        
+        // Item Balance
+        var currentItem: BudgetItem?
+        
+        if isNewBudgetItem {
+            
+            guard let unallocated = loadUnallocatedItem(startID: startID) else { return }
+            
+            currentItem = unallocated
+            
+        } else {
+            
+            if let name = itemName, let type = itemType {
+                
+                guard let chosenItem = loadSpecificBudgetItem(startID: startID, named: name, type: type) else { return }
+                
+                currentItem = chosenItem
+                
+            } else {
+                
+                return print("Cannot load the balance of this item")
+                
+            }
+        
+        }
+        
+        if let item = currentItem {
+            
+            itemOrTransactionBalance.text = "\(item.name!): \(convertedAmountToDollars(amount: item.available))"
+            
+        } else {
+            
+            return print("Something didn't go right with the item or transaction balance.")
+            
+        }
+        
     }
     
     

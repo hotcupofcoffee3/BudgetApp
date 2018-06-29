@@ -13,15 +13,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="BudgetItemCell" rowHeight="137" id="KGk-i7-Jjw" customClass="BudgetItemTableViewCell" customModule="Alloc" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BudgetItemCell" rowHeight="137" id="KGk-i7-Jjw" customClass="BudgetItemTableViewCell" customModule="Alloc" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="335" height="89.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wkI-OU-vVJ" userLabel="Name &amp; Category Stack">
-                        <rect key="frame" x="40" y="11" width="180" height="41.5"/>
+                        <rect key="frame" x="16" y="11" width="180" height="41.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" text="Eating Out" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ieo-ww-P6a">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="20"/>
@@ -44,7 +44,7 @@
                         </constraints>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="kwX-pq-stx" userLabel="Amounts &amp; Due Day Stack">
-                        <rect key="frame" x="230" y="10" width="88.5" height="69.5"/>
+                        <rect key="frame" x="206" y="10" width="88.5" height="69.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bal: $159.67" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI" userLabel="Left Label">
                                 <rect key="frame" x="0.0" y="0.0" width="88.5" height="22.5"/>
@@ -66,29 +66,19 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postit" translatesAutoresizingMaskIntoConstraints="NO" id="Th7-kZ-9B4">
-                        <rect key="frame" x="10" y="10" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="Hq1-9c-FoZ"/>
-                            <constraint firstAttribute="height" constant="20" id="JgN-SQ-OS0"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Th7-kZ-9B4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="608-BC-t7B"/>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="65m-4k-BCA"/>
-                    <constraint firstItem="wkI-OU-vVJ" firstAttribute="leading" secondItem="Th7-kZ-9B4" secondAttribute="trailing" constant="10" id="6CA-BF-xyX"/>
                     <constraint firstAttribute="bottom" secondItem="kwX-pq-stx" secondAttribute="bottom" constant="10" id="9iL-oG-7kY"/>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="leading" secondItem="wkI-OU-vVJ" secondAttribute="trailing" constant="10" id="Dum-oK-frz"/>
-                    <constraint firstItem="Th7-kZ-9B4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Fb1-q0-3v6"/>
                     <constraint firstItem="wkI-OU-vVJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="RFX-rV-GWH"/>
+                    <constraint firstItem="wkI-OU-vVJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vHT-4O-Af9"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="addedToLedgerImage" destination="Th7-kZ-9B4" id="aAx-Dd-elj"/>
                 <outlet property="amountAvailableLabel" destination="CiM-Kx-HJI" id="GAM-zm-619"/>
                 <outlet property="amountBudgetedLabel" destination="Vno-A5-5fq" id="YPk-ru-c4t"/>
                 <outlet property="dueDayLabel" destination="tGe-jb-WtZ" id="f1q-Pe-9FW"/>
@@ -98,7 +88,4 @@
             <point key="canvasLocation" x="-7.5" y="-147"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="postit" width="100" height="100"/>
-    </resources>
 </document>

@@ -56,7 +56,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
-    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    @IBOutlet weak var balanceLabelAtTop: UILabel!
     
     @IBOutlet weak var typeSegment: UISegmentedControl!
     
@@ -290,22 +290,14 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
        
         updateAllPeriodsBalances()
     
-        // TODO: Also change the function for updating and added a Paycheck, Category, and Other Item in the 'BudgetModel' so that they can take all of the 'BudgetItem' properties to be manually set.
-        
-        
-        
-        
-        
-        
-        
-        
         saveData()
         
         warningLabel.textColor = successColor
         warningLabel.text = "\"\(name)\" with an amount of \(convertedAmountToDollars(amount: amount)) has been added."
         
         successHaptic()
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: selectedBudgetTimeFrameStartID, itemName: nil, itemType: nil, isNewBudgetItem: true)
         
         
     }
@@ -683,6 +675,8 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             dueDateSwitch.isOn = false
             
+            updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: selectedBudgetTimeFrameStartID, itemName: nil, itemType: nil, isNewBudgetItem: true)
+            
         } else {
             
             backButton.title = "Cancel"
@@ -696,6 +690,8 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             typeSegment.isEnabled = false
             nameTextField.text = name
             budgetedTextField.text = "\(convertedAmountToDouble(amount: currentBudgetItem.budgeted))"
+            
+            updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: selectedBudgetTimeFrameStartID, itemName: name, itemType: currentBudgetItem.type!, isNewBudgetItem: false)
             
             if currentBudgetItem.day > 0 {
                 
@@ -726,7 +722,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
         
     }
     

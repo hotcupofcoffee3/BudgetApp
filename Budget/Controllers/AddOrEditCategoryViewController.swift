@@ -45,10 +45,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     // MARK: - IBOutlets
     // *****
     
-    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
-    
-    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
-    
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var submitCategoryButton: UIButton!
@@ -251,7 +247,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         
         updateUIElementsBecauseOfSuccess()
         successHaptic()
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }
     
@@ -622,10 +617,6 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
         self.view.addGestureRecognizer(closeKeyboardGesture)
         
         
-        // *** Update labels
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
-        
-        
         // *** Circle around button
         addCircleAroundButton(named: submitCategoryButton)
         
@@ -639,7 +630,9 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        
+        
+        
     }
     
     

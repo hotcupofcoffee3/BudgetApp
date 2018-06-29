@@ -28,7 +28,6 @@ func createAndSaveNewBudgetItem(periodStartID: Int, type: String, named: String,
     itemToSave.category = category
     itemToSave.year = Int64(year)
     itemToSave.month = Int64(month)
-    itemToSave.checked = checked
     
     // The 'day' is the set due day, NOT the date from the 'timeSpanID'
     itemToSave.day = Int64(day)
@@ -290,32 +289,6 @@ func loadSavedBudgetItems() {
 // *****
 // MARK: - Updates
 // *****
-
-// Update Checkage
-
-func updateCheckage(selectedItem: BudgetItem) {
-    
-    selectedItem.checked = !selectedItem.checked
-    
-    saveData()
-    
-}
-
-
-
-// Update Budget Item Per Checkage
-
-func updateItemAndBalancePerCheckage(startID: Int, named: String, type: String) {
-    
-    print(startID)
-    print(named)
-    print(type)
-    
-    
-    
-    saveData()
-    
-}
 
 
 
@@ -654,43 +627,6 @@ func updateAvailableForASpecificBudgetItemForFuturePeriodsPerDeletion(startID: I
     
 }
 
-
-
-// *********
-// ***!!!*** MAYBE FOR THE CHECKAGE ONE
-// *********
-
-// MARK: - Updates all future instances of a specific Budget Item for all Periods.
-
-func updateAvailableForAllSpecificBudgetItemsForFuturePeriodsPerCheckage(startID: Int, named: String, type: String, isNewlyChecked: Bool) {
-    
-    guard let currentItem = loadSpecificBudgetItem(startID: startID, named: named, type: type) else { return }
-    
-    let specificItems = loadAllSpecificBudgetItemsAcrossPeriods(named: currentItem.name!, type: currentItem.type!)
-    
-    // If the period is NOT the last period in the array.
-    if !(currentItem.periodStartID == specificItems[specificItems.count - 1].periodStartID) {
-        
-        for item in specificItems {
-            
-            // All future instances
-            if item.periodStartID > currentItem.periodStartID {
-                
-                let amount = isNewlyChecked ? currentItem.budgeted : -currentItem.budgeted
-                
-                item.available += amount
-                
-                updateUnallocatedItem(startID: Int(item.periodStartID), type: type)
-                
-            }
-            
-        }
-        
-    }
-    
-    saveData()
-    
-}
 
 
 

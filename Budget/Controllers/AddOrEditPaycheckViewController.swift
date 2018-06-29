@@ -42,10 +42,6 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var navBar: UINavigationBar!
     
-    @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
-    
-    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
-    
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var submitPaycheckButton: UIButton!
@@ -211,8 +207,6 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         warningLabel.text = "A paycheck named \"\(name)\" with \(convertedAmountToDollars(amount: amount)) was just created. Congrats!"
         
         successHaptic()
-        
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
     }
     
@@ -455,9 +449,6 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
         let closeKeyboardGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.closeKeyboardFromSwipe))
         closeKeyboardGesture.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(closeKeyboardGesture)
-        
-        
-        self.updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
         
         addCircleAroundButton(named: submitPaycheckButton)
         

@@ -42,7 +42,9 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     var canChooseAnyCategory = true
     
-    var budgetItemForTransaction = String()
+    var budgetItemNameForTransaction = String()
+    
+    var budgetItemTypeForTransaction = String()
     
     var transactionPeriodStartID = Int()
     
@@ -58,7 +60,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBOutlet weak var balanceOnNavBar: UIBarButtonItem!
     
-    @IBOutlet weak var unallocatedLabelAtTop: UILabel!
+    @IBOutlet weak var balanceLabelAtTop: UILabel!
     
     @IBOutlet weak var warningLabel: UILabel!
     
@@ -145,7 +147,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                     
                 } else {
                     
-                    categoryLabel.text = budgetItemForTransaction
+                    categoryLabel.text = budgetItemNameForTransaction
                     categoryLabel.isEnabled = false
                     
                 }
@@ -201,7 +203,7 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate?.loadTransactionsForBudgetItem(startID: transactionPeriodStartID, endID: transactionPeriodEndID, itemName: budgetItemForTransaction)
+        delegate?.loadTransactionsForBudgetItem(startID: transactionPeriodStartID, endID: transactionPeriodEndID, itemName: budgetItemNameForTransaction)
         
         dismiss(animated: true, completion: nil)
         
@@ -411,7 +413,10 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
             successHaptic()
             
             updateUIElementsBecauseOfSuccess(forCategory: categoryName)
-            updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+            
+            guard let item = loadSpecificBudgetItem(startID: transactionPeriodStartID, named: budgetItemNameForTransaction, type: budgetItemTypeForTransaction) else { return print("Couldn't load the item in the 'addTransactionSubmission' section.")}
+            
+            updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: transactionPeriodStartID, itemName: item.name!, itemType: item.type!, isNewBudgetItem: false)
             
         } else if type == .deposit {
             
@@ -431,7 +436,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
                 successHaptic()
                 
                 updateUIElementsBecauseOfSuccess(forCategory: unallocatedKey)
-                updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+            
+                updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: transactionPeriodStartID, itemName: unallocatedKey, itemType: categoryKey, isNewBudgetItem: false)
             
         }
         
@@ -917,7 +923,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         addCircleAroundButton(named: submitTransactionButton)
         
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: transactionPeriodStartID, itemName: budgetItemNameForTransaction, itemType: budgetItemTypeForTransaction, isNewBudgetItem: false)
+        
         updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
         self.transactionNameTextField.delegate = self
@@ -930,7 +937,8 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
     override func viewWillAppear(_ animated: Bool) {
         budget.sortCategoriesByKey(withUnallocated: true)
         
-        updateBalanceAndUnallocatedLabelsAtTop(barButton: balanceOnNavBar, unallocatedButton: unallocatedLabelAtTop)
+        updatePeriodBalanceAndClickedBalanceLabelsAtTop(barButton: balanceOnNavBar, itemOrTransactionBalance: balanceLabelAtTop, startID: transactionPeriodStartID, itemName: budgetItemNameForTransaction, itemType: budgetItemTypeForTransaction, isNewBudgetItem: false)
+        
         updateTransactionButtonBasedOnTransactionChoice(typeOfTransaction: transactionSelection)
         
     }
