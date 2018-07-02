@@ -472,7 +472,11 @@ func updatePeriodBalance(startID: Int, endID: Int) {
     
     guard let period = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
     
+    let previousBalance = loadPreviousPeriodBalance(startID: startID)
+    
     period.balance = 0
+    
+    period.balance += previousBalance
     
     for transaction in transactions {
         
