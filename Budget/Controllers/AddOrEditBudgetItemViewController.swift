@@ -277,9 +277,11 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
         
         let type = (typeOfItem == .withdrawal) ? withdrawalKey : depositKey
         
+        let amountAvailable = (type == withdrawalKey) ? amount : 0
         
         
-        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amount, category: unallocatedKey, year: year, month: month, day: day, checked: true)
+        // Category is 'Unallocated', as whether it is a deposit or withdrawal, it is done to the 'Unallocated' category, as this would be a special, one-time addition of a Budget Item.
+        createAndSaveNewBudgetItem(periodStartID: selectedBudgetTimeFrameStartID, type: type, named: name, budgeted: amount, available: amountAvailable, category: unallocatedKey, year: year, month: month, day: day, checked: true)
         
         
         // Update current Unallocated Item.

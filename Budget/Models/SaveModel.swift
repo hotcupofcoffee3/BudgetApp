@@ -56,7 +56,6 @@ func createCurrentTimeFrame(){
     let endDate = convertComponentsToDate(year: currentYear, month: currentMonth, day: endDay)
     addNewPeriod(start: startDate, end: endDate)
     
-    
 }
 
 
@@ -107,7 +106,7 @@ func createCategoryBudgetItem(startID: Int, named: String, budgeted: Double, due
 
 func createPaycheckBudgetItem(startID: Int, named: String, amount: Double){
     
-    createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: amount, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
+    createAndSaveNewBudgetItem(periodStartID: startID, type: paycheckKey, named: named, budgeted: amount, available: 0.0, category: paycheckKey, year: 0, month: 0, day: 0, checked: true)
     
 }
 

@@ -68,7 +68,7 @@ func addPaycheckAsBudgetedItemToPeriods(named: String, amount: Double) {
             
             updateUnallocatedItem(startID: startID, type: paycheckKey)
             
-            updatePeriodBalance(startID: startID)
+            updatePeriodBalance(startID: startID, endID: endID)
             
         }
         
@@ -105,7 +105,7 @@ func addCategoryAsBudgetedItemToPeriods(named: String, withBudgeted budgeted: Do
                 
                 // ***** TODO: - Make a function like "updateUnallocatedItem()" that updates all categories for the future based on the previous item's available.
                 
-                updatePeriodBalance(startID: startID)
+                updatePeriodBalance(startID: startID, endID: endID)
                 
             }
 

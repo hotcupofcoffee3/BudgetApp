@@ -145,6 +145,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         destinationVC.transactionPeriodEndID = selectedBudgetTimeFrameEndID
         
+        let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+        
+        let date = (currentDateAsPeriodID > selectedBudgetTimeFrameStartID && currentDateAsPeriodID < selectedBudgetTimeFrameEndID) ? Date() : (convertPeriodIDToDate(id: selectedBudgetTimeFrameStartID))
+        
+        destinationVC.date = date
+        
         destinationVC.delegate = self
         
     }

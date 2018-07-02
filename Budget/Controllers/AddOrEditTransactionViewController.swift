@@ -847,10 +847,12 @@ class AddOrEditTransactionViewController: UIViewController, UITextFieldDelegate,
         
         if isNewTransaction == true {
             
-            let dateFormat = DateFormatter()
-            dateFormat.dateStyle = .short
+//            let dateFormat = DateFormatter()
+//            dateFormat.dateStyle = .short
+//
+//            dateLabel.text = dateFormat.string(from: date)
             
-            dateLabel.text = dateFormat.string(from: Date())
+            setDate(date: date)
             
             backButton.title = "Back"
             

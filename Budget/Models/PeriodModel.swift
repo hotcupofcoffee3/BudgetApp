@@ -466,17 +466,17 @@ func loadPreviousPeriodBalance(startID: Int) -> Double {
 
 // Mark: - Updates specific Periods' balance by adding together all of the categories and paychecks (without unallocated).
 
-func updatePeriodBalance(startID: Int) {
+func updatePeriodBalance(startID: Int, endID: Int) {
     
-    let items = loadSpecificBudgetItems(startID: startID)
+    let transactions = loadTransactionsByPeriod(selectedStartDate: startID, selectedEndDate: endID)
     
     guard let period = loadSpecificBudgetedTimeFrame(startID: startID) else { return }
     
     period.balance = 0
     
-    for item in items {
+    for transaction in transactions {
         
-        period.balance += (item.type == categoryKey || item.type == withdrawalKey) ? item.available : 0
+        period.balance += (transaction.type == depositKey) ? transaction.inTheAmountOf : -transaction.inTheAmountOf
         
     }
     
@@ -496,13 +496,17 @@ func updateAllPeriodsBalances() {
         
         for period in allPeriods {
             
-            let items = loadSpecificBudgetItems(startID: Int(period.startDateID))
+            let transactions = loadTransactionsByPeriod(selectedStartDate: Int(period.startDateID), selectedEndDate: Int(period.endDateID))
+            
+            let previousBalance = loadPreviousPeriodBalance(startID: Int(period.startDateID))
             
             period.balance = 0
             
-            for item in items {
+            period.balance += previousBalance
+            
+            for transaction in transactions {
                 
-                period.balance += (item.type == categoryKey || item.type == withdrawalKey) ? item.available : 0
+                period.balance += (transaction.type == depositKey) ? transaction.inTheAmountOf : -transaction.inTheAmountOf
                 
             }
             

@@ -104,7 +104,7 @@ class Budget {
                     
                 }
                 
-                updatePeriodBalance(startID: Int(period.startDateID))
+                updatePeriodBalance(startID: Int(period.startDateID), endID: Int(period.endDateID))
                 
             }
             
@@ -424,8 +424,6 @@ class Budget {
                     
                     updateUnallocatedItem(startID: Int(item.periodStartID), type: type)
                     
-                    updatePeriodBalance(startID: Int(item.periodStartID))
-                    
                 }
                 
             }
@@ -709,7 +707,7 @@ class Budget {
                 
             }
             
-            updatePeriodBalance(startID: Int(period.startDateID))
+            updatePeriodBalance(startID: Int(period.startDateID), endID: Int(period.endDateID))
             
         }
         
