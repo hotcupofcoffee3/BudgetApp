@@ -29,6 +29,7 @@
 		B58B8A9F2098AC54009C55A3 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B58B8A9D2098AC54009C55A3 /* Data.xcdatamodeld */; };
 		B5CB41A420AB3016000BF325 /* AddOrEditBudgetItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB41A320AB3016000BF325 /* AddOrEditBudgetItemViewController.swift */; };
 		B5E05246207467BF00C69153 /* SaveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05245207467BF00C69153 /* SaveModel.swift */; };
+		B5E78BF020EEB3F600F0E318 /* OpeningScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */; };
 		B5E81E1C20A385F800E8C3D3 /* DatePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */; };
 		B5E81E1E20A3860400E8C3D3 /* CategoryPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */; };
 		B5E8316920A4DA660068DD05 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */; };
@@ -77,6 +78,7 @@
 		B58B8A9E2098AC54009C55A3 /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
 		B5CB41A320AB3016000BF325 /* AddOrEditBudgetItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditBudgetItemViewController.swift; sourceTree = "<group>"; };
 		B5E05245207467BF00C69153 /* SaveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveModel.swift; sourceTree = "<group>"; };
+		B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningScreenViewController.swift; sourceTree = "<group>"; };
 		B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DatePicker.storyboard; sourceTree = "<group>"; };
 		B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategoryPicker.storyboard; sourceTree = "<group>"; };
 		B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		B5759A292076699600410FF9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */,
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
@@ -321,6 +324,7 @@
 				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveModel.swift in Sources */,
 				B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */,
+				B5E78BF020EEB3F600F0E318 /* OpeningScreenViewController.swift in Sources */,
 				B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */,
 				B5759A272076690700410FF9 /* KeyModel.swift in Sources */,
 				B51AC2E92076BB730068E059 /* AddOrEditCategoryViewController.swift in Sources */,
