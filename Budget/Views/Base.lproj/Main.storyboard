@@ -1907,7 +1907,7 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="eK1-N9-yax" kind="presentation" modalTransitionStyle="partialCurl" id="9jS-NR-Vyr"/>
+                                            <action selector="goToMain:" destination="6EZ-MQ-mYK" eventType="touchUpInside" id="cEP-Me-cYP"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1923,6 +1923,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XoO-NW-nrL"/>
                     </view>
+                    <connections>
+                        <segue destination="eK1-N9-yax" kind="presentation" identifier="welcomeToMainSegue" modalTransitionStyle="partialCurl" id="QDj-0O-c55"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQk-x6-Was" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1939,6 +1942,6 @@
         <segue reference="sum-Cr-7Ay"/>
         <segue reference="eXP-Fb-uY0"/>
         <segue reference="mU4-cf-aIR"/>
-        <segue reference="9jS-NR-Vyr"/>
+        <segue reference="QDj-0O-c55"/>
     </inferredMetricsTieBreakers>
 </document>
