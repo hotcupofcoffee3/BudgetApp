@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+//        if let x = UserDefaults.standard.object(forKey: "firstTime") {
+//
+//            print(x)
+//            UserDefaults.standard.set(false, forKey: "firstTime")
+//
+//        } else {
+//            
+//            print("It's the first time")
+//            UserDefaults.standard.set(true, forKey: "firstTime")
+//
+//        }
+        
+        
+        
         // Light status bar
         UIApplication.shared.statusBarStyle = .lightContent
         
