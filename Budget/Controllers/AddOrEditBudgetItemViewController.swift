@@ -222,13 +222,15 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
             
             if let amount = Double(amount) {
                 
-                guard let unallocated = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
+//                guard let unallocated = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
                 
-                if (unallocated.available - amount) < 0 && typeOfItem == .withdrawal {
-                    
-                    failureWithWarning(label: warningLabel, message: "You don't have enough funds budgeted in this category.")
-                    
-                } else if amount <= 0 {
+//                if (unallocated.available - amount) < 0 && typeOfItem == .withdrawal {
+//
+//                    failureWithWarning(label: warningLabel, message: "You don't have enough funds budgeted in this category.")
+//
+//                } else if amount <= 0 {
+                
+                if amount <= 0 {
                     
                     failureWithWarning(label: warningLabel, message: "You have to enter a number greater than 0.")
                     
@@ -355,7 +357,7 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
     
     func submitEditAmountForReview() {
         
-        guard let currentItem = editableBudgetItem else { return }
+//        guard let currentItem = editableBudgetItem else { return }
         
         if let newAmount = budgetedTextField.text {
             
@@ -383,20 +385,20 @@ class AddOrEditBudgetItemViewController: UIViewController, UITextFieldDelegate, 
                 
                 }
                 
-                guard let unallocatedItem = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
-                  
+//                guard let unallocatedItem = loadUnallocatedItem(startID: selectedBudgetTimeFrameStartID) else { return }
+                
                     
                 // *** Was the amount entered less than 0?
                 if newAmountDouble < 0.0 {
                     
                     failureWithWarning(label: warningLabel, message: "You have to enter a positive amount")
                     
-                    
-                } else if newAmountDouble > (unallocatedItem.available + currentItem.budgeted) && typeOfItem == .withdrawal {
-                    
-                    failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
-                    
-                    
+//
+//                } else if newAmountDouble > (unallocatedItem.available + currentItem.budgeted) && typeOfItem == .withdrawal {
+//
+//                    failureWithWarning(label: warningLabel, message: "There are not enough funds available to allocate the budgeted amount at this time.")
+//
+//
                     // *** SUCCESS!
                 } else {
                     

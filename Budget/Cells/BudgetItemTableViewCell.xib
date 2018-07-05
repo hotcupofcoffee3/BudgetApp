@@ -43,23 +43,23 @@
                             <constraint firstAttribute="width" constant="180" id="tY0-Ys-eNi"/>
                         </constraints>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="kwX-pq-stx" userLabel="Amounts &amp; Due Day Stack">
-                        <rect key="frame" x="206" y="10" width="88.5" height="69.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="kwX-pq-stx" userLabel="Amounts &amp; Due Day Stack">
+                        <rect key="frame" x="206" y="10" width="149" height="62.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bal: $159.67" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiM-Kx-HJI" userLabel="Left Label">
-                                <rect key="frame" x="0.0" y="0.0" width="88.5" height="22.5"/>
+                                <rect key="frame" x="64.5" y="0.0" width="84.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bgt: $200.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-A5-5fq" userLabel="Budget Label">
-                                <rect key="frame" x="0.0" y="23.5" width="88.5" height="22.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bgt: $200.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-A5-5fq" userLabel="Budget Label">
+                                <rect key="frame" x="62.5" y="22.5" width="86.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Due: 28th" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGe-jb-WtZ">
-                                <rect key="frame" x="0.0" y="47" width="88.5" height="22.5"/>
+                                <rect key="frame" x="83.5" y="45" width="65.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -69,9 +69,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="65m-4k-BCA"/>
-                    <constraint firstAttribute="bottom" secondItem="kwX-pq-stx" secondAttribute="bottom" constant="10" id="9iL-oG-7kY"/>
                     <constraint firstItem="kwX-pq-stx" firstAttribute="leading" secondItem="wkI-OU-vVJ" secondAttribute="trailing" constant="10" id="Dum-oK-frz"/>
                     <constraint firstItem="wkI-OU-vVJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="RFX-rV-GWH"/>
+                    <constraint firstAttribute="trailing" secondItem="kwX-pq-stx" secondAttribute="trailing" constant="20" id="g2l-2G-Gai"/>
                     <constraint firstItem="wkI-OU-vVJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vHT-4O-Af9"/>
                 </constraints>
             </tableViewCellContentView>

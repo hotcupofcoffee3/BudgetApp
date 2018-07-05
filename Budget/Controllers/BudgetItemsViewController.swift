@@ -362,19 +362,19 @@ extension BudgetItemsViewController {
                 
                 if item.name == unallocatedKey {
                     
-                    cell.amountAvailableLabel?.text = ""
+                    cell.amountAvailableLabel?.text = "Bal: ---"
                     cell.amountBudgetedLabel?.text = "\(convertedAmountToDollars(amount: item.budgeted))"
                     
                 } else {
                     
-                    cell.amountAvailableLabel?.text = ""
+                    cell.amountAvailableLabel?.text = "Bal: ---"
                     cell.amountBudgetedLabel?.text = "Bgt: \(convertedAmountToDollars(amount: item.budgeted))"
                     
                 }
                 
             } else if item.type == paycheckKey || item.type == depositKey {
                 
-                cell.amountAvailableLabel?.text = ""
+                cell.amountAvailableLabel?.text = "Bal: ---"
                 cell.amountBudgetedLabel?.text = "+ \(convertedAmountToDollars(amount: item.budgeted))"
                 
             }

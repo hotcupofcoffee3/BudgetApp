@@ -117,13 +117,9 @@ func loadSpecificBudgetItems(startID: Int) -> [BudgetItem] {
         
     }
     
-    if !budgetItemArray.isEmpty {
-        
-        if let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
+    if let unallocated = loadSpecificBudgetItem(startID: startID, named: unallocatedKey, type: categoryKey) {
             
-            unallocatedArray.append(unallocated)
-            
-        }
+        unallocatedArray.append(unallocated)
         
     }
     
