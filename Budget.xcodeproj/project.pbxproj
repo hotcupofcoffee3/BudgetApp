@@ -30,6 +30,7 @@
 		B5CB41A420AB3016000BF325 /* AddOrEditBudgetItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB41A320AB3016000BF325 /* AddOrEditBudgetItemViewController.swift */; };
 		B5E05246207467BF00C69153 /* SaveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05245207467BF00C69153 /* SaveModel.swift */; };
 		B5E78BF020EEB3F600F0E318 /* OpeningScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */; };
+		B5E78BF220EED24400F0E318 /* dotGifModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E78BF120EED24400F0E318 /* dotGifModel.swift */; };
 		B5E81E1C20A385F800E8C3D3 /* DatePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */; };
 		B5E81E1E20A3860400E8C3D3 /* CategoryPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */; };
 		B5E8316920A4DA660068DD05 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		B5CB41A320AB3016000BF325 /* AddOrEditBudgetItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditBudgetItemViewController.swift; sourceTree = "<group>"; };
 		B5E05245207467BF00C69153 /* SaveModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveModel.swift; sourceTree = "<group>"; };
 		B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningScreenViewController.swift; sourceTree = "<group>"; };
+		B5E78BF120EED24400F0E318 /* dotGifModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotGifModel.swift; sourceTree = "<group>"; };
 		B5E81E1B20A385F800E8C3D3 /* DatePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DatePicker.storyboard; sourceTree = "<group>"; };
 		B5E81E1D20A3860400E8C3D3 /* CategoryPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategoryPicker.storyboard; sourceTree = "<group>"; };
 		B5E8316720A4DA660068DD05 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				B5E05245207467BF00C69153 /* SaveModel.swift */,
 				B5F489FE20BE12D50062F757 /* PeriodModel.swift */,
 				B5F489FA20BE12C30062F757 /* PaycheckAndCategoryModel.swift */,
+				B5E78BF120EED24400F0E318 /* dotGifModel.swift */,
 				B5F489FC20BE12CC0062F757 /* BudgetItemModel.swift */,
 				B5F48A0020BE13560062F757 /* TransactionModel.swift */,
 				B5F489F420BE072D0062F757 /* CalculationModel.swift */,
@@ -321,6 +324,7 @@
 				B5EE2BC820AA5CB30059CFA4 /* PaychecksViewController.swift in Sources */,
 				B5F48A0120BE13560062F757 /* TransactionModel.swift in Sources */,
 				B5CB41A420AB3016000BF325 /* AddOrEditBudgetItemViewController.swift in Sources */,
+				B5E78BF220EED24400F0E318 /* dotGifModel.swift in Sources */,
 				B5F86FF120A22E9F00B87BD3 /* CategoryPickerViewController.swift in Sources */,
 				B5E05246207467BF00C69153 /* SaveModel.swift in Sources */,
 				B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */,

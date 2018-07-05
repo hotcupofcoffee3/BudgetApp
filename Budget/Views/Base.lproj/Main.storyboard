@@ -1912,11 +1912,20 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dots.001" translatesAutoresizingMaskIntoConstraints="NO" id="YAO-YO-Djw">
+                                <rect key="frame" x="137" y="507" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="afY-tq-BSn"/>
+                                    <constraint firstAttribute="width" constant="100" id="z2p-El-TiT"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="HXC-bc-ExA" firstAttribute="centerY" secondItem="SGd-yB-GqU" secondAttribute="centerY" id="241-lc-Z9C"/>
                             <constraint firstItem="i27-Li-wys" firstAttribute="top" secondItem="SGd-yB-GqU" secondAttribute="top" id="CAK-Bx-ePK"/>
+                            <constraint firstItem="XoO-NW-nrL" firstAttribute="bottom" secondItem="YAO-YO-Djw" secondAttribute="bottom" constant="60" id="F4R-VP-zdC"/>
                             <constraint firstAttribute="bottom" secondItem="i27-Li-wys" secondAttribute="bottom" id="HDP-ti-Prj"/>
+                            <constraint firstItem="YAO-YO-Djw" firstAttribute="centerX" secondItem="SGd-yB-GqU" secondAttribute="centerX" id="OPY-lU-J9e"/>
                             <constraint firstItem="XoO-NW-nrL" firstAttribute="trailing" secondItem="i27-Li-wys" secondAttribute="trailing" id="Z1j-Ne-Vut"/>
                             <constraint firstItem="i27-Li-wys" firstAttribute="leading" secondItem="XoO-NW-nrL" secondAttribute="leading" id="hFA-ui-aFY"/>
                             <constraint firstItem="HXC-bc-ExA" firstAttribute="centerX" secondItem="SGd-yB-GqU" secondAttribute="centerX" id="qHD-Ak-gCw"/>
@@ -1924,17 +1933,19 @@
                         <viewLayoutGuide key="safeArea" id="XoO-NW-nrL"/>
                     </view>
                     <connections>
+                        <outlet property="dotGif" destination="YAO-YO-Djw" id="Yoy-Fr-8Ix"/>
                         <segue destination="eK1-N9-yax" kind="presentation" identifier="welcomeToMainSegue" modalTransitionStyle="partialCurl" id="QDj-0O-c55"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQk-x6-Was" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3870" y="-1988"/>
+            <point key="canvasLocation" x="-3871.1999999999998" y="-1988.4557721139431"/>
         </scene>
     </scenes>
     <resources>
         <image name="addButton" width="300" height="300"/>
         <image name="bg1-75-croppedSameAsIcon" width="1024" height="1024"/>
+        <image name="dots.001" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xOp-Mq-eWc"/>

@@ -15,11 +15,30 @@ class OpeningScreenViewController: UIViewController {
         performSegue(withIdentifier: "welcomeToMainSegue", sender: self)
         
     }
+    
+    @IBOutlet weak var dotGif: UIImageView!
+    
+   
+    // DOT gif
+    
+    var timer = Timer()
+    
+    var currentNumber = 1
+    
+    @objc func runDotGif() {
+        
+        dotGif.image = UIImage(named: "dots.00\(currentNumber).png")
+        
+        currentNumber = (currentNumber < 3) ? (currentNumber + 1) : 1
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(OpeningScreenViewController.runDotGif), userInfo: nil, repeats: true)
     }
     
     override func didReceiveMemoryWarning() {
