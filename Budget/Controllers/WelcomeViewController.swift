@@ -17,7 +17,7 @@ class WelcomeViewController: UIViewController {
     @IBAction func goToMain(_ sender: UIButton) {
         
         performSegue(withIdentifier: "welcomeToMainSegue", sender: self)
-//        UserDefaults.standard.set(false, forKey: "firstTime")
+//        UserDefaults.standard.set(true, forKey: "isSetUp")
         
     }
     
@@ -36,7 +36,7 @@ class WelcomeViewController: UIViewController {
             
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             
             UIView.animate(withDuration: 0.5) {
                 
@@ -53,6 +53,8 @@ class WelcomeViewController: UIViewController {
 
         self.welcomeToLabel.alpha = 0.0
         self.goToMainButton.alpha = 0.0
+        
+        addCircleAroundMainButtons(named: self.goToMainButton)
         
     }
 

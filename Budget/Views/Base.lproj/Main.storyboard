@@ -1244,7 +1244,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jsx-sh-U2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3577" y="730"/>
+            <point key="canvasLocation" x="-3578" y="730"/>
         </scene>
         <!--Add Or Edit Paycheck View Controller-->
         <scene sceneID="Hg6-Lu-omA">
@@ -1988,7 +1988,7 @@
         <image name="dots.001" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xOp-Mq-eWc"/>
+        <segue reference="BFk-Fg-fMz"/>
         <segue reference="1AE-Ye-tTi"/>
         <segue reference="sum-Cr-7Ay"/>
         <segue reference="8K3-ts-dmR"/>
