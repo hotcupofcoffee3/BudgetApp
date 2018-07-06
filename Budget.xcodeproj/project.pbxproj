@@ -23,6 +23,7 @@
 		B5668BA420B335A2008D02D1 /* PaycheckPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5668BA320B335A2008D02D1 /* PaycheckPicker.storyboard */; };
 		B5668BA620B335C9008D02D1 /* PaycheckPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5668BA520B335C9008D02D1 /* PaycheckPickerViewController.swift */; };
 		B56A0D99209CB3600016634B /* ExtensionFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */; };
+		B56C249120EFE0410020EB3D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56C249020EFE0410020EB3D /* WelcomeViewController.swift */; };
 		B5759A272076690700410FF9 /* KeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5759A262076690700410FF9 /* KeyModel.swift */; };
 		B576FD2C208F86BE00565082 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B576FD2B208F86BD00565082 /* DetailsViewController.swift */; };
 		B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58816C82084F85D00CA0C4D /* DateFormatModel.swift */; };
@@ -74,6 +75,7 @@
 		B5668BA320B335A2008D02D1 /* PaycheckPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PaycheckPicker.storyboard; sourceTree = "<group>"; };
 		B5668BA520B335C9008D02D1 /* PaycheckPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckPickerViewController.swift; sourceTree = "<group>"; };
 		B56A0D98209CB3600016634B /* ExtensionFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFunctionsViewController.swift; sourceTree = "<group>"; };
+		B56C249020EFE0410020EB3D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		B5759A262076690700410FF9 /* KeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyModel.swift; sourceTree = "<group>"; };
 		B576FD2B208F86BD00565082 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		B58816C82084F85D00CA0C4D /* DateFormatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatModel.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				B5E78BEF20EEB3F600F0E318 /* OpeningScreenViewController.swift */,
+				B56C249020EFE0410020EB3D /* WelcomeViewController.swift */,
 				B5380EAC2073CC830061C9E5 /* MainScreenController.swift */,
 				B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */,
 				B51AC2E62076BB570068E059 /* TransactionViewController.swift */,
@@ -335,6 +338,7 @@
 				B5380EAD2073CC830061C9E5 /* MainScreenController.swift in Sources */,
 				B54EFF3A20A0A19600EF3FB8 /* BudgetViewController.swift in Sources */,
 				B52879A9208A42970011D04C /* AddOrEditTransactionViewController.swift in Sources */,
+				B56C249120EFE0410020EB3D /* WelcomeViewController.swift in Sources */,
 				B533E35E20700B01007A72E0 /* AppDelegate.swift in Sources */,
 				B5892DD820A9D297003687C6 /* AddOrEditBudgetedTimeFrameViewController.swift in Sources */,
 				B58816C92084F85D00CA0C4D /* DateFormatModel.swift in Sources */,

@@ -10,13 +10,8 @@ import UIKit
 
 class OpeningScreenViewController: UIViewController {
     
-    @IBAction func goToMain(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: "welcomeToMainSegue", sender: self)
-        
-    }
-    
     @IBOutlet weak var dotGif: UIImageView!
+    
     
    
     // DOT gif
@@ -32,13 +27,30 @@ class OpeningScreenViewController: UIViewController {
         currentNumber = (currentNumber < 3) ? (currentNumber + 1) : 1
         
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
         timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(OpeningScreenViewController.runDotGif), userInfo: nil, repeats: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            
+            if UserDefaults.standard.object(forKey: "firstTime") != nil {
+                
+                print("It had a value.")
+                self.performSegue(withIdentifier: openingToMainSegueKey, sender: self)
+                
+                
+            } else {
+                
+                print("It's nil.")
+                self.performSegue(withIdentifier: openingToWelcomeSegueKey, sender: self)
+                
+            }
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
