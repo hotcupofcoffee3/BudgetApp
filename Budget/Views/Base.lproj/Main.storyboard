@@ -1974,7 +1974,7 @@
                     <connections>
                         <outlet property="goToMainButton" destination="6mt-8f-ChG" id="Zrl-jw-5Nv"/>
                         <outlet property="welcomeToLabel" destination="Z2v-rn-FjQ" id="l6S-4E-fxe"/>
-                        <segue destination="eK1-N9-yax" kind="presentation" identifier="welcomeToMainSegue" id="H2G-x9-Ucd"/>
+                        <segue destination="eK1-N9-yax" kind="presentation" identifier="welcomeToMainSegue" modalTransitionStyle="coverVertical" id="H2G-x9-Ucd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PuW-va-Hi9" userLabel="First Responder" sceneMemberID="firstResponder"/>
