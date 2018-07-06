@@ -265,34 +265,34 @@ extension UIViewController {
     
     // MARK: - Add Something Alert Popup Function
     
-    func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String) {
-        
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // Just so I don't forget the structure, this is the only one being left like this.
-        // All the rest use the "performSegue()" function.
-        
-        //  let addACategoryViewController = self.storyboard?.instantiateViewController(withIdentifier: addACategoryViewControllerKey) as! AddCategoryViewController
-        //
-        //  self.present(addACategoryViewController, animated: true, completion: nil)
-        
-        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: addCategorySegue, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
-            
-            self.performSegue(withIdentifier: addTransactionSegue, sender: self)
-            
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
+//    func addSomethingAlertPopup(addCategorySegue: String, addTransactionSegue: String) {
+//        
+//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        
+//        // Just so I don't forget the structure, this is the only one being left like this.
+//        // All the rest use the "performSegue()" function.
+//        
+//        //  let addACategoryViewController = self.storyboard?.instantiateViewController(withIdentifier: addACategoryViewControllerKey) as! AddCategoryViewController
+//        //
+//        //  self.present(addACategoryViewController, animated: true, completion: nil)
+//        
+//        alert.addAction(UIAlertAction(title: "Add Category", style: .default) { (action) in
+//            
+//            self.performSegue(withIdentifier: addCategorySegue, sender: self)
+//            
+//        })
+//        
+//        alert.addAction(UIAlertAction(title: "Add Transaction", style: .default) { (action) in
+//            
+//            self.performSegue(withIdentifier: addTransactionSegue, sender: self)
+//            
+//        })
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        
+//        present(alert, animated: true, completion: nil)
+//        
+//    }
     
     
     

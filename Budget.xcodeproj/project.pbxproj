@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B50D5D9720A9F0E800EBD67D /* BudgetItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */; };
+		B511CE8920EF014E00BBB9D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B511CE8820EF014E00BBB9D6 /* StoreKit.framework */; };
 		B51AC2E52076BB4C0068E059 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */; };
 		B51AC2E72076BB570068E059 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E62076BB570068E059 /* TransactionViewController.swift */; };
 		B51AC2E92076BB730068E059 /* AddOrEditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AC2E82076BB730068E059 /* AddOrEditCategoryViewController.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		B50D5D9620A9F0E800EBD67D /* BudgetItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetItemsViewController.swift; sourceTree = "<group>"; };
+		B511CE8820EF014E00BBB9D6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B51AC2E42076BB4C0068E059 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B51AC2E62076BB570068E059 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		B51AC2E82076BB730068E059 /* AddOrEditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditCategoryViewController.swift; sourceTree = "<group>"; };
@@ -109,17 +111,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B511CE8920EF014E00BBB9D6 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B511CE8720EF014E00BBB9D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B511CE8820EF014E00BBB9D6 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B533E35120700B01007A72E0 = {
 			isa = PBXGroup;
 			children = (
 				B533E35C20700B01007A72E0 /* Budget */,
 				B533E35B20700B01007A72E0 /* Products */,
+				B511CE8720EF014E00BBB9D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,6 +277,11 @@
 					B533E35920700B01007A72E0 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
