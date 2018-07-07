@@ -39,6 +39,8 @@ class AddOrEditCategoryViewController: UIViewController, UITextFieldDelegate, Ch
     
     var dateFormatYYYYMMDD = Int()
     
+    let isFirstTime = (UserDefaults.standard.object(forKey: isSetUpKey) == nil) ? true : false
+    
     
     
     // *****

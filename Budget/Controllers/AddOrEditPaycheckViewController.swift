@@ -32,6 +32,8 @@ class AddOrEditPaycheckViewController: UIViewController, UITextFieldDelegate {
     
     var editablePaycheckAmount = Double()
     
+    let isFirstTime = (UserDefaults.standard.object(forKey: isSetUpKey) == nil) ? true : false
+    
     
     
     // *****

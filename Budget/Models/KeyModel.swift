@@ -54,6 +54,10 @@ let startDateIDKey = "startDateID"
 let endDateIDKey = "endDateID"
 
 
+// Startup Keys
+let isSetUpKey = "isSetUp"
+
+
 // Budget Item Keys
 let categoryTypeKey = "category"
 
@@ -69,10 +73,15 @@ let fadedWhiteColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, 
 
 // MARK: - Segue Keys
 
-// Welcome to others
+// Opening to others
 
 let openingToMainSegueKey = "openingToMainSegue"
 let openingToWelcomeSegueKey = "openingToWelcomeSegue"
+
+
+// Welcome to others
+let welcomeToAddPeriodSegueKey = "welcomeToAddPeriodSegue"
+
 
 // Main to others
 let mainToBudgetSegueKey = "mainToBudgetSegue"

@@ -38,6 +38,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     
     var endDate = Date()
     
+    let isFirstTime = (UserDefaults.standard.object(forKey: isSetUpKey) == nil) ? true : false
+    
     
     
     // *****
@@ -59,6 +61,8 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
     @IBOutlet weak var endDateLabel: UILabel!
     
     @IBOutlet weak var endDateView: UIView!
+    
+    @IBOutlet weak var instructionsLabel: UILabel!
     
     
     
@@ -200,6 +204,19 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             if isNewBudgetTimeFrame {
                 
+                if isFirstTime {
+                    
+                    let currentDateAsPeriodID = convertDateToBudgetedTimeFrameID(timeFrame: Date(), isEnd: false)
+                    
+                    if startID > currentDateAsPeriodID || endID < currentDateAsPeriodID {
+                        
+                        failureWithWarning(label: warningLabel, message: "The starting period has to include the current date.")
+                        return
+                        
+                    }
+                    
+                }
+                
                 addBudgetedTimeFrameSubmission(startID: startID, startYear: startYear, startMonth: startMonth, startDay: startDay, endYear: endYear, endMonth: endMonth, endDay: endDay)
                 
             } else {
@@ -220,7 +237,15 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
         
         successHaptic()
         
-        self.dismiss(animated: true, completion: nil)
+        if isFirstTime {
+            
+//            performSegue(withIdentifier: addOrEditPeriodToAddOrEditPaycheckSegueKey, sender: self)
+            
+        } else {
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
         
     }
     
@@ -374,7 +399,19 @@ class AddOrEditBudgetedTimeFrameViewController: UIViewController, ChooseDate {
             
             submitTimeFrameButton.setTitle("Add Time Frame", for: .normal)
             
+            if isFirstTime {
+                
+                instructionsLabel.text = "Add a Starting Budget Period.\n\nToday's date has to be within the date range."
+                
+            } else {
+                
+                instructionsLabel.text = ""
+                
+            }
+            
         } else {
+            
+            instructionsLabel.text = ""
             
             backButton.title = "Cancel"
             

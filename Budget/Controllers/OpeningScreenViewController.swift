@@ -37,7 +37,7 @@ class OpeningScreenViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             
-            if UserDefaults.standard.object(forKey: "isSetUp") != nil {
+            if UserDefaults.standard.object(forKey: isSetUpKey) != nil {
                 
                 print("It is set up.")
                 self.performSegue(withIdentifier: openingToMainSegueKey, sender: self)

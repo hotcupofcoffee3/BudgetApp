@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
 
-//        UserDefaults.standard.set(nil, forKey: "isSetUp")
+//        UserDefaults.standard.set(nil, forKey: isSetUpKey)
         
         
         // Light status bar

@@ -16,8 +16,9 @@ class WelcomeViewController: UIViewController {
     
     @IBAction func goToMain(_ sender: UIButton) {
         
-        performSegue(withIdentifier: "welcomeToMainSegue", sender: self)
-//        UserDefaults.standard.set(true, forKey: "isSetUp")
+//        performSegue(withIdentifier: "welcomeToMainSegue", sender: self)
+//        UserDefaults.standard.set(true, forKey: isSetUpKey)
+        performSegue(withIdentifier: welcomeToAddPeriodSegueKey, sender: self)
         
     }
     
